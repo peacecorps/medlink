@@ -33,9 +33,11 @@ Here's a quick rundown of some Gems you may not be familiar with:
 
 See the default [README.rdoc](https://github.com/atlrug-rhok/rhok-rails/blob/master/doc/README.rdoc).
 
-### Pushing to heroku
+### Heroku
 
-Add the following to your .git/config:
+An instance of this project is live at [http://rhok-rails.herokuapp.com/](http://rhok-rails.herokuapp.com/).
+
+If you would like to be able to deploy to Heroku, add the following to your .git/config:
 
     [remote "heroku"]
       url = git@heroku.com:rhok-rails.git
