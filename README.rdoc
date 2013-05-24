@@ -1,3 +1,17 @@
+== Pushing to heroku
+
+Add the following to your .git/config:
+
+    [remote "heroku"]
+      url = git@heroku.com:rhok-rails.git
+      fetch = +refs/heads/*:refs/remotes/heroku/*
+
+Then `git push heroku master` will push your changes to Heroku and trigger a build. If you need collab access on Heroku, talk to James.
+
+-----------------------------
+
+Default README.rdoc follows:
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create
