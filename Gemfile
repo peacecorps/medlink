@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.13'
 gem 'jquery-rails'
 gem 'haml-rails'
+gem 'twitter-bootstrap-rails'
 gem 'pg'  # Only needed for Heroku deployment
 
 # Gems used only for assets and not required
