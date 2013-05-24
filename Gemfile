@@ -4,7 +4,6 @@ gem 'rails', '3.2.13'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'twitter-bootstrap-rails'
-gem 'pg'  # Only needed for Heroku deployment
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -23,4 +22,8 @@ group :development, :test do
   gem 'pry'
   gem 'better_errors'
   gem 'binding_of_caller'
+end
+
+group :production do
+  gem 'pg'  # Only needed for Heroku deployment
 end
