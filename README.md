@@ -54,3 +54,4 @@ If you'd like to practice making a pull request, feel free to add yourself to th
 * James Dabbs
 * Luke Reimer
 * Al Snow
+* Clint Lee
