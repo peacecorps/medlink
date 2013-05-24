@@ -42,3 +42,12 @@ Add the following to your .git/config:
       fetch = +refs/heads/*:refs/remotes/heroku/*
 
 Then `git push heroku master` will push your changes to Heroku and trigger a build.
+
+### Pull requests
+
+If you'd like to practice making a pull request, feel free to add yourself to the following list:
+
+## Contributors
+
+* James Dabbs
+* Luke Reimer
