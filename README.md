@@ -1,4 +1,4 @@
-= ATLRUG-RHOK Rails Project Template
+## ATLRUG-RHOK Rails Project Template
 
 This is a more-or-less blank Rails project, designed to get members of the ATLRUG-RHOK team on the same page and ready to code ASAP. To set it up on your machine:
 
@@ -14,26 +14,26 @@ and you should be off to the races. You can check by running the specs with
 $ rake spec
 ```
 
-If it's green, you should be good to go. If you have any questions at all, feel free to email James or post on the Google Group.
+If it's green, you should be good to go. If you have any questions at all, feel free to email [James](https://github.com/jamesdabbs) or post on the [Google Group](https://groups.google.com/forum/?fromgroups#!forum/atlrug-rhok).
 
-=== Ruby version
+### Ruby version
 
 We're targeting Ruby 1.9.3. If you're running rvm and have 1.9.3 installed, the .rvmrc file should take care of everything.
 
-=== Installed Gems
+### Installed Gems
 
 Here's a quick rundown of some Gems you may not be familiar with:
 
-* `haml-rails` - enables rendering of `.html.haml` files, a much less verbose alternative to `.html.erb`. See the application layout for an example.
+* `haml-rails` - enables rendering of `.html.haml` files, a much less verbose alternative to `.html.erb`. See the [application layout](https://github.com/atlrug-rhok/rhok-rails/blob/master/app/views/layouts/application.html.haml) for an example.
 * `pry` - a versatile debugging tool. Drop in a `binding.pry` at any point to halt execution and poke around the application's current state.
 * `better_errors` - enables a significantly more informative error page.
-* `binding_of_caller` - enables a REPL bound at the point of error on the better errors page.
+* `binding_of_caller` - enables a [REPL](http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) bound at the point of error on the better errors page.
 
-=== Rails reference
+### Rails reference
 
-See the default README.rdoc.
+See the default [README.rdoc](https://github.com/atlrug-rhok/rhok-rails/blob/master/doc/README.rdoc).
 
-=== Pushing to heroku
+### Pushing to heroku
 
 Add the following to your .git/config:
 
