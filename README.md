@@ -52,6 +52,6 @@ If you'd like to practice making a pull request, feel free to add yourself to th
 ## Contributors
 
 * James Dabbs
-* Luke Reimer
+* Luke J Reimer
 * Al Snow
 * Clint Lee
