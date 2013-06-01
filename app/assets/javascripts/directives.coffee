@@ -1,1 +1,1 @@
-angular.module('rhok.directives', [])
+angular.module('medSupplies.directives', [])
