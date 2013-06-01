@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require lib/html5shiv.min.js
 //= require lib/json3.js
 //= require lib/angular.min.js
 //= require lib/angular-resource.min.js
