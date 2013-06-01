@@ -1,6 +1,9 @@
 Rhok::Application.routes.draw do
   devise_for :users
 
+  resources :users
+  resources :med_requests
+
   root to: 'application#root'
   
   # The priority is based upon order of creation:
