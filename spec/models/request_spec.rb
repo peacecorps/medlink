@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Request, :focus do
+describe Request do
   subject { FactoryGirl.create :request }
 
   it 'can be created' do
