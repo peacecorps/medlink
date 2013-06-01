@@ -13,6 +13,12 @@
 
 ActiveRecord::Schema.define(:version => 20130601192226) do
 
+  create_table "countries", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "pc_hubs", :force => true do |t|
     t.string   "name"
     t.integer  "country_id"
@@ -29,10 +35,10 @@ ActiveRecord::Schema.define(:version => 20130601192226) do
     t.string   "state"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "phone"
-    t.string   "email"
     t.boolean  "confirmed"
     t.boolean  "complete"
+    t.string   "phone"
+    t.string   "email"
     t.string   "extra_text"
   end
 
