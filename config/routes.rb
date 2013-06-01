@@ -1,5 +1,5 @@
 Rhok::Application.routes.draw do
   root to: 'application#root'
   
-  match '/medrequest', to: 'med_requests#create'
+  match '/medrequest', to: 'twilio#create'
 end
