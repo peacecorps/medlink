@@ -1,15 +1,22 @@
-angular.module('rhok',
+angular.module('medSupplies', [
   'ngResource'
-  'rhok.services'
-  'rhok.filters'
-  'rhok.directives'
-  'rhok.controllers'
-)
+  'medSupplies.services'
+  'medSupplies.filters'
+  'medSupplies.directives'
+  'medSupplies.controllers'
+])
 
 .config([
   '$routeProvider',
   '$locationProvider',
 
   ($routeProvider, $locationProvider) ->
-    $routeProvider.when('/')
+    $routeProvider
+
+    .when('/',
+      templateUrl: '/assets/templates/main.html'
+      controller: 'MainCtrl'
+    )
+
+    $locationProvider.html5Mode(true);
 ])

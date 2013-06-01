@@ -11,9 +11,15 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require lib/html5shiv.min.js
+//= require lib/json3.js
 //= require lib/angular.min.js
 //= require lib/angular-resource.min.js
-//= require lib/angular-cookies.min.js
 //= require lib/promise-tracker.min.js
 //= require angularjs/rails/resource
+//= require services
+//= require filters
+//= require directives
+//= require controllers
+//= require main
 //= require_tree .

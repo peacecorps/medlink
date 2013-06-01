@@ -11,8 +11,10 @@ describe RequestsController do
 
   describe "GET 'create'" do
     it "returns http success" do
-      get 'create'
+      post 'create', dose: 'some_string', quantity: 5 
       response.should be_success
+      @req = Request.where(dose: 'some_string').first
+      @req.should_not be_nil
     end
   end
 
