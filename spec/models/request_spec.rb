@@ -1,43 +1,56 @@
 require 'spec_helper'
 
-describe Request do
+describe Request, :focus do
   subject { FactoryGirl.create :request }
 
   it 'can be created' do
     expect( subject ).to be_a_kind_of Request
   end
 
-  context 'received' do
-    it 'has not been confirmed' do
-      expect( subject ).not_to be_confirmed
-    end
+  context 'validation' do
+    pending 'spec any non-trivial validations'
+  end
 
-    it 'can send a confirmation'
+  context 'received' do
+    it { should_not be_confirmed }
+
     it 'notifies if invalid'
     it 'rejects duplicates'
 
-    it 'can generate a confirmation message'
-    it 'can populate :from for text messages'
+    it 'knows its email destination for text messages' do
+      expect( subject.destination.keys ).to eq [:email, :phone]
+    end
+
+    context 'when valid' do
+      it { should be_valid }
+
+      it 'can generate a confirmation message' do
+        expect( subject.confirmation_message ).to match /has been processed/
+      end
+    end
+
+    context 'when invalid' do
+      before(:each) { subject.pcv_id = nil }
+
+      it { should_not be_valid }
+
+      it 'can generate an error message' do
+        expect( subject.confirmation_message ).to match /pcv id/i
+      end
+    end
   end
 
   context 'confirmed' do
     before(:each) { subject.confirm! }
 
-    it 'has been confirmed' do
-      expect( subject ).to be_confirmed
-    end
-
-    it 'has not been completed' do
-      expect( subject ).not_to be_complete
-    end
+    it { should be_confirmed }
+    it { should_not be_complete }
 
     it 'can be completed'
   end
 
   context 'completed' do
-    it 'is complete' do
-      expect( subject ).to be_complete
-    end
+    it { should be_complete }
 
     it 'has instructions for pickup'
     it 'can send those instructions'
