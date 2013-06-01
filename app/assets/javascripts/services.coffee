@@ -1,4 +1,4 @@
-angular.module('rhok.services', [])
+angular.module('medSupplies.services', [])
 
 .config([
 	'$httpProvider',

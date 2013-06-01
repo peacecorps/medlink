@@ -1,1 +1,1 @@
-angular.module('rhok.filters', [])
+angular.module('medSupplies.filters', [])
