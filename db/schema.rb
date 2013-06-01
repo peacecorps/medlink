@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601185952) do
+ActiveRecord::Schema.define(:version => 20130601190832) do
 
   create_table "requests", :force => true do |t|
     t.integer  "user_id"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(:version => 20130601185952) do
     t.string   "email"
     t.boolean  "confirmed"
     t.boolean  "complete"
+    t.string   "extra_text"
   end
 
   create_table "supplies", :force => true do |t|
