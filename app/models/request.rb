@@ -9,6 +9,10 @@ class Request < ActiveRecord::Base
     :user => "PCVID"
   }
 
+  def self.human_attribute_name(attr, options={})
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
+
   validate_presence_of :user, :message => "invalid."
   validate_presence_of :supply, :message => "shortcode invalid."
 
