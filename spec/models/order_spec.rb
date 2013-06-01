@@ -6,7 +6,7 @@ describe Order do
     pending 'spec and non-trivial validations'
   end
 
-  context 'from text', :focus do
+  context 'from text' do
     subject { Order.create_from_text pcvid: 1, shortcode: 'BND' }
 
     it { should be_a_kind_of Order }
