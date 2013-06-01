@@ -14,5 +14,6 @@
 //= require lib/angular.min.js
 //= require lib/angular-resource.min.js
 //= require lib/angular-cookies.min.js
+//= require lib/promise-tracker.min.js
 //= require angularjs/rails/resource
 //= require_tree .
