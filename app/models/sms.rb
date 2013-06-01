@@ -4,6 +4,10 @@ class SMS
     @data = data
   end
 
+  def data
+    @data
+  end
+
   def send_now( bool )
     @send_now = bool
   end
@@ -27,46 +31,51 @@ class SMS
     body     = params[:Body]
     data     = nil
 
-    if @body      
-      if data=@body.match /(\d{6}),*\s+(\w+),*\s+(\d+)(\w+),*\s+(\d+),*\s+(\w+)/
+    if body      
+      if body.match /(\d{6}),*\s+(\w+),*\s+(\d+)(\w+),*\s+(\d+),*\s+(\w+)/
+        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+)(\w+),*\s+(\d+),*\s+(\w+)/
         # sms: "111111, BANDG, 30mg, 50, ACCRA"
         data = { 
           :phone        => reply_to,
-          :pcvid        => data[0],
-          :shortcode    => data[1],
-          :qty          => data[2],
-          :loc          => data[3],
-          :dosage_value => data[4],
-          :dosage_units => data[5]
+          :pcvid        => data[1],
+          :shortcode    => data[2],
+          :dosage_value => data[3],
+          :dosage_units => data[4],
+          :qty          => data[5],
+          :loc          => data[6]
         }
         sms = SMS.new data
-      elsif data=@body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/
+      elsif body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/
+        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/
         # sms: "111111, BANDG, 50, ACCRA"
         data = { 
           :phone        => reply_to,
-          :pcvid        => data[0],
-          :shortcode    => data[1],
-          :qty          => data[2],
-          :loc          => data[3],
+          :pcvid        => data[1],
+          :shortcode    => data[2],
+          :qty          => data[3],
+          :loc          => data[4],
         }
         sms = SMS.new data
-      elsif data=@body.match /([lL]\w+)\?/
+      elsif body.match /([lL]\w+)\?/
+        data = body.match /([lL]\w+)\?/
         # sms: "list?"
         # send 
         data = {
           :from => '+17322301185',
-          :to   => reply_to
+          :to   => reply_to,
           :body => "meds, units, countryX"
         }
         sms = SMS.new data
         sms.send_now true
-      elsif data=@body.match /([lL]\w+)\s(\w+)/
+      elsif body.match /([lL]\w+)\s(\w+)/
+        data = body.match /([lL]\w+)\s(\w+)/
+        puts data[2]
         # sms: ["list meds", "list units", "list ghana"]
-        if data[1] == "meds"
+        if data[2] == "meds"
           # this will be well over 160 chars.
           # future implementation: add a filter or 
           # send multiple messages
-        elsif data[1] == "units"
+        elsif data[2] == "units"
           # future implementation: add a filter
           data = {
             :from => '+17322301185',
@@ -77,8 +86,8 @@ class SMS
           sms.send_now true
         else
           # s
-          country   = Country.where( :name => data[1], limit => 1 )
-          locations = country.pc_hubs.all
+          country   = Country.where( :name => data[2], :limit => 1 )
+          locations = %w(one two three) #country.pc_hubs.all
           data = {
             :from => '+17322301185',
             :to   => reply_to,

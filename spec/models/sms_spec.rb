@@ -1,24 +1,55 @@
 require 'spec_helper'
+require 'ostruct'
 
 describe SMS do
-	before do
-		data = {
-  			:From => '+15555555555',
-  			:Body => '111111 bandg 30mg 50 ACCRA'
-  		}
-	end
 
-  context "can parse Twilio POST data" do  	
-  	subject { SMS.parse data }
+  context "can process request with dosage" do  
+    data = {
+        :From => '+15555555555',
+        :Body => '111111 bandg 30mg 50 ACCRA'
+      }	
+  	subject { OpenStruct.new SMS.parse(data).data }
 
-  	it { should be_a_kind_of SMS }
-
-  	its( data[:phone] )        { should eq '+15555555555' }
-  	its( data[:pcvid] )        { should eq '111111' }
-  	its( data[:shortcode] )    { should eq  'bandg' }
-  	its( data[:qty] )          { should eq '50' }
-  	its( data[:loc] )          { should eq 'ACCRA' }
-  	its( data[:dosage_value] ) { should eq '30' }
-  	its( data[:dosage_units] ) { should eq 'mg' }
+  	its( :phone )        { should eq '+15555555555' }
+  	its( :pcvid )        { should eq '111111' }
+  	its( :shortcode )    { should eq  'bandg' }
+  	its( :qty )          { should eq '50' }
+  	its( :loc )          { should eq 'ACCRA' }
+  	its( :dosage_value ) { should eq '30' }
+  	its( :dosage_units ) { should eq 'mg' }
   end
+
+  context "can process list request" do  
+    data = {
+        :From => '+15555555555',
+        :Body => 'list?'
+      } 
+    subject { OpenStruct.new SMS.parse(data).data }
+
+    its( :to )   { should eq '+15555555555' }
+    its( :body ) { should eq 'meds, units, countryX' }
+  end
+
+  context "can process list units" do  
+    data = {
+        :From => '+15555555555',
+        :Body => 'list units'
+      } 
+    subject { OpenStruct.new SMS.parse(data).data }
+
+    its( :to )   { should eq '+15555555555' }
+    its( :body ) { should eq 'mg, g, ml' }
+  end
+
+  context "can process list country" do  
+    data = {
+        :From => '+15555555555',
+        :Body => 'list ghana'
+      } 
+    subject { OpenStruct.new SMS.parse(data).data }
+
+    its( :to )   { should eq '+15555555555' }
+    its( :body ) { should eq 'one, two, three' }
+  end
+
 end
