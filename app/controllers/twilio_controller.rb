@@ -1,17 +1,17 @@
 require 'twilio-ruby'
 
 class TwilioController < ApplicationController
-	def create
-		# snag parameters from twilio
-		from   = params[:From]
-		body   = params[:Body]
 
-		# send SMS
-		client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
-		client.account.sms.messages.create(
-  			:from => '+17322301185',
-  			:to => from,
-  			:body => body
-		)
+	def create
+		# parse parameters from twilio
+    data = SMS.parse params
+
+    # generate a Request object
+    request = Request.new data
+
+    # try to save - this may fail, but will send a notice if so
+    request.save
+    SMS.send request.confirmation
 	end
+  
 end

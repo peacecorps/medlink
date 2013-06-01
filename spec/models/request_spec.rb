@@ -15,6 +15,9 @@ describe Request do
     it 'can send a confirmation'
     it 'notifies if invalid'
     it 'rejects duplicates'
+
+    it 'can generate a confirmation hash'
+    # Includes from, body, ...
   end
 
   context 'confirmed' do
