@@ -30,3 +30,6 @@ bin
 
 *.sublime-project
 *.sublime-workspace
+*.swp
+*.swo
+*.orig

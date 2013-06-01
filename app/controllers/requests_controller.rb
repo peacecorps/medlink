@@ -1,7 +1,4 @@
 class RequestsController < ApplicationController
-  def new
-  end
-
   def create
   end
 
@@ -9,9 +6,6 @@ class RequestsController < ApplicationController
   end
 
   def destroy
-  end
-
-  def edit
   end
 
   def update
