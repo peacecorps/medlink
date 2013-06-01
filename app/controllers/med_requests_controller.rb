@@ -1,3 +1,5 @@
+require 'twilio-ruby'
+
 class MedRequests < ApplicationController
 
 	def create
