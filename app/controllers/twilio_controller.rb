@@ -1,7 +1,6 @@
 require 'twilio-ruby'
 
-class MedRequestsController < ApplicationController
-
+class TwilioController < ApplicationController
 	def create
 		# snag parameters from twilio
 		from   = params[:From]
@@ -14,11 +13,5 @@ class MedRequestsController < ApplicationController
   			:to => from,
   			:body => body
 		)
-	end
-	def destroy
-	end
-	def update
-	end
-	def index
 	end
 end
