@@ -2,7 +2,7 @@ class RequestsController < ApplicationController
   respond_to :json
 
   def create
-    @request = Request.new params.slice(*attributes)
+    @request = Request.new params[:request].slice(*attributes)
     if @request.save
       render json: {success: true, request: @request}
     else
@@ -18,7 +18,7 @@ class RequestsController < ApplicationController
 
   def update
     r = Request.where(id: params[:id]).first!
-    r.update_attributes params.slice(*attributes)
+    r.update_attributes params[:request].slice(*attributes)
     render json: {success: true}
   end
 
