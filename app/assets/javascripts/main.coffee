@@ -1,11 +1,12 @@
-angular.module 'rhok',
+angular.module('rhok',
   'ngResource'
   'rhok.services'
   'rhok.filters'
   'rhok.directives'
   'rhok.controllers'
+)
 
-angular.config([
+.config([
   '$routeProvider',
   '$locationProvider',
 
