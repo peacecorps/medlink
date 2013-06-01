@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601165531) do
+ActiveRecord::Schema.define(:version => 20130601165554) do
 
   create_table "requests", :force => true do |t|
     t.integer  "user_id"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(:version => 20130601165531) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "supplies", :force => true do |t|
+    t.string   "shortcode"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "supplies", ["shortcode"], :name => "index_supplies_on_shortcode"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
