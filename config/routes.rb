@@ -5,7 +5,7 @@ Rhok::Application.routes.draw do
 
   resources :requests
   resources :users
-  resources :med_requests
+  resources :requests, only: [:create, :destroy, :update]
 
   root to: 'application#root'
   

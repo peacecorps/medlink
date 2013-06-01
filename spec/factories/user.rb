@@ -1,14 +1,7 @@
-require 'factory_girl'
-
 FactoryGirl.define do
   factory :user do
     email    'user@example.com'
     password 'password'
-  end
-
-  factory :supply do
-  end
-
-  factory :request do
+    phone    '555-867-5309'
   end
 end

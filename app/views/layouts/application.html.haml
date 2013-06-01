@@ -9,6 +9,6 @@
     = stylesheet_link_tag "application", :media => "all"
 
 
-  %body(ng-view)
-
+  %body
+    = yield
     = javascript_include_tag "application"

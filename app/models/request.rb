@@ -1,11 +1,11 @@
 class Request < ActiveRecord::Base
-  attr_accessible :dose, :location, :quantity, :state, :supply_id, :user_id
+  attr_accessible :dose, :quantity, :supply_id
   attr_accessible :phone, :email
 
-  belongs_to :user
+  belongs_to :order
   belongs_to :supply
 
-  valid
+  validates_presence_of :supply, :message => "shortcode invalid."
 
   def confirm!
     update_attribute :confirmed, true
