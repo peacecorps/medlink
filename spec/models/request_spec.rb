@@ -24,14 +24,18 @@ describe Request do
       expect( subject ).to be_confirmed
     end
 
-    it 'has not been replied to' do
-      expect( subject ).not_to be_confirmed
+    it 'has not been completed' do
+      expect( subject ).not_to be_complete
     end
 
     it 'can be completed'
   end
 
   context 'completed' do
+    it 'is complete' do
+      expect( subject ).to be_complete
+    end
+
     it 'has instructions for pickup'
     it 'can send those instructions'
   end

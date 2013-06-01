@@ -3,4 +3,8 @@ class Request < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :supply
+
+  def confirm!
+    update_attribute :confirmed, true
+  end
 end
