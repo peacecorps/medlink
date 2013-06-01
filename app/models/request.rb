@@ -5,7 +5,12 @@ class Request < ActiveRecord::Base
   belongs_to :user
   belongs_to :supply
 
-  valid
+  HUMANIZED_ATTRIBUTES = {
+    :user => "PCVID"
+  }
+
+  validate_presence_of :user, :message => "invalid."
+  validate_presence_of :supply, :message => "shortcode invalid."
 
   def confirm!
     update_attribute :confirmed, true
