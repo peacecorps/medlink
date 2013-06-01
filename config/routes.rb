@@ -3,6 +3,9 @@ require 'resque/server'
 Rhok::Application.routes.draw do
   devise_for :users
 
+  resources :users
+  resources :med_requests
+
   root to: 'application#root'
   
   match '/medrequest', to: 'med_requests#create'

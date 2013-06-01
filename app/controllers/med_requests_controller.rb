@@ -15,5 +15,10 @@ class MedRequestsController < ApplicationController
   			:body => body
 		)
 	end
-
+	def destroy
+	end
+	def update
+	end
+	def index
+	end
 end
