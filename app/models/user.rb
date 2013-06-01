@@ -11,4 +11,6 @@ class User < ActiveRecord::Base
 
   has_many :requests
   has_many :supplies, through: :requests
+
+  has_one :pc_hub
 end
