@@ -1,3 +1,5 @@
+require 'resque/server'
+
 Rhok::Application.routes.draw do
   devise_for :users
 
@@ -59,4 +61,9 @@ Rhok::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+  devise_for :users
+
+  # TODO: lock this down to admins
+  mount Resque::Server, at: '/resque', as: 'resque'
 end
