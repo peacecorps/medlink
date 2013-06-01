@@ -2,46 +2,31 @@ require 'spec_helper'
 
 describe RequestsController do
 
-  describe "GET 'new'" do
-    it "returns http success" do
-      get 'new'
-      response.should be_success
-    end
-  end
-
   describe "GET 'create'" do
     it "returns http success" do
       post 'create', dose: 'some_string', quantity: 5 
       response.should be_success
-      @req = Request.where(dose: 'some_string').first
-      @req.should_not be_nil
-    end
-  end
-
-  describe "GET 'delete'" do
-    it "returns http success" do
-      get 'delete'
-      response.should be_success
+      req = JSON.parse(response.body)
+      req["request"]["dose"].should eq 'some_string'
     end
   end
 
   describe "GET 'destroy'" do
-    it "returns http success" do
-      get 'destroy'
-      response.should be_success
+    let :example do
+      FactoryGirl.create(:request)
     end
-  end
-
-  describe "GET 'edit'" do
     it "returns http success" do
-      get 'edit'
+      delete 'destroy', id: example.id
       response.should be_success
     end
   end
 
   describe "GET 'update'" do
+    let :example do
+      FactoryGirl.create(:request)
+    end
     it "returns http success" do
-      get 'update'
+      put :update, id: example.id
       response.should be_success
     end
   end
