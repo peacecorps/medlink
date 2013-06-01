@@ -33,6 +33,14 @@ Here's a quick rundown of some Gems you may not be familiar with:
 
 See the default [README.rdoc](https://github.com/atlrug-rhok/rhok-rails/blob/master/doc/README.rdoc).
 
+### Resque
+
+You'll need to run resque for background jobs (e.g. mailing). Install redis and then
+
+    QUEUE=* bundle exec rake environment resque:work
+
+You can view the status of resque jobs on the resqueweb server at `/resque`.
+
 ### Heroku
 
 An instance of this project is live at [http://rhok-rails.herokuapp.com/](http://rhok-rails.herokuapp.com/).
