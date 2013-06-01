@@ -13,8 +13,7 @@ class Request < ActiveRecord::Base
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super
   end
 
-  validate_presence_of :user, :message => "invalid."
-  validate_presence_of :supply, :message => "shortcode invalid."
+  validates_presence_of :supply, :message => "shortcode invalid."
 
   def confirm!
     update_attribute :confirmed, true

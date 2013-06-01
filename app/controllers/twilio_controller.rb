@@ -6,12 +6,12 @@ class TwilioController < ApplicationController
 		# parse parameters from twilio
     data = SMS.parse params
 
-    # generate a Request object
-    request = Request.new data
+    # generate an Order object
+    order = Order.from_text data
 
     # try to save - this may fail, but will send a notice if so
-    request.save
-    SMS.send_confirmation request
+    order.save
+    SMS.send_confirmation order
 	end
   
 end
