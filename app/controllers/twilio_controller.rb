@@ -11,7 +11,7 @@ class TwilioController < ApplicationController
 
     # try to save - this may fail, but will send a notice if so
     request.save
-    SMS.send request.confirmation
+    SMS.send_confirmation request
 	end
   
 end

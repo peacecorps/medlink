@@ -16,8 +16,8 @@ describe Request do
     it 'notifies if invalid'
     it 'rejects duplicates'
 
-    it 'can generate a confirmation hash'
-    # Includes from, body, ...
+    it 'can generate a confirmation message'
+    it 'can populate :from for text messages'
   end
 
   context 'confirmed' do
