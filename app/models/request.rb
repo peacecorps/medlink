@@ -1,17 +1,9 @@
 class Request < ActiveRecord::Base
-  attr_accessible :dose, :location, :quantity, :state, :supply_id, :user_id
+  attr_accessible :dose, :quantity, :supply_id
   attr_accessible :phone, :email
 
   belongs_to :order
   belongs_to :supply
-
-  HUMANIZED_ATTRIBUTES = {
-    :user => "PCVID"
-  }
-
-  def self.human_attribute_name(attr, options={})
-    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
-  end
 
   validates_presence_of :supply, :message => "shortcode invalid."
 

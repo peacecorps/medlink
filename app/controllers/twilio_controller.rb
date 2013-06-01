@@ -3,14 +3,11 @@ require 'twilio-ruby'
 class TwilioController < ApplicationController
 
 	def create
-		# parse parameters from twilio
     data = SMS.parse params
+    order = Order.create_from_text data
 
-    # generate an Order object
-    order = Order.from_text data
-
-    # try to save - this may fail, but will send a notice if so
-    order.save
+    # The Order object and its associated Request may or may not be
+    # valid or persisted
     SMS.send_confirmation order
 	end
   

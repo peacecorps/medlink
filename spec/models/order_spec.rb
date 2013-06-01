@@ -2,18 +2,17 @@ require 'spec_helper'
 
 describe Order do
 
-  context 'from text' do
-    subject { Order.from_text }
+  context 'validation' do
+    pending 'spec and non-trivial validations'
+  end
+
+  context 'from text', :focus do
+    subject { Order.create_from_text pcvid: 1, shortcode: 'BND' }
 
     it { should be_a_kind_of Order }
 
-    context 'validation' do
-      pending 'spec and non-trivial validations'
-    end
-
-    it 'knows its response destination' do
-      expect( subject.destination.keys ).to eq [:email, :phone]
-    end
+    its(:email) { should eq 'user@example.com' }
+    its(:phone) { should eq '555-867-5309'     }
   end
 
   # -----
@@ -26,9 +25,8 @@ describe Order do
     it 'notifies if invalid'
     it 'rejects duplicates'
 
-    it 'knows its email destination for text messages' do
-      expect( subject.destination.keys ).to eq [:email, :phone]
-    end
+    its(:email) { should eq 'user@example.com' }
+    its(:phone) { should eq '555-867-5309'     }
 
     context 'when valid' do
       it { should be_valid }
