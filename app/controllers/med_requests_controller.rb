@@ -1,6 +1,6 @@
 require 'twilio-ruby'
 
-class MedRequests < ApplicationController
+class MedRequestsController < ApplicationController
 
 	def create
 		from = params[:from]
