@@ -2,21 +2,29 @@ class RequestsController < ApplicationController
   respond_to :json
 
   def create
-    attributes = params.slice(
-      :dose, :location, :quantity, :state, :supply_id, :user_id,
-      :phone, :email
-    )
-    @request = Request.new(attributes)
+    @request = Request.new params.slice(*attributes)
     if @request.save
-      render json: {success: true}
+      render json: {success: true, request: @request}
     else
-      render json: {errors: @request.errors, success: false}
+      render :status => :unacceptable, json: {errors: @request.errors, success: false}
     end
   end
 
   def destroy
+    r = Request.where(id: params[:id]).first!
+    r.destroy
+    render json: {success: true}
   end
 
   def update
+    r = Request.where(id: params[:id]).first!
+    r.update_attributes params.slice(*attributes)
+    render json: {success: true}
+  end
+
+  protected
+
+  def attributes
+    Request.column_names.map(&:to_sym)
   end
 end
