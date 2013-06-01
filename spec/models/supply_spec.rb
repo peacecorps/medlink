@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Supply do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { FactoryGirl.create :supply }
+
+  it 'can be created' do
+    expect( subject ).to be_a_kind_of Supply
+  end
 end
