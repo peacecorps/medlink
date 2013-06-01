@@ -4,6 +4,7 @@ gem 'rails', '3.2.13'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'twitter-bootstrap-rails'
+gem 'twilio-ruby'
 
 # Gems used only for assets and not required
 # in production environments by default.
