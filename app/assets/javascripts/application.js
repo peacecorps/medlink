@@ -22,3 +22,4 @@
 //= require directives
 //= require controllers
 //= require main
+//= require_tree .
