@@ -69,7 +69,7 @@ class SMS
         sms.send_now true
       elsif body.match /([lL]\w+)\s(\w+)/
         data = body.match /([lL]\w+)\s(\w+)/
-        puts data[2]
+        Rails.logger.info data[2]
         # sms: ["list meds", "list units", "list ghana"]
         if data[2] == "meds"
           # this will be well over 160 chars.
