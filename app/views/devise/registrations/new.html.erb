@@ -10,25 +10,33 @@
 
     <div class="form__section">
       <div class="input-group">
-        <%= f.email_field :email, :autofocus => true, :type => 'text', :placeholder => 'Email' %>
+        <%= f.text_field :first_name, :autofocus => true, :type => 'text', :placeholder => 'First name' %>
+        <%= f.text_field :last_name, :type => 'text', :placeholder => 'Last name' %>
       </div>
     </div>
 
     <div class="form__section">
       <div class="input-group">
-        <%= f.password_field :password, :placeholder => 'Password' %>
+        <%= f.email_field :email, :type => 'text', :class => 'input--full', :placeholder => 'Email' %>
       </div>
     </div>
 
     <div class="form__section">
       <div class="input-group">
-        <%= f.password_field :password_confirmation, :placeholder => 'Confirm Password' %>
+        <%= f.password_field :password, :class => 'input--full', :placeholder => 'Password' %>
+      </div>
+    </div>
+
+    <div class="form__section">
+      <div class="input-group">
+        <%= f.password_field :password_confirmation, :class => 'input--full', :placeholder => 'Confirm Password' %>
       </div>
     </div>
 
     <div class="form__section">
       <div class="input-group">
         <div class="select select--full">
+          <%= f.text_field :pcv_id, :type => 'text', :placeholder => 'PCV ID' %>
           <%= f.select(:country_id, ["Country", ""] + Country.all.map { |c| [c.name.titleize, c.id] }) %>
           <i class="icon-caret-down select__arrow"></i>
         </div>
