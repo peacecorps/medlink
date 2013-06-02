@@ -4,5 +4,9 @@ FactoryGirl.define do
     password 'password'
     phone    '555-867-5309'
     country { FactoryGirl.create(:country) }
+
+    factory :admin do
+      role 'admin'
+    end
   end
 end
