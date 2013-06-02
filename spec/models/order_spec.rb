@@ -7,12 +7,34 @@ describe Order do
   end
 
   context 'from text' do
-    subject { Order.create_from_text pcvid: 1, shortcode: 'BND' }
+    before :each do
+      FactoryGirl.create :user,   pcv_id: 'USR'
+      FactoryGirl.create :pc_hub, name: 'LOC'
+      FactoryGirl.create :supply, shortcode: 'BND'
+    end
+
+    let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND' } }
+
+    subject { Order.create_from_text data }
 
     it { should be_a_kind_of Order }
 
     its(:email) { should eq 'user@example.com' }
     its(:phone) { should eq '555-867-5309'     }
+
+    it 'raises on invalid pcvid' do
+      expect do 
+        data[:pcvid] = 'NON'
+        Order.create_from_text data
+      end.to raise_error /unrecognized pcvid/i
+    end
+
+    it 'with invalid shortcode' do
+      expect do
+        data[:shortcode] = 'NON'
+        Order.create_from_text data
+      end.to raise_error  /unrecognized shortcode/i
+    end
   end
 
   # -----

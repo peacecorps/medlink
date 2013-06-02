@@ -3,11 +3,10 @@ require 'spec_helper'
 describe RequestsController do
 
   describe "GET 'create'" do
+    let (:supply) { FactoryGirl.create(:supply) }
     it "returns http success" do
-      post 'create', dose: 'some_string', quantity: 5 
+      post 'create', request: {supply_id: supply.id, dose: '5', quantity: '5'}
       response.should be_success
-      req = JSON.parse(response.body)
-      req["request"]["dose"].should eq 'some_string'
     end
   end
 
@@ -26,7 +25,7 @@ describe RequestsController do
       FactoryGirl.create(:request)
     end
     it "returns http success" do
-      put :update, id: example.id
+      put :update, id: example.id, request: {dose: '10', quantity: 20}
       response.should be_success
     end
   end
