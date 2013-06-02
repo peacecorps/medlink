@@ -3,6 +3,7 @@ require 'twilio-ruby'
 class TwilioController < ApplicationController
 
 	def create
+        Rails.logger.info( params )
 		# parse gives back and SMS object
         begin
             Rails.logger.info("Starting create method...")

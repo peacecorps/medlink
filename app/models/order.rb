@@ -47,6 +47,7 @@ class Order < ActiveRecord::Base
     if self.valid?
       "Your request has been processed and action will be taken within 24 hours."
     else
+      Rails.logger.info( errors.full_messages.join "," )
       errors.full_messages.join ","
     end
   end
