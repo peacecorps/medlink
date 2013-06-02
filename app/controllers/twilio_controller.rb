@@ -11,11 +11,12 @@ class TwilioController < ApplicationController
             else
                 create_order sms
             end
+            head :ok
         rescue => e
+            puts "error in parse"
             SMS.send_error params[:From], e.message
         end
-
-        head :ok
+        head :no_content
 	end
 
     private
@@ -25,6 +26,7 @@ class TwilioController < ApplicationController
         SMS.send_from_order order
         
     rescue => e
+        puts "Error in create_order"
         SMS.send_error sms.data[:phone], e.message
     end
 end
