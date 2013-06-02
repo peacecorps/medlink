@@ -32,6 +32,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'pry'
   gem 'binding_of_caller'
+  gem 'letter_opener'
 end
 
 group :production do
