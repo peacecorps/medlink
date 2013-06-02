@@ -33,9 +33,9 @@ class SMS
     data     = nil
 
     if body      
-      if body.match /(\d{6}),*\s+(\w+),*\s+(\d+)\s*(\w+),*\s+(\d+),*\s+(\w+)/
+      if (data=body.match /(\d{6}),*\s+(\w+),*\s+(\d+)\s*(\w+),*\s+(\d+),*\s+(\w+)/)
         # sms: "111111, BANDG, 30mg, 50, ACCRA"
-        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+)\s*(\w+),*\s+(\d+),*\s+(\w+)/
+        #data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+)\s*(\w+),*\s+(\d+),*\s+(\w+)/
         data = { 
           :phone        => reply_to,
           :pcvid        => data[1],
@@ -46,9 +46,9 @@ class SMS
           :loc          => data[6]
         }
         sms = SMS.new data
-      elsif body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/  
+      elsif (data=body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/)
         # sms: "111111, BANDG, 50, ACCRA"
-        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/
+        #data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/
         data = { 
           :phone        => reply_to,
           :pcvid        => data[1],
@@ -57,24 +57,20 @@ class SMS
           :loc          => data[4],
         }
         sms = SMS.new data
-      elsif body.match /([lL]\w+)\?/  
-        # sms: "list?"
-        data = body.match /([lL]\w+)\?/
+      elsif (data=body.match /([lL]\w+)\?/)
+        #data = body.match /([lL]\w+)\?/
         data = {
           :from => '+17322301185',
           :to   => reply_to,
           :body => %w(meds units countryX).join( ", ")
         }
         sms = SMS.new data, true
-      elsif body.match /([lL]\w+)\s(\w+)/
-        data = body.match /([lL]\w+)\s(\w+)/
-        Rails.logger.info data[2]
+      elsif (data=body.match /([lL]\w+)\s(\w+)/)
+        #data = body.match /([lL]\w+)\s(\w+)/
         # sms: ["list meds", "list units", "list ghana"]
         data = body.match /([lL]\w+)\s(\w+)/
         if data[2] == "meds" 
-          # this will be well over 160 chars.
-          # future implementation: add a filter or 
-          # send multiple messages
+          # Future: add filter or send multiple messages
         elsif data[2] == "units"
           # future implementation: add a filter
           data = {
