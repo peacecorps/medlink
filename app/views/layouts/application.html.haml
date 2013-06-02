@@ -32,7 +32,7 @@
           %tr(ng-repeat="order in orders" ng-click="viewOrder(order.id)")
             %td
               %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
-              %small.cell--secondary 5555555
+              %small.cell--secondary {{order.user.pcvId}}
             %td
               %span {{order.createdAt | date:'shortDate'}}
               %small.cell--secondary {{order.createdAt | date:'HH:mm'}}
