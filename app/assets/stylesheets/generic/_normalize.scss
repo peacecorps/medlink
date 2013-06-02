@@ -166,50 +166,6 @@ blockquote {
 }
 
 /**
- * Address variable `h1` font-size and margin within `section` and `article`
- * contexts in Firefox 4+, Safari 5, and Chrome.
- */
-
-h1, .h1 {
-    /* Set the font-size and line-height while keeping a proper vertical rhythm. */
-    @include adjust-font-size-to( $h1-size );
-
-    /* Set 1 unit of vertical rhythm on the top and bottom margins. */
-    @include leader(1, $h1-size);
-    @include trailer(1, $h1-size);
-}
-
-h2, .h2 {
-    @include adjust-font-size-to( $h2-size );
-    @include leader(1, $h2-size);
-    @include trailer(1, $h2-size);
-}
-
-h3, .h3 {
-    @include adjust-font-size-to( $h3-size );
-    @include leader(1, $h3-size);
-    @include trailer(1, $h3-size);
-}
-
-h4, .h4 {
-    @include adjust-font-size-to( $h4-size );
-    @include leader(1, $h4-size);
-    @include trailer(1, $h4-size);
-}
-
-h5, .h5 {
-    @include adjust-font-size-to( $h5-size );
-    @include leader(1, $h5-size);
-    @include trailer(1, $h5-size);
-}
-
-h6, .h6 {
-    @include adjust-font-size-to( $h6-size );
-    @include leader(1, $h6-size);
-    @include trailer(1, $h6-size);
-}
-
-/**
  * Address styling not present in IE 8/9, Safari 5, and Chrome.
  */
 
