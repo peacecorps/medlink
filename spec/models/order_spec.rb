@@ -4,7 +4,6 @@ describe Order do
 
   before :each do
     FactoryGirl.create :user,   pcv_id: 'USR'
-    FactoryGirl.create :pc_hub, name: 'LOC'
     FactoryGirl.create :supply, shortcode: 'BND'
   end
   
@@ -62,11 +61,11 @@ describe Order do
 
     it 'rejects duplicates' do
       # Sequences generate different Users / PcHubs if we don't do this:
-      d = data.merge user_id: User.first.id, pc_hub_id: PcHub.first.id
+      d = data.merge user_id: User.first.id
 
       expect do
-        a = Order.create! d
-        b = Order.create! d
+        Order.create! d
+        Order.create! d
       end.to raise_error /duplicate/i
     end
 
@@ -82,12 +81,12 @@ describe Order do
     end
 
     context 'when invalid' do
-      before(:each) { subject.pc_hub = nil }
+      before(:each) { subject.user = nil }
 
       it { should_not be_valid }
 
       it 'can generate an error message' do
-        expect( subject.confirmation_message ).to match /location code/i
+        expect( subject.confirmation_message ).to match /pcv id/i
       end
     end
 

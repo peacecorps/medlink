@@ -2,16 +2,20 @@
   %thead
     %tr
       %th Requester
-      %th Country
-      %th Hub or Center
+      %th Request Date
+      %th Location
       %th Requested Supplies
+      %th
   %tbody
     %tr(ng-repeat="order in orders")
       %td
-        %span.cell--primary {{order.user}}
+        %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
         %small.cell--secondary 5555555
-      %td {{order.country}}
       %td
-        %span.cell--primary {{order.hub}}
-        %small.cell--secondary City Name
-      %td {{order.supplies}}
+        %span {{order.createdAt | date:'shortDate'}}
+        %small.cell--secondary {{order.createdAt | date:'HH:mm'}}
+      %td
+        %span.cell--primary City
+      %td 
+      %td.cell--arrow
+        %i.icon-caret-right

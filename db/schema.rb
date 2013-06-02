@@ -11,13 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602020623) do
+ActiveRecord::Schema.define(:version => 20130602031512) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "code"
   end
+
+  add_index "countries", ["code"], :name => "index_countries_on_code"
 
   create_table "orders", :force => true do |t|
     t.integer  "user_id"
@@ -74,7 +77,6 @@ ActiveRecord::Schema.define(:version => 20130602020623) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "pcv_id"
-    t.integer  "pc_hub_id"
     t.integer  "country_id"
     t.string   "role",                   :default => "user"
   end

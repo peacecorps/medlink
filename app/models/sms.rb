@@ -66,7 +66,9 @@ class SMS
           :body => %w(meds units countryX).join( ", ")
         }
         sms = SMS.new data, true
-      elsif body.match /([lL]\w+)\s(\w+)/  
+      elsif body.match /([lL]\w+)\s(\w+)/
+        data = body.match /([lL]\w+)\s(\w+)/
+        Rails.logger.info data[2]
         # sms: ["list meds", "list units", "list ghana"]
         data = body.match /([lL]\w+)\s(\w+)/
         if data[2] == "meds" 
