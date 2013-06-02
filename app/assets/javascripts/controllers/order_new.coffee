@@ -24,16 +24,18 @@ angular.module('medSupplies.controllers')
       'μg'
     ]
 
-    $scope.order =
-      requestsAttributes: []
-      extra: ''
-
     $scope.addRequest = ->
       $scope.order.requestsAttributes.push
         supplyId: ''
         dosageValue: ''
         dosageUnits: ''
         quantity: ''
+
+    $scope.reset = ->
+      $scope.order =
+        requestsAttributes: []
+        extra: ''
+      $scope.addRequest()
 
     $scope.submitOrder = ->
       orderData = angular.copy($scope.order)
@@ -43,10 +45,10 @@ angular.module('medSupplies.controllers')
         delete req.dosageUnits
       order = new Order(orderData).create().then (results) ->
         $rootScope.flash.push 'Order submitted successfully.'
-        $location.path('/')
+        $scope.reset()
       , (error) ->
         $rootScope.flash.push 'There was a problem with your order.'
         console.log error
 
-    $scope.addRequest()
+    $scope.reset()
 ])
