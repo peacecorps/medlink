@@ -4,6 +4,7 @@ angular.module('medSupplies.directives', [])
 angular.module('medSupplies.controllers', [])
 
 angular.module('medSupplies', [
+  'rails'
   'medSupplies.services'
   'medSupplies.filters'
   'medSupplies.directives'

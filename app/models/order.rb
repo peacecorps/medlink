@@ -3,11 +3,10 @@ class Order < ActiveRecord::Base
     :phone, :user_id, :requests_attributes, :instructions
 
   belongs_to :user
-  belongs_to :pc_hub
+  #belongs_to :pc_hub
   has_many :requests
 
   validates_presence_of :user,   message: "unrecognized"
-  validates_presence_of :pc_hub, message: "unrecognized"
   accepts_nested_attributes_for :requests
 
   # UI wants users included with all output
@@ -27,12 +26,10 @@ class Order < ActiveRecord::Base
 
   def self.create_from_text data
     user   = User.where(pcv_id: data[:pcvid]).first || raise("Unrecognized PCVID")
-    hub    = PcHub.where(name: data[:loc]).first || raise("Unrecognized location")
     supply = Supply.where(shortcode: data[:shortcode]).first || raise("Unrecognized shortcode")
 
     create!({
       user_id:   user.try(:id),
-      pc_hub_id: hub.try(:id),
       phone:     data[:phone],
       email:     user.try(:email),
       requests_attributes: [{
