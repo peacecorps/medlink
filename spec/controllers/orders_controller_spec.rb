@@ -60,6 +60,13 @@ describe OrdersController do
       @body.first['user']['country'].should_not be_nil
       @body.first['requests'].first['supply'].should_not be_nil
     end
+    it "should be ordered by created_at" do
+      get 'index', format: :json
+      response.should be_success
+      @body = JSON.parse(response.body)
+      cas = @body.map { |o| o['created_at'] }.uniq
+      cas.should eq cas.sort {|a,b| a <=> b }
+    end
   end
 
 end

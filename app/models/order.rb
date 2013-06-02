@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
 
   belongs_to :user
   has_many :requests
+  default_scope order(orders: 'created_at DESC')
 
   validates_presence_of :user,   message: "unrecognized"
   accepts_nested_attributes_for :requests
