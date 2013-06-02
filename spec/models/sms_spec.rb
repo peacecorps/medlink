@@ -27,7 +27,7 @@ describe SMS do
     subject { OpenStruct.new SMS.parse(data).data }
 
     its( :to )   { should eq '+15555555555' }
-    its( :body ) { should eq 'meds, units, countryX' }
+    its( :body ) { should eq 'meds, units, country' }
   end
 
   context "can process list units" do  
@@ -39,17 +39,6 @@ describe SMS do
 
     its( :to )   { should eq '+15555555555' }
     its( :body ) { should eq 'mg, g, ml' }
-  end
-
-  context "can process list country" do  
-    data = {
-        :From => '+15555555555',
-        :Body => 'list ghana'
-      } 
-    subject { OpenStruct.new SMS.parse(data).data }
-
-    its( :to )   { should eq '+15555555555' }
-    its( :body ) { should eq 'one, two, three' }
   end
 
 end
