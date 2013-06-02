@@ -46,4 +46,19 @@ describe OrdersController do
     end
   end
 
+  describe "GET 'index'" do
+    before do
+      FactoryGirl.create(:order, user_id: current_user.id,
+                         requests: FactoryGirl.create_list(:request, 10))
+    end
+    it "returns success with valid data" do
+      get 'index', format: :json
+      puts "ERR: #{response.body}"
+      response.should be_success
+      @body = JSON.parse(response.body)
+
+      @body.first['requests'].should_not be_nil
+    end
+  end
+
 end
