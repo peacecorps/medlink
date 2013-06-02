@@ -1,7 +1,8 @@
 class SMS
 
-  def initialize( data )
-    @data = data
+  def initialize( data, send_now=false )
+    @data     = data
+    @send_now = send_now
   end
 
   def data
@@ -33,8 +34,8 @@ class SMS
 
     if body      
       if body.match /(\d{6}),*\s+(\w+),*\s+(\d+)(\w+),*\s+(\d+),*\s+(\w+)/
-        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+)(\w+),*\s+(\d+),*\s+(\w+)/
         # sms: "111111, BANDG, 30mg, 50, ACCRA"
+        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+)(\w+),*\s+(\d+),*\s+(\w+)/
         data = { 
           :phone        => reply_to,
           :pcvid        => data[1],
@@ -45,9 +46,9 @@ class SMS
           :loc          => data[6]
         }
         sms = SMS.new data
-      elsif body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/
-        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/
+      elsif body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/  
         # sms: "111111, BANDG, 50, ACCRA"
+        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/
         data = { 
           :phone        => reply_to,
           :pcvid        => data[1],
@@ -56,22 +57,19 @@ class SMS
           :loc          => data[4],
         }
         sms = SMS.new data
-      elsif body.match /([lL]\w+)\?/
-        data = body.match /([lL]\w+)\?/
+      elsif body.match /([lL]\w+)\?/  
         # sms: "list?"
-        # send 
+        data = body.match /([lL]\w+)\?/
         data = {
           :from => '+17322301185',
           :to   => reply_to,
           :body => "meds, units, countryX"
         }
-        sms = SMS.new data
-        sms.send_now true
-      elsif body.match /([lL]\w+)\s(\w+)/
-        data = body.match /([lL]\w+)\s(\w+)/
-        puts data[2]
+        sms = SMS.new data, true
+      elsif body.match /([lL]\w+)\s(\w+)/  
         # sms: ["list meds", "list units", "list ghana"]
-        if data[2] == "meds"
+        data = body.match /([lL]\w+)\s(\w+)/
+        if data[2] == "meds" 
           # this will be well over 160 chars.
           # future implementation: add a filter or 
           # send multiple messages
@@ -82,10 +80,8 @@ class SMS
             :to   => reply_to,
             :body => "mg, g, ml"
           }
-          sms = SMS.new data
-          sms.send_now true
+          sms = SMS.new data, true
         else
-          # s
           country   = Country.where( :name => data[2], :limit => 1 )
           locations = %w(one two three) #country.pc_hubs.all
           data = {
@@ -93,27 +89,34 @@ class SMS
             :to   => reply_to,
             :body => locations.join(", ")
           }
-          sms = SMS.new data
-          sms.send_now true
+          sms = SMS.new data, true
         end
       else
-        # not a well-formed sms
-        raise "Bad Request"
+        raise "Bad Request" # not a well-formed sms
       end
       sms
     else
-      # null sms
-      raise "Bad Request"
+      raise "Bad Request" # nil sms
+
     end
   end
 
-  def self.send_from_request request
+  def self.send_from_order order
     client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
     client.account.sms.messages.create(
         :from => '+17322301185',
-        :to   => request.from,
-        :body => request.confirmation_message
+        :to   => order.phone,
+        :body => order.confirmation_message
     )
-    request.confirm! if request.valid?
   end
+
+  def self.send_error sms, message
+    client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
+    client.account.sms.messages.create(
+        :from => '+17322301185',
+        :to   => sms.data[:phone],
+        :body => message
+    )
+  end
+
 end

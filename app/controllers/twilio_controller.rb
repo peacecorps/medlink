@@ -20,6 +20,6 @@ class TwilioController < ApplicationController
         SMS.send_from_order order
         
         rescue => e
-            SMS.send_error e.message
+            SMS.send_error sms, e.message
     end
 end
