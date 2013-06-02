@@ -1,6 +1,8 @@
+[![Code Climate](https://codeclimate.com/github/atlrug-rhok/rhok-rails.png)](https://codeclimate.com/github/atlrug-rhok/rhok-rails)
+
 ## ATLRUG-RHOK Rails Project Template
 
-This is a more-or-less blank Rails project, designed to get members of the ATLRUG-RHOK team on the same page and ready to code ASAP. To set it up on your machine:
+This is a no longer blank Rails project that needs a better description than this. To set it up on your machine:
 
 ```bash
 $ git clone git@github.com:atlrug-rhok/rhok-rails.git
