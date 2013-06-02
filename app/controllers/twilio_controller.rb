@@ -8,7 +8,7 @@ class TwilioController < ApplicationController
         begin
             Rails.logger.info("Starting create method...")
         	sms = SMS.parse params
-            Rails.logger.info("parsed sms: " + sms.data)
+            Rails.logger.info(sms.data)
             if sms.send_now?
                 sms.send
             else
