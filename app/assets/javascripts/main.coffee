@@ -19,7 +19,7 @@ angular.module('medSupplies', [
     $routeProvider
 
     .when('/',
-      templateUrl: '/assets/templates/order_list.html'
+      templateUrl: 'order_list.html'
       controller: 'OrderListCtrl'
     )
 
