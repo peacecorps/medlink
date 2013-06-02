@@ -5,6 +5,7 @@ describe Order do
   before :each do
     FactoryGirl.create :user,   pcv_id: 'USR'
     FactoryGirl.create :supply, shortcode: 'BND'
+    FactoryGirl.create :supply, shortcode: 'SND'
   end
   
   context 'validation' do
@@ -59,7 +60,9 @@ describe Order do
     it { should be_a_kind_of Order }
     it { should_not be_confirmed   }
 
-    it 'rejects duplicates' do
+    it 'requires unique supply items'
+
+    it 'rejects duplicates', :focus do
       # Sequences generate different Users / PcHubs if we don't do this:
       d = data.merge user_id: User.first.id
 
