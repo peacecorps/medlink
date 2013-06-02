@@ -14,14 +14,14 @@ describe Order do
 
   context 'from text' do
 
-    let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND' } }
+    let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND', phone: '555-123-4567' } }
 
     subject { Order.create_from_text data }
 
     it { should be_a_kind_of Order }
 
     its(:email) { should eq 'user@example.com' }
-    its(:phone) { should eq '555-867-5309'     }
+    its(:phone) { should eq '555-123-4567'     }
 
     it 'raises on invalid pcvid' do
       expect do 
@@ -51,8 +51,10 @@ describe Order do
     it { should be_a_kind_of Order }
     it { should_not be_confirmed   }
 
-    it 'notifies if invalid'
-    it 'rejects duplicates'
+    it 'rejects duplicates' do
+      # Add two requests to order
+      # Create duplicate order
+    end
 
     its(:email) { should eq 'custom@example.com' }
     its(:phone) { should eq '-'                  }
