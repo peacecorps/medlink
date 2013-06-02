@@ -8,13 +8,14 @@ class TwilioController < ApplicationController
         begin
             Rails.logger.info("Starting create method...")
         	sms = SMS.parse params
+            Rails.logger.info("parsed sms: " + sms.data)
             if sms.send_now?
                 sms.send
             else
                 create_order sms
             end
         rescue => e
-            Rails.logger.info "error in parse"
+            Rails.logger.info "error in parse: #{e.message}"
             SMS.send_error params[:From], e.message
         end
         head :no_content
@@ -27,7 +28,7 @@ class TwilioController < ApplicationController
         SMS.send_from_order order
         
     rescue => e
-        Rails.logger.info "Error in create_order"
+        Rails.logger.info "Error in create_order: #{e.message}"
         SMS.send_error sms.data[:phone], e.message
     end
 end
