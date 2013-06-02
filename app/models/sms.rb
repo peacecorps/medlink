@@ -63,7 +63,7 @@ class SMS
         data = {
           :from => '+17322301185',
           :to   => reply_to,
-          :body => %w(meds units countryX).join( " %0a ")
+          :body => %w(meds units countryX).join( ", ")
         }
         sms = SMS.new data, true
       elsif body.match /([lL]\w+)\s(\w+)/  
