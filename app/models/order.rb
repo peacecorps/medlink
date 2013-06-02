@@ -12,9 +12,9 @@ class Order < ActiveRecord::Base
 
   # UI wants users included with all output
   def to_json
-    super(include: :user)
+    super(include: [:user, :requests])
   end
-  default_scope eager_load(:user)
+  default_scope eager_load(:user, :requests)
 
   scope :unfulfilled, where(fulfilled: false)
 
