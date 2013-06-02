@@ -12,7 +12,13 @@
 
 
   %body
+    .flash
+      - flash.each do |name, msg|
+        %div(class="alert alert-#{name}")
+          = msg
+
     = yield
+
     = javascript_include_tag "application"
     %script{type: "text/ng-template", id: "order_list.html"}
       %table.table.table--striped.table--linked
