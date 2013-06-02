@@ -39,7 +39,7 @@
               %small.cell--secondary {{order.createdAt | date:'HH:mm'}}
             %td
               %span.cell--primary City
-            %td 
+            %td {{order.requests | joinSupplies}}
             %td.cell--arrow
               %i.icon-caret-right
 
