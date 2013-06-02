@@ -1,0 +1,83 @@
+.form__section
+  background: $white
+  padding: $base-spacing-unit $base-spacing-unit 0
+  margin-bottom: $base-spacing-unit
+
+.form__add
+  margin-bottom: $base-spacing-unit * 2
+  text-align: right
+
+  .icon-plus
+    padding: 5px 0 10px 5px
+    cursor: pointer
+
+input[type="text"], textarea, select
+  -webkit-appearance: none
+  box-sizing: border-box
+  background: $gray-lighter
+  padding: $base-spacing-unit
+  outline: none
+  border: none
+  border-radius: 0
+  color: $black
+
+.select
+  position: relative
+  display: inline
+
+  select
+    display: block
+    float: left
+
+  .select__arrow
+    position: absolute
+    right: 10px
+    top: 10px
+
+textarea, .input--full, .select--full
+  width: 100%
+
+.select--full select
+  width: 100%
+
+.input--dosage
+  width: 23%
+  margin-right: 2%
+
+.select--unit
+  float: left
+  display: block
+  width: 23%
+  margin-right: 2%
+
+  select
+    width: 100%
+
+.input--quantity
+  width: 50%
+
+.input-group
+  @extend .clearfix
+  padding-bottom: $base-spacing-unit
+
+  .input
+    float: left
+
+@mixin button-style($fore, $back, $shadow)
+  background: $back
+  color: $fore
+  box-shadow: 0 3px 0 $shadow
+
+.btn-group
+  text-align: center
+
+.btn
+  display: inline-block
+  padding: $base-spacing-unit ($base-spacing-unit * 3)
+  font-weight: bold
+  border: 0
+  *display: inline
+  zoom: 1
+
+.btn--primary
+  +button-style($white, $blue, $gray-lighter)

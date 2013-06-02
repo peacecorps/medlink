@@ -2,17 +2,27 @@
   %span Kate Godwin
   %small 5555555
 
-%form(ng-submit="submitOrder()")
-  .order__request(ng-repeat="request in order.requestsAttributes")
-    %select(ng-model="order.requestsAttributes[$index].supplyId" ng-options="supply.shortcode as supply.name for supply in supplies")
-      %option(value="") Select Medical Supply
-    %input(ng-model="order.requestsAttributes[$index].dosageValue" placeholder="Dosage")
-    %select(ng-model="order.requestsAttributes[$index].dosageUnits" ng-options="unit for unit in units")
-      %option(value="") Unit
-    %input(ng-model="order.requestsAttributes[$index].quantity" placeholder="Quantity")
+%form.form--order(ng-submit="submitOrder()")
+  .form__section(ng-repeat="request in order.requestsAttributes")
+    .input-group
+      .select.select--full
+        %select(ng-model="order.requestsAttributes[$index].supplyId" ng-options="supply.shortcode as supply.name for supply in supplies")
+          %option(value="") Select Medical Supply
+        %i.icon-caret-down.select__arrow
+    .input-group
+      %input.input.input--dosage(type="text" ng-model="order.requestsAttributes[$index].dosageValue" placeholder="Dosage")
+      .select.select--unit
+        %select(ng-model="order.requestsAttributes[$index].dosageUnits" ng-options="unit for unit in units")
+          %option(value="") Unit
+        %i.icon-caret-down.select__arrow
+      %input.input.input--quantity(type="text" ng-model="order.requestsAttributes[$index].quantity" placeholder="Quantity")
 
-  %i.icon-plus(ng-click="addRequest()")
+  .form__add
+    %i.icon-plus(ng-click="addRequest()")
 
-  %textarea.extra(ng-model="order.extra" placeholder="Special requests for location or dosage")
+  .form__section
+    .input-group
+      %textarea(ng-model="order.extra" placeholder="Special requests for location or dosage")
 
-  %button.btn.btn--primary(type="submit") Send
+  .btn-group
+    %button.btn.btn--primary(type="submit") Send
