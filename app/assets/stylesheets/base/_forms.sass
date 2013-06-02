@@ -3,6 +3,9 @@
   padding: $base-spacing-unit $base-spacing-unit 0
   margin-bottom: $base-spacing-unit
 
+  .btn-group
+    padding-bottom: $base-spacing-unit
+
 .form__add
   margin-bottom: $base-spacing-unit * 2
   font-family: $sans-serif
@@ -12,7 +15,7 @@
   .icon-plus
     padding: 5px 0 10px 5px
 
-input[type="text"], input[type="password"], textarea, select
+input[type="text"], input[type="password"], input[type="email"], textarea, select
   -webkit-appearance: none
   box-sizing: border-box
   background: $gray-lighter
@@ -72,6 +75,9 @@ textarea, .input--full, .select--full
 
 .btn-group
   text-align: center
+
+.btn-group--right
+  text-align: right
 
 .btn
   display: inline-block

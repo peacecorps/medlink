@@ -8,6 +8,18 @@ angular.module('medSupplies.controllers')
 
   ($scope, $location, Order, Supply) ->
     $scope.supplies = Supply.query()
+    $scope.units = [
+      'mg'
+      'mL'
+      'g'
+      'dL'
+      'gr'
+      'kg'
+      'oz'
+      'tbsp'
+      'tsp'
+      'μg'
+    ]
 
     $scope.order =
       requestsAttributes: []
@@ -33,16 +45,4 @@ angular.module('medSupplies.controllers')
         console.log error
 
     $scope.addRequest()
-    $scope.units = [
-      'mg'
-      'mL'
-      'g'
-      'dL'
-      'gr'
-      'kg'
-      'oz'
-      'tbsp'
-      'tsp'
-      'μg'
-    ]
 ])
