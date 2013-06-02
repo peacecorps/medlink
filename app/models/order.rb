@@ -52,6 +52,13 @@ class Order < ActiveRecord::Base
     update_attribute :confirmed, true
   end
 
+  def send_instructions!
+    Rails.logger.info "Sending SMS confirmation"
+    SMS.send_raw order.phone, order.instructions
+    Rails.logger.info "Sending confirmation email"
+    UserMailer.fulfillment_email order
+  end
+
   def fulfill! instructions
     update_attributes({
       fulfilled:    true,
