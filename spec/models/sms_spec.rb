@@ -1,6 +1,11 @@
 require 'spec_helper'
 require 'ostruct'
 
+RSpec.configure do |c|
+  # declare an exclusion filter
+  c.filter_run_excluding :list
+end
+
 describe SMS do
 
   context "can process request with dosage" do  
@@ -19,7 +24,7 @@ describe SMS do
   	its( :dosage_units ) { should eq 'mg' }
   end
 
-  context "can process list request" do  
+  context "can process list request", :list do  
     data = {
         :From => '+15555555555',
         :Body => 'list?'
@@ -30,7 +35,7 @@ describe SMS do
     its( :body ) { should eq 'meds, units, country' }
   end
 
-  context "can process list units" do  
+  context "can process list units", :list do  
     data = {
         :From => '+15555555555',
         :Body => 'list units'
@@ -41,4 +46,13 @@ describe SMS do
     its( :body ) { should eq 'mg, g, ml' }
   end
 
-end
+  context "can process list country", :list do  
+    data = {
+        :From => '+15555555555',
+        :Body => 'list ghana'
+      } 
+    subject { OpenStruct.new SMS.parse(data).data }
+
+    its( :to )   { should eq '+15555555555' }
+    its( :body ) { should eq 'one, two, three' }
+  end

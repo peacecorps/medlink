@@ -27,60 +27,40 @@ class SMS
   end
 
   def self.parse params
-    reply_to = params[:From]
+    # grab info from twilio post
     body     = params[:Body]
+    data     = Hash.new
+    data[:phone] = params[:From]
 
-    if body == nil
-      raise "Invalid Request. No Data was entered"
-    end
 
-    if (data=body.match /(\d{6}),*\s+(\w+),*\s+(\d+)\s*(\w+),*\s+(\d+),*\s+(\w+)/)
-      # "111111, BANDG, 30mg, 50, ACCRA"
-      data = { 
-        :phone        => reply_to,
-        :pcvid        => data[1],
-        :shortcode    => data[2],
-        :dosage_value => data[3],
-        :dosage_units => data[4],
-        :qty          => data[5],
-        :loc          => data[6]
-      }
-      sms = SMS.new data
-    elsif (data=body.match /(\d{6}),*\s+(\w+),*\s+(\d+),*\s+(\w+)/)
-      # "111111, BANDG, 50, ACCRA"
-      data = { 
-        :phone        => reply_to,
-        :pcvid        => data[1],
-        :shortcode    => data[2],
-        :qty          => data[3],
-        :loc          => data[4],
-      }
-      sms = SMS.new data
-    elsif (data=body.match /([lL]\w+)\?/)
-      # List?
-      data = {
-        :from => '+17322301185',
-        :to   => reply_to,
-        :body => %w(meds units country).join( ", ")
-      }
-      sms = SMS.new data, true
-    elsif (data=body.match /([lL]\w+)\s(\w+)/)
-      # ["list meds", "list units", "list ghana"]
-      if data[2] == "meds" 
-        # Future: add filter or send multiple messages
-      elsif data[2] == "units"
-        # future implementation: add a filter on type of supply
-        data = {
-          :from => '+17322301185',
-          :to   => reply_to,
-          :body => "mg, g, ml"
-        }
-        sms = SMS.new data, true
+    if body
+      if body.match(/([lL]\w+)\s(\w+)/) 
+        return SMS.new list(params), true
       end
-    else
-      raise "Invalid request. Please use this format: pcvid, shortcode, dose/units (if applicable), quantity, location" # not a well-formed sms
+
+      parse_list = params[:Body].split(/[, ]/)
+      parse_list.each_index { |i| 
+        if i == 0
+          data[:pcvid] = parse_list[i] #pcvID
+        elsif i == 1
+          data[:shortcode] = parse_list[i] #shortcode
+        elsif match = parse_list[i].match(/([0-9]+)\s*([a-zA-z]+)/) #dosage info
+          data[:dosage_value], data[:dosage_units] = match.captures
+        elsif match = parse_list[i].match(/[0-9]+\b/) #qty
+          data[:qty] = match[0]
+        elsif match = parse_list[i].match(/[a-zA-z]+\b/) #loc
+          data[:loc] = match[0] 
+        end
+      }
+
+      return SMS.new data
+    else 
+      raise "Invalid Request"
     end
-    sms
+  end
+
+  def self.list params
+    #function stub for future implementation of list command
   end
 
   def self.send_from_order order
