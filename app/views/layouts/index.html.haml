@@ -9,9 +9,133 @@
   %div.l-main
     .l-header
       %nav
-        %ul.nav.nav--inline.nav--right
-          %li
-            = link_to 'Logout', destroy_user_session_path, target: '_self'
-          %li
-            = link_to 'Settings', edit_user_registration_path, target: '_self'
+        .dropdown
+          %a(ng-click="open = !open")
+            %i.icon-cog
+          %ul.nav.nav--dropdown(ng-class="{'is-active': open}")
+            %li
+              %a(href="#") About
+            %li
+              = link_to 'Settings', edit_user_registration_path, target: '_self'
+            %li
+              %a(href="#") Help
+            %li
+              = link_to 'Logout', destroy_user_session_path, target: '_self'
     %section(ng-view)
+
+    %script{type: "text/ng-template", id: "order_list.html"}
+      %table.table.table--bordered.table--striped.table--linked
+        %thead
+          %tr
+            %th Requester
+            %th Request Date
+            %th Location
+            %th Requested Supplies
+            %th
+        %tbody
+          %tr(ng-repeat="order in orders" ng-click="viewOrder(order.id)")
+            %td
+              %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
+              %small.cell--secondary {{order.user.pcvId}}
+            %td
+              %span {{order.createdAt | date:'shortDate'}}
+              %small.cell--secondary {{order.createdAt | date:'HH:mm'}}
+            %td
+              %span.cell--primary City
+            %td {{order.requests | joinSupplies}}
+            %td.cell--arrow
+              %i.icon-caret-right
+
+%script{type: "text/ng-template", id: "supply_list.html"}
+  %table.table.table--bordered.table--striped.table--linked
+    %thead
+      %tr
+        %th Name
+        %th Short Code
+    %tbody
+      %tr(ng-repeat="supply in supplies")
+        %td
+          %span.cell--primary {{supply.name}}
+        %td
+          %span {{supply.shortcode}}
+
+%script{type: "text/ng-template", id: "order_form.html"}
+  %h3
+    %span #{current_user.first_name} #{current_user.last_name}
+    %small #{current_user.pcv_id}
+
+  %form.form--order(ng-submit="submitOrder()")
+    .form__section(ng-repeat="request in order.requestsAttributes")
+      .input-group
+        .select.select--full
+          %select(ng-model="order.requestsAttributes[$index].supplyId" ng-options="supply.id as supply.name for supply in supplies")
+            %option(value="") Select Medical Supply
+          %i.icon-caret-down.select__arrow
+      .input-group
+        %input.input.input--dosage(type="text" ng-model="order.requestsAttributes[$index].dosageValue" placeholder="Dosage")
+        .select.select--unit
+          %select(ng-model="order.requestsAttributes[$index].dosageUnits" ng-options="unit for unit in units")
+            %option(value="") Unit
+          %i.icon-caret-down.select__arrow
+        %input.input.input--quantity(type="text" ng-model="order.requestsAttributes[$index].quantity" placeholder="Quantity")
+
+    .form__add
+      %i.icon-plus(ng-click="addRequest()")
+
+    .form__section
+      .input-group
+        %textarea(ng-model="order.extra" placeholder="Special requests for location or dosage")
+
+    .btn-group
+      %button.btn.btn--primary(type="submit") Send
+
+%script{type: "text/ng-template", id: "order_show.html"}
+  .order-back
+    %a(ng-href="#/orders")
+      %i.icon-caret-left
+      %span Back to all Orders
+
+  .order
+    .order__section
+      %hgroup
+        %h3 
+          %span Order From: {{order.user.firstName}} {{order.user.lastName}}
+          %small.pcv-id {{order.user.pcvId}} 5555555
+        %div
+          %em City Name, {{order.user.country.name}}
+      %table.table
+        %tbody
+          %tr(ng-repeat="request in order.requests")
+            %td {{request.quantity}}
+            %td.cell--primary {{request.supply.name}}
+            %td {{request.dose}}
+      .order__extra
+        {{order.extra}}
+    %form.order__section(ng-submit="saveOrder()")
+      %h4.order__action Order Action:
+      .order__message
+        %ul.radio-group
+          %ul.list-column
+            %li
+              %input(type="radio" ng-model="orderAction" value="0" id="order-action0")
+              %label(for="order-action0") Delivered to PCV
+            %li
+              %input(type="radio" ng-model="orderAction" value="1" id="order-action1")
+              %label(for="order-action1") PCV Purchase
+          %ul.list-column
+            %li
+              %input(type="radio" ng-model="orderAction" value="2" id="order-action2")
+              %label(for="order-action2") Delivered to Hub
+            %li
+              %input(type="radio" ng-model="orderAction" value="3" id="order-action3")
+              %label(for="order-action3") Contact PCMO
+          %ul.list-column
+            %li
+              %input(type="radio" ng-model="orderAction" value="4" id="order-action4")
+              %label(for="order-action4") Other
+        .order__instructions
+          %textarea(ng-model="order.instructions" placeholder="Message")
+          .order__characters {{order.instructions | count}} characters remaining
+
+      .btn-group
+        %button.btn.btn--primary(type="submit") Send
