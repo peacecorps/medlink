@@ -2,23 +2,13 @@ angular.module('medSupplies.controllers')
 
 .controller('OrderNewCtrl', [
   '$scope',
+  '$location',
   'Order',
   'Supply',
+  'CurrentUser',
 
-  ($scope, Order, Supply) ->
-    ###
-    order = new Order(
-      requests_attributes: [
-          supply_id: 1
-        ,
-          supply_id: 2
-      ]
-    )
-
-    order.create().then (result) ->
-      console.log result
-    ###
-
+  ($scope, $location, Order, Supply, CurrentUser) ->
+    $scope.user = CurrentUser.query()
     $scope.supplies = Supply.query()
 
     $scope.order =
@@ -38,7 +28,11 @@ angular.module('medSupplies.controllers')
         req.dose = req.dosageValue + req.dosageUnits
         delete req.dosageValue
         delete req.dosageUnits
-      console.log orderData
+      order = new Order(orderData).create().then (results) ->
+        # display success
+        $location.path('/')
+      , (error) ->
+        console.log error
 
     $scope.addRequest()
     $scope.units = [

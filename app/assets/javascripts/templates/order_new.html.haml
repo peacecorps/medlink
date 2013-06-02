@@ -1,12 +1,12 @@
 %h3
-  %span Kate Godwin
-  %small 5555555
+  %span {{user.firstName}} {{user.lastName}}
+  %small {{user.pcvId}}
 
 %form.form--order(ng-submit="submitOrder()")
   .form__section(ng-repeat="request in order.requestsAttributes")
     .input-group
       .select.select--full
-        %select(ng-model="order.requestsAttributes[$index].supplyId" ng-options="supply.shortcode as supply.name for supply in supplies")
+        %select(ng-model="order.requestsAttributes[$index].supplyId" ng-options="supply.id as supply.name for supply in supplies")
           %option(value="") Select Medical Supply
         %i.icon-caret-down.select__arrow
     .input-group
