@@ -35,11 +35,17 @@ h6, .h6
   @include leader(1, $h6-size)
   @include trailer(1, $h6-size)
 
-h1, h2, h3
+h1, h2, h3, h4, h5, h6
   line-height: 1
 
-h4, h5, h6
-  line-height: 1
-  font-family: $sans-serif
+h3, h4, h5, h6
   font-weight: normal
+  font-family: $sans-serif
+
+h4, h5, h6
   color: $gray
+
+h3 small
+  font-size: inherit
+  color: $gray-light
+  padding-left: 5px
