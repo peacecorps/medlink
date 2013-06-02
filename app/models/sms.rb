@@ -74,8 +74,27 @@ class SMS
     client.account.sms.messages.create(
         :from => '+17322301185',
         :to   => phone,
-        :body => message
+        :body => friendly(message)
     )
+  end
+
+  def friendly message
+    case message
+    when /unrecognized pcvid/i
+      %{ Your request was not submitted because the PCVID was incorrect. Please resubmit 
+         your request in this format: PCVID, Supply short name, dose, qty, location. }
+    when /unrecognized shortcode/i
+      %{ Your request was not submitted because supply name was incorrect. Please resubmit 
+         the request in this format: PCVID, Supply short name, dose, qty, location. }
+    when /duplicate/i
+      %{ We have already received your request. Please refrain from 
+         sending multiple requests. }
+    when /parse/i
+      %{ Your request was not submitted. Please resubmit your request in this Format: 
+         PCVID,Supply short name, dose, qty, location. }
+    else
+      message
+    end.squish
   end
 
 end
