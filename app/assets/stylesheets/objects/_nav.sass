@@ -1,0 +1,30 @@
+.nav
+  @extend .clearfix
+  +adjust-font-size-to($h3-size)
+  margin: 0
+  padding: 0
+  font-family: $sans-serif
+  font-weight: bold
+
+  > li
+    &, > a
+      display: inline-block
+      *display: inline
+      *zoom: 1
+
+.nav--stacked
+  text-align: left
+  padding: ($base-spacing-unit / 2) 0
+
+  > li
+    &, > a
+      display: block
+
+  > li > a
+    padding: ($base-spacing-unit / 2) 0
+
+.nav--right
+  text-align: right
+
+  > li > a
+    padding-left: $base-spacing-unit

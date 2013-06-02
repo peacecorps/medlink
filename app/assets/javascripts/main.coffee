@@ -1,5 +1,9 @@
+angular.module('medSupplies.services', [])
+angular.module('medSupplies.filters', [])
+angular.module('medSupplies.directives', [])
+angular.module('medSupplies.controllers', [])
+
 angular.module('medSupplies', [
-  'ngResource'
   'medSupplies.services'
   'medSupplies.filters'
   'medSupplies.directives'
@@ -14,8 +18,8 @@ angular.module('medSupplies', [
     $routeProvider
 
     .when('/',
-      templateUrl: '/assets/templates/main.html'
-      controller: 'MainCtrl'
+      templateUrl: '/assets/templates/order_list.html'
+      controller: 'OrderListCtrl'
     )
 
     $locationProvider.html5Mode(true);

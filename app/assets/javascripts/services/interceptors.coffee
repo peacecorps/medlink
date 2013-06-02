@@ -1,4 +1,4 @@
-angular.module('medSupplies.services', [])
+angular.module('medSupplies.services')
 
 .config([
 	'$httpProvider',
