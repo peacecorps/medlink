@@ -18,12 +18,12 @@ angular.module('medSupplies', [
   ($routeProvider, $locationProvider) ->
     $routeProvider
 
-    .when('/',
+    .when('/orders',
       templateUrl: 'order_list.html'
       controller: 'OrderListCtrl'
     )
 
-    .when('/orders',
+    .when('/orders/new',
       templateUrl: 'order_form.html'
       controller: 'OrderNewCtrl'
     )
@@ -37,4 +37,6 @@ angular.module('medSupplies', [
       templateUrl: 'order_show.html'
       controller: 'OrderShowCtrl'
     )
+
+    .otherwise({redirectTo: '/orders'})
 ])

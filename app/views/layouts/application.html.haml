@@ -29,7 +29,7 @@
             %th Requested Supplies
             %th
         %tbody
-          %tr(ng-repeat="order in orders")
+          %tr(ng-repeat="order in orders" ng-click="viewOrder(order.id)")
             %td
               %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
               %small.cell--secondary 5555555

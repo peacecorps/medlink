@@ -34,10 +34,18 @@ th
 .table--linked
   tbody tr
     &:hover
+      background: $blue
+      color: $white
       cursor: pointer
 
       .icon-caret-right
         opacity: 1
+
+    &
+      +transition(all 0.1s linear)
+
+    .icon-caret-right
+      +transition(opacity 0.2s linear)
 
   .cell--arrow
     vertical-align: middle
