@@ -8,8 +8,13 @@ class Order < ActiveRecord::Base
 
   validates_presence_of :user,   message: "unrecognized"
   validates_presence_of :pc_hub, message: "unrecognized"
-
   accepts_nested_attributes_for :requests
+
+  # UI wants users included with all output
+  def to_json
+    super(include: :user)
+  end
+  default_scope eager_load(:user)
 
   def self.human_attribute_name(attr, options={})
     { 

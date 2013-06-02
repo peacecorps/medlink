@@ -3,12 +3,12 @@ class OrdersController < ApplicationController
   respond_to :json
 
   def index
-    respond_with current_user.orders.all
+    respond_with current_user.accessible_orders.all
   end
 
   def show
     order_id = params[:order_id] || params[:id]
-    respond_with current_user.orders.where(id: order_id).first!
+    respond_with current_user.accessible_orders.where(id: order_id).first!
   end
 
   def create
@@ -22,7 +22,7 @@ class OrdersController < ApplicationController
   end
   
   def update
-    order = current_user.orders.where(id: params[:order_id] || params[:id]).first!
+    order = current_user.accessible_orders.where(id: params[:order_id] || params[:id]).first!
     if order.update_attributes(params[:order])
       render json: {success: true, order: order}
     else
@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
     end
   end
   def destroy
-    order = current_user.orders.where(id: params[:order_id] || params[:id]).first!
+    order = current_user.accessible_orders.where(id: params[:order_id] || params[:id]).first!
     order.destroy
     render json: {success: true}
   end

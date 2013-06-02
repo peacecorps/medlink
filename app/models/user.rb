@@ -10,5 +10,14 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
 
   has_one :pc_hub
+  belongs_to :country
   has_many :orders
+  validates_presence_of :country
+
+  def accessible_orders
+    is_admin? ? Order.where(users: {country_id: country_id}) : orders
+  end
+  def is_admin?
+    role == 'admin'
+  end
 end

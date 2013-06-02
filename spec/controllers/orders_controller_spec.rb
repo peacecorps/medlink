@@ -7,8 +7,10 @@ describe OrdersController do
   }
 
   describe "POST 'create'" do
+    let (:pc_hub) { FactoryGirl.create(:pc_hub) }
     it "returns http success" do
-      post 'create', order: {user_id: current_user.id}
+      post 'create', order: {user_id: current_user.id, pc_hub_id: pc_hub.id}
+      puts response.body
       response.should be_success
     end
   end
