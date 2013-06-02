@@ -9,8 +9,8 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :requests
 
   # UI wants users included with all output
-  def to_json
-    super(include: [:user, :requests])
+  def as_json(args)
+    super(args.merge(include: [{:user => {:include => :country}}, {:requests => {:include => :supply}}]))
   end
   default_scope eager_load(:user, :requests)
 
