@@ -1,9 +1,6 @@
 table
   width: 100%
 
-thead
-  border-bottom: 1px solid $gray-light
-
 tbody
   background: $white
 
@@ -12,8 +9,9 @@ th, td
   text-align: left
   vertical-align: top
 
-td
-  border-top: 1px solid $gray-light
+.table--bordered tbody
+  border-top: 2px solid $blue
+  border-bottom: 2px solid $blue
 
 th
   +adjust-font-size-to($h3-size)
@@ -34,10 +32,18 @@ th
 .table--linked
   tbody tr
     &:hover
+      background: $blue
+      color: $white
       cursor: pointer
 
       .icon-caret-right
         opacity: 1
+
+    &
+      +transition(all 0.1s linear)
+
+    .icon-caret-right
+      +transition(opacity 0.11s linear)
 
   .cell--arrow
     vertical-align: middle

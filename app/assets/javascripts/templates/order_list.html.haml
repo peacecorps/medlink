@@ -1,0 +1,21 @@
+%table.table.table--striped.table--linked
+  %thead
+    %tr
+      %th Requester
+      %th Request Date
+      %th Location
+      %th Requested Supplies
+      %th
+  %tbody
+    %tr(ng-repeat="order in orders")
+      %td
+        %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
+        %small.cell--secondary {{order.user.pcvId}}
+      %td
+        %span {{order.createdAt | date:'shortDate'}}
+        %small.cell--secondary {{order.createdAt | date:'HH:mm'}}
+      %td
+        %span.cell--primary City
+      %td {{order.requests | joinSupplies}}
+      %td.cell--arrow
+        %i.icon-caret-right

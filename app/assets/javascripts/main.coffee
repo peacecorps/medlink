@@ -18,13 +18,25 @@ angular.module('medSupplies', [
   ($routeProvider, $locationProvider) ->
     $routeProvider
 
-    .when('/',
+    .when('/orders',
       templateUrl: 'order_list.html'
       controller: 'OrderListCtrl'
-    ).when('/supply_list',
+    )
+
+    .when('/orders/new',
+      templateUrl: 'order_form.html'
+      controller: 'OrderNewCtrl'
+    )
+
+    .when('/supply_list',
       templateUrl: 'supply_list.html'
       controller: 'SupplyListCtrl'
     )
 
-    $locationProvider.html5Mode(true);
+    .when('/orders/:id',
+      templateUrl: 'order_show.html'
+      controller: 'OrderShowCtrl'
+    )
+
+    .otherwise({redirectTo: '/orders'})
 ])
