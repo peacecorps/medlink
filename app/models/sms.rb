@@ -33,9 +33,9 @@ class SMS
     data     = nil
 
     if body      
-      if body.match /(\d{6}),*\s+(\w+),*\s+(\d+)(\w+),*\s+(\d+),*\s+(\w+)/
+      if body.match /(\d{6}),*\s+(\w+),*\s+(\d+)\s*(\w+),*\s+(\d+),*\s+(\w+)/
         # sms: "111111, BANDG, 30mg, 50, ACCRA"
-        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+)(\w+),*\s+(\d+),*\s+(\w+)/
+        data = body.match /(\d{6}),*\s+(\w+),*\s+(\d+)\s*(\w+),*\s+(\d+),*\s+(\w+)/
         data = { 
           :phone        => reply_to,
           :pcvid        => data[1],
