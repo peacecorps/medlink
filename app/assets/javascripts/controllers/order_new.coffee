@@ -2,11 +2,14 @@ angular.module('medSupplies.controllers')
 
 .controller('OrderNewCtrl', [
   '$scope',
+  '$rootScope'
   '$location',
   'Order',
   'Supply',
 
-  ($scope, $location, Order, Supply) ->
+  ($scope, $rootScope, $location, Order, Supply) ->
+    $rootScope.flash = [] if not $rootScope.flash
+
     $scope.supplies = Supply.query()
     $scope.units = [
       'mg'
@@ -39,9 +42,10 @@ angular.module('medSupplies.controllers')
         delete req.dosageValue
         delete req.dosageUnits
       order = new Order(orderData).create().then (results) ->
-        # display success
+        $rootScope.flash.push 'Order submitted successfully.'
         $location.path('/')
       , (error) ->
+        $rootScope.flash.push 'There was a problem with your order.'
         console.log error
 
     $scope.addRequest()

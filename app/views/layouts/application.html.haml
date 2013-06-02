@@ -16,6 +16,7 @@
       - flash.each do |name, msg|
         %div(class="alert alert-#{name}")
           = msg
+      %div.flash__message.alert(ng-cloak ng-repeat="message in flash track by $index") {{message}}
 
 .l-wrapper
   %header.l-sidebar
