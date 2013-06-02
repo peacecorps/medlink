@@ -2,21 +2,20 @@ require 'spec_helper'
 
 describe OrdersController do
   let (:current_user) { FactoryGirl.create(:user) }
-  let (:pc_hub) { FactoryGirl.create(:pc_hub) }
   before {
     sign_in current_user
   }
 
   describe "POST 'create'" do
     it "returns http success" do
-      post 'create', order: {user_id: current_user.id, pc_hub_id: pc_hub.id}
+      post 'create', order: {user_id: current_user.id}
       response.should be_success
     end
   end
   describe "POST 'create' nested requests" do
     let (:supply) { FactoryGirl.create(:supply) }
     it "returns http success" do
-      order = {user_id: current_user.id, pc_hub_id: pc_hub.id}
+      order = {user_id: current_user.id}
       order[:requests_attributes] = [
         {supply_id: supply.id, dose: '5', quantity: 5},
         {supply_id: supply.id, dose: '10', quantity: 15}

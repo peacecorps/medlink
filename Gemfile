@@ -28,6 +28,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'simplecov'
   gem 'factory_girl_rails'
   gem 'pry'
   gem 'binding_of_caller'

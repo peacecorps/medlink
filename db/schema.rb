@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602031512) do
+ActiveRecord::Schema.define(:version => 20130602041715) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(:version => 20130602031512) do
 
   create_table "orders", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "pc_hub_id"
     t.boolean  "confirmed",    :default => false
     t.boolean  "fulfilled",    :default => false
     t.string   "phone"
@@ -33,13 +32,6 @@ ActiveRecord::Schema.define(:version => 20130602031512) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.string   "instructions"
-  end
-
-  create_table "pc_hubs", :force => true do |t|
-    t.string   "name"
-    t.integer  "country_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "requests", :force => true do |t|

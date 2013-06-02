@@ -33,3 +33,5 @@ bin
 *.swp
 *.swo
 *.orig
+
+coverage
