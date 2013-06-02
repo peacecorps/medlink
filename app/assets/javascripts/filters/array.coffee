@@ -8,6 +8,7 @@ angular.module('medSupplies.filters')
     angular.forEach requests, (request) ->
       supplies.push(request.supply.name) if (request.supply)
 
+    console.log supplies
     if angular.isArray(supplies)
       return supplies.join(separator)
 ])

@@ -21,13 +21,15 @@ angular.module('medSupplies', [
     .when('/',
       templateUrl: 'order_list.html'
       controller: 'OrderListCtrl'
-    ).when('/supply_list',
-      templateUrl: 'supply_list.html'
-      controller: 'SupplyListCtrl'
     )
 
-    .when('/createOrder',
-      templateUrl: '/assets/templates/order_new.html'
+    .when('/order_form',
+      templateUrl: 'order_form.html'
       controller: 'OrderNewCtrl'
+    )
+
+    .when('/supply_list',
+      templateUrl: 'supply_list.html'
+      controller: 'SupplyListCtrl'
     )
 ])
