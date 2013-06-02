@@ -5,6 +5,7 @@ Rhok::Application.routes.draw do
 
   resources :orders
   resources :users
+  resources :supplies, only: [:index]
   resources :requests, only: [:create, :destroy, :update]
 
   root to: 'application#root'
