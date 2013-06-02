@@ -5,10 +5,8 @@ angular.module('medSupplies.controllers')
   '$location',
   'Order',
   'Supply',
-  'CurrentUser',
 
-  ($scope, $location, Order, Supply, CurrentUser) ->
-    $scope.user = CurrentUser.query()
+  ($scope, $location, Order, Supply) ->
     $scope.supplies = Supply.query()
 
     $scope.order =

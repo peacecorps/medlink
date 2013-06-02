@@ -19,7 +19,6 @@
 
     = yield
 
-    = javascript_include_tag "application"
     %script{type: "text/ng-template", id: "order_list.html"}
       %table.table.table--striped.table--linked
         %thead
@@ -58,8 +57,8 @@
 
     %script{type: "text/ng-template", id: "order_form.html"}
       %h3
-        %span {{user.firstName}} {{user.lastName}}
-        %small {{user.pcvId}}
+        %span #{current_user.first_name} #{current_user.last_name}
+        %small #{current_user.pcv_id}
 
       %form.form--order(ng-submit="submitOrder()")
         .form__section(ng-repeat="request in order.requestsAttributes")
@@ -85,3 +84,10 @@
 
         .btn-group
           %button.btn.btn--primary(type="submit") Send
+
+    %script{type: "text/ng-template", id: "order_show.html"}
+      %h3
+        %span #{current_user.first_name} #{current_user.last_name}
+        %small #{current_user.pcv_id}
+
+    = javascript_include_tag "application"

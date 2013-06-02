@@ -23,7 +23,7 @@ angular.module('medSupplies', [
       controller: 'OrderListCtrl'
     )
 
-    .when('/order_form',
+    .when('/orders',
       templateUrl: 'order_form.html'
       controller: 'OrderNewCtrl'
     )
@@ -31,5 +31,10 @@ angular.module('medSupplies', [
     .when('/supply_list',
       templateUrl: 'supply_list.html'
       controller: 'SupplyListCtrl'
+    )
+
+    .when('/orders/:id',
+      templateUrl: 'order_show.html'
+      controller: 'OrderShowCtrl'
     )
 ])
