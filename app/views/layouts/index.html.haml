@@ -54,9 +54,15 @@
           %span {{supply.shortcode}}
 
 %script{type: "text/ng-template", id: "order_form.html"}
+
   %h3
     %span #{current_user.first_name} #{current_user.last_name}
     %small #{current_user.pcv_id}
+
+  .order-back
+    %a(ng-href="#/orders")
+      %i.icon-caret-left
+      %span Back to all Orders
 
   %form.form--order(ng-submit="submitOrder()")
     .form__section(ng-repeat="request in order.requestsAttributes")
