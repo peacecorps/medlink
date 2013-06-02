@@ -22,7 +22,7 @@ class TwilioController < ApplicationController
     private
 
     def create_order sms
-        order = Order.create_from_text sms
+        order = Order.create_from_text sms.data
         SMS.send_from_order order
         
     rescue => e
