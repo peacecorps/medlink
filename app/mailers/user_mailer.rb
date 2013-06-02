@@ -8,7 +8,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def forgotten_password_email(params)
-    User.send_reset_password_instructions params[:email]
+    User.send_reset_password_instructions(email: params[:email])
   end
 
   def fufillment_email(order)
