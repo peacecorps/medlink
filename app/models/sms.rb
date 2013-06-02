@@ -61,6 +61,7 @@ class SMS
   end
 
   def self.send_raw phone, message
+    return unless ENV['TWILIO_ACCOUNT_SID']
     client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
     client.account.sms.messages.create(
         :from => '+17322301185',

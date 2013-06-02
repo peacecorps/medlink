@@ -54,8 +54,10 @@ angular.module('medSupplies', [
   ($rootScope, $location, CurrentUser) ->
     CurrentUser.get().then (user) ->
       $rootScope.user = user
-      if $rootScope.user.role == 'user'
-        $location.path '/orders/new'
-      else
-        $location.path '/orders/'
+      path = $location.path()
+      if path == '/' or path == '/orders'
+        if $rootScope.user.role == 'user'
+          $location.path '/orders/new'
+        else
+          $location.path '/orders/'
 ])
