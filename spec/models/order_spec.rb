@@ -55,12 +55,19 @@ describe Order do
     } }
 
     subject { FactoryGirl.create :order, data }
+    after(:each) { subject.destroy }
 
     it { should be_a_kind_of Order }
     it { should_not be_confirmed   }
 
     it 'rejects duplicates' do
-      expect{ FactoryGirl.create :order, data }.to raise_error /duplicate/i
+      # Sequences generate different Users / PcHubs if we don't do this:
+      d = data.merge user_id: User.first.id, pc_hub_id: PcHub.first.id
+
+      expect do
+        a = Order.create! d
+        b = Order.create! d
+      end.to raise_error /duplicate/i
     end
 
     its(:email) { should eq 'custom@example.com' }

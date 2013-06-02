@@ -16,6 +16,8 @@ class Order < ActiveRecord::Base
   end
   default_scope eager_load(:user)
 
+  scope :unfulfilled, where(fulfilled: false)
+
   def self.human_attribute_name(attr, options={})
     { 
       user:   "PCV ID",
@@ -58,5 +60,23 @@ class Order < ActiveRecord::Base
       fulfilled:    true,
       instructions: instructions
     })
+  end
+
+  def dup_hash
+    {
+      user:     user.id,
+      requests: requests.map { |r| [r.supply_id, r.dose, r.quantity] }.sort_by(&:first)
+    }
+  end
+
+  def self.create! attrs={}
+    # Prevent creating an order with identical user and requests
+    if user = User.find(attrs[:user_id])
+      dh   = new(attrs).dup_hash
+      dups = user.orders.unfulfilled.select { |o| o.dup_hash == dh }
+      raise "Cannot create duplicate order" unless dups.empty?
+    end
+
+    super
   end
 end
