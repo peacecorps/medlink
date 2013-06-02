@@ -2,17 +2,22 @@
   %header.l-sidebar
     .l-sidebar__inner
       #brand
-      %h1 Peace Corps
-      %h3 Medical Supplies
-      %select.countries
-        %option Uganda
+      %hgroup
+        %h1 Peace Corps
+        %h4 Medical Supplies
+        %span.badge.badge--left Uganda
       %nav
-        %ul
-          %li Requests
-          %li Submit Request
+        %ul.nav.nav--stacked
+          %li
+            %a(href="#") Requests
+          %li
+            %a(href="#") Submit Request
   %div.l-main
-    %nav.nav
-      %ul
-        %li Logout
-        %li Settings
+    .l-header
+      %nav
+        %ul.nav.nav--inline.nav--right
+          %li
+            %a(href="#") Logout
+          %li
+            %a(href="#") Settings
     %section(ng-view)
