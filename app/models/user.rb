@@ -19,4 +19,8 @@ class User < ActiveRecord::Base
   def is_admin?
     role == 'admin'
   end
+
+  def self.lookup str
+    where(['lower(pcv_id) = ?', str.downcase]).first
+  end
 end

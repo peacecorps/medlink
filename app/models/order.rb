@@ -23,8 +23,8 @@ class Order < ActiveRecord::Base
   end
 
   def self.create_from_text data
-    user   = User.where(pcv_id: data[:pcvid]).first || raise("Unrecognized PCVID")
-    supply = Supply.where(shortcode: data[:shortcode]).first || raise("Unrecognized shortcode")
+    user   = User.lookup(data[:pcvid]) || raise("Unrecognized PCVID")
+    supply = Supply.lookup(data[:shortcode]) || raise("Unrecognized shortcode")
 
     create!({
       user_id:   user.try(:id),

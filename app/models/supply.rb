@@ -3,4 +3,9 @@ class Supply < ActiveRecord::Base
 
   has_many :requests
   has_many :users, through: :requests
+
+  def self.lookup str
+    where(['lower(shortcode) = ?', str.downcase]).first || 
+    where(['lower(name) = ?',      str.downcase]).first
+  end
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe User do
-  subject { FactoryGirl.create :user }
+  subject { FactoryGirl.create :user, pcv_id: 'USR' }
 
   it 'can be created' do
     expect( subject ).to be_a_kind_of User
@@ -36,6 +36,18 @@ describe User do
         combined_ids.sort! and combined_ids.uniq!
         expect( subject.accessible_orders.map(&:id).uniq.sort ).to eq combined_ids
       end
+    end
+  end
+
+  context 'lookup' do
+    before(:each) { FactoryGirl.create :user, pcv_id: 'USR' }
+  
+    it 'retrieves upper case' do
+      expect( User.lookup 'USR' ).to be_present
+    end
+
+    it 'retrieves lower case' do
+      expect( User.lookup 'usr' ).to be_present
     end
   end
 end
