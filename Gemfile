@@ -35,6 +35,10 @@ group :development, :test do
   gem 'letter_opener'
 end
 
+group :test do
+  gem 'email_spec'
+end
+
 group :production do
   gem 'pg'  # Only needed for Heroku deployment
 end
