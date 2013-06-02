@@ -39,19 +39,16 @@ class SMS
       end
 
       parse_list = params[:Body].split(/[, ]/)
-      parse_list.each_index { |i| 
-        if i == 0
-          data[:pcvid] = parse_list[i] #pcvID
-        elsif i == 1
-          data[:shortcode] = parse_list[i] #shortcode
-        elsif match = parse_list[i].match(/([0-9]+)\s*([a-zA-z]+)/) #dosage info
+      data[:pcvid], data[:shortcode] = parse_list.shift 2
+      parse_list.each do |item| 
+        if match = item.match(/([0-9]+)\s*([a-zA-z]+)/) #dosage info
           data[:dosage_value], data[:dosage_units] = match.captures
-        elsif match = parse_list[i].match(/[0-9]+\b/) #qty
+        elsif match = item.match(/[0-9]+\b/) #qty
           data[:qty] = match[0]
-        elsif match = parse_list[i].match(/[a-zA-z]+\b/) #loc
+        elsif match = item.match(/[a-zA-z]+\b/) #loc
           data[:loc] = match[0] 
         end
-      }
+      end
 
       return SMS.new data
     else 
