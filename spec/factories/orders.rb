@@ -2,7 +2,6 @@
 
 FactoryGirl.define do
   factory :order do
-    user_id 1
     pc_hub_id 1
     confirmed false
     fulfilled false
