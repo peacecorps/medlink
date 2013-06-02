@@ -18,6 +18,6 @@ angular.module('medSupplies.controllers')
       console.log result
     ###
 
-    $scope.orders = Order.query()
+    #$scope.orders = Order.query()
 
 ])

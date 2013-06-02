@@ -26,5 +26,8 @@ angular.module('medSupplies', [
       controller: 'SupplyListCtrl'
     )
 
-    $locationProvider.html5Mode(true);
+    .when('/createOrder',
+      templateUrl: '/assets/templates/order_new.html'
+      controller: 'OrderNewCtrl'
+    )
 ])

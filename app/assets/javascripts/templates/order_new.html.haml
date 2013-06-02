@@ -1,0 +1,18 @@
+%h3
+  %span Kate Godwin
+  %small 5555555
+
+%form(ng-submit="submitOrder()")
+  .order__request(ng-repeat="request in order.requestsAttributes")
+    %select(ng-model="order.requestsAttributes[$index].supplyId" ng-options="unit for unit in units")
+      %option(value="") Select Medical Supply
+    %input(ng-model="order.requestsAttributes[$index].dosageValue" placeholder="Dosage")
+    %select(ng-model="order.requestsAttributes[$index].dosageUnits" ng-options="unit for unit in units")
+      %option(value="") Unit
+    %input(ng-model="order.requestsAttributes[$index].quantity" placeholder="Quantity")
+
+  %i.icon-plus(ng-click="addRequest()")
+
+  %textarea.extra(ng-model="order.extra" placeholder="Special requests for location or dosage")
+
+  %button.btn.btn--primary(type="submit") Send
