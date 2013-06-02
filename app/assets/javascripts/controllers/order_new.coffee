@@ -3,8 +3,9 @@ angular.module('medSupplies.controllers')
 .controller('OrderNewCtrl', [
   '$scope',
   'Order',
+  'Supply',
 
-  ($scope, Order) ->
+  ($scope, Order, Supply) ->
     ###
     order = new Order(
       requests_attributes: [
@@ -18,6 +19,8 @@ angular.module('medSupplies.controllers')
       console.log result
     ###
 
+    $scope.supplies = Supply.query()
+
     $scope.order =
       requestsAttributes: []
       extra: ''
@@ -27,11 +30,15 @@ angular.module('medSupplies.controllers')
         supplyId: ''
         dosageValue: ''
         dosageUnits: ''
-        unit: ''
         quantity: ''
 
     $scope.submitOrder = ->
-      console.log $scope.order
+      orderData = angular.copy($scope.order)
+      angular.forEach orderData.requestsAttributes, (req) ->
+        req.dose = req.dosageValue + req.dosageUnits
+        delete req.dosageValue
+        delete req.dosageUnits
+      console.log orderData
 
     $scope.addRequest()
     $scope.units = [

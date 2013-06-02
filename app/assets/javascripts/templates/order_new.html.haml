@@ -4,7 +4,7 @@
 
 %form(ng-submit="submitOrder()")
   .order__request(ng-repeat="request in order.requestsAttributes")
-    %select(ng-model="order.requestsAttributes[$index].supplyId" ng-options="unit for unit in units")
+    %select(ng-model="order.requestsAttributes[$index].supplyId" ng-options="supply.shortcode as supply.name for supply in supplies")
       %option(value="") Select Medical Supply
     %input(ng-model="order.requestsAttributes[$index].dosageValue" placeholder="Dosage")
     %select(ng-model="order.requestsAttributes[$index].dosageUnits" ng-options="unit for unit in units")
