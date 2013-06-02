@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
 
   # UI wants users included with all output
   def as_json(args)
-    super(args.merge(include: [{:user => {:include => :country}}, :requests]))
+    super(args.merge(include: [{:user => {:include => :country}}, {:requests => {:include => :supply}}]))
   end
   default_scope eager_load(:user, :requests)
 

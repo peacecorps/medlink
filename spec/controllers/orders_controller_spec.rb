@@ -53,11 +53,13 @@ describe OrdersController do
     end
     it "returns success with valid data" do
       get 'index', format: :json
-      puts "ERR: #{response.body}"
       response.should be_success
       @body = JSON.parse(response.body)
 
       @body.first['requests'].should_not be_nil
+      @body.first['user'].should_not be_nil
+      @body.first['user']['country'].should_not be_nil
+      @body.first['requests'].first['supply'].should_not be_nil
     end
   end
 
