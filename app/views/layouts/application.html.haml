@@ -25,7 +25,7 @@
       %hgroup
         %h1 Peace Corps
         %h4 Medical Supplies
-        %span.badge= current_user.country.name.titleize
+        %span.badge= current_user.try(:country).try(:name).try(:titleize)
   %div.l-main
     .l-header
       %nav
