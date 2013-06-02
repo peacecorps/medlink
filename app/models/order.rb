@@ -40,7 +40,8 @@ class Order < ActiveRecord::Base
 
   def confirmation_message
     if self.valid?
-      "Your request has been processed and action will be taken within 24 hours."
+      %{ Your request has been received. Fulfillment details will follow 
+         within 24 hrs via email and text message. }.squish
     else
       Rails.logger.info( errors.full_messages.join "," )
       errors.full_messages.join ","

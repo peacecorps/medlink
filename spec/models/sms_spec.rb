@@ -56,3 +56,5 @@ describe SMS do
     its( :to )   { should eq '+15555555555' }
     its( :body ) { should eq 'one, two, three' }
   end
+  
+end

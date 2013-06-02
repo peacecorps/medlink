@@ -8,9 +8,7 @@ describe Order do
     FactoryGirl.create :supply, shortcode: 'SND'
   end
   
-  context 'validation' do
-    pending 'spec validation messages'
-  end
+  pending 'spec friendly validation messages'
 
   context 'from text' do
 
@@ -79,7 +77,7 @@ describe Order do
       it { should be_valid }
 
       it 'can generate a confirmation message' do
-        expect( subject.confirmation_message ).to match /has been processed/
+        expect( subject.confirmation_message ).to match /has been received/
       end
     end
 

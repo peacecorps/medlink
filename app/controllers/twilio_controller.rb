@@ -16,7 +16,7 @@ class TwilioController < ApplicationController
             end
         rescue => e
             Rails.logger.info "error in parse: #{e.message}"
-            SMS.send_error params[:From], e.message
+            SMS.send_error params[:From], 'parse'
         end
         head :no_content
 	end
@@ -31,4 +31,5 @@ class TwilioController < ApplicationController
         Rails.logger.info "Error in create_order: #{e.message}"
         SMS.send_error sms.data[:phone], e.message
     end
+
 end
