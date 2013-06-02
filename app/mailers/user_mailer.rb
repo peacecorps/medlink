@@ -11,7 +11,7 @@ class UserMailer < ActionMailer::Base
     User.send_reset_password_instructions(email: params[:email])
   end
 
-  def fufillment_email(order)
+  def fulfillment_email(order)
     @order = order
     mail(:to => order.email, :subject => "Your Order Has Been Fufilled")
   end

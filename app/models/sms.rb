@@ -77,7 +77,7 @@ class SMS
     self.send_raw phone, friendly(message)
   end
 
-  def friendly message
+  def self.friendly message
     case message
     when /unrecognized pcvid/i
       %{ Your request was not submitted because the PCVID was incorrect. Please resubmit 
