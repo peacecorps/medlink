@@ -1,11 +1,5 @@
 .l-wrapper
-  %header.l-sidebar
-    .l-sidebar__inner
-      %img#brand(src="/logo.png")
-      %hgroup
-        %h1 Peace Corps
-        %h4 Medical Supplies
-        %span.badge= current_user.country.name.titleize
+  = render "partials/sidebar"
   %div.l-main
     .l-header
       %nav

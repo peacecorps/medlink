@@ -1,21 +1,44 @@
-<h2>Sign up</h2>
+<div class="l-wrapper">
+  <%= render "partials/sidebar" %>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
+  <div class="l-main">
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
+  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => 'form-devise'}) do |f| %>
+    <h2>Sign up</h2>
+    
+    <%= devise_error_messages! %>
 
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
+    <div class="form__section">
+      <div class="input-group">
+        <%= f.email_field :email, :autofocus => true, :type => 'text', :placeholder => 'Email' %>
+      </div>
+    </div>
 
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
+    <div class="form__section">
+      <div class="input-group">
+        <%= f.password_field :password, :type => 'text', :placeholder => 'Password' %>
+      </div>
+    </div>
 
-  <div><%= f.label :country %><br />
-  <%= f.select :country_id, Country.all.map { |c| [c.name.titleize, c.id] } %></div>
+    <div class="form__section">
+      <div class="input-group">
+        <%= f.password_field :password_confirmation, :type => 'text', :placeholder => 'Confirm Password' %>
+      </div>
+    </div>
 
-  <div><%= f.submit "Sign up" %></div>
-<% end %>
+    <div class="form__section">
+      <div class="input-group">
+        <div class="select select--full">
+          <%= f.select(:country_id, Country.all.map { |c| [c.name.titleize, c.id] }) %>
+          <i class="icon-caret-down select__arrow"></i>
+        </div>
+      </div>
+    </div>
 
-<%= render "devise/shared/links" %>
+    <div class="btn-group">
+      <%= f.submit "Sign up", :class => 'btn btn--primary' %>
+      <%= render "devise/shared/links" %>
+    </div>
+  <% end %>
+
+</div>
