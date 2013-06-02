@@ -1,0 +1,44 @@
+table
+  width: 100%
+
+thead
+  border-bottom: 1px solid $gray-light
+
+tbody
+  background: $white
+
+th, td
+  padding: $base-spacing-unit / 2
+  text-align: left
+  vertical-align: top
+
+td
+  border-top: 1px solid $gray-light
+
+th
+  +adjust-font-size-to($h3-size)
+  font-family: $sans-serif
+  padding-bottom: $base-spacing-unit
+
+.table--striped
+  tbody tr:nth-child(even)
+    background-color: $blue
+    color: $white
+
+.cell--primary
+  font-weight: bold
+
+.cell--secondary
+  display: block
+  color: $gray-light
+
+.table--linked
+  tbody tr
+    &:hover
+      cursor: pointer
+      background-color: $creme
+
+    &:nth-child(even):hover
+      background-color: lighten($blue, 5%)
+
+  

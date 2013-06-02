@@ -9,19 +9,19 @@ describe Order do
   end
   
   context 'validation' do
-    pending 'spec and non-trivial validations'
+    pending 'spec validation messages'
   end
 
   context 'from text' do
 
-    let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND' } }
+    let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND', phone: '555-123-4567' } }
 
     subject { Order.create_from_text data }
 
     it { should be_a_kind_of Order }
 
-    its(:email) { should eq 'user@example.com' }
-    its(:phone) { should eq '555-867-5309'     }
+    its(:email) { should match /user\d+@example.com/ }
+    its(:phone) { should eq '555-123-4567'     }
 
     it 'raises on invalid pcvid' do
       expect do 
@@ -42,20 +42,29 @@ describe Order do
   # -----
 
   context 'from web' do
+    let(:data) { {
+      email: 'custom@example.com',
+      phone: 'N/A',
+      requests_attributes: [{
+        supply_id: Supply.first.id,
+        dose:      '10mg'
+      }, {
+        supply_id: Supply.last.id,
+        quantity:  5
+      }]
+    } }
 
-    subject { FactoryGirl.create :order,
-      email: 'custom@example.com', 
-      phone: '-'
-    }  
+    subject { FactoryGirl.create :order, data }
 
     it { should be_a_kind_of Order }
     it { should_not be_confirmed   }
 
-    it 'notifies if invalid'
-    it 'rejects duplicates'
+    it 'rejects duplicates' do
+      expect{ FactoryGirl.create :order, data }.to raise_error /duplicate/i
+    end
 
     its(:email) { should eq 'custom@example.com' }
-    its(:phone) { should eq '-'                  }
+    its(:phone) { should eq 'N/A'                }
 
     context 'when valid' do
       it { should be_valid }
@@ -79,15 +88,14 @@ describe Order do
       before(:each) { subject.confirm! }
 
       it { should be_confirmed }
-      it { should_not be_complete }
-
-      it 'can be completed'
+      it { should_not be_fulfilled }
     end
 
     context 'fulfilled' do
-      it { should be_fulfilled }
+      before(:each) { subject.fulfill! 'Look around you' }
 
-      it 'has instructions for pickup'
+      it { should be_fulfilled }
+      its(:instructions) { should eq 'Look around you' }
     end
 
   end

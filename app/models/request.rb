@@ -6,8 +6,4 @@ class Request < ActiveRecord::Base
   belongs_to :supply
 
   validates_presence_of :supply, message: "Invalid shortcode"
-
-  def confirm!
-    update_attribute :confirmed, true
-  end
 end
