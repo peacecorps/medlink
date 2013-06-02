@@ -7,6 +7,8 @@
     %title= content_for?(:title) ? yield(:title) : "Rhok"
     = csrf_meta_tags
     = stylesheet_link_tag "application", :media => "all"
+    /[if lt IE 8]
+      = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
 
 
   %body

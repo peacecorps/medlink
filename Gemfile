@@ -9,6 +9,7 @@ gem 'devise'
 
 gem 'resque'
 
+gem 'font-awesome-rails'
 gem 'angularjs-rails-resource'
 
 # Gems used only for assets and not required

@@ -9,12 +9,13 @@
   %tbody
     %tr(ng-repeat="order in orders")
       %td
-        %span.cell--primary {{order.user}}
+        %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
         %small.cell--secondary 5555555
       %td
-        %span 05/25/2005
-        %small.cell--secondary 15:00
+        %span {{order.createdAt | date:'shortDate'}}
+        %small.cell--secondary {{order.createdAt | date:'HH:mm'}}
       %td
         %span.cell--primary City
-      %td {{order.supplies}}
+      %td 
       %td.cell--arrow
+        %i.icon-caret-right

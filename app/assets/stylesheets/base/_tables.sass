@@ -22,8 +22,7 @@ th
 
 .table--striped
   tbody tr:nth-child(even)
-    background-color: $blue
-    color: $white
+    background-color: $gray-lighter
 
 .cell--primary
   font-weight: bold
@@ -36,9 +35,13 @@ th
   tbody tr
     &:hover
       cursor: pointer
-      background-color: $creme
 
-    &:nth-child(even):hover
-      background-color: lighten($blue, 5%)
+      .icon-caret-right
+        opacity: 1
 
-  
+  .cell--arrow
+    vertical-align: middle
+
+  .icon-caret-right
+    opacity: 0
+    font-size: 40px
