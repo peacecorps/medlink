@@ -1,6 +1,6 @@
 class Order < ActiveRecord::Base
   attr_accessible :confirmed, :email, :extra, :fulfilled, :pc_hub_id, 
-    :phone, :user_id, :requests_attributes
+    :phone, :user_id, :requests_attributes, :instructions
 
   belongs_to :user
   belongs_to :pc_hub
@@ -42,5 +42,16 @@ class Order < ActiveRecord::Base
     else
       errors.full_messages.join ","
     end
+  end
+
+  def confirm!
+    update_attribute :confirmed, true
+  end
+
+  def fulfill! instructions
+    update_attributes({
+      fulfilled:    true,
+      instructions: instructions
+    })
   end
 end
