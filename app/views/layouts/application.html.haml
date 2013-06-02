@@ -17,6 +17,54 @@
         %div(class="alert alert-#{name}")
           = msg
 
+.l-wrapper
+  %header.l-sidebar
+    .l-sidebar__inner
+      %img#brand(src="/logo.png")
+      %hgroup
+        %h1 Peace Corps
+        %h4 Medical Supplies
+        %span.badge= current_user.country.name.titleize
+  %div.l-main
+    .l-header
+      %nav
+        .dropdown
+          %a(ng-click="open = !open")
+            %i.icon-cog
+          %ul.nav.nav--dropdown(ng-class="{'is-active': open}")
+            %li
+              %a(href="#") About
+            %li
+              = link_to 'Settings', edit_user_registration_path, target: '_self'
+            %li
+              %a(href="#") Help
+            %li
+              = link_to 'Logout', destroy_user_session_path, target: '_self'
+    %section(ng-view)
+
+    %script{type: "text/ng-template", id: "order_list.html"}
+      %table.table.table--bordered.table--striped.table--linked
+        %thead
+          %tr
+            %th Requester
+            %th Request Date
+            %th Location
+            %th Requested Supplies
+            %th
+        %tbody
+          %tr(ng-repeat="order in orders" ng-click="viewOrder(order.id)")
+            %td
+              %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
+              %small.cell--secondary {{order.user.pcvId}}
+            %td
+              %span {{order.createdAt | date:'shortDate'}}
+              %small.cell--secondary {{order.createdAt | date:'HH:mm'}}
+            %td
+              %span.cell--primary City
+            %td {{order.requests | joinSupplies}}
+            %td.cell--arrow
+              %i.icon-caret-right
+
     = yield
 
     = javascript_include_tag "application"

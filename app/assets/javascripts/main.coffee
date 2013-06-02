@@ -38,5 +38,9 @@ angular.module('medSupplies', [
       controller: 'OrderShowCtrl'
     )
 
-    .otherwise({redirectTo: '/orders'})
+    .when('/',
+      redirectTo: '/orders'
+    )
+
+    #.otherwise({redirectTo: '/orders'})
 ])
