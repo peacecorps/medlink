@@ -21,6 +21,9 @@ angular.module('medSupplies', [
     .when('/',
       templateUrl: 'order_list.html'
       controller: 'OrderListCtrl'
+    ).when('/supply_list',
+      templateUrl: 'supply_list.html'
+      controller: 'SupplyListCtrl'
     )
 
     $locationProvider.html5Mode(true);

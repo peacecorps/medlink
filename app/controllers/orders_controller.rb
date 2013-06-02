@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
     order = Order.new(params[:order])
     order.user = current_user
     if order.save
-      render json: {success: true, order: @order}
+      render json: {success: true, order: order}
     else
       render :status => :unacceptable, json: {errors: order.errors}
     end
