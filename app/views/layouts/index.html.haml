@@ -80,7 +80,9 @@
         %input.input.input--quantity(type="text" ng-model="order.requestsAttributes[$index].quantity" placeholder="Quantity")
 
     .form__add
-      %i.icon-plus(ng-click="addRequest()")
+      %a(ng-click="addRequest()")
+        %i.icon-plus
+        %span Add a new supply request
 
     .form__section
       .input-group
