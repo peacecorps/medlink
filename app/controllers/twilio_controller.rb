@@ -5,6 +5,8 @@ class TwilioController < ApplicationController
 	def create
 		# parse gives back and SMS object
     	sms = SMS.parse params
+        rescue => e
+            SMS.send_error params[:From], e.message
 
     	if sms.send_now?
     		sms.send
@@ -20,6 +22,6 @@ class TwilioController < ApplicationController
         SMS.send_from_order order
         
         rescue => e
-            SMS.send_error sms, e.message
+            SMS.send_error sms.data[:phone], e.message
     end
 end

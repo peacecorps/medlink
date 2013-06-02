@@ -110,11 +110,11 @@ class SMS
     )
   end
 
-  def self.send_error sms, message
+  def self.send_error phone, message
     client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
     client.account.sms.messages.create(
         :from => '+17322301185',
-        :to   => sms.data[:phone],
+        :to   => phone,
         :body => message
     )
   end
