@@ -60,22 +60,21 @@ class SMS
     #function stub for future implementation of list command
   end
 
-  def self.send_from_order order
-    client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
-    client.account.sms.messages.create(
-        :from => '+17322301185',
-        :to   => order.phone,
-        :body => order.confirmation_message
-    )
-  end
-
-  def self.send_error phone, message
+  def self.send_raw phone, message
     client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
     client.account.sms.messages.create(
         :from => '+17322301185',
         :to   => phone,
-        :body => friendly(message)
+        :body => message
     )
+  end
+
+  def self.send_from_order order
+    self.send_raw order.phone, order.confirmation_message
+  end
+
+  def self.send_error phone, message
+    self.send_raw phone, friendly(message)
   end
 
   def friendly message

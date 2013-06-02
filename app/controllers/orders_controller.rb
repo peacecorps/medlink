@@ -24,6 +24,7 @@ class OrdersController < ApplicationController
   def update
     order = current_user.accessible_orders.where(id: params[:order_id] || params[:id]).first!
     if order.update_attributes(params[:order])
+      order.send_instructions!
       render json: {success: true, order: order}
     else
       render :status => :unacceptable, json: {success: false, errors: order.errors}
