@@ -11,7 +11,7 @@
       %nav
         %ul.nav.nav--inline.nav--right
           %li
-            %a(href="#") Logout
+            = link_to 'Logout', destroy_user_session_path, target: '_self'
           %li
-            %a(href="#") Settings
+            = link_to 'Settings', edit_user_registration_path, target: '_self'
     %section(ng-view)
