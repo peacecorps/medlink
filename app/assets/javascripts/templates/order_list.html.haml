@@ -1,2 +1,17 @@
-#test
-	This is a test.
+%table.table.table--striped
+  %thead
+    %tr
+      %th Requester
+      %th Country
+      %th Hub or Center
+      %th Requested Supplies
+  %tbody
+    %tr(ng-repeat="order in orders")
+      %td
+        %span.cell--primary {{order.user}}
+        %small.cell--secondary 5555555
+      %td {{order.country}}
+      %td
+        %span.cell--primary {{order.hub}}
+        %small.cell--secondary City Name
+      %td {{order.supplies}}

@@ -1,1 +1,18 @@
-%div(ng-view)
+.l-wrapper
+  %header.l-sidebar
+    .l-sidebar__inner
+      #brand
+      %h1 Peace Corps
+      %h3 Medical Supplies
+      %select.countries
+        %option Uganda
+      %nav
+        %ul
+          %li Requests
+          %li Submit Request
+  %div.l-main
+    %nav.nav
+      %ul
+        %li Logout
+        %li Settings
+    %section(ng-view)
