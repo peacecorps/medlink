@@ -3,7 +3,7 @@ require 'resque/server'
 Rhok::Application.routes.draw do
   devise_for :users
 
-  resources :requests
+  resources :orders
   resources :users
   resources :requests, only: [:create, :destroy, :update]
 
