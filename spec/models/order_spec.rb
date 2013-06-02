@@ -2,16 +2,17 @@ require 'spec_helper'
 
 describe Order do
 
+  before :each do
+    FactoryGirl.create :user,   pcv_id: 'USR'
+    FactoryGirl.create :pc_hub, name: 'LOC'
+    FactoryGirl.create :supply, shortcode: 'BND'
+  end
+  
   context 'validation' do
     pending 'spec and non-trivial validations'
   end
 
   context 'from text' do
-    before :each do
-      FactoryGirl.create :user,   pcv_id: 'USR'
-      FactoryGirl.create :pc_hub, name: 'LOC'
-      FactoryGirl.create :supply, shortcode: 'BND'
-    end
 
     let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND' } }
 
@@ -35,20 +36,26 @@ describe Order do
         Order.create_from_text data
       end.to raise_error  /unrecognized shortcode/i
     end
+
   end
 
   # -----
 
   context 'from web' do
-    subject { FactoryGirl.create :order }  
 
-    it { should_not be_confirmed }
+    subject { FactoryGirl.create :order,
+      email: 'custom@example.com', 
+      phone: '-'
+    }  
+
+    it { should be_a_kind_of Order }
+    it { should_not be_confirmed   }
 
     it 'notifies if invalid'
     it 'rejects duplicates'
 
-    its(:email) { should eq 'user@example.com' }
-    its(:phone) { should eq '555-867-5309'     }
+    its(:email) { should eq 'custom@example.com' }
+    its(:phone) { should eq '-'                  }
 
     context 'when valid' do
       it { should be_valid }
@@ -59,12 +66,12 @@ describe Order do
     end
 
     context 'when invalid' do
-      before(:each) { subject.pcv_id = nil }
+      before(:each) { subject.pc_hub = nil }
 
       it { should_not be_valid }
 
       it 'can generate an error message' do
-        expect( subject.confirmation_message ).to match /pcv id/i
+        expect( subject.confirmation_message ).to match /location code/i
       end
     end
 
@@ -82,6 +89,7 @@ describe Order do
 
       it 'has instructions for pickup'
     end
+
   end
 
 end

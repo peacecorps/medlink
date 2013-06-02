@@ -1,12 +1,8 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :order do
-    pc_hub_id 1
+    user
+    pc_hub
     confirmed false
     fulfilled false
-    phone "MyString"
-    email "MyString"
-    extra "MyText"
   end
 end

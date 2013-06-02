@@ -2,17 +2,18 @@ class Order < ActiveRecord::Base
   attr_accessible :confirmed, :email, :extra, :fulfilled, :pc_hub_id, :phone, :user_id
 
   belongs_to :user
+  belongs_to :pc_hub
   has_many :requests
 
-  HUMANIZED_ATTRIBUTES = {
-    :user => "PCVID"
-  }
+  validates_presence_of :user,   message: "unrecognized"
+  validates_presence_of :pc_hub, message: "unrecognized"
 
   def self.human_attribute_name(attr, options={})
-    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+    { 
+      user:   "PCV ID",
+      pc_hub: "Location code"
+    }[attr] || super
   end
-
-  validates :user_id, presence: true
 
   def self.create_from_text data
     user   = User.where(pcv_id: data[:pcvid]).first || raise("Unrecognized PCVID")
@@ -44,7 +45,7 @@ class Order < ActiveRecord::Base
     if self.valid?
       "Your request has been processed and action will be taken within 24 hours."
     else
-      errors.each_full.join(" ")
+      errors.full_messages.join ","
     end
   end
 end
