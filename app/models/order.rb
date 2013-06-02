@@ -3,7 +3,6 @@ class Order < ActiveRecord::Base
     :phone, :user_id, :requests_attributes, :instructions
 
   belongs_to :user
-  #belongs_to :pc_hub
   has_many :requests
 
   validates_presence_of :user,   message: "unrecognized"
@@ -19,8 +18,7 @@ class Order < ActiveRecord::Base
 
   def self.human_attribute_name(attr, options={})
     { 
-      user:   "PCV ID",
-      pc_hub: "Location code"
+      user:   "PCV ID"
     }[attr] || super
   end
 
