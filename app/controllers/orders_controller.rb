@@ -29,6 +29,7 @@ class OrdersController < ApplicationController
       render :status => :unacceptable, json: {success: false, errors: order.errors}
     end
   end
+  
   def destroy
     order = current_user.accessible_orders.where(id: params[:order_id] || params[:id]).first!
     order.destroy
