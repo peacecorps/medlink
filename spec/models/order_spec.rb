@@ -63,7 +63,7 @@ describe Order do
     it 'requires unique supply items'
 
     it 'rejects duplicates' do
-      # Sequences generate different Users / PcHubs if we don't do this:
+      # Sequences generate different Users if we don't do this:
       d = data.merge user_id: User.first.id
 
       expect do

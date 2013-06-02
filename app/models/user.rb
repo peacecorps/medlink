@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   # attr_accessible :title, :body
 
-  has_one :pc_hub
   belongs_to :country
   has_many :orders
   validates_presence_of :country
