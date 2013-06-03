@@ -76,7 +76,7 @@ If you'd like to practice making a pull request, feel free to add yourself to th
 * Luke J Reimer
 * Jeffrey Rhodes
 * Al Snow
-* Patrick Stocia
+* Patrick Stoica
 * Jake Swanson
 * Nate Tate
 * Danel Trisi
