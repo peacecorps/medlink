@@ -61,7 +61,25 @@ If you'd like to practice making a pull request, feel free to add yourself to th
 
 ## Contributors
 
+* Caitlyn Bauer
+* Patrick Choquette
+* John Craft
+* Jack Craft
 * James Dabbs
-* Luke J Reimer
-* Al Snow
+* Diane Deseta
+* Kate Godwin
+* Jonathan Howard
 * Clint Lee
+* Gordon Macie
+* Drew Pak
+* John Petitte
+* Luke J Reimer
+* Jeffrey Rhodes
+* Al Snow
+* Patrick Stocia
+* Jake Swanson
+* Nate Tate
+* Danel Trisi
+* Kevin Sun
+
+

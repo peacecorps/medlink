@@ -1,0 +1,12 @@
+language: ruby
+
+rvm:
+  - 1.9.3
+
+notifications:
+  email:
+    recipients:
+      - gmacie@hotmail.com
+      - jasnow@hotmail.com
+    on_success: change
+    on_failure: always
