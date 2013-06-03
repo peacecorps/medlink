@@ -3,6 +3,9 @@ language: ruby
 rvm:
   - 1.9.3
 
+script:
+  - RAILS_ENV=test bundle exec rake --trace db:migrate test
+
 notifications:
   email:
     recipients:
