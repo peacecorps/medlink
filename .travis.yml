@@ -1,0 +1,15 @@
+language: ruby
+
+rvm:
+  - 1.9.3
+
+script:
+  - RAILS_ENV=test bundle exec rake --trace db:migrate spec
+
+notifications:
+  email:
+    recipients:
+      - gmacie@hotmail.com
+      - jasnow@hotmail.com
+    on_success: change
+    on_failure: always
