@@ -38,7 +38,7 @@ class SMS
         return SMS.new list(params), true
       end
 
-      parse_list = params[:Body].split(/[, ]/)
+      parse_list = params[:Body].split(/,\s*|\s/)
       data[:pcvid], data[:shortcode] = parse_list.shift 2
       parse_list.each do |item| 
         if match = item.match(/([0-9]+)\s*([a-zA-z]+)/) #dosage info
