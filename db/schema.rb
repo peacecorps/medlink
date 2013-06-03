@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130602041715) do
+ActiveRecord::Schema.define(:version => 20130602151744) do
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(:version => 20130602041715) do
     t.string   "pcv_id"
     t.integer  "country_id"
     t.string   "role",                   :default => "user"
+    t.string   "city"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
