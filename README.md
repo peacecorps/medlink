@@ -2,9 +2,15 @@
 [![Build Status](https://travis-ci.org/github/atlrug-rhok/rhok-rails.png)](https://travis-ci.org/github/atlrug-rhok/rhok-rails)
 
 
-## ATLRUG-RHOK Rails Project Template
+## Peace Corps Medical Supplies
 
-This is a no longer blank Rails project that needs a better description than this. To set it up on your machine:
+This project grew out of a [National Day of Civic Hacking](http://hackforchange.org/). You can see a live version of the site at [www.pcmedicalsupplies.org](www.pcmedicalsupplies.org).
+
+### Developing locally
+
+If you have any questions at all, feel free to email [James](https://github.com/jamesdabbs) or post on the [Google Group](https://groups.google.com/forum/?fromgroups#!forum/atlrug-rhok).
+
+To get started with a local copy of the project, run
 
 ```bash
 $ git clone git@github.com:atlrug-rhok/rhok-rails.git
@@ -12,59 +18,47 @@ $ bundle
 $ rake db:setup
 ```
 
-and you should be off to the races. You can check by running the specs with
+and you should be off to the races. You can check your setup by running the specs with
 
 ```bash
 $ rake spec
 ```
 
-If it's green, you should be good to go. If you have any questions at all, feel free to email [James](https://github.com/jamesdabbs) or post on the [Google Group](https://groups.google.com/forum/?fromgroups#!forum/atlrug-rhok).
+If it's green, you should be good to go. 
 
-### Ruby version
+A few components require a little extra setup to run:
 
-We're targeting Ruby 1.9.3. If you're running rvm and have 1.9.3 installed, the .rvmrc file should take care of everything.
+#### Twilio (SMS integration)
 
-### Installed Gems
+You'll need to sign up for Twilio and set the TWILIO_ACCOUNT_SID, TWILIO_AUTH and TWILIO_PHONE_NUMBER environment variables. If you'd like to receive SMS messages to your local machine, you can set up [localtunnel](http://progrium.com/localtunnel/) and run
 
-Here's a quick rundown of some Gems you may not be familiar with:
+```bash
+$ localtunnel 3000  # Assuming your development server is running on port 3000
+```
 
-* `haml-rails` - enables rendering of `.html.haml` files, a much less verbose alternative to `.html.erb`. See the [application layout](https://github.com/atlrug-rhok/rhok-rails/blob/master/app/views/layouts/application.html.haml) for an example.
-* `pry` - a versatile debugging tool. Drop in a `binding.pry` at any point to halt execution and poke around the application's current state.
-* `better_errors` - enables a significantly more informative error page.
-* `binding_of_caller` - enables a [REPL](http://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop) bound at the point of error on the better errors page.
+and point your Twilio request URL at the address it specifies (http://something.localtunnel.com).
 
-### Rails reference
+#### Resque (background jobs)
 
-See the default [README.rdoc](https://github.com/atlrug-rhok/rhok-rails/blob/master/doc/README.rdoc).
+Resque requires Redis. On OSX, you can 
 
-### Resque
+    brew install redis
 
-You'll need to run resque for background jobs (e.g. mailing). Install redis and then
+Installation should be similar with your package manager of choice. To start a background worker, run
 
-    QUEUE=* bundle exec rake environment resque:work
+    $ QUEUE=* rake resque:work
 
-You can view the status of resque jobs on the resqueweb server at `/resque`.
-
-### Heroku
-
-An instance of this project is live at [http://rhok-rails.herokuapp.com/](http://rhok-rails.herokuapp.com/).
-
-If you would like to be able to deploy to Heroku, add the following to your .git/config:
-
-    [remote "heroku"]
-      url = git@heroku.com:rhok-rails.git
-      fetch = +refs/heads/*:refs/remotes/heroku/*
-
-Then `git push heroku master` will push your changes to Heroku and trigger a build.
-
-### Pull requests
-
-If you'd like to practice making a pull request, feel free to add yourself to the following list:
+Note that, unlike the development server, Resque workes do not automatically restart as files are changed.
 
 ## Contributors
 
-* Caitlyn Bauer
+Special thanks to the consulting Peace Corp members, without whom none of this would be possible:
 * Patrick Choquette
+* Caitlyn Bauer
+* Jeffrey Rhodes
+* Danel Trisi
+
+Additional thanks to the [RHoK](http://www.rhok.org/) team for their outstanding work getting this project off the ground:
 * John Craft
 * Jack Craft
 * James Dabbs
@@ -76,12 +70,10 @@ If you'd like to practice making a pull request, feel free to add yourself to th
 * Drew Pak
 * John Petitte
 * Luke J Reimer
-* Jeffrey Rhodes
 * Al Snow
 * Patrick Stoica
 * Jake Swanson
 * Nate Tate
-* Danel Trisi
 * Kevin Sun
 
-
+We welcome other contributions - just open up an issue or a pull request.

@@ -18,12 +18,7 @@ class SMS
   end
 
   def send 
-    client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
-    client.account.sms.messages.create(
-        :from => '+17322301185',
-        :to   => data[:to],
-        :body => data[:body]
-    )
+    send_raw data[:to], data[:body]
   end
 
   def self.parse params
@@ -64,7 +59,7 @@ class SMS
     return unless ENV['TWILIO_ACCOUNT_SID']
     client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
     client.account.sms.messages.create(
-        :from => '+17322301185',
+        :from => ENV['TWILIO_PHONE_NUMBER'],
         :to   => phone,
         :body => message
     )
