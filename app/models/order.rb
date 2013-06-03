@@ -57,7 +57,7 @@ class Order < ActiveRecord::Base
     Rails.logger.info "Sending SMS confirmation"
     SMS.send_raw phone, instructions
     Rails.logger.info "Sending confirmation email"
-    UserMailer.new.fulfillment_email self
+    UserMailer.fulfillment_email self
   end
 
   def fulfill! instructions

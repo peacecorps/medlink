@@ -44,3 +44,20 @@ angular.module('medSupplies', [
 
     #.otherwise({redirectTo: '/orders'})
 ])
+
+
+.run([
+  '$rootScope',
+  '$location',
+  'CurrentUser',
+
+  ($rootScope, $location, CurrentUser) ->
+    CurrentUser.get().then (user) ->
+      $rootScope.user = user
+      path = $location.path()
+      if path == '/' or path == '/orders'
+        if $rootScope.user.role == 'user'
+          $location.path '/orders/new'
+        else
+          $location.path '/orders/'
+])

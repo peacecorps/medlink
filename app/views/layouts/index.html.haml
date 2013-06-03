@@ -16,7 +16,7 @@
           %span {{order.createdAt | date:'shortDate'}}
           %small.cell--secondary {{order.createdAt | date:'HH:mm'}}
         %td
-          %span.cell--primary City
+          %span.cell--primary {{order.user.city}}
         %td {{order.requests | joinSupplies}}
         %td.cell--arrow
           %i.icon-caret-right
@@ -39,11 +39,6 @@
   %h3
     %span #{current_user.first_name} #{current_user.last_name}
     %small #{current_user.pcv_id}
-
-  .order-back
-    %a(ng-href="#/orders")
-      %i.icon-caret-left
-      %span Back to all Orders
 
   %form.form--order(ng-submit="submitOrder()")
     .form__section(ng-repeat="request in order.requestsAttributes")
@@ -85,7 +80,7 @@
           %span Order From: {{order.user.firstName}} {{order.user.lastName}}
           %small.pcv-id {{order.user.pcvId}}
         %div
-          %em City Name, {{order.user.country.name}}
+          %em {{order.user.city}}, {{order.user.country.name}}
       %table.table
         %tbody
           %tr(ng-repeat="request in order.requests")
