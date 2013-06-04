@@ -32,8 +32,6 @@ GEM
     angularjs-rails-resource (0.1.6)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
-    binding_of_caller (0.7.1)
-      debug_inspector (>= 0.0.1)
     builder (3.0.4)
     chunky_png (1.2.8)
     coderay (1.0.9)
@@ -50,7 +48,6 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
-    debug_inspector (0.0.2)
     devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -201,7 +198,6 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails-resource
-  binding_of_caller
   coffee-rails
   compass-rails
   devise
