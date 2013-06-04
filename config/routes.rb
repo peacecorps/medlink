@@ -16,4 +16,6 @@ Rhok::Application.routes.draw do
   
   match '/medrequest', to: 'twilio#create'
   match '/supply_list' => 'application#root'
+
+  mount Resque::Server, at: '/resque', as: 'resque'
 end

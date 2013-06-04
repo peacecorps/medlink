@@ -54,10 +54,8 @@ class Order < ActiveRecord::Base
   end
 
   def send_instructions!
-    Rails.logger.info "Sending SMS confirmation"
-    SMS.send_raw phone, instructions
-    Rails.logger.info "Sending confirmation email"
-    UserMailer.fulfillment_email self
+    SMSJob.enqueue phone, instructions
+    MailerJob.enqueue :fulfillment, id
   end
 
   def fulfill! instructions

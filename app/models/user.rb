@@ -23,4 +23,12 @@ class User < ActiveRecord::Base
   def self.lookup str
     where(['lower(pcv_id) = ?', str.downcase]).first
   end
+
+  def send_reset_password_instructions opts={}
+    if opts[:async] == false
+      super()
+    else
+      MailerJob.enqueue :forgotten_password, id
+    end
+  end
 end

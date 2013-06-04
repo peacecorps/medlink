@@ -46,7 +46,7 @@ Resque requires Redis. On OSX, you can
 
 Installation should be similar with your package manager of choice. To start a background worker, run
 
-    $ QUEUE=* rake resque:work
+    $ QUEUE=* bundle exec rake environment resque:work
 
 Note that, unlike the development server, Resque workes do not automatically restart as files are changed.
 

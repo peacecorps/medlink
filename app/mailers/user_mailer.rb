@@ -1,18 +1,18 @@
 class UserMailer < ActionMailer::Base
   default from: "no-reply@pcmedsupply.com"
 
-  def welcome_email(user)
-    @user = user
+  def welcome id
+    @user = User.find id
     @url = "http://pcmedsupply.com/users/sign_in"
-    mail(:to => user.email, :subject => "Thanks for signing up for pcmedsupply.org")
+    mail to: @user.email, subject: "Thanks for signing up for pcmedsupply.org"
   end
 
-  def forgotten_password_email(params)
-    User.send_reset_password_instructions(email: params[:email])
+  def forgotten_password id
+    User.find(id).send_reset_password_instructions async: false
   end
 
-  def fulfillment_email(order)
-    @order = order
-    mail(:to => order.email, :subject => "Your Order Has Been Fufilled")
+  def fulfillment id
+    @order = Order.find id
+    mail to: @order.email, subject: "Your Order Has Been Fufilled"
   end
 end
