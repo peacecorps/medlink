@@ -41,10 +41,8 @@ class Order < ActiveRecord::Base
 
   def confirmation_message
     if self.valid?
-      %{ Your request has been received. Fulfillment details will follow 
-         within 24 hrs via email and text message. }.squish
+      I18n.t "order.confirmation"
     else
-      Rails.logger.info( errors.full_messages.join "," )
       errors.full_messages.join ","
     end
   end

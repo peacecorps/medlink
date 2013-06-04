@@ -75,18 +75,14 @@ class SMS
 
   def self.friendly message
     case message
-    when /unrecognized pcvid/i
-      %{ Your request was not submitted because the PCVID was incorrect. Please resubmit 
-         your request in this format: PCVID, Supply short name, dose, qty, location. }
-    when /unrecognized shortcode/i
-      %{ Your request was not submitted because supply name was incorrect. Please resubmit 
-         the request in this format: PCVID, Supply short name, dose, qty, location. }
-    when /duplicate/i
-      %{ We have already received your request. Please refrain from 
-         sending multiple requests. }
     when /parse/i
-      %{ Your request was not submitted. Please resubmit your request in this Format: 
-         PCVID,Supply short name, dose, qty, location. }
+      I18n.t! "order.unparseable"
+    when /unrecognized pcvid/i
+      I18n.t! "order.unrecognized_pcvid"
+    when /unrecognized shortcode/i
+      I18n.t! "order.unrecognized_shortcode"
+    when /duplicate/i
+      I18n.t! "order.duplicate_order"
     else
       message
     end.squish
