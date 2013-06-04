@@ -3,7 +3,9 @@ ENV["RAILS_ENV"] ||= 'test'
 # Run specs under COVERAGE=true to generate coverage reports
 if ENV["COVERAGE"]
   require 'simplecov'
-  SimpleCov.start 'rails'
+  SimpleCov.start 'rails' do
+    add_group "Jobs", "app/jobs"
+  end
 end
 
 require File.expand_path("../../config/environment", __FILE__)

@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe TwilioController do
+  include SmsSpec::Helpers
+  
   let(:number) { '+15555555555' }
   let(:current_user) { FactoryGirl.create(:user, pcv_id: '123456') }
 
@@ -10,7 +12,6 @@ describe TwilioController do
   end
 
   describe "POST 'receive'" do
-    include SmsSpec::Helpers
 
     it 'routes lists' do
       expect{ post :receive, From: number, Body: 'List supplies'
