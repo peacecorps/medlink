@@ -1,5 +1,7 @@
 class SMS
 
+  class ParseError < StandardError ; ; end
+
   def initialize( data, send_now=false )
     @data     = data
     @send_now = send_now
@@ -17,7 +19,7 @@ class SMS
     @send_now
   end
 
-  def send 
+  def send
     send_raw data[:to], data[:body]
   end
 
@@ -29,10 +31,6 @@ class SMS
 
 
     if body
-      if body.match(/([lL]\w+)\s(\w+)/) 
-        return SMS.new list(params), true
-      end
-
       parse_list = params[:Body].split(/,\s*/)
       data[:pcvid], data[:shortcode] = parse_list.shift 2
       parse_list.each do |item| 
@@ -44,15 +42,10 @@ class SMS
           data[:loc] = match[0] 
         end
       end
-
-      return SMS.new data
-    else 
-      raise "Invalid Request"
     end
-  end
 
-  def self.list params
-    #function stub for future implementation of list command
+    raise ParseError.new unless data[:pcvid] && data[:shortcode]
+    SMS.new data
   end
 
   def self.send_raw phone, message
@@ -63,14 +56,6 @@ class SMS
         :to   => phone,
         :body => message
     )
-  end
-
-  def self.send_from_order order
-    self.send_raw order.phone, order.confirmation_message
-  end
-
-  def self.send_error phone, message
-    self.send_raw phone, friendly(message)
   end
 
   def self.friendly message

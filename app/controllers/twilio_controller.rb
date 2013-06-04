@@ -3,33 +3,33 @@ require 'twilio-ruby'
 class TwilioController < ApplicationController
 
 	def receive
-        Rails.logger.info( params )
-		# parse gives back and SMS object
-        begin
-            Rails.logger.info("Starting create method...")
-        	sms = SMS.parse params
-            Rails.logger.info(sms.data)
-            if sms.send_now?
-                sms.send
-            else
-                create_order sms
-            end
-        rescue => e
-            Rails.logger.info "error in parse: #{e.message}"
-            SMS.send_error params[:From], 'parse'
-        end
-        head :no_content
+    Rails.logger.info( "Received SMS: #{params}" )
+
+    case params[:Body]
+    when /list/i
+      list
+    else
+      create_order
+    end
+
+    head :no_content
 	end
 
-    private
+  private
 
-    def create_order sms
-        order = Order.create_from_text sms.data
-        SMS.send_from_order order
-        
-    rescue => e
-        Rails.logger.info "Error in create_order: #{e.message}"
-        SMS.send_error sms.data[:phone], e.message
-    end
+  def list
+    raise "Not Implemented"
+  end
+
+  def create_order
+    sms   = SMS.parse params
+    order = Order.create_from_text sms.data
+    SMS.send_from_order order
+  rescue SMS::ParseError => e
+    SMS.send_raw params[:From], I18n.t('order.unparseable')
+  rescue => e
+    Rails.logger.info "Error in `create_order`: #{e.message}"
+    SMS.send_raw params[:From], e.message
+  end
 
 end

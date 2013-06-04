@@ -74,15 +74,12 @@ describe SMS do
       its( :dosage_units ) { should eq 'mg' }
     end 
 
-    context "fails with single-space delimiter" do  
+    it "fails with single-space delimiter" do
       data = {
           :From => '+15555555555',
           :Body => '111111 aceta 30mg 50 ACCRA'
-        }	
-    	subject { OpenStruct.new SMS.parse(data).data }
-
-    	its( :phone )        { should eq '+15555555555' }
-    	its( :pcvid )        { should eq '111111 aceta 30mg 50 ACCRA' }
+        }
+      expect{ SMS.parse data }.to raise_error SMS::ParseError
     end
 
   end
@@ -91,9 +88,9 @@ describe SMS do
 
     context "succeeds with comma-space delimiter" do
       data = {
-          :From => '+15555555555',
-          :Body => '111111, bandg, 50, ACCRA'
-        }
+        :From => '+15555555555',
+        :Body => '111111, bandg, 50, ACCRA'
+      }
       subject { OpenStruct.new SMS.parse(data).data }
 
       its( :phone )        { should eq '+15555555555' }
@@ -117,15 +114,12 @@ describe SMS do
       its( :loc )          { should eq 'ACCRA' }
     end
 
-    context "fails with single-space delimiter" do  
+    it "fails with single-space delimiter" do  
       data = {
-          :From => '+15555555555',
-          :Body => '111111 bandg 50 ACCRA'
-        } 
-      subject { OpenStruct.new SMS.parse(data).data }
-
-      its( :phone )        { should eq '+15555555555' }
-      its( :pcvid )        { should eq '111111 bandg 50 ACCRA' }
+        :From => '+15555555555',
+        :Body => '111111 bandg 50 ACCRA'
+      }
+      expect{ SMS.parse data }.to raise_error SMS::ParseError
     end
 
   end
