@@ -10,7 +10,7 @@
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
-    
+
     <div class="input-group">
       <%= f.password_field :current_password, :class => 'input input--full', :placeholder => 'Current Password' %>
     </div>

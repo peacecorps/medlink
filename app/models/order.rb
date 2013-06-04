@@ -11,14 +11,15 @@ class Order < ActiveRecord::Base
 
   # UI wants users included with all output
   def as_json(args)
-    super(args.merge(include: [{:user => {:include => :country}}, {:requests => {:include => :supply}}]))
+    super(args.merge(include: [{:user => {:include => :country}},
+                               {:requests => {:include => :supply}}]))
   end
   default_scope eager_load(:user, :requests)
 
   scope :unfulfilled, where(fulfilled: false)
 
   def self.human_attribute_name(attr, options={})
-    { 
+    {
       user:   "PCV ID"
     }[attr] || super
   end
@@ -41,10 +42,8 @@ class Order < ActiveRecord::Base
 
   def confirmation_message
     if self.valid?
-      %{ Your request has been received. Fulfillment details will follow 
-         within 24 hrs via email and text message. }.squish
+      I18n.t "order.confirmation"
     else
-      Rails.logger.info( errors.full_messages.join "," )
       errors.full_messages.join ","
     end
   end
@@ -54,10 +53,8 @@ class Order < ActiveRecord::Base
   end
 
   def send_instructions!
-    Rails.logger.info "Sending SMS confirmation"
-    SMS.send_raw phone, instructions
-    Rails.logger.info "Sending confirmation email"
-    UserMailer.fulfillment_email self
+    SMSJob.enqueue phone, instructions
+    MailerJob.enqueue :fulfillment, id
   end
 
   def fulfill! instructions
@@ -70,7 +67,8 @@ class Order < ActiveRecord::Base
   def dup_hash
     {
       user:     user.id,
-      requests: requests.map { |r| [r.supply_id, r.dose, r.quantity] }.sort_by(&:first)
+      requests: requests.map { |r| [r.supply_id, r.dose, r.quantity]
+        }.sort_by(&:first)
     }
   end
 
