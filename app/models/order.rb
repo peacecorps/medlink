@@ -11,14 +11,15 @@ class Order < ActiveRecord::Base
 
   # UI wants users included with all output
   def as_json(args)
-    super(args.merge(include: [{:user => {:include => :country}}, {:requests => {:include => :supply}}]))
+    super(args.merge(include: [{:user => {:include => :country}},
+                               {:requests => {:include => :supply}}]))
   end
   default_scope eager_load(:user, :requests)
 
   scope :unfulfilled, where(fulfilled: false)
 
   def self.human_attribute_name(attr, options={})
-    { 
+    {
       user:   "PCV ID"
     }[attr] || super
   end
@@ -66,7 +67,8 @@ class Order < ActiveRecord::Base
   def dup_hash
     {
       user:     user.id,
-      requests: requests.map { |r| [r.supply_id, r.dose, r.quantity] }.sort_by(&:first)
+      requests: requests.map { |r| [r.supply_id, r.dose, r.quantity]
+        }.sort_by(&:first)
     }
   end
 

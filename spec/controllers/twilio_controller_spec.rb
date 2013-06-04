@@ -13,7 +13,8 @@ describe TwilioController do
     include SmsSpec::Helpers
 
     it 'routes lists' do
-      expect{ post :receive, From: number, Body: 'List supplies' }.to raise_error /Not Implemented/
+      expect{ post :receive, From: number, Body: 'List supplies'
+        }.to raise_error /Not Implemented/
     end
 
     it 'sends a confirmation message after adding an order' do
@@ -23,9 +24,10 @@ describe TwilioController do
     end
 
     it 'sends an error message on unparseable texts' do
-      post :receive, From: number, Body: 'This message should not parse as a valid order'
+      post :receive, From: number,
+        Body: 'This message should not parse as a valid order'
       open_last_text_message_for number
-      current_text_message.should have_body I18n.t 'order.unparseable'    
+      current_text_message.should have_body I18n.t 'order.unparseable'
     end
   end
 end

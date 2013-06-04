@@ -2,7 +2,7 @@ require 'twilio-ruby'
 
 class TwilioController < ApplicationController
 
-	def receive
+  def receive
     Rails.logger.info( "Received SMS: #{params}" )
 
     case params[:Body]
@@ -13,7 +13,7 @@ class TwilioController < ApplicationController
     end
 
     head :no_content
-	end
+  end
 
   private
 

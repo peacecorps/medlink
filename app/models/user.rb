@@ -14,7 +14,8 @@ class User < ActiveRecord::Base
   validates_presence_of :city, :country, :first_name, :last_name, :pcv_id
 
   def accessible_orders
-    is_admin? ? Order.where(users: {country_id: country_id}, fulfilled: false) : orders
+    is_admin? ? Order.where(users: {country_id: country_id},
+      fulfilled: false) : orders
   end
   def is_admin?
     role == 'admin'

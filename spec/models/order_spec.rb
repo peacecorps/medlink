@@ -7,12 +7,13 @@ describe Order do
     FactoryGirl.create :supply, shortcode: 'BND'
     FactoryGirl.create :supply, shortcode: 'SND'
   end
-  
+
   pending 'spec friendly validation messages'
 
   context 'from text' do
 
-    let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND', phone: '555-123-4567' } }
+    let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND',
+      phone: '555-123-4567' } }
 
     subject { Order.create_from_text data }
 
@@ -22,7 +23,7 @@ describe Order do
     its(:phone) { should eq '555-123-4567'     }
 
     it 'raises on invalid pcvid' do
-      expect do 
+      expect do
         data[:pcvid] = 'NON'
         Order.create_from_text data
       end.to raise_error /unrecognized pcvid/i

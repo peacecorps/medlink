@@ -13,7 +13,7 @@ Rhok::Application.routes.draw do
   resources :requests, only: [:create, :destroy, :update]
 
   root to: 'application#root'
-  
+
   match '/medrequest', to: 'twilio#receive'
   match '/supply_list' => 'application#root'
 

@@ -24,7 +24,7 @@ and you should be off to the races. You can check your setup by running the spec
 $ rake spec
 ```
 
-If it's green, you should be good to go. 
+If it's green, you should be good to go.
 
 A few components require a little extra setup to run:
 
@@ -40,7 +40,7 @@ and point your Twilio request URL at the address it specifies (http://something.
 
 #### Resque (background jobs)
 
-Resque requires Redis. On OSX, you can 
+Resque requires Redis. On OSX, you can
 
     brew install redis
 

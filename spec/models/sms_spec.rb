@@ -46,7 +46,7 @@ describe SMS do
       data = {
           :From => '+15555555555',
           :Body => '111111,aceta,30 mg,50,ACCRA'
-        } 
+        }
       subject { OpenStruct.new SMS.parse data }
 
       its( :phone )        { should eq '+15555555555' }
@@ -56,13 +56,13 @@ describe SMS do
       its( :loc )          { should eq 'ACCRA' }
       its( :dosage_value ) { should eq '30' }
       its( :dosage_units ) { should eq 'mg' }
-    end 
+    end
 
-    context "succeeds with comma-space delim and dosage value/units are spaced" do
+    context "succeeds w/ comma-space delim and dosage value/units are spaced" do
       data = {
           :From => '+15555555555',
           :Body => '111111, aceta, 30 mg, 50, ACCRA'
-        } 
+        }
       subject { OpenStruct.new SMS.parse data }
 
       its( :phone )        { should eq '+15555555555' }
@@ -72,7 +72,7 @@ describe SMS do
       its( :loc )          { should eq 'ACCRA' }
       its( :dosage_value ) { should eq '30' }
       its( :dosage_units ) { should eq 'mg' }
-    end 
+    end
 
     it "fails with single-space delimiter" do
       data = {
@@ -114,7 +114,7 @@ describe SMS do
       its( :loc )          { should eq 'ACCRA' }
     end
 
-    it "fails with single-space delimiter" do  
+    it "fails with single-space delimiter" do
       data = {
         :From => '+15555555555',
         :Body => '111111 bandg 50 ACCRA'
@@ -126,33 +126,33 @@ describe SMS do
 
   describe "list requests" do
 
-    context "can process list request", :list do  
+    context "can process list request", :list do
       data = {
           :From => '+15555555555',
           :Body => 'list?'
-        } 
+        }
       subject { OpenStruct.new SMS.parse data }
 
       its( :to )   { should eq '+15555555555' }
       its( :body ) { should eq 'meds, units, country' }
     end
 
-    context "can process list units", :list do  
+    context "can process list units", :list do
       data = {
           :From => '+15555555555',
           :Body => 'list units'
-        } 
+        }
       subject { OpenStruct.new SMS.parse data }
 
       its( :to )   { should eq '+15555555555' }
       its( :body ) { should eq 'mg, g, ml' }
     end
 
-    context "can process list country", :list do  
+    context "can process list country", :list do
       data = {
           :From => '+15555555555',
           :Body => 'list ghana'
-        } 
+        }
       subject { OpenStruct.new SMS.parse data }
 
       its( :to )   { should eq '+15555555555' }
