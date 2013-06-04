@@ -2,33 +2,16 @@ class SMS
 
   class ParseError < StandardError ; ; end
 
-  def initialize( data, send_now=false )
-    @data     = data
-    @send_now = send_now
-  end
+  attr_accessor :phone, :message
 
-  def data
-    @data
-  end
-
-  def send_now( bool )
-    @send_now = bool
-  end
-
-  def send_now?
-    @send_now
-  end
-
-  def send
-    send_raw data[:to], data[:body]
+  def initialize phone, message
+    @phone   = phone
+    @message = message
   end
 
   def self.parse params
-    # grab info from twilio post
-    body     = params[:Body]
-    data     = Hash.new
-    data[:phone] = params[:From]
-
+    body = params[:Body]
+    data = { phone: params[:From] }
 
     if body
       parse_list = params[:Body].split(/,\s*/)
@@ -45,16 +28,16 @@ class SMS
     end
 
     raise ParseError.new unless data[:pcvid] && data[:shortcode]
-    SMS.new data
+    data
   end
 
-  def self.send_raw phone, message
+  def deliver
     return unless ENV['TWILIO_ACCOUNT_SID']
-    client = Twilio::REST::Client.new ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH']
+    client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH'])
     client.account.sms.messages.create(
-        :from => ENV['TWILIO_PHONE_NUMBER'],
-        :to   => phone,
-        :body => message
+      from: ENV['TWILIO_PHONE_NUMBER'],
+      to:   phone,
+      body: message
     )
   end
 

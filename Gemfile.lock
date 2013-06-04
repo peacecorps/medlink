@@ -148,6 +148,10 @@ GEM
       redis-namespace (~> 1.2)
       sinatra (>= 0.9.2)
       vegas (~> 0.1.2)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
     rspec-core (2.13.1)
     rspec-expectations (2.13.0)
       diff-lcs (>= 1.1.3, < 2.0)
@@ -173,6 +177,8 @@ GEM
       rack-protection (~> 1.3)
       tilt (~> 1.3, >= 1.3.3)
     slop (3.4.5)
+    sms-spec (0.1.7)
+      rspec
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -223,6 +229,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 3.2.3)
   simplecov
+  sms-spec
   sqlite3
   twilio-ruby
   uglifier (>= 1.0.3)

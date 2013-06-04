@@ -22,14 +22,17 @@ class TwilioController < ApplicationController
   end
 
   def create_order
-    sms   = SMS.parse params
-    order = Order.create_from_text sms.data
-    SMS.send_from_order order
-  rescue SMS::ParseError => e
-    SMS.send_raw params[:From], I18n.t('order.unparseable')
-  rescue => e
-    Rails.logger.info "Error in `create_order`: #{e.message}"
-    SMS.send_raw params[:From], e.message
+    response = begin
+      data  = SMS.parse params
+      order = Order.create_from_text data
+      order.confirmation_message
+    rescue SMS::ParseError => e
+      I18n.t 'order.unparseable'
+    rescue => e
+      Rails.logger.info "Error in `create_order`: #{e.message}"
+      friendly e.message
+    end
+    SMS.new(params[:From], response).deliver
   end
 
 end

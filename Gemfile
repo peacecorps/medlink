@@ -37,6 +37,7 @@ end
 
 group :test do
   gem 'email_spec'
+  gem 'sms-spec'
 end
 
 group :production do

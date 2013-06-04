@@ -10,21 +10,22 @@ describe TwilioController do
   end
 
   describe "POST 'receive'" do
+    include SmsSpec::Helpers
+
     it 'routes lists' do
       expect{ post :receive, From: number, Body: 'List supplies' }.to raise_error /Not Implemented/
     end
 
     it 'sends a confirmation message after adding an order' do
-      SMS.should_receive(:send_raw).and_return(true)
       post :receive, From: number, Body: '123456, ASDF, 30mg, 50, Somewhere'
+      open_last_text_message_for number
+      current_text_message.should have_body I18n.t 'order.confirmation'
     end
 
     it 'sends an error message on unparseable texts' do
-      SMS.should_receive(:send_raw).
-        with(number, I18n.t('order.unparseable')).
-        and_return(true)
-
       post :receive, From: number, Body: 'This message should not parse as a valid order'
+      open_last_text_message_for number
+      current_text_message.should have_body I18n.t 'order.unparseable'    
     end
   end
 end
