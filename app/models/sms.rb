@@ -9,6 +9,12 @@ class SMS
     @message = message
   end
 
+  def self.configured?
+    %w{ ACCOUNT_SID AUTH PHONE_NUMBER }.all? do |key|
+      ENV["TWILIO_#{key}"].present?
+    end
+  end
+
   def self.parse params
     body = params[:Body]
     data = { phone: params[:From] }
@@ -32,7 +38,8 @@ class SMS
   end
 
   def deliver
-    return unless ENV['TWILIO_ACCOUNT_SID']
+    return unless SMS.configured? || defined?(SmsSpec)
+    # In the test env, this client should be monkey-patched by sms-spec
     client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'],
                                       ENV['TWILIO_AUTH'])
     client.account.sms.messages.create(
