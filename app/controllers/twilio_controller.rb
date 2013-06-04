@@ -2,7 +2,7 @@ require 'twilio-ruby'
 
 class TwilioController < ApplicationController
 
-	def create
+	def receive
         Rails.logger.info( params )
 		# parse gives back and SMS object
         begin
