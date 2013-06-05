@@ -40,7 +40,7 @@ describe OrdersController do
       FactoryGirl.create(:order, user_id: current_user.id)
     end
     it "returns http success" do
-      put :update, id: example.id, order: {phone: '678-315-5999'}
+      put :update, id: example.id, order: {phone: '678-315-5999', email: 'test@example.com'}
       response.should be_success
     end
   end
