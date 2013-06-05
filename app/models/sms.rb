@@ -50,18 +50,16 @@ class SMS
   end
 
   def self.friendly message
-    case message
-    when /parse/i
-      I18n.t! "order.unparseable"
+    translation = case message
     when /unrecognized pcvid/i
-      I18n.t! "order.unrecognized_pcvid"
+      "order.unrecognized_pcvid"
     when /unrecognized shortcode/i
-      I18n.t! "order.unrecognized_shortcode"
+      "order.unrecognized_shortcode"
     when /duplicate/i
-      I18n.t! "order.duplicate_order"
-    else
-      message
-    end.squish
+      "order.duplicate_order"
+    end
+
+    I18n.t!(translation).squish
   end
 
 end

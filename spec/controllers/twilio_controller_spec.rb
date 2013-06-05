@@ -18,17 +18,28 @@ describe TwilioController do
         }.to raise_error /Not Implemented/
     end
 
-    it 'sends a confirmation message after adding an order' do
-      post :receive, From: number, Body: '123456, ASDF, 30mg, 50, Somewhere'
-      open_last_text_message_for number
-      current_text_message.should have_body I18n.t 'order.confirmation'
+    # -- Friendly messages -----
+    {
+      unparseable:            'This message should not parse as a valid order',
+      confirmation:           '123456, ASDF, 30mg, 50, Somewhere',
+      unrecognized_pcvid:     'XXX,    ASDF, 30mg, 50, Somewhere',
+      unrecognized_shortcode: '123456, XXX,  30mg, 50, Somewhere'
+    }.each do |key, msg|
+      it "sends order.#{key} when appropriate" do
+        post :receive, From: number, Body: msg
+        open_last_text_message_for number
+        current_text_message.should have_body I18n.t "order.#{key}"
+      end
     end
 
-    it 'sends an error message on unparseable texts' do
-      post :receive, From: number,
-        Body: 'This message should not parse as a valid order'
-      open_last_text_message_for number
-      current_text_message.should have_body I18n.t 'order.unparseable'
+    it 'notifies on duplicate submission' do
+      msg = '123456, ASDF, 30mg, 50, Somewhere'
+      3.times do
+        post :receive, From: number, Body: msg
+        open_last_text_message_for number
+      end
+      current_text_message.should have_body I18n.t "order.duplicate_order"
     end
+
   end
 end

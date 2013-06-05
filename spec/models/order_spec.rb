@@ -8,8 +8,6 @@ describe Order do
     FactoryGirl.create :supply, shortcode: 'SND'
   end
 
-  pending 'spec friendly validation messages'
-
   context 'from text' do
 
     let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND',
