@@ -12,7 +12,7 @@ angular.module('medSupplies.controllers')
     $rootScope.flash = [] if not $rootScope.flash
     $scope.messages = [
       'Your request is estimated to arrive at your location on this date.'
-      'We do not have your requested item in stock please purchase elsewhere and allow us to reimburse you.'
+      'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.'
       'Please pick up your request at this by this date.'
       'Please contact me at this concerning your request.'
     ]
