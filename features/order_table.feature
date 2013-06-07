@@ -38,7 +38,7 @@ Feature: Visit "Order Table" Web Page
 #U#    Then I should see "Back to all Orders" (inside span)
 #U#    Then I should see "Order Form:" (inside span)
 #U#    Then I should see "Order Action:" inside "h4"
-#U# 
+#U#
 #U#    Then I should see "Delivered to PCV" inside "label"
 #U#    Then I should see "PCV Purchase" inside "label"
 #U#    Then I should see "Delivered to Hub" inside "label"

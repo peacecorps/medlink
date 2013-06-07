@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SMSJob do 
+describe SMSJob do
   include SmsSpec::Helpers
 
   it 'just sends a text message' do
