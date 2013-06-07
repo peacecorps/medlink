@@ -1,6 +1,6 @@
 require 'resque/server'
 
-Rhok::Application.routes.draw do
+Medlink::Application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
 
   resources :orders

@@ -1,7 +1,7 @@
-[![Code Climate](https://codeclimate.com/github/atlrug-rhok/rhok-rails.png)](https://codeclimate.com/github/atlrug-rhok/rhok-rails)
-[![Build Status](https://travis-ci.org/atlrug-rhok/rhok-rails.png?branch=master)](https://travis-ci.org/atlrug-rhok/rhok-rails)
+[![Code Climate](https://codeclimate.com/github/atlrug-rhok/medlink.png)](https://codeclimate.com/github/atlrug-rhok/medlink)
+[![Build Status](https://travis-ci.org/atlrug-rhok/medlink.png?branch=master)](https://travis-ci.org/atlrug-rhok/medlink)
 
-## Peace Corps Medical Supplies
+## PC Medlink - Peace Corps Medical Supplies
 
 This project grew out of a [National Day of Civic Hacking](http://hackforchange.org/). You can see a live version of the site at [www.pcmedicalsupplies.org](www.pcmedicalsupplies.org).
 
@@ -12,7 +12,7 @@ If you have any questions at all, feel free to email [James](https://github.com/
 To get started with a local copy of the project, run
 
 ```bash
-$ git clone git@github.com:atlrug-rhok/rhok-rails.git
+$ git clone git@github.com:atlrug-rhok/medlink.git
 $ bundle
 $ rake db:setup
 ```
