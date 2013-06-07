@@ -12,8 +12,6 @@ gem 'resque'
 gem 'font-awesome-rails'
 gem 'angularjs-rails-resource'
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem 'sass-rails'
   gem 'compass-rails'
@@ -24,22 +22,21 @@ end
 
 group :development do
   gem 'sqlite3'
-end
-
-group :development, :test do
-  gem 'rspec-rails'
-  gem 'simplecov'
-  gem 'factory_girl_rails'
   gem 'pry'
-  gem 'binding_of_caller'
   gem 'letter_opener'
+  gem 'simplecov'
 end
 
+gem 'rspec-rails', group: [:development, :test]
 group :test do
+  gem 'factory_girl_rails'
   gem 'email_spec'
   gem 'sms-spec'
+
+  #U# gem 'cucumber-rails', :require => false
+  #U# gem 'database_cleaner'
 end
 
 group :production do
-  gem 'pg'  # Only needed for Heroku deployment
+  gem 'pg'
 end

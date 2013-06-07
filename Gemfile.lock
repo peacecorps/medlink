@@ -32,8 +32,6 @@ GEM
     angularjs-rails-resource (0.1.6)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
-    binding_of_caller (0.7.1)
-      debug_inspector (>= 0.0.1)
     builder (3.0.4)
     chunky_png (1.2.8)
     coderay (1.0.9)
@@ -50,7 +48,6 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
-    debug_inspector (0.0.2)
     devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -68,7 +65,7 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
-    font-awesome-rails (3.1.1.2)
+    font-awesome-rails (3.1.1.3)
       railties (>= 3.2, < 5.0)
     fssm (0.2.10)
     haml (4.0.3)
@@ -78,7 +75,7 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
-    hike (1.2.2)
+    hike (1.2.3)
     i18n (0.6.1)
     journey (1.0.4)
     jquery-rails (3.0.0)
@@ -201,7 +198,6 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails-resource
-  binding_of_caller
   coffee-rails
   compass-rails
   devise

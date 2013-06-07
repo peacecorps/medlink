@@ -9,6 +9,12 @@ class SMS
     @message = message
   end
 
+  def self.configured?
+    %w{ ACCOUNT_SID AUTH PHONE_NUMBER }.all? do |key|
+      ENV["TWILIO_#{key}"].present?
+    end
+  end
+
   def self.parse params
     body = params[:Body]
     data = { phone: params[:From] }
@@ -32,7 +38,8 @@ class SMS
   end
 
   def deliver
-    return unless ENV['TWILIO_ACCOUNT_SID']
+    return unless SMS.configured? || defined?(SmsSpec)
+    # In the test env, this client should be monkey-patched by sms-spec
     client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'],
                                       ENV['TWILIO_AUTH'])
     client.account.sms.messages.create(
@@ -43,18 +50,16 @@ class SMS
   end
 
   def self.friendly message
-    case message
-    when /parse/i
-      I18n.t! "order.unparseable"
+    translation = case message
     when /unrecognized pcvid/i
-      I18n.t! "order.unrecognized_pcvid"
+      "order.unrecognized_pcvid"
     when /unrecognized shortcode/i
-      I18n.t! "order.unrecognized_shortcode"
+      "order.unrecognized_shortcode"
     when /duplicate/i
-      I18n.t! "order.duplicate_order"
-    else
-      message
-    end.squish
+      "order.duplicate_order"
+    end
+
+    I18n.t!(translation).squish
   end
 
 end

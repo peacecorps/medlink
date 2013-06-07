@@ -1,6 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/atlrug-rhok/rhok-rails.png)](https://codeclimate.com/github/atlrug-rhok/rhok-rails)
-[![Build Status](https://travis-ci.org/github/atlrug-rhok/rhok-rails.png)](https://travis-ci.org/github/atlrug-rhok/rhok-rails)
-
+[![Build Status](https://travis-ci.org/atlrug-rhok/rhok-rails.png?branch=master)](https://travis-ci.org/atlrug-rhok/rhok-rails)
 
 ## Peace Corps Medical Supplies
 

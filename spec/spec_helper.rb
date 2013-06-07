@@ -3,12 +3,20 @@ ENV["RAILS_ENV"] ||= 'test'
 # Run specs under COVERAGE=true to generate coverage reports
 if ENV["COVERAGE"]
   require 'simplecov'
-  SimpleCov.start 'rails'
+  SimpleCov.start 'rails' do
+    add_group "Jobs", "app/jobs"
+  end
 end
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+
+# Pry is useful locally but we don't want to require to for e.g. Travis
+begin
+  require 'pry'
+rescue LoadError
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

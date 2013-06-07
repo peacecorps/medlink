@@ -11,5 +11,6 @@ notifications:
     recipients:
       - gmacie@hotmail.com
       - jasnow@hotmail.com
+      - jamesdabbs@gmail.com
     on_success: change
     on_failure: always

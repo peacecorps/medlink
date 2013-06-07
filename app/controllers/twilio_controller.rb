@@ -30,7 +30,7 @@ class TwilioController < ApplicationController
       I18n.t 'order.unparseable'
     rescue => e
       Rails.logger.info "Error in `create_order`: #{e.message}"
-      friendly e.message
+      SMS.friendly e.message
     end
     SMS.new(params[:From], response).deliver
   end
