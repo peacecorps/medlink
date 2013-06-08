@@ -14,7 +14,6 @@ angular.module('medSupplies.controllers')
       'Your request is estimated to arrive at your location on this date.'
       'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.'
       'Please pick up your request at this by this date.'
-      'Please contact me at this concerning your request.'
     ]
 
     $scope.order = {}
