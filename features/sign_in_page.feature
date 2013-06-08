@@ -60,6 +60,6 @@ Feature: Visit "Sign In" Web Page
 #U#        -- <number>    <name>    <quantity, like 30mg>
 #U#        -- Order Action:
 #U#        -- 5 radio buttons: "Delivered to PCV", "PCV Purchase",
-#U#            "Delivered to Hub", "Other"
+#U#            "Delivered to Hub", "Special Instructions"
 #U#        -- Message box (160 chars)
 #U#        -- Send button

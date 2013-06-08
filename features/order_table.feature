@@ -42,6 +42,6 @@ Feature: Visit "Order Table" Web Page
 #U#    Then I should see "Delivered to PCV" inside "label"
 #U#    Then I should see "PCV Purchase" inside "label"
 #U#    Then I should see "Delivered to Hub" inside "label"
-#U#    Then I should see "Other" inside "label"
+#U#    Then I should see "Special Instructions" inside "label"
 #U#    Then I should see field "Message" (placeholder)
 #U#    Then I should see "Send"
