@@ -28,21 +28,21 @@ describe OrdersController do
   end
 
   describe "GET 'destroy'" do
-    let :example do
+    let :order do
       FactoryGirl.create(:order, user_id: current_user.id)
     end
     it "returns http success" do
-      delete 'destroy', id: example.id
+      delete 'destroy', id: order.id
       response.should be_success
     end
   end
 
   describe "PUT 'update'" do
-    let :example do
+    let :order do
       FactoryGirl.create(:order, user_id: current_user.id)
     end
     it "returns http success" do
-      put :update, id: example.id, order: {
+      put :update, id: order.id, order: {
         phone: '678-315-5999', email: 'test@example.com'}
       response.should be_success
     end

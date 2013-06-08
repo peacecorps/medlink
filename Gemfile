@@ -34,8 +34,8 @@ group :test do
   gem 'email_spec'
   gem 'sms-spec'
 
-  #U# gem 'cucumber-rails', :require => false
-  #U# gem 'database_cleaner'
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
 end
 
 group :production do
