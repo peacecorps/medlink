@@ -26,6 +26,7 @@ group :development do
   gem 'pry'
   gem 'letter_opener'
   gem 'simplecov'
+  gem 'coveralls', require: false
 end
 
 gem 'rspec-rails', group: [:development, :test]
