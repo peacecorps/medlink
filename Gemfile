@@ -7,6 +7,7 @@ gem 'twilio-ruby'
 
 gem 'devise'
 
+gem 'unicorn'
 gem 'resque'
 
 gem 'font-awesome-rails'
