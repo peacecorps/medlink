@@ -11,7 +11,9 @@ describe OrdersController do
       post 'create', order: {user_id: current_user.id}
       response.should be_success
     end
+    it "returns http failure (bad order create params)"
   end
+
   describe "POST 'create' nested requests" do
     let (:supply) { FactoryGirl.create(:supply) }
     it "returns http success" do
@@ -44,6 +46,11 @@ describe OrdersController do
         phone: '678-315-5999', email: 'test@example.com'}
       response.should be_success
     end
+    it "returns http failure (bad order update params)"
+  end
+
+  describe "GET 'show'" do
+    it "add show order spec"
   end
 
   describe "GET 'index'" do
