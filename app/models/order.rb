@@ -52,7 +52,8 @@ class Order < ActiveRecord::Base
   end
 
   def send_instructions!
-    SMSJob.enqueue phone, instructions
+    to = self.phone || user.phone
+    SMSJob.enqueue(to, instructions) if to
     MailerJob.enqueue :fulfillment, id
   end
 
