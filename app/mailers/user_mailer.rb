@@ -7,6 +7,7 @@ class UserMailer < ActionMailer::Base
 
   def fulfillment id
     @order = Order.find id
-    mail to: @order.email, subject: "Your Order Has Been Fufilled"
+    email = @order.email || @order.user.email
+    mail to: email, subject: "Your Order Has Been Fufilled"
   end
 end
