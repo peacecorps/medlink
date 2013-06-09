@@ -23,4 +23,9 @@ after_fork do |server, worker|
 
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.establish_connection
+
+  SuckerPunch.config do
+    queue name: :mailer_job, worker: MailerJob, workers: 3
+    queue name: :sms_job,    worker: SMSJob,    workers: 5
+  end
 end

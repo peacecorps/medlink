@@ -4,6 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-require 'resque/tasks'
-
 Medlink::Application.load_tasks

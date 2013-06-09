@@ -1,7 +1,8 @@
 class MailerJob < BaseJob
-  @queue = :email
-
-  def self.perform method, *args
-    UserMailer.send(method, *args).try :deliver
+  def perform method, *args
+    # Need to be careful not to exhaust the connection pool
+    ActiveRecord::Base.connection_pool.with_connection do
+      UserMailer.send(method, *args).try :deliver
+    end
   end
 end

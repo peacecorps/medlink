@@ -1,5 +1,3 @@
-require 'resque/server'
-
 Medlink::Application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
 
@@ -16,6 +14,4 @@ Medlink::Application.routes.draw do
 
   match '/medrequest', to: 'twilio#receive'
   match '/supply_list' => 'application#root'
-
-  mount Resque::Server, at: '/resque', as: 'resque'
 end

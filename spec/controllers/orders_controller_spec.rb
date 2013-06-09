@@ -37,7 +37,7 @@ describe OrdersController do
     end
   end
 
-  describe "PUT 'update'" do
+  describe "PUT 'update'", :worker do
     let :order do
       FactoryGirl.create(:order, user_id: current_user.id)
     end

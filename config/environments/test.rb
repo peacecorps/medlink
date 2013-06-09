@@ -37,12 +37,4 @@ Medlink::Application.configure do
 
   # For email specs
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-
-  # Run all jobs syncronously in test mode
-  class TestQueue
-    def self.enqueue job, *args
-      job.perform *args
-    end
-  end
-  config.queue = TestQueue
 end

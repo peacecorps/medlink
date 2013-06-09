@@ -8,7 +8,7 @@ gem 'twilio-ruby'
 gem 'devise'
 
 gem 'unicorn'
-gem 'resque'
+gem 'sucker_punch'
 
 gem 'font-awesome-rails'
 gem 'angularjs-rails-resource'

@@ -38,17 +38,17 @@ $ localtunnel 3000  # Assuming your development server is running on port 3000
 
 and point your Twilio request URL at the address it specifies (http://something.localtunnel.com).
 
-#### Resque (background jobs)
+#### Sidekiq (background jobs)
 
-Resque requires Redis. On OSX, you can
+Sidekiq requires Redis. On OSX, you can
 
     brew install redis
 
 Installation should be similar with your package manager of choice. To start a background worker, run
 
-    $ QUEUE=* bundle exec rake environment resque:work
+    $ bundle exec sidekiq
 
-Note that, unlike the development server, Resque workes do not automatically restart as files are changed.
+Note that, unlike the development server, Sidekiq workes do not automatically restart as files are changed.
 
 ## Contributors
 
