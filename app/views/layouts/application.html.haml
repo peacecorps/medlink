@@ -34,11 +34,13 @@
             %i.icon-cog
           %ul.nav.nav--dropdown(ng-class="{'is-active': open}")
             %li
-              %a(href="#") About
+              / %a(href="#") About
+              = link_to 'About', root_path, target: '_self'
             %li
               = link_to 'Settings', edit_user_registration_path, target: '_self'
             %li
-              %a(href="#") Help
+              /%a(href="#") Help
+              = link_to 'Help', root_path, target: '_self'
             %li
               = link_to 'Logout', destroy_user_session_path, target: '_self'
     %section(ng-view)
