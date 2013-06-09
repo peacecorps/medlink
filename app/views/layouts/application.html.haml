@@ -21,7 +21,7 @@
 .l-wrapper
   %header.l-sidebar
     .l-sidebar__inner
-      %img#brand(src="/logo.png")
+      = link_to image_tag("/logo.png", id: 'brand'), root_path, target: '_self'
       %hgroup
         %h1 Peace Corps
         %h4 Medical Supplies
