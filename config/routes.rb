@@ -9,9 +9,10 @@ Medlink::Application.routes.draw do
 
   resources :supplies, only: [:index]
   resources :requests, only: [:create, :destroy, :update]
-
+  
+  get '/about' => 'application#about'
+  get '/help'  => 'application#help'
   root to: 'application#root'
 
-  match '/medrequest', to: 'twilio#receive'
-  match '/supply_list' => 'application#root'
+  match '/medrequest'  => 'twilio#receive'
 end

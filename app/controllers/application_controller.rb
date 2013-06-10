@@ -5,4 +5,12 @@ class ApplicationController < ActionController::Base
     authenticate_user!
     render 'layouts/index'
   end
+
+  def about
+    render 'layouts/about'
+  end
+
+  def help
+    render 'layouts/help'
+  end
 end
