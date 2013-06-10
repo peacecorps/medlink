@@ -16,12 +16,12 @@
       - flash.each do |name, msg|
         %div(class="alert alert-#{name}")
           = msg
-      %div.flash__message.alert(ng-cloak ng-repeat="message in flash track by $index") {{message}}
+      / %div.flash__message.alert(ng-cloak ng-repeat="message in flash track by $index") {{message}}
 
 .l-wrapper
   %header.l-sidebar
     .l-sidebar__inner
-      %img#brand(src="/logo.png")
+      = link_to image_tag("/logo.png", id: 'brand'), root_path, target: '_self'
       %hgroup
         %h1 Peace Corps
         %h4 Medical Supplies
@@ -34,11 +34,13 @@
             %i.icon-cog
           %ul.nav.nav--dropdown(ng-class="{'is-active': open}")
             %li
-              %a(href="#") About
+              / %a(href="#") About
+              = link_to 'About', root_path, target: '_self'
             %li
               = link_to 'Settings', edit_user_registration_path, target: '_self'
             %li
-              %a(href="#") Help
+              /%a(href="#") Help
+              = link_to 'Help', root_path, target: '_self'
             %li
               = link_to 'Logout', destroy_user_session_path, target: '_self'
     %section(ng-view)
