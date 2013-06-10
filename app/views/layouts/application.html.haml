@@ -25,7 +25,7 @@
       %hgroup
         %h1 Peace Corps
         %h4 Medical Supplies
-        %span.badge= current_user.try(:country).try(:name).try(:titleize)
+        %span.badge(ng-show="current_user") {{current_user.country.name | lowercase}}
   %div.l-main
     .l-header
       %nav

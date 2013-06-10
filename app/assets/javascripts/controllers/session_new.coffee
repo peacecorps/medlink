@@ -13,7 +13,8 @@ angular.module('medSupplies.controllers')
 
     $scope.login = ->
       $http.post('/users/sign_in.json', {user: $scope.user})
-        .success ->
+        .success (res) ->
+          $scope.$emit 'auth:update', res.user
           $location.path '/'
         .error (e) ->
           $scope.$emit 'flash:add', 'Invalid email or password.'

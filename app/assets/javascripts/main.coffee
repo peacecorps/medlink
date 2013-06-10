@@ -63,9 +63,16 @@ angular.module('medSupplies', [
 
   ($rootScope, $location, CurrentUser) ->
     $rootScope.flash = []
+    $rootScope.current_user = CurrentUser.get()
 
     $rootScope.$on 'flash:add', (e, message) ->
       $rootScope.flash.push message
+
+    $rootScope.$on 'auth:update', (e, user) ->
+      $rootScope.current_user = user
+
+    $rootScope.$on 'auth:destroy', (e) ->
+      $rootScope.current_user = null
 
     ###
     CurrentUser.get().then (user) ->

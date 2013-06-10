@@ -3,7 +3,7 @@ class SessionsController < Devise::SessionsController
 
   def create
     warden.authenticate!(scope: resource_name, recall: "#{controller_path}#invalid_login_attempt")
-    render json: {success: true}
+    render json: {success: true, user: current_user}
   end
 
   def destroy
