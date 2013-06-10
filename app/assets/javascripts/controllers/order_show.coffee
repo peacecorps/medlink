@@ -13,7 +13,7 @@ angular.module('medSupplies.controllers')
     $scope.messages = [
       'Your request is estimated to arrive at your location on this date.'
       'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.'
-      'Please pick up your request at this by this date.'
+      'Your request is estimated to arrive at your location on this date [enter date here].'
     ]
 
     $scope.order = {}
