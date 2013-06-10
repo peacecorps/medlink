@@ -38,6 +38,16 @@ angular.module('medSupplies', [
       controller: 'OrderShowCtrl'
     )
 
+    .when('/users/sign_in',
+      templateUrl: 'session_new.html'
+      controller: 'SessionNewCtrl'
+    )
+
+    .when('/users/sign_out',
+      templateUrl: 'session_new.html'
+      controller: 'SessionDestroyCtrl'
+    )
+
     .when('/',
       redirectTo: '/orders'
     )
@@ -52,6 +62,12 @@ angular.module('medSupplies', [
   'CurrentUser',
 
   ($rootScope, $location, CurrentUser) ->
+    $rootScope.flash = []
+
+    $rootScope.$on 'flash:add', (e, message) ->
+      $rootScope.flash.push message
+
+    ###
     CurrentUser.get().then (user) ->
       $rootScope.user = user
       path = $location.path()
@@ -60,4 +76,5 @@ angular.module('medSupplies', [
           $location.path '/orders/new'
         else
           $location.path '/orders/'
+    ###
 ])

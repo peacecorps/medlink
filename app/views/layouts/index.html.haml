@@ -41,8 +41,8 @@
 %script{type: "text/ng-template", id: "order_form.html"}
 
   %h3
-    %span #{current_user.first_name} #{current_user.last_name}
-    %small #{current_user.pcv_id}
+    %span {{current_user.first_name}} {{current_user.last_name}}
+    %small {{current_user.pcv_id}}
 
   %form.form--order(ng-submit="submitOrder()")
     .form__section(ng-repeat="request in order.requestsAttributes")
@@ -118,3 +118,16 @@
 
       .btn-group
         %button.btn.btn--primary(type="submit") Send
+
+%script{type: "text/ng-template", id: "session_new.html"}
+  %form(ng-submit="login()")
+    %h2 Sign in
+    .form__section
+      .input-group
+        %input.input--full(type="email" autofocus="true" placeholder="Email" ng-model="user.email")
+      .input-group
+        %input.input--full(type="password" placeholder="Password" ng-model="user.password")
+    .btn-group
+      %button.btn.btn--primary(type="submit") Sign in
+      %a.btn(href="/users/sign_up") Sign up
+      %a.btn(href="/users/password/new") Forgot your password?

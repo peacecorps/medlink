@@ -16,7 +16,7 @@
       - flash.each do |name, msg|
         %div(class="alert alert-#{name}")
           = msg
-      / %div.flash__message.alert(ng-cloak ng-repeat="message in flash track by $index") {{message}}
+      %div.flash__message.alert(ng-cloak ng-repeat="message in flash track by $index") {{message}}
 
 .l-wrapper
   %header.l-sidebar
@@ -37,36 +37,13 @@
             /   %a(href="#") About
             /   = link_to 'About', about_path, target: '_self'
             %li
-              = link_to 'Settings', edit_user_registration_path, target: '_self'
+              = link_to 'Settings', '/users/edit'
             %li
               /%a(href="#") Help
               = link_to 'Help', help_path, target: '_self'
             %li
-              = link_to 'Logout', destroy_user_session_path, target: '_self'
+              %a(href="#/users/sign_out") Logout
     %section(ng-view)
-
-    %script{type: "text/ng-template", id: "order_list.html"}
-      %table.table.table--bordered.table--striped.table--linked
-        %thead
-          %tr
-            %th Requester
-            %th Request Date
-            %th Location
-            %th Requested Supplies
-            %th
-        %tbody
-          %tr(ng-repeat="order in orders" ng-click="viewOrder(order.id)")
-            %td
-              %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
-              %small.cell--secondary {{order.user.pcvId}}
-            %td
-              %span {{order.createdAt | date:'shortDate'}}
-              %small.cell--secondary {{order.createdAt | date:'HH:mm'}}
-            %td
-              %span.cell--primary City
-            %td {{order.requests | joinSupplies}}
-            %td.cell--arrow
-              %i.icon-caret-right
 
     = yield
 
