@@ -38,18 +38,6 @@ $ localtunnel 3000  # Assuming your development server is running on port 3000
 
 and point your Twilio request URL at the address it specifies (http://something.localtunnel.com).
 
-#### Sidekiq (background jobs)
-
-Sidekiq requires Redis. On OSX, you can
-
-    brew install redis
-
-Installation should be similar with your package manager of choice. To start a background worker, run
-
-    $ bundle exec sidekiq
-
-Note that, unlike the development server, Sidekiq workes do not automatically restart as files are changed.
-
 ## Contributors
 
 Special thanks to the consulting Peace Corp members, without whom none of this would be possible:
