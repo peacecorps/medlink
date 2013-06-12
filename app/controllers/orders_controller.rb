@@ -1,9 +1,12 @@
 class OrdersController < ApplicationController
   before_filter :authenticate_user!
+
   respond_to :json
+  respond_to :csv, only: :index
 
   def index
-    respond_with current_user.accessible_orders.all
+    @orders = current_user.accessible_orders.all
+    respond_with @orders
   end
 
   def show
