@@ -12,7 +12,7 @@
               Download
               %i.icon-download-alt
     %tbody
-      %tr(ng-repeat="order in orders" ng-click="viewOrder(order.id)")
+      %tr(ng-repeat="order in orders | filter:unfulfilled" ng-click="viewOrder(order.id)")
         %td
           %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
           %small.cell--secondary {{order.user.pcvId}}

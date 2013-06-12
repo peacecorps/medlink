@@ -10,4 +10,7 @@ angular.module('medSupplies.controllers')
 
     $scope.viewOrder = (orderId) ->
       $location.path('/orders/' + orderId)
+
+    $scope.unfulfilled = (order) ->
+      order.fulfilled == false
 ])

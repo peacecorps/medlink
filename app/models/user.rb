@@ -14,12 +14,12 @@ class User < ActiveRecord::Base
   validates_presence_of :city, :country, :first_name, :last_name, :pcv_id
   validates :pcv_id, uniqueness: true
 
-  def accessible_orders
-    is_admin? ? Order.where(users: {country_id: country_id},
-      fulfilled: false) : orders
-  end
   def is_admin?
     role == 'admin'
+  end
+  
+  def accessible_orders
+    is_admin? ? Order.where(users: {country_id: country_id}) : orders
   end
 
   def self.lookup str
