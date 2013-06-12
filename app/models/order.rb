@@ -47,21 +47,10 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def confirm!
-    update_attribute :confirmed, true
-  end
-
   def send_instructions!
     to = self.phone || user.phone
     SMSJob.enqueue(to, instructions) if to
     MailerJob.enqueue :fulfillment, id
-  end
-
-  def fulfill! instructions
-    update_attributes({
-      fulfilled:    true,
-      instructions: instructions
-    })
   end
 
   def dup_hash
