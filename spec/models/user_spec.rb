@@ -58,14 +58,16 @@ describe User do
   context 'can send reset instructions' do
     before(:each) { ActionMailer::Base.deliveries = [] }
 
-    it 'asyncronously' do
-      MailerJob.should_receive(:enqueue).with(:forgotten_password, subject.id).and_call_original
+    it 'asyncronously', :worker do
+      MailerJob.should_receive(:enqueue).with(:forgotten_password,
+        subject.id).and_call_original
       subject.send_reset_password_instructions
       expect( ActionMailer::Base ).to have_exactly(1).deliveries
     end
 
     it 'syncronously' do
-      MailerJob.should_not_receive(:enqueue).with(:forgotten_password, subject.id)
+      MailerJob.should_not_receive(:enqueue).with(:forgotten_password,
+        subject.id)
       subject.send_reset_password_instructions async: false
       expect( ActionMailer::Base ).to have_exactly(1).deliveries
     end

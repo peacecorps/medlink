@@ -7,7 +7,8 @@ gem 'twilio-ruby'
 
 gem 'devise'
 
-gem 'resque'
+gem 'unicorn'
+gem 'sucker_punch'
 
 gem 'font-awesome-rails'
 gem 'angularjs-rails-resource'
@@ -25,6 +26,7 @@ group :development do
   gem 'pry'
   gem 'letter_opener'
   gem 'simplecov'
+  gem 'coveralls', require: false
 end
 
 gem 'rspec-rails', group: [:development, :test]
@@ -33,10 +35,11 @@ group :test do
   gem 'email_spec'
   gem 'sms-spec'
 
-  #U# gem 'cucumber-rails', :require => false
-  #U# gem 'database_cleaner'
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
 end
 
 group :production do
+  gem 'newrelic_rpm'
   gem 'pg'
 end

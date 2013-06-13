@@ -1,4 +1,4 @@
-Rhok::Application.configure do
+Medlink::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -36,17 +36,6 @@ Rhok::Application.configure do
   config.assets.debug = true
 
   # For Devise
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
   config.action_mailer.delivery_method = :letter_opener
-
-  # Run jobs asyncronously, but only if redis is connected
-  class DevelopmentQueue
-    def self.enqueue job, *args
-      Resque.enqueue job *args
-    rescue Redis::CannotConnectError => e
-      Rails.logger.warn "Could not connect to Redis. Executing job inline."
-      job.perform *args
-    end
-  end
-  config.queue = DevelopmentQueue
 end

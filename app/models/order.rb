@@ -4,7 +4,6 @@ class Order < ActiveRecord::Base
 
   belongs_to :user
   has_many :requests
-  default_scope order(orders: 'created_at DESC')
 
   validates_presence_of :user,   message: "unrecognized"
   accepts_nested_attributes_for :requests
@@ -14,7 +13,7 @@ class Order < ActiveRecord::Base
     super(args.merge(include: [{:user => {:include => :country}},
                                {:requests => {:include => :supply}}]))
   end
-  default_scope eager_load(:user, :requests)
+  default_scope eager_load(:user, :requests).order('"orders"."created_at" DESC')
 
   scope :unfulfilled, where(fulfilled: false)
 
@@ -48,20 +47,10 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def confirm!
-    update_attribute :confirmed, true
-  end
-
   def send_instructions!
-    SMSJob.enqueue phone, instructions
+    to = self.phone || user.phone
+    SMSJob.enqueue(to, instructions) if to
     MailerJob.enqueue :fulfillment, id
-  end
-
-  def fulfill! instructions
-    update_attributes({
-      fulfilled:    true,
-      instructions: instructions
-    })
   end
 
   def dup_hash

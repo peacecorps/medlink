@@ -1,4 +1,4 @@
-Rhok::Application.configure do
+Medlink::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's
@@ -37,12 +37,4 @@ Rhok::Application.configure do
 
   # For email specs
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-
-  # Run all jobs syncronously in test mode
-  class TestQueue
-    def self.enqueue job, *args
-      job.perform *args
-    end
-  end
-  config.queue = TestQueue
 end

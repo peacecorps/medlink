@@ -1,6 +1,4 @@
-require 'resque/server'
-
-Rhok::Application.routes.draw do
+Medlink::Application.routes.draw do
   devise_for :users, :controllers => { registrations: 'registrations' }
 
   resources :orders
@@ -11,11 +9,10 @@ Rhok::Application.routes.draw do
 
   resources :supplies, only: [:index]
   resources :requests, only: [:create, :destroy, :update]
-
+  
+  get '/about' => 'application#about'
+  get '/help'  => 'application#help'
   root to: 'application#root'
 
-  match '/medrequest', to: 'twilio#receive'
-  match '/supply_list' => 'application#root'
-
-  mount Resque::Server, at: '/resque', as: 'resque'
+  match '/medrequest'  => 'twilio#receive'
 end

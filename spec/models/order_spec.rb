@@ -55,7 +55,7 @@ describe Order do
     after(:each) { subject.destroy }
 
     it { should be_a_kind_of Order }
-    it { should_not be_confirmed   }
+    it { should_not be_fulfilled   }
 
     it 'requires unique supply items'
 
@@ -88,20 +88,6 @@ describe Order do
       it 'can generate an error message' do
         expect( subject.confirmation_message ).to match /pcv id/i
       end
-    end
-
-    context 'confirmed' do
-      before(:each) { subject.confirm! }
-
-      it { should be_confirmed }
-      it { should_not be_fulfilled }
-    end
-
-    context 'fulfilled' do
-      before(:each) { subject.fulfill! 'Look around you' }
-
-      it { should be_fulfilled }
-      its(:instructions) { should eq 'Look around you' }
     end
 
   end

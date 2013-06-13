@@ -11,7 +11,9 @@ describe OrdersController do
       post 'create', order: {user_id: current_user.id}
       response.should be_success
     end
+    it "returns http failure (bad order create params)"
   end
+
   describe "POST 'create' nested requests" do
     let (:supply) { FactoryGirl.create(:supply) }
     it "returns http success" do
@@ -26,23 +28,29 @@ describe OrdersController do
   end
 
   describe "GET 'destroy'" do
-    let :example do
+    let :order do
       FactoryGirl.create(:order, user_id: current_user.id)
     end
     it "returns http success" do
-      delete 'destroy', id: example.id
+      delete 'destroy', id: order.id
       response.should be_success
     end
   end
 
-  describe "PUT 'update'" do
-    let :example do
+  describe "PUT 'update'", :worker do
+    let :order do
       FactoryGirl.create(:order, user_id: current_user.id)
     end
     it "returns http success" do
-      put :update, id: example.id, order: {phone: '678-315-5999', email: 'test@example.com'}
+      put :update, id: order.id, order: {
+        phone: '678-315-5999', email: 'test@example.com'}
       response.should be_success
     end
+    it "returns http failure (bad order update params)"
+  end
+
+  describe "GET 'show'" do
+    it "add show order spec"
   end
 
   describe "GET 'index'" do

@@ -46,7 +46,7 @@ Feature: Visit "Sign In" Web Page
 #U#        -- "Send me reset password instructions" button
 #U#        -- "Sign in", "Sign up"
 #U#    -- "#/orders/new"
-#U#        -- Icon 
+#U#        -- Icon
 #U#        -- Number
 #U#        -- "Select Medical Supply" dropdown (list)
 #U#        -- Fields: Dosage, Unit, Quantity
@@ -59,7 +59,7 @@ Feature: Visit "Sign In" Web Page
 #U#        -- <city>, <country>
 #U#        -- <number>    <name>    <quantity, like 30mg>
 #U#        -- Order Action:
-#U#        -- 5 radio buttons: "Delivered to PCV", "PCV Purchase", 
-#U#            "Delivered to Hub", "Contact PCMO", "Other"
+#U#        -- 5 radio buttons: "Delivered to PCV", "PCV Purchase",
+#U#            "Delivered to Hub", "Special Instructions"
 #U#        -- Message box (160 chars)
 #U#        -- Send button

@@ -1,4 +1,4 @@
-Rhok::Application.configure do
+Medlink::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -54,6 +54,7 @@ Rhok::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.default_url_options = { host: 'pcmedlink.org' }
 
   # Enable threaded mode
   # config.threadsafe!
@@ -68,7 +69,4 @@ Rhok::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-
-  # Use simple Resque queue in production
-  config.queue = Resque
 end

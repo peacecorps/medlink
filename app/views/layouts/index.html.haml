@@ -7,8 +7,12 @@
         %th Location
         %th Requested Supplies
         %th
+          %form{action: "/orders.csv", method: "get"}
+            %button.btn.btn--primary
+              Download
+              %i.icon-download-alt
     %tbody
-      %tr(ng-repeat="order in orders" ng-click="viewOrder(order.id)")
+      %tr(ng-repeat="order in orders | filter:unfulfilled" ng-click="viewOrder(order.id)")
         %td
           %span.cell--primary {{order.user.firstName}} {{order.user.lastName}}
           %small.cell--secondary {{order.user.pcvId}}
@@ -104,13 +108,10 @@
             %li
               %input(type="radio" ng-model="orderAction" value="2" id="order-action2")
               %label(for="order-action2") Delivered to Hub
-            %li
-              %input(type="radio" ng-model="orderAction" value="3" id="order-action3")
-              %label(for="order-action3") Contact PCMO
           %ul.list-column
             %li
               %input(type="radio" ng-model="orderAction" value="4" id="order-action4")
-              %label(for="order-action4") Other
+              %label(for="order-action3") Special Instructions
         .order__instructions
           %textarea(ng-model="order.instructions" placeholder="Message")
           .order__characters {{order.instructions | count}} characters remaining

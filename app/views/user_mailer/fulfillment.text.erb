@@ -3,9 +3,9 @@ Your Order Has Been Fufilled
 
 Your order of:
 
-<%= @order.requests.each do |request|
-    "#{request.qty} #{request.supply.name}; \n"
-          end %>
+<%- @order.requests.each do |request| %>
+  <%= "#{request.quantity} #{request.supply.name}; \n" %>
+<% end %>
 
 has successfully been filled. Please follow the attached instructions:
-<%= @order.instruction %>
+<%= @order.instructions %>
