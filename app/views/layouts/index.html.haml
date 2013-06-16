@@ -121,7 +121,7 @@
 
 %script{type: "text/ng-template", id: "session_new.html"}
   %form(ng-submit="login()")
-    %h2 Sign in
+    %h3 Sign in
     .form__section
       .input-group
         %input.input--full(type="email" autofocus="true" placeholder="Email" ng-model="user.email")
@@ -129,15 +129,15 @@
         %input.input--full(type="password" placeholder="Password" ng-model="user.password")
       .btn-group
         %button.btn.btn--primary(type="submit") Sign in
-        %a.btn(href="/users/sign_up") Sign up
-        %a.btn(href="/users/password/new") Forgot your password?
+        %a.btn(href="#/users/sign_up") Sign up
+        //%a.btn(href="#/users/password/new") Forgot your password?
 
 %script{type: "text/ng-template", id: "registration_edit.html"}
   %form(ng-submit="updateUser()")
-    %h3
-      %span {{current_user.first_name}} {{current_user.last_name}}
-      %small {{current_user.pcv_id}}
     .form__section
+      %h3
+        %span {{current_user.first_name}} {{current_user.last_name}}
+        %small {{current_user.pcv_id}}
       .input-group
         %input.input--full(type="email" autofocus="true" placeholder="Email" ng-model="user.email" required)
       .input-group
@@ -152,3 +152,32 @@
         %input.input--full(type="password" placeholder="Password Confirmation" ng-model="user.password_confirmation")
       .btn-group
         %button.btn.btn--primary(type="submit") Update
+
+%script{type: "text/ng-template", id: "registration_new.html"}
+  %form(ng-submit="createUser()")
+    %h3 Sign up
+    .form__section
+      .input-group
+        %input.input--full(type="text" autofocus="true" placeholder="First Name" ng-model="user.first_name" required)
+      .input-group
+        %input.input--full(type="text" placeholder="Last Name" ng-model="user.last_name" required)
+      .input-group
+        %input.input--full(type="email" placeholder="Email" ng-model="user.email" required)
+      .input-group
+        %input.input--full(type="text" placeholder="PCV ID" ng-model="user.pcv_id" required)
+      .input-group
+        %input.input--full(type="tel" placeholder="Phone Number" ng-model="user.phone")
+      .input-group
+        %input.input--full(type="text" placeholder="City" ng-model="user.city")
+      .input-group
+        .select.select--full
+          %select(ng-model="user.country_id" required)
+            %option(value="") Country
+            = options_for_select Country.all.map { |c| [c.name.titleize, c.id] }
+          %i.icon-caret-down.select__arrow
+      .input-group
+        %input.input--full(type="password" placeholder="Password" ng-model="user.password" required)
+      .input-group
+        %input.input--full(type="password" placeholder="Password Confirmation" ng-model="user.password_confirmation")
+      .btn-group
+        %button.btn.btn--primary(type="submit") Submit

@@ -49,6 +49,11 @@ angular.module('medSupplies', [
       controller: 'SessionDestroyCtrl'
     )
 
+    .when('/users/sign_up',
+      templateUrl: 'registration_new.html'
+      controller: 'RegistrationNewCtrl'
+    )
+
     .when('/users/edit',
       templateUrl: 'registration_edit.html'
       controller: 'RegistrationEditCtrl'

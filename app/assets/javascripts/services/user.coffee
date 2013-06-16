@@ -37,6 +37,19 @@ angular.module('medSupplies.services')
           password: @password
           password_confirmation: @password_confirmation
 
+    UserRegistration::create = ->
+      return $http.post '/users',
+        user:
+          first_name: @first_name
+          last_name: @last_name
+          pcv_id: @pcv_id
+          email: @email
+          phone: @phone
+          city: @city
+          country_id: @country_id
+          password: @password
+          password_confirmation: @password_confirmation
+
     return UserRegistration
 ])
 
