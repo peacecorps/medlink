@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:current]
   respond_to :json
 
   def create
@@ -15,6 +15,10 @@ class UsersController < ApplicationController
   end
 
   def current
-    respond_with current_user
+    if user_signed_in?
+      respond_with current_user
+    else
+      render :json => {}
+    end
   end
 end

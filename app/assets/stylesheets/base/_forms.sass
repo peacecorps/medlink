@@ -1,4 +1,5 @@
 .form__section
+  display: inline-block
   background: $white
   padding: $base-spacing-unit $base-spacing-unit 0
   margin-bottom: $base-spacing-unit
@@ -18,7 +19,13 @@
 .hrng div.field_with_errors
   display: inline
 
-input[type="text"], input[type="password"], input[type="email"], textarea, select
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select
   -webkit-appearance: none
   box-sizing: border-box
   background: $gray-lighter

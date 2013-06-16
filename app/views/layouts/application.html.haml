@@ -25,7 +25,7 @@
       %hgroup
         %h1 Peace Corps
         %h4 Medical Supplies
-        %span.badge(ng-show="current_user") {{current_user.country.name | lowercase}}
+        %span.badge(ng-show="current_user.country" ng-cloak) {{current_user.country.name | lowercase}}
   %div.l-main
     .l-header
       %nav
@@ -37,7 +37,7 @@
             /   %a(href="#") About
             /   = link_to 'About', about_path, target: '_self'
             %li
-              = link_to 'Settings', '/users/edit'
+              = link_to 'Settings', '#/users/edit'
             %li
               /%a(href="#") Help
               = link_to 'Help', help_path, target: '_self'

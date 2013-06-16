@@ -5,17 +5,17 @@ angular.module('medSupplies.controllers')
   '$rootScope'
   '$location',
   '$http',
+  'UserSession',
 
-  ($scope, $rootScope, $location, $http) ->
-    $scope.user =
-      email: null
-      password: null
+  ($scope, $rootScope, $location, $http, UserSession) ->
+    $scope.user = new UserSession()
 
     $scope.login = ->
-      $http.post('/users/sign_in.json', {user: $scope.user})
-        .success (res) ->
+      $scope.user.save().then(
+        (res) ->
           $scope.$emit 'auth:update', res.user
           $location.path '/'
-        .error (e) ->
+        (e) ->
           $scope.$emit 'flash:add', 'Invalid email or password.'
+      )
 ])

@@ -65,29 +65,28 @@ angular.module('medSupplies', [
 .run([
   '$rootScope',
   '$location',
+  'UserSession',
   'CurrentUser',
 
-  ($rootScope, $location, CurrentUser) ->
+  ($rootScope, $location, UserSession, CurrentUser) ->
     $rootScope.flash = []
-    $rootScope.current_user = CurrentUser.get()
 
     $rootScope.$on 'flash:add', (e, message) ->
       $rootScope.flash.push message
 
+    $rootScope.$on 'auth:fetch', ->
+      CurrentUser.get {}, (user) ->
+        $rootScope.current_user = new UserSession(user)
+
     $rootScope.$on 'auth:update', (e, user) ->
-      $rootScope.current_user = user
+      if (user)
+        $rootScope.current_user = new UserSession(user)
+      else
+        $rootScope.$emit 'auth:fetch'
 
     $rootScope.$on 'auth:destroy', (e) ->
       $rootScope.current_user = null
 
-    ###
-    CurrentUser.get().then (user) ->
-      $rootScope.user = user
-      path = $location.path()
-      if path == '/' or path == '/orders'
-        if $rootScope.user.role == 'user'
-          $location.path '/orders/new'
-        else
-          $location.path '/orders/'
-    ###
+    # get the current user on initialization
+    $rootScope.$emit 'auth:fetch'
 ])

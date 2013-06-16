@@ -4,11 +4,11 @@ angular.module('medSupplies.controllers')
   '$scope',
   '$location',
   '$http',
+  'UserSession',
 
-  ($scope, $location, $http) ->
-    $http.delete('/users/sign_out.json')
-      .success ->
-        $scope.$emit 'auth:destroy'
-        $scope.$emit 'flash:add', 'You have been successfully signed out.'
-        $location.path '/users/sign_in'
+  ($scope, $location, $http, UserSession) ->
+    $scope.current_user.destroy().then ->
+      $scope.$emit 'auth:destroy'
+      $scope.$emit 'flash:add', 'You have been successfully signed out.'
+      $location.path '/users/sign_in'
 ])
