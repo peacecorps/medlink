@@ -5,6 +5,7 @@ angular.module('medSupplies.controllers', [])
 
 angular.module('medSupplies', [
   'rails'
+  'ngResource'
   'medSupplies.services'
   'medSupplies.filters'
   'medSupplies.directives'
@@ -46,6 +47,11 @@ angular.module('medSupplies', [
     .when('/users/sign_out',
       templateUrl: 'session_new.html'
       controller: 'SessionDestroyCtrl'
+    )
+
+    .when('/users/edit',
+      templateUrl: 'registration_edit.html'
+      controller: 'RegistrationEditCtrl'
     )
 
     .when('/',
