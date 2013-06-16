@@ -59,6 +59,10 @@ angular.module('medSupplies', [
       controller: 'RegistrationEditCtrl'
     )
 
+    .when('/help',
+      templateUrl: 'help.html'
+    )
+
     .when('/',
       redirectTo: '/orders'
     )

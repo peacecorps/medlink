@@ -1,9 +1,9 @@
 %script{type: "text/ng-template", id: "registration_edit.html"}
   %form(ng-submit="updateUser()")
+    %h3
+      %span {{current_user.first_name}} {{current_user.last_name}}
+      %small {{current_user.pcv_id}}
     .form__section
-      %h3
-        %span {{current_user.first_name}} {{current_user.last_name}}
-        %small {{current_user.pcv_id}}
       .input-group
         %input.input--full(type="email" autofocus="true" placeholder="Email" ng-model="user.email" required)
       .input-group

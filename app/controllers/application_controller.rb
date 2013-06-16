@@ -8,8 +8,4 @@ class ApplicationController < ActionController::Base
   def about
     render 'layouts/about'
   end
-
-  def help
-    render 'layouts/help'
-  end
 end
