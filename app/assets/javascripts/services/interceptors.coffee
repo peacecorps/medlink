@@ -24,9 +24,10 @@ angular.module('medSupplies.services')
 
 .factory('authInterceptor', [
 	'$q',
+	'$location',
 	'$rootScope',
 
-	($q) ->
+	($q, $location, $rootScope) ->
 		success = (response) ->
 			return response
 
@@ -34,8 +35,7 @@ angular.module('medSupplies.services')
 			status = response.status
 
 			if status is 401
-				# redirect
-				return
+				$location.path '/users/sign_in'
 
 			return $q.reject(response)
 

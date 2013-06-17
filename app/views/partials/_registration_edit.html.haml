@@ -1,0 +1,20 @@
+%script{type: "text/ng-template", id: "registration_edit.html"}
+  %form(ng-submit="updateUser()")
+    %h3
+      %span {{current_user.first_name}} {{current_user.last_name}}
+      %small {{current_user.pcv_id}}
+    .form__section
+      .input-group
+        %input.input--full(type="email" autofocus="true" placeholder="Email" ng-model="user.email" required)
+      .input-group
+        %input.input--full(type="tel" placeholder="Phone Number" ng-model="user.phone")
+      .input-group
+        %input.input--full(type="text" placeholder="City" ng-model="user.city")
+      .input-group
+        %input.input--full(type="password" placeholder="Current Password" ng-model="user.current_password" required)
+      .input-group
+        %input.input--full(type="password" placeholder="New Password" ng-model="user.password")
+      .input-group
+        %input.input--full(type="password" placeholder="Password Confirmation" ng-model="user.password_confirmation")
+      .btn-group
+        %button.btn.btn--primary(type="submit") Update

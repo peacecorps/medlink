@@ -1,0 +1,28 @@
+%script{type: "text/ng-template", id: "registration_new.html"}
+  %form(ng-submit="createUser()")
+    %h3 Sign up
+    .form__section
+      .input-group
+        %input.input--full(type="text" autofocus="true" placeholder="First Name" ng-model="user.first_name" required)
+      .input-group
+        %input.input--full(type="text" placeholder="Last Name" ng-model="user.last_name" required)
+      .input-group
+        %input.input--full(type="email" placeholder="Email" ng-model="user.email" required)
+      .input-group
+        %input.input--full(type="text" placeholder="PCV ID" ng-model="user.pcv_id" required)
+      .input-group
+        %input.input--full(type="tel" placeholder="Phone Number" ng-model="user.phone")
+      .input-group
+        %input.input--full(type="text" placeholder="City" ng-model="user.city")
+      .input-group
+        .select.select--full
+          %select(ng-model="user.country_id" required)
+            %option(value="") Country
+            = options_for_select Country.all.map { |c| [c.name.titleize, c.id] }
+          %i.icon-caret-down.select__arrow
+      .input-group
+        %input.input--full(type="password" placeholder="Password" ng-model="user.password" required)
+      .input-group
+        %input.input--full(type="password" placeholder="Password Confirmation" ng-model="user.password_confirmation")
+      .btn-group
+        %button.btn.btn--primary(type="submit") Submit
