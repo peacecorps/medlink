@@ -45,6 +45,7 @@ Special thanks to the consulting Peace Corp members, without whom none of this w
 * Caitlyn Bauer
 * Jeffrey Rhodes
 * Danel Trisi
+* Kevin Sun
 
 Additional thanks to the [RHoK](http://www.rhok.org/) team for their outstanding work getting this project off the ground:
 * John Craft
@@ -62,6 +63,5 @@ Additional thanks to the [RHoK](http://www.rhok.org/) team for their outstanding
 * Patrick Stoica
 * Jake Swanson
 * Nate Tate
-* Kevin Sun
 
 We welcome other contributions - just open up an issue or a pull request.

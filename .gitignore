@@ -35,3 +35,5 @@ bin
 *.orig
 
 coverage
+libpeerconnection.log
+
