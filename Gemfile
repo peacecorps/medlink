@@ -32,6 +32,7 @@ end
 
 gem 'rspec-rails', group: [:development, :test]
 group :test do
+  gem 'rake'
   gem 'factory_girl_rails'
   gem 'email_spec'
   gem 'sms-spec'
