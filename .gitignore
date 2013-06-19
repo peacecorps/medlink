@@ -36,4 +36,5 @@ bin
 
 coverage
 libpeerconnection.log
+.rvmrc
 
