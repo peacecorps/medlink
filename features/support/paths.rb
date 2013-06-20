@@ -9,9 +9,9 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
     when /the sign_in page/
-      '/users/sign_in#/sign_in'
+      '#/users/sign_in'
     when /the sign_up page/
-      '/users/sign_up#/sign_up'
+      '#/users/sign_up'
     when /the forgot_password page/
       '/users/password/new#/new'
     when /the new_order page/
