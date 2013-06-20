@@ -20,6 +20,10 @@ module NavigationHelpers
       '/#/orders'
     when /the first_order page/
       '/#/orders/1'
+    when /the settings page/
+      '#/users/edit'
+    when /the help page/
+      '/#/help'
     end
   end
 end

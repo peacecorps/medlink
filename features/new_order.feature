@@ -8,13 +8,15 @@ Feature: Visit "New Order" Web Page
     Then I should see the image "brand"
     Then I should see "Peace Corps" inside "h1"
     Then I should see "Medical Supplies" inside "h4"
+#U#   Then I should see "United States" inside "span"
 
     Then I should see "Settings" inside "a"
     Then I should see "Help" inside "a"
     Then I should see "Logout" inside "a"
 
 #U# #PROBLEMS
-#    Then I should see "111111" inside "small"
+#    Then I should see "Al Snow" (Name)
+#    Then I should see "12345678" (PCV ID)
 #    Then I should see "Select Medical Supply" inside "option"
 #    Then I should see "Dosage" inside "input"
 #    Then I should see field "Unit" inside "option"
@@ -22,5 +24,3 @@ Feature: Visit "New Order" Web Page
 #    Then I should see "Add a new supply request"
 #    Then I should see "Send" inside "button"
 #    Then I should see "Special requests for location or dosage"
-#"country" badge
-#    Then I should see "Ghana" inside "span"

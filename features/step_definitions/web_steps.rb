@@ -38,6 +38,10 @@ When /^(?:|I )follow "([^\"]*)"$/ do |link|
   click_link(link)
 end
 
+Then /^show me the page$/ do
+  save_and_open_page
+end
+
 #### # TL;DR: YOU SHOULD DELETE THIS FILE
 #### #
 #### Then /^the "([^"]*)" field(?: within (.*))? should contain "([^"]*)"$/ do |field, parent, value|
@@ -240,6 +244,3 @@ end
 #### end
 ####
 #### # 8/25/2012: Had two versions so commented out one of them.
-#### #Then /^show me the page$/ do
-#### #  save_and_open_page
-#### #end
