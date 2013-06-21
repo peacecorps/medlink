@@ -9,7 +9,7 @@ Feature: Visit "Sign In" Web Page
     Then I should see "Peace Corps" inside "h1"
     Then I should see "Medical Supplies" inside "h4"
 
-    Then I should see "Settings" inside "a"
+    Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
     Then I should see "Logout" inside "a"
 
