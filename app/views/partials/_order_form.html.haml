@@ -1,4 +1,5 @@
 %script{type: "text/ng-template", id: "order_form.html"}
+  %h1 Request Form
   %h3
     %span {{current_user.first_name}} {{current_user.last_name}}
     %small {{current_user.pcv_id}}
@@ -8,7 +9,7 @@
       .input-group
         .select.select--full
           %select(ng-model="order.requestsAttributes[$index].supplyId" ng-options="supply.id as supply.name for supply in supplies")
-            %option(value="") Select Medical Supply
+            %option(value="") Select Supply
           %i.icon-caret-down.select__arrow
       .input-group
         %input.input.input--dosage(type="text" ng-model="order.requestsAttributes[$index].dosageValue" placeholder="Dosage")
@@ -28,4 +29,4 @@
         %textarea(ng-model="order.extra" placeholder="Special requests for location or dosage")
 
     .btn-group
-      %button.btn.btn--primary(type="submit") Send
+      %button.btn.btn--primary(type="submit") Submit
