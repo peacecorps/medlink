@@ -11,9 +11,10 @@ angular.module('medSupplies.controllers')
   ($scope, $rootScope, $routeParams, $location, Order) ->
     $rootScope.flash = [] if not $rootScope.flash
     $scope.messages = [
-      'Your request is estimated to arrive at your location on this date.'
+      'Please pick up your request at [enter location here] by [enter date here].'
       'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.'
-      'Your request is estimated to arrive at your location on this date [enter date here].'
+      'Your request is estimated to arrive at your location on [enter date here].'
+      ''
     ]
 
     $scope.order = {}
@@ -28,7 +29,7 @@ angular.module('medSupplies.controllers')
       delete newOrder.updatedAt
 
       switch parseInt($scope.orderAction)
-        when 0, 1, 2
+        when 0, 1, 2, 3
           newOrder.fulfilled = true
 
       newOrder.update().then (result) ->
