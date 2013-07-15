@@ -59,7 +59,7 @@ RSpec.configure do |config|
   config.filter_run focus: true
   config.run_all_when_everything_filtered = true
 
-  # Since background jobs run in a separate thread, we can't use the 
+  # Since background jobs run in a separate thread, we can't use the
   # default transactions. These settings should allow you to specify
   # :worker specs which rely on data persisting into the background
   # job.

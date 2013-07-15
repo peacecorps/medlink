@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   def is_admin?
     role == 'admin'
   end
-  
+
   def accessible_orders
     is_admin? ? Order.where(users: {country_id: country_id}) : orders
   end
