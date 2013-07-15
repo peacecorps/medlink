@@ -29,20 +29,16 @@
   %div.l-main
     .l-header
       %nav
-        .dropdown
+        .dropdown(ng-show="current_user.id")
           %a(ng-click="open = !open")
             %i.icon-cog
-          %ul.nav.nav--dropdown(ng-class="{'is-active': open}")
-            / %li
-            /   %a(href="#") About
-            /   = link_to 'About', about_path, target: '_self'
+          %ul.nav.nav--dropdown(ng-class="{'is-active': open}" ng-click="open = false")
             %li
               = link_to 'Change Password', '#/users/edit'
             %li
-              /%a(href="#") Help
               = link_to 'Help', '#/help'
             %li
-              %a(href="#/users/sign_out") Logout
+              = link_to 'Logout', '#/users/sign_out'
     %section(ng-view)
 
     = yield
