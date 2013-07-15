@@ -29,7 +29,7 @@ angular.module('medSupplies.controllers')
       delete newOrder.updatedAt
 
       switch parseInt($scope.orderAction)
-        when 0, 1, 2
+        when 0, 1, 2, 3
           newOrder.fulfilled = true
 
       newOrder.update().then (result) ->
