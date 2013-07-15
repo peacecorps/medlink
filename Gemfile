@@ -11,7 +11,7 @@ gem 'devise'
 
 gem 'unicorn'
 #U# gem 'unicorn-rails'
-gem 'sucker_punch', '0.5.1'
+gem 'sucker_punch'
 
 gem 'font-awesome-rails'
 gem 'angularjs-rails-resource'
