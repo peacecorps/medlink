@@ -6,6 +6,11 @@ rvm:
 script:
   - RAILS_ENV=test COVERAGE=true bundle exec rake --trace db:migrate spec
 
+branches:
+  only:
+    - master
+    - production
+
 notifications:
   email:
     recipients:
