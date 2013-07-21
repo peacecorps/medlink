@@ -1,0 +1,50 @@
+.order-back
+  = link_to orders_path do
+    %i.icon-caret-left
+    %span Back to all Orders
+
+.order
+  .order__section
+    %hgroup
+      %h3
+        %span
+          Order From:
+          = @order.user.name
+        %small.pcv-id= @order.user.pcv_id
+      %div
+        %em= "#{@order.user.city}, #{@order.user.country.name}"
+    %table.table
+      %tbody
+        - @order.requests.includes(:supply).each do |request|
+          %tr
+            %td request.quantity
+            %td.cell--primary request.supply.name
+            %td request.dose
+    .order__extra= @order.extra
+
+  = form_for @order, html: {class: 'order__section'} do |f|
+    %h4.order__action Order Action:
+    .order__message
+      / FIXME: default messages and remaining character count js
+      %ul.radio-group
+        %ul.list-column
+          %li
+            %input(type="radio" ng-model="orderAction" value="0" id="order-action0")
+            %label(for="order-action0") Delivered to PCV
+          %li
+            %input(type="radio" ng-model="orderAction" value="1" id="order-action1")
+            %label(for="order-action1") PCV Purchase
+        %ul.list-column
+          %li
+            %input(type="radio" ng-model="orderAction" value="2" id="order-action2")
+            %label(for="order-action2") Delivered to Hub
+        %ul.list-column
+          %li
+            %input(type="radio" ng-model="orderAction" value="3" id="order-action3")
+            %label(for="order-action3") Special Instructions
+      .order__instructions
+        %textarea(ng-model="order.instructions" placeholder="Message")
+        .order__characters @order.instructions | count characters remaining
+
+    .btn-group
+      %button.btn.btn--primary(type="submit") Submit

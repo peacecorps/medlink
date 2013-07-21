@@ -1,7 +1,4 @@
 class Order < ActiveRecord::Base
-  attr_accessible :confirmed, :email, :extra, :fulfilled,
-    :phone, :user_id, :requests_attributes, :instructions
-
   belongs_to :user
   has_many :requests
 

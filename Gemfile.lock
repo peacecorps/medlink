@@ -38,6 +38,11 @@ GEM
     arel (4.0.0)
     atomic (1.1.10)
     bcrypt-ruby (3.1.1)
+    better_errors (0.9.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+    binding_of_caller (0.7.2)
+      debug_inspector (>= 0.0.1)
     builder (3.1.4)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -78,6 +83,7 @@ GEM
       cucumber (>= 1.1.8)
       nokogiri (>= 1.5.0)
     database_cleaner (1.0.1)
+    debug_inspector (0.0.2)
     devise (3.0.0)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -134,8 +140,6 @@ GEM
     orm_adapter (0.4.0)
     pg (0.15.1)
     polyglot (0.3.3)
-    protected_attributes (1.0.3)
-      activemodel (>= 4.0.0, < 5.0)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
@@ -229,6 +233,8 @@ PLATFORMS
 
 DEPENDENCIES
   angularjs-rails-resource
+  better_errors
+  binding_of_caller
   coffee-rails
   compass-rails!
   coveralls
@@ -244,7 +250,6 @@ DEPENDENCIES
   letter_opener
   newrelic_rpm
   pg
-  protected_attributes
   pry
   rails (= 4.0.0)
   rake
