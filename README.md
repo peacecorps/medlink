@@ -64,5 +64,6 @@ Additional thanks to the [RHoK](http://www.rhok.org/) team for their outstanding
 * Patrick Stoica
 * Jake Swanson
 * Nate Tate
+* Laura Moore
 
 We welcome other contributions - just open up an issue or a pull request.
