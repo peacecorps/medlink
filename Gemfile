@@ -2,7 +2,9 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '3.2.14.rc2'
+gem 'rails', '4.0.0'
+gem 'protected_attributes'
+
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'twilio-ruby'
@@ -18,7 +20,7 @@ gem 'angularjs-rails-resource'
 
 group :assets do
   gem 'sass-rails'
-  gem 'compass-rails'
+#U#  gem 'compass-rails'
   gem 'coffee-rails'
   gem 'haml'
   gem 'uglifier'

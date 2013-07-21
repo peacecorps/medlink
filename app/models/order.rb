@@ -13,9 +13,9 @@ class Order < ActiveRecord::Base
     super(args.merge(include: [{:user => {:include => :country}},
                                {:requests => {:include => :supply}}]))
   end
-  default_scope eager_load(:user, :requests).order('"orders"."created_at" DESC')
+  default_scope { eager_load(:user, :requests).order('"orders"."created_at" DESC') }
 
-  scope :unfulfilled, where(fulfilled: false)
+  scope :unfulfilled, -> { where(fulfilled: false) }
 
   def self.human_attribute_name(attr, options={})
     {
