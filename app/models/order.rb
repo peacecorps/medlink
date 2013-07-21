@@ -71,4 +71,8 @@ class Order < ActiveRecord::Base
 
     super
   end
+
+  def supplies
+    requests.includes(:supply).map { |r| r.supply.name }
+  end
 end

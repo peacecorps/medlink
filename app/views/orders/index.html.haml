@@ -1,0 +1,33 @@
+%table.table.table--bordered.table--striped.table--linked
+  %thead
+    %tr
+      %th Requester
+      %th Request Date
+      %th Location
+      %th Requested Supplies
+      %th
+        - if current_user.admin?
+          = link_to orders_path(format: :csv), class: "btn btn--primary" do
+            Download
+            %i.icon-download-alt
+        - else
+          = link_to new_order_path, class: "btn btn--primary" do
+            Order
+            %i.icon-file
+  %tbody
+    - @orders.each do |order|
+      - next if order.fulfilled?
+      / FIXME: make entire table row clickable, link to order
+      %tr
+        %td
+          %span.cell--primary= order.user.name
+          %small.cell--secondary= order.user.pcv_id
+        %td
+          %span= order.created_at.strftime '%-m/%-d/%y'
+          / FIXME: timezones
+          %small.cell--secondary= order.created_at.strftime '%H:%M'
+        %td
+          %span.cell--primary= order.user.city
+        %td= order.supplies.join ', '
+        %td.cell--arrow
+          %i.icon-caret-right

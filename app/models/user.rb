@@ -18,12 +18,12 @@ class User < ActiveRecord::Base
     super(args.merge(include: [:country]))
   end
 
-  def is_admin?
+  def admin?
     role == 'admin'
   end
 
   def accessible_orders
-    is_admin? ? Order.where(users: {country_id: country_id}) : orders
+    admin? ? Order.where(users: {country_id: country_id}) : orders
   end
 
   def self.lookup str
@@ -36,5 +36,9 @@ class User < ActiveRecord::Base
     else
       MailerJob.enqueue :forgotten_password, id
     end
+  end
+
+  def name
+    "#{first_name} #{last_name}".strip
   end
 end
