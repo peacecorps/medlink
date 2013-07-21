@@ -41,7 +41,8 @@ group :test do
   gem 'email_spec'
   gem 'sms-spec'
 
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', :require => false, :branch => 'master_rails4_test',
+    :git => 'https://github.com/cucumber/cucumber-rails.git'
   gem 'database_cleaner'
 end
 
