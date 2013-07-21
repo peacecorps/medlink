@@ -9,71 +9,71 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130612012522) do
+ActiveRecord::Schema.define(version: 20130612012522) do
 
-  create_table "countries", :force => true do |t|
+  create_table "countries", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "code"
   end
 
-  add_index "countries", ["code"], :name => "index_countries_on_code"
+  add_index "countries", ["code"], name: "index_countries_on_code"
 
-  create_table "orders", :force => true do |t|
+  create_table "orders", force: true do |t|
     t.integer  "user_id"
-    t.boolean  "fulfilled",    :default => false
+    t.boolean  "fulfilled",    default: false
     t.string   "phone"
     t.string   "email"
     t.text     "extra"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "instructions"
   end
 
-  create_table "requests", :force => true do |t|
+  create_table "requests", force: true do |t|
     t.integer  "supply_id"
     t.string   "dose"
     t.integer  "quantity"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "order_id"
   end
 
-  create_table "supplies", :force => true do |t|
+  create_table "supplies", force: true do |t|
     t.string   "shortcode"
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "supplies", ["shortcode"], :name => "index_supplies_on_shortcode"
+  add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode"
 
-  create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "",     :null => false
-    t.string   "encrypted_password",     :default => "",     :null => false
+  create_table "users", force: true do |t|
+    t.string   "email",                  default: "",     null: false
+    t.string   "encrypted_password",     default: "",     null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "phone"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "pcv_id"
     t.integer  "country_id"
-    t.string   "role",                   :default => "user"
+    t.string   "role",                   default: "user"
     t.string   "city"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

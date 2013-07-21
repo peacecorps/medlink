@@ -20,7 +20,7 @@ gem 'angularjs-rails-resource'
 
 group :assets do
   gem 'sass-rails'
-#U#  gem 'compass-rails'
+  gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'
   gem 'coffee-rails'
   gem 'haml'
   gem 'uglifier'
@@ -41,7 +41,9 @@ group :test do
   gem 'email_spec'
   gem 'sms-spec'
 
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', :require => false, :branch => 'master_rails4_test',
+    :git => 'https://github.com/cucumber/cucumber-rails.git'
+
   gem 'database_cleaner'
 end
 
