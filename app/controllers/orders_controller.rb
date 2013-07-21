@@ -5,7 +5,7 @@ class OrdersController < ApplicationController
   respond_to :csv, only: :index
 
   def index
-    @orders = current_user.accessible_orders.all
+    @orders = current_user.accessible_orders
     respond_with @orders
   end
 

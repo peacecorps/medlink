@@ -15,5 +15,5 @@ Medlink::Application.routes.draw do
   get '/help'  => 'application#help'
   root to: 'application#root'
 
-  match '/medrequest'  => 'twilio#receive'
+  get '/medrequest'  => 'twilio#receive'
 end
