@@ -19,24 +19,9 @@ angular.module('medSupplies', [
   ($routeProvider, $locationProvider) ->
     $routeProvider
 
-    .when('/orders',
-      templateUrl: 'order_list.html'
-      controller: 'OrderListCtrl'
-    )
-
-    .when('/orders/new',
-      templateUrl: 'order_form.html'
-      controller: 'OrderNewCtrl'
-    )
-
     .when('/supply_list',
       templateUrl: 'supply_list.html'
       controller: 'SupplyListCtrl'
-    )
-
-    .when('/orders/:id',
-      templateUrl: 'order_show.html'
-      controller: 'OrderShowCtrl'
     )
 
     .when('/users/sign_in',
@@ -64,10 +49,8 @@ angular.module('medSupplies', [
     )
 
     .when('/',
-      redirectTo: '/orders'
+      redirectTo: '/users/sign_in'
     )
-
-    #.otherwise({redirectTo: '/orders'})
 ])
 
 
@@ -99,3 +82,8 @@ angular.module('medSupplies', [
     # get the current user on initialization
     $rootScope.$emit 'auth:fetch'
 ])
+
+# FIXME: extract into a more appropriate location / framework?
+$ ->
+  $("tr[data-link]").click ->
+    window.location = $(this).data "link"

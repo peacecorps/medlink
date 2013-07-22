@@ -5,13 +5,6 @@ class Order < ActiveRecord::Base
   validates_presence_of :user,   message: "unrecognized"
   accepts_nested_attributes_for :requests
 
-  # UI wants users included with all output
-  def as_json(args)
-    super(args.merge(include: [{:user => {:include => :country}},
-                               {:requests => {:include => :supply}}]))
-  end
-  default_scope { eager_load(:user, :requests).order('"orders"."created_at" DESC') }
-
   scope :unfulfilled, -> { where(fulfilled: false) }
 
   def self.human_attribute_name(attr, options={})
@@ -22,7 +15,7 @@ class Order < ActiveRecord::Base
 
   def self.create_from_text data
     user   = User.lookup(data[:pcvid]) || raise("Unrecognized PCVID")
-    supply = Supply.lookup(data[:shortcode]) || raise("Unrecognized shortcode")
+    supply = Supply.lookup data[:shortcode]
 
     create!({
       user_id:   user.try(:id),

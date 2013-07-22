@@ -11,18 +11,22 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = current_user.orders.new order_params
-    if @order.save
+    clean! params[:order]
+
+    @order = current_user.orders.new create_params
+    if @order.save!
       redirect_to orders_path, notice: "Order submitted successfully"
+    else
+      # FIXME: validation messages
+      render :new
     end
   end
 
   def edit
-    # FIXME: limit to admins
   end
 
   def update
-    # FIXME: fix. limit to admins
+    # FIXME: fix. limit to admins?
     raise
     flash[:notice] = "Order updated successfully" if @order.save
     # FIXME: determine when to send instructions
@@ -35,7 +39,19 @@ class OrdersController < ApplicationController
     @order = current_user.accessible_orders.find params[:id]
   end
 
-  def order_params
-    params.require(:order).permit :request_attributes, :extra
+  def clean! order
+    req = order[:requests_attributes]
+    req[:supply_id] = Supply.lookup(req[:supply_id]).id
+    req[:dose] = "#{req.delete :dosage}#{req.delete :unit}"
+    order[:requests_attributes] = [req]
+  end
+
+  def create_params
+    params.require(:order).permit :extra,
+      requests_attributes: [:supply_id, :dose, :quantity]
+  end
+
+  def update_params
+    params.require(:order)
   end
 end

@@ -4,7 +4,7 @@
   %small= current_user.pcv_id
 
 = form_for @order, html: {class: 'form--order'} do |of|
-  = of.fields_for :request_attributes do |rf|
+  = of.fields_for :requests_attributes do |rf|
     .form__section
       .input-group
         .select.select--full

@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   end
 
   def accessible_orders
-    admin? ? Order.where(users: {country_id: country_id}) : orders
+    admin? ? Order.includes(:user).where(users: {country_id: country_id}) : orders
   end
 
   def self.lookup str

@@ -17,9 +17,9 @@
       %tbody
         - @order.requests.includes(:supply).each do |request|
           %tr
-            %td request.quantity
-            %td.cell--primary request.supply.name
-            %td request.dose
+            %td= request.quantity
+            %td.cell--primary= request.supply.name
+            %td= request.dose
     .order__extra= @order.extra
 
   = form_for @order, html: {class: 'order__section'} do |f|
