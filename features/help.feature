@@ -12,7 +12,7 @@ Feature: Visit "Help" Web Page
 
 #U#    Then I should see "Settings" inside "a"
     Then I should see "Help" inside "a"
-#U#    Then I should see "Logout" inside "a"
+#U#    Then I should see "Log out" inside "a"
 
 #U#    Then I should see "How to order personal medical supplies" inside "h2"
 #U#    Then I should see "Send an SMS" inside "h3"
