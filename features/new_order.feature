@@ -12,7 +12,7 @@ Feature: Visit "New Order" Web Page
 
     Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
-    Then I should see "Logout" inside "a"
+#U#    Then I should see "Logout" inside "a"
 
 #U# #PROBLEMS
 #    Then I should see "Request Form"

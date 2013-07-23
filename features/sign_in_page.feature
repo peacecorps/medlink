@@ -11,7 +11,7 @@ Feature: Visit "Sign In" Web Page
 
     Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
-    Then I should see "Logout" inside "a"
+#U#    Then I should see "Logout" inside "a"
 
 #U#    Then I should see "Email" (placeholder)
 #U#    Then I should see "Password" (placeholder)

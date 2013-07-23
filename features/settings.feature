@@ -12,7 +12,7 @@ Feature: Visit "Settings" Web Page
 
 #U#    Then I should see "Settings" inside "a"
     Then I should see "Help" inside "a"
-    Then I should see "Logout" inside "a"
+#U#    Then I should see "Logout" inside "a"
 
 #U#    Then I should see "Al Snow"
 #U#    Then I should see "12345678"
