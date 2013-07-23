@@ -9,21 +9,19 @@ describe OrdersController do
   describe "POST 'create'" do
     it "returns http success" do
       post 'create', order: {user_id: current_user.id}
-      response.should be_success
+      response.should be_redirection
     end
     it "returns http failure (bad order create params)"
   end
 
   describe "POST 'create' nested requests" do
-    let (:supply) { FactoryGirl.create(:supply) }
+    before(:each) { FactoryGirl.create(:supply, shortcode: 'CODE') }
     it "returns http success" do
       order = {user_id: current_user.id}
-      order[:requests_attributes] = [
-        {supply_id: supply.id, dose: '5', quantity: 5},
-        {supply_id: supply.id, dose: '10', quantity: 15}
-      ]
+      order[:requests_attributes] = {
+        supply_id: 'CODE', dose: '5', quantity: 5 }
       post 'create', order: order
-      response.should be_success
+      response.should be_redirection
     end
   end
 
@@ -34,7 +32,7 @@ describe OrdersController do
     it "returns http success" do
       put :update, id: order.id, order: {
         phone: '678-315-5999', email: 'test@example.com'}
-      response.should be_success
+      response.should be_redirection
     end
     it "returns http failure (bad order update params)"
   end
@@ -49,21 +47,8 @@ describe OrdersController do
                          requests: FactoryGirl.create_list(:request, 10))
     end
     it "returns success with valid data" do
-      get 'index', format: :json
+      get 'index'
       response.should be_success
-      @body = JSON.parse(response.body)
-
-      @body.first['requests'].should_not be_nil
-      @body.first['user'].should_not be_nil
-      @body.first['user']['country'].should_not be_nil
-      @body.first['requests'].first['supply'].should_not be_nil
-    end
-    it "should be ordered by created_at" do
-      get 'index', format: :json
-      response.should be_success
-      @body = JSON.parse(response.body)
-      cas = @body.map { |o| o['created_at'] }.uniq
-      cas.should eq cas.sort {|a,b| a <=> b }
     end
   end
 

@@ -52,7 +52,7 @@ class OrdersController < ApplicationController
   end
 
   def clean! order
-    req = order[:requests_attributes]
+    return order unless req = order[:requests_attributes]
     req[:supply_id] = Supply.lookup(req[:supply_id]).id
     req[:dose] = "#{req.delete :dosage}#{req.delete :unit}"
     order[:requests_attributes] = [req]
