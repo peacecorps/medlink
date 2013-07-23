@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
     role == 'admin'
   end
 
+  # FIXME: denormalize on country
   def accessible_orders
     admin? ? Order.includes(:user).where(users: {country_id: country_id}) : orders
   end

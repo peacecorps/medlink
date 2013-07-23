@@ -38,6 +38,7 @@ class Order < ActiveRecord::Base
   end
 
   def send_instructions!
+    # FIX
     to = self.phone || user.phone
     SMSJob.enqueue(to, instructions) if to
     MailerJob.enqueue :fulfillment, id
@@ -64,5 +65,9 @@ class Order < ActiveRecord::Base
 
   def supplies
     requests.includes(:supply).map { |r| r.supply.name }
+  end
+
+  # FIXME: store fulfillment action along with message
+  def action
   end
 end

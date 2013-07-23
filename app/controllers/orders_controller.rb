@@ -23,14 +23,26 @@ class OrdersController < ApplicationController
   end
 
   def edit
+    @defaults = {
+      'Delivered to PCV' =>
+        'Please pick up your request at [enter location here] by [enter date here].',
+      'PCV Purchase' =>
+        'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.',
+      'Delivered to Hub' =>
+        'Your request is estimated to arrive at your location on [enter date here].',
+      'Special Instructions' => ''
+    }
   end
 
   def update
-    # FIXME: fix. limit to admins?
-    raise
-    flash[:notice] = "Order updated successfully" if @order.save
-    # FIXME: determine when to send instructions
-    @order.send_instructions
+    # FIXME: limit to admins
+    if @order.update_attributes update_params
+      # FIXME: should we _always_ send these?
+      @order.send_instructions!
+      redirect_to orders_path, notice: "Order updated successfully"
+    else
+      render :edit
+    end
   end
 
   private # -----
@@ -52,6 +64,6 @@ class OrdersController < ApplicationController
   end
 
   def update_params
-    params.require(:order)
+    params.require(:order).permit [:fulfilled, :instructions]
   end
 end

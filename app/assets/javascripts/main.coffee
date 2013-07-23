@@ -87,3 +87,16 @@ angular.module('medSupplies', [
 $ ->
   $("tr[data-link]").click ->
     window.location = $(this).data "link"
+
+  instructions = $ ".order__instructions textarea"
+  remaining = $ ".order__characters"
+
+  update_counts = ->
+    count = 160 - instructions.val().length
+    remaining.text count + " characters remaining"
+
+  $(".order__message input").click ->
+    instructions.val $(this).data "message"
+    update_counts()
+
+  instructions.keyup(update_counts).keyup()
