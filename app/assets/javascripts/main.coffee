@@ -19,11 +19,6 @@ angular.module('medSupplies', [
   ($routeProvider, $locationProvider) ->
     $routeProvider
 
-    .when('/supply_list',
-      templateUrl: 'supply_list.html'
-      controller: 'SupplyListCtrl'
-    )
-
     .when('/users/sign_in',
       templateUrl: 'session_new.html'
       controller: 'SessionNewCtrl'
