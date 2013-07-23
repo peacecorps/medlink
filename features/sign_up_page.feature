@@ -13,18 +13,14 @@ Feature: Visit "Sign Up" Web Page
     Then I should see "Help" inside "a"
     Then I should see "Log out" inside "a"
 
-#U# PROBLEMS
-#U#    Then I should see "Sign up" inside "h3"
-#U#    Then I should see field "First Name" (placeholder)
-#U#    Then I should see field "Last Name" (placeholder)
-#U#    Then I should see field "Email" (placeholder)
-#U#    Then I should see field "PCV ID" (placeholder)
-#U#    Then I should see field "Phone Number" (placeholder)
-#U#    Then I should see field "City" (placeholder)
-#U#    Then I should see "Country" inside "option" (BROKEN)
-#U#    Then I should see field "Password" (placeholder)
-#U#    Then I should see field "Password Confirmation" (placeholder)
-
-#U#    Then I should see field "Submit"
-#U#    Then I should see "Sign in" inside "a"
-#U#    Then I should see "Forgot your password?" inside "a"
+    Then I should see "Sign up" inside "h3"
+    Then I should see field "First Name"
+    Then I should see field "Last Name"
+    Then I should see field "Email"
+    Then I should see field "PCV ID"
+    Then I should see field "Phone Number"
+    Then I should see field "City"
+    Then I should see "Country" inside "option"
+    Then I should see field "Password"
+    Then I should see field "Password Confirmation"
+    Then I should see the button "Submit"

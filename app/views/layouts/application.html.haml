@@ -36,11 +36,10 @@
             %li= link_to 'Help', help_path
             %li= link_to "Log out", destroy_user_session_path, method: :delete
     %section
+      = yield
+
     - if notice
       %p.alert.alert-notice= notice
     - if alert
       %p.alert.alert-error= alert
-
-      = yield
-
     = javascript_include_tag "application"
