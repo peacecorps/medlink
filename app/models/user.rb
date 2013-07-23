@@ -10,10 +10,6 @@ class User < ActiveRecord::Base
   validates_presence_of :city, :country, :first_name, :last_name, :pcv_id
   validates :pcv_id, uniqueness: true
 
-  def as_json(args)
-    super(args.merge(include: [:country]))
-  end
-
   def admin?
     role == 'admin'
   end

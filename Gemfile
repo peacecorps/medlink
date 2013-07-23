@@ -15,7 +15,6 @@ gem 'unicorn'
 gem 'sucker_punch'
 
 gem 'font-awesome-rails'
-gem 'angularjs-rails-resource'
 
 group :assets do
   gem 'sass-rails'
