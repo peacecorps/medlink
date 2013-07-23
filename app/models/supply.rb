@@ -13,6 +13,6 @@ class Supply < ActiveRecord::Base
   def self.lookup str
     where(['lower(shortcode) = ?', str.downcase]).first ||
     where(['lower(name) = ?',      str.downcase]).first ||
-    raise("Invalid shortcode")
+    raise("Unrecognized shortcode")
   end
 end

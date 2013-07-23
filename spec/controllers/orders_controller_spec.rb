@@ -27,16 +27,6 @@ describe OrdersController do
     end
   end
 
-  describe "GET 'destroy'" do
-    let :order do
-      FactoryGirl.create(:order, user_id: current_user.id)
-    end
-    it "returns http success" do
-      delete 'destroy', id: order.id
-      response.should be_success
-    end
-  end
-
   describe "PUT 'update'", :worker do
     let :order do
       FactoryGirl.create(:order, user_id: current_user.id)
