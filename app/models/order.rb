@@ -1,19 +1,9 @@
 class Order < ActiveRecord::Base
-  attr_accessible :confirmed, :email, :extra, :fulfilled,
-    :phone, :user_id, :requests_attributes, :instructions
-
   belongs_to :user
   has_many :requests
 
   validates_presence_of :user,   message: "unrecognized"
   accepts_nested_attributes_for :requests
-
-  # UI wants users included with all output
-  def as_json(args)
-    super(args.merge(include: [{:user => {:include => :country}},
-                               {:requests => {:include => :supply}}]))
-  end
-  default_scope { eager_load(:user, :requests).order('"orders"."created_at" DESC') }
 
   scope :unfulfilled, -> { where(fulfilled: false) }
 
@@ -25,7 +15,7 @@ class Order < ActiveRecord::Base
 
   def self.create_from_text data
     user   = User.lookup(data[:pcvid]) || raise("Unrecognized PCVID")
-    supply = Supply.lookup(data[:shortcode]) || raise("Unrecognized shortcode")
+    supply = Supply.lookup data[:shortcode]
 
     create!({
       user_id:   user.try(:id),
@@ -48,6 +38,7 @@ class Order < ActiveRecord::Base
   end
 
   def send_instructions!
+    # FIX
     to = self.phone || user.phone
     SMSJob.enqueue(to, instructions) if to
     MailerJob.enqueue :fulfillment, id
@@ -74,5 +65,9 @@ class Order < ActiveRecord::Base
 
   def supplies
     requests.includes(:supply).map { |r| r.supply.name }
+  end
+
+  # FIXME: store fulfillment action along with message
+  def action
   end
 end

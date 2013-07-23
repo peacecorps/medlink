@@ -1,0 +1,32 @@
+%h1 Request Form
+%h3
+  %span= current_user.name
+  %small= current_user.pcv_id
+
+= form_for @order, html: {class: 'form--order'} do |of|
+  = of.fields_for :requests_attributes do |rf|
+    .form__section
+      .input-group
+        .select.select--full
+          = rf.select :supply_id, [['Select Supply', '']] + Supply.choices
+          %i.icon-caret-down.select__arrow
+
+      .input-group
+        = rf.text_field :dosage, placeholder: 'Dosage', class: 'input input--dosage'
+        .select.select--unit
+          = rf.select :unit, [['Unit', '']] + Supply.units
+          %i.icon-caret-down.select__arrow
+        = rf.text_field :quantity, placeholder: 'Quantity', class: 'input input--quantity'
+
+  / FIXME: Add extra request form__sections on the fly
+  / .form__add
+  /   %a(ng-click="addRequest()")
+  /     %i.icon-plus
+  /     %span Add a new supply request
+
+  .form__section
+    .input-group
+      = of.text_area :extra, placeholder: 'Special requests for location or dosage', rows: 3
+
+  .btn-group
+    %button.btn.btn--primary(type="submit") Submit

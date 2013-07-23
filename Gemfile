@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'rails', '4.0.0'
-gem 'protected_attributes'
 
 gem 'jquery-rails'
 gem 'haml-rails'
@@ -16,7 +15,6 @@ gem 'unicorn'
 gem 'sucker_punch'
 
 gem 'font-awesome-rails'
-gem 'angularjs-rails-resource'
 
 group :assets do
   gem 'sass-rails'
@@ -29,6 +27,8 @@ end
 group :development do
   gem 'sqlite3'
   gem 'pry'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'letter_opener'
   gem 'simplecov'
   gem 'coveralls', require: false

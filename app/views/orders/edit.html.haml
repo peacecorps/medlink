@@ -1,0 +1,41 @@
+.order-back
+  = link_to orders_path do
+    %i.icon-caret-left
+    %span Back to all Orders
+
+.order
+  .order__section
+    %hgroup
+      %h3
+        %span
+          Order From:
+          = @order.user.name
+        %small.pcv-id= @order.user.pcv_id
+      %div
+        %em= "#{@order.user.city}, #{@order.user.country.name}"
+    %table.table
+      %tbody
+        - @order.requests.includes(:supply).each do |request|
+          %tr
+            %td= request.quantity
+            %td.cell--primary= request.supply.name
+            %td= request.dose
+    .order__extra= @order.extra
+
+  = form_for @order, html: {class: 'order__section'} do |f|
+    %h4.order__action Order Action:
+    .order__message
+      %ul.radio-group
+        / FIXME: 3 %ul.list-columns for (0,1) (2) and (3)?
+        %ul.list-column
+          - @defaults.each_with_index do |(title, desc), i|
+            %li
+              = f.radio_button :action, i, data: {message: desc}
+              %label(for="order_action_#{i}")= title
+      .order__instructions
+        = f.text_area :instructions
+        .order__characters 160 characters remaining
+    = f.hidden_field :fulfilled, value: true
+
+    .btn-group
+      %button.btn.btn--primary(type="submit") Submit

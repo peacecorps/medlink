@@ -1,45 +1,69 @@
 class OrdersController < ApplicationController
   before_filter :authenticate_user!
-
-  respond_to :html, :json
-  respond_to :csv, only: :index
+  before_filter :find_order, except: [:index, :new, :create]
 
   def index
     @orders = current_user.accessible_orders
-    respond_with @orders
   end
 
-  def show
-    order_id = params[:order_id] || params[:id]
-    respond_with current_user.accessible_orders.where(id: order_id).first!
+  def new
+    @order = current_user.orders.new
   end
 
   def create
-    order = Order.new(params[:order])
-    order.user = current_user
-    if order.save
-      render json: {success: true, order: order}
+    clean! params[:order]
+
+    @order = current_user.orders.new create_params
+    if @order.save!
+      redirect_to orders_path, notice: "Order submitted successfully"
     else
-      render :status => :unacceptable, json: {errors: order.errors}
+      # FIXME: validation messages
+      render :new
     end
+  end
+
+  def edit
+    @defaults = {
+      'Delivered to PCV' =>
+        'Please pick up your request at [enter location here] by [enter date here].',
+      'PCV Purchase' =>
+        'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.',
+      'Delivered to Hub' =>
+        'Your request is estimated to arrive at your location on [enter date here].',
+      'Special Instructions' => ''
+    }
   end
 
   def update
-    order = current_user.accessible_orders.where(
-      id: params[:order_id] || params[:id]).first!
-    if order.update_attributes(params[:order])
-      order.send_instructions!
-      render json: {success: true, order: order}
+    # FIXME: limit to admins
+    if @order.update_attributes update_params
+      # FIXME: should we _always_ send these?
+      @order.send_instructions!
+      redirect_to orders_path, notice: "Order updated successfully"
     else
-      render :status => :unacceptable, json:
-        {success: false, errors: order.errors}
+      render :edit
     end
   end
 
-  def destroy
-    order = current_user.accessible_orders.where(
-      id: params[:order_id] || params[:id]).first!
-    order.destroy
-    render json: {success: true}
+  private # -----
+
+  def find_order
+    @order = current_user.accessible_orders.find params[:id]
+  end
+
+  def clean! order
+    req = order[:requests_attributes]
+    req[:supply_id] = Supply.lookup(req[:supply_id]).id
+    req[:dose] = "#{req.delete :dosage}#{req.delete :unit}"
+    order[:requests_attributes] = [req]
+  end
+
+  def create_params
+    params.require(:order).permit :extra,
+      requests_attributes: [:supply_id, :dose, :quantity]
+  end
+
+  def update_params
+    params.require(:order).permit [:fulfilled, :instructions]
   end
 end

@@ -15,8 +15,6 @@
 /tmp
 .ruby-version
 
-bin
-
 ###OSX###
  
 .DS_Store
