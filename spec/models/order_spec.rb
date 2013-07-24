@@ -4,8 +4,8 @@ describe Order do
 
   before :each do
     FactoryGirl.create :user,   pcv_id: 'USR'
-    FactoryGirl.create :supply, shortcode: 'BND'
-    FactoryGirl.create :supply, shortcode: 'SND'
+    FactoryGirl.create :supply, shortcode: 'BND', name: 'Bandages'
+    FactoryGirl.create :supply, shortcode: 'SND', name: 'Second thing'
   end
 
   context 'from text' do
@@ -56,6 +56,10 @@ describe Order do
 
     it { should be_a_kind_of Order }
     it { should_not be_fulfilled   }
+
+    it 'can list its supplies' do
+      expect( subject.supplies ).to eq ['Bandages', 'Second thing']
+    end
 
     it 'requires unique supply items'
 

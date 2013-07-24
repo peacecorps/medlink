@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
     clean! params[:order]
 
     @order = current_user.orders.new create_params
-    if @order.save!
+    if @order.save
       redirect_to orders_path, notice: "Order submitted successfully"
     else
       # FIXME: validation messages
@@ -35,14 +35,14 @@ class OrdersController < ApplicationController
   end
 
   def update
-    # FIXME: limit to admins
-    if @order.update_attributes update_params
-      # FIXME: should we _always_ send these?
-      @order.send_instructions!
-      redirect_to orders_path, notice: "Order updated successfully"
-    else
-      render :edit
-    end
+    # FIXME: 
+    # - limit to admins
+    # - currently, this *can't* fail any validations. Should we check for
+    #     instructions here?
+    # - should we always send instructions on an update?
+    @order.update_attributes update_params
+    @order.send_instructions!
+    redirect_to orders_path, notice: "Order updated successfully"
   end
 
   private # -----
@@ -53,7 +53,7 @@ class OrdersController < ApplicationController
 
   def clean! order
     return order unless req = order[:requests_attributes]
-    req[:supply_id] = Supply.lookup(req[:supply_id]).id
+    req[:supply_id] = Supply.lookup(req[:supply_id]).id rescue nil
     req[:dose] = "#{req.delete :dosage}#{req.delete :unit}"
     order[:requests_attributes] = [req]
   end

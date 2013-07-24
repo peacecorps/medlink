@@ -6,12 +6,25 @@ describe OrdersController do
     sign_in current_user
   }
 
-  describe "POST 'create'" do
-    it "returns http success" do
-      post 'create', order: {user_id: current_user.id}
-      response.should be_redirection
+  describe "GET 'new'" do
+    it 'displays a template' do
+      get 'new'
+      expect( response ).to be_success
     end
-    it "returns http failure (bad order create params)"
+  end
+
+  describe "POST 'create'" do
+    it "redirects on creation" do
+      post 'create', order: {user_id: current_user.id}
+      expect( response ).to be_redirection
+    end
+    it "renders on failure" do
+      FactoryGirl.create(:supply, shortcode: 'CODE')
+      order = {user_id: current_user}
+      order[:requests_attributes] = {supply_id: 'QWERTY'}
+      post 'create', order: order
+      expect( response ).to be_success
+    end
   end
 
   describe "POST 'create' nested requests" do
@@ -21,7 +34,17 @@ describe OrdersController do
       order[:requests_attributes] = {
         supply_id: 'CODE', dose: '5', quantity: 5 }
       post 'create', order: order
-      response.should be_redirection
+      expect( response ).to be_redirection
+    end
+  end
+
+  describe "GET 'edit'" do
+    let :order do
+      FactoryGirl.create(:order, user_id: current_user.id)
+    end
+    it 'displays a template' do
+      get 'edit', id: order.id
+      expect( response ).to be_success
     end
   end
 
@@ -29,10 +52,10 @@ describe OrdersController do
     let :order do
       FactoryGirl.create(:order, user_id: current_user.id)
     end
-    it "returns http success" do
+    it "redirects on success" do
       put :update, id: order.id, order: {
         phone: '678-315-5999', email: 'test@example.com'}
-      response.should be_redirection
+      expect( response ).to be_redirection
     end
     it "returns http failure (bad order update params)"
   end
@@ -48,7 +71,7 @@ describe OrdersController do
     end
     it "returns success with valid data" do
       get 'index'
-      response.should be_success
+      expect( response ).to be_success
     end
   end
 
