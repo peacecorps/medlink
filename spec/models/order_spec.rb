@@ -61,7 +61,21 @@ describe Order do
       expect( subject.supplies ).to eq ['Bandages', 'Second thing']
     end
 
-    it 'requires unique supply items'
+    it 'requires unique supply items' do
+      expect do
+        a = FactoryGirl.create :order,
+          email: 'custom@example.com',
+          phone: 'N/A',
+          requests_attributes: [{
+            supply_id: Supply.first.id,
+            dose:      '10mg'
+          }, {
+            supply_id: Supply.first.id,
+            quantity:  5
+          }]
+        binding.pry
+      end.to raise_error /suppl.*unique/i
+    end
 
     it 'rejects duplicates' do
       # Sequences generate different Users if we don't do this:

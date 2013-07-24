@@ -4,6 +4,16 @@ class Order < ActiveRecord::Base
 
   validates_presence_of :user,   message: "unrecognized"
   accepts_nested_attributes_for :requests
+  validate :supplies_are_unique
+
+  # FIXME: If we have two requests for the same supply, should we merge them?
+  #        What about dosage?
+  def supplies_are_unique
+    _sups = requests.map &:supply_id
+    unless _sups.length == _sups.uniq.length
+      errors.add :base, "Supplies are not unique"
+    end
+  end
 
   scope :unfulfilled, -> { where(fulfilled: false) }
 

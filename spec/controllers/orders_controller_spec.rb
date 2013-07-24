@@ -38,30 +38,23 @@ describe OrdersController do
     end
   end
 
-  describe "GET 'edit'" do
-    let :order do
-      FactoryGirl.create(:order, user_id: current_user.id)
-    end
-    it 'displays a template' do
-      get 'edit', id: order.id
-      expect( response ).to be_success
-    end
-  end
+  context 'with an existing order' do
+    before(:each) { @order = FactoryGirl.create :order, user_id: current_user.id }
 
-  describe "PUT 'update'", :worker do
-    let :order do
-      FactoryGirl.create(:order, user_id: current_user.id)
+    describe "GET 'edit'" do
+      it 'displays a template' do
+        get 'edit', id: @order.id
+        expect( response ).to be_success
+      end
     end
-    it "redirects on success" do
-      put :update, id: order.id, order: {
-        phone: '678-315-5999', email: 'test@example.com'}
-      expect( response ).to be_redirection
-    end
-    it "returns http failure (bad order update params)"
-  end
 
-  describe "GET 'show'" do
-    it "add show order spec"
+    describe "PUT 'update'", :worker do
+      it "redirects on success" do
+        put :update, id: @order.id, order: {
+          phone: '678-315-5999', email: 'test@example.com'}
+        expect( response ).to be_redirection
+      end
+    end
   end
 
   describe "GET 'index'" do
