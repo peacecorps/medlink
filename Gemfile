@@ -10,8 +10,6 @@ gem 'twilio-ruby'
 
 gem 'devise'
 
-gem 'unicorn'
-#U# gem 'unicorn-rails'
 gem 'sucker_punch'
 
 gem 'font-awesome-rails'
@@ -47,6 +45,7 @@ group :test do
 end
 
 group :production do
+  gem 'unicorn'
   gem 'newrelic_rpm'
   gem 'pg'
 end
