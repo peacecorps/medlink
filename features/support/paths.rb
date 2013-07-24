@@ -13,17 +13,17 @@ module NavigationHelpers
     when /the sign_up page/
       '/users/sign_up'
     when /the forgot_password page/
-      '/users/password/new#/new'
+      '/users/password/new'
     when /the new_order page/
-      '/#/orders/new'
+      '/orders/new'
     when /the order_table page/
-      '/#/orders'
+      '/orders'
     when /the first_order page/
-      '/#/orders/1'
+      '/orders/1'
     when /the change_password page/
-      '#/users/edit'
+      '/users/edit'
     when /the help page/
-      '/#/help'
+      '/help'
     end
   end
 end

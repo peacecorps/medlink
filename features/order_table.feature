@@ -22,7 +22,7 @@ Feature: Visit "Order Table" Web Page
 
 ######################################################################
 # Inside one order.
-    When I go to the first_order page
+#U#    When I go to the first_order page
     Then I should see the image "brand"
     Then I should see "Peace Corps" inside "h1"
     Then I should see "Medical Supplies" inside "h4"
