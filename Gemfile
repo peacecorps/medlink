@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'rails', '4.0.0'
-gem 'protected_attributes'
 
 gem 'jquery-rails'
 gem 'haml-rails'
@@ -11,12 +10,9 @@ gem 'twilio-ruby'
 
 gem 'devise'
 
-gem 'unicorn'
-#U# gem 'unicorn-rails'
 gem 'sucker_punch'
 
 gem 'font-awesome-rails'
-gem 'angularjs-rails-resource'
 
 group :assets do
   gem 'sass-rails'
@@ -29,6 +25,8 @@ end
 group :development do
   gem 'sqlite3'
   gem 'pry'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'letter_opener'
   gem 'simplecov'
   gem 'coveralls', require: false
@@ -41,11 +39,13 @@ group :test do
   gem 'email_spec'
   gem 'sms-spec'
 
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', :require => false, :branch => 'master_rails4_test',
+    :git => 'https://github.com/cucumber/cucumber-rails.git'
   gem 'database_cleaner'
 end
 
 group :production do
+  gem 'unicorn'
   gem 'newrelic_rpm'
   gem 'pg'
 end

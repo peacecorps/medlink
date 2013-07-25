@@ -11,7 +11,7 @@ describe SuppliesController do
       FactoryGirl.create_list(:supply,30)
     end
     it "returns success with valid data" do
-      get 'index', format: :json
+      get 'index'
       response.should be_success
     end
   end

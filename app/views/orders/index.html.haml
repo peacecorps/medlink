@@ -17,17 +17,16 @@
   %tbody
     - @orders.each do |order|
       - next if order.fulfilled?
-      / FIXME: make entire table row clickable, link to order
-      %tr
+      %tr(data-link="#{edit_order_path order}")
         %td
           %span.cell--primary= order.user.name
           %small.cell--secondary= order.user.pcv_id
         %td
           %span= order.created_at.strftime '%-m/%-d/%y'
-          / FIXME: timezones
           %small.cell--secondary= order.created_at.strftime '%H:%M'
         %td
           %span.cell--primary= order.user.city
         %td= order.supplies.join ', '
         %td.cell--arrow
           %i.icon-caret-right
+

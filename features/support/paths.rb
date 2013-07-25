@@ -9,21 +9,21 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
     when /the sign_in page/
-      '#/users/sign_in'
+      '/users/sign_in'
     when /the sign_up page/
-      '#/users/sign_up'
+      '/users/sign_up'
     when /the forgot_password page/
-      '/users/password/new#/new'
+      '/users/password/new'
     when /the new_order page/
-      '/#/orders/new'
+      '/orders/new'
     when /the order_table page/
-      '/#/orders'
+      '/orders'
     when /the first_order page/
-      '/#/orders/1'
-    when /the settings page/
-      '#/users/edit'
+      '/orders/1'
+    when /the change_password page/
+      '/users/edit'
     when /the help page/
-      '/#/help'
+      '/help'
     end
   end
 end

@@ -11,10 +11,11 @@ Feature: Visit "Sign In" Web Page
 
     Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
-    Then I should see "Logout" inside "a"
+    Then I should see "Log out" inside "a"
 
-#U#    Then I should see "Email" (placeholder)
-#U#    Then I should see "Password" (placeholder)
-#U#    Then I should see the button "Sign in"
-#U#    Then I should see "Sign up" inside "a"
-#U#    Then I should see "Forgot your password?" inside "a"
+    Then I should see "Sign in" inside "h3"
+    Then I should see field "Email"
+    Then I should see field "Password"
+    Then I should see the button "Sign in"
+    Then I should see "Sign up" inside "a"
+    Then I should see "Forgot your password?" inside "a"

@@ -5,25 +5,18 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me,
-    :country_id, :first_name, :last_name, :pcv_id, :city, :role, :phone
-
   belongs_to :country
   has_many :orders
   validates_presence_of :city, :country, :first_name, :last_name, :pcv_id
   validates :pcv_id, uniqueness: true
 
-  def as_json(args)
-    super(args.merge(include: [:country]))
-  end
-
   def admin?
     role == 'admin'
   end
 
+  # FIXME: denormalize on country
   def accessible_orders
-    admin? ? Order.where(users: {country_id: country_id}) : orders
+    admin? ? Order.includes(:user).where(users: {country_id: country_id}) : orders
   end
 
   def self.lookup str

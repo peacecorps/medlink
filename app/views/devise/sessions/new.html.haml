@@ -1,0 +1,12 @@
+= form_for resource, html: {class: 'form form-horizontal'}, as: resource_name, url: session_path(resource_name) do |f|
+
+  %h3 Sign in
+  .form__section
+    .input-group
+      = f.email_field :email, placeholder: 'Email', class: 'input--full', autofocus: true
+    .input-group
+      = f.password_field :password, placeholder: 'Password', class: 'input--full'
+    .btn-group
+      %button.btn.btn--primary(type="submit") Sign in
+      = link_to 'Sign up', new_user_registration_path, class: 'btn'
+      = link_to 'Forgot your password?', new_user_password_path, class: 'btn'

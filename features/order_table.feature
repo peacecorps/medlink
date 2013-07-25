@@ -13,7 +13,7 @@ Feature: Visit "Order Table" Web Page
 
     Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
-    Then I should see "Logout" inside "a"
+#U#    Then I should see "Log out" inside "a"
 
 #U#    Then I should see "Requester"
 #U#    Then I should see "Request Date"
@@ -22,14 +22,14 @@ Feature: Visit "Order Table" Web Page
 
 ######################################################################
 # Inside one order.
-    When I go to the first_order page
+#U#    When I go to the first_order page
     Then I should see the image "brand"
     Then I should see "Peace Corps" inside "h1"
     Then I should see "Medical Supplies" inside "h4"
 
     Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
-    Then I should see "Logout" inside "a"
+#U#    Then I should see "Log out" inside "a"
 
 #U#    Then I should see "Back to all Orders" (inside span)
 #U#    Then I should see "Order Form:" (inside span)
