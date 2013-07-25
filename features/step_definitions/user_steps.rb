@@ -26,6 +26,7 @@ end
 def sign_in
   visit '/users/sign_in'
   fill_in "Email", :with => @visitor[:email]
+  #U# find("input[placeholder='Password']").set(@visitor[:password])
   fill_in "Password", :with => @visitor[:password]
   click_button "Sign in"
 end
