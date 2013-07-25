@@ -1,13 +1,13 @@
 ### UTILITY METHODS ###
 
 def create_visitor
-  @visitor ||= { :first_name => "Testy", :last_name => "McUserton", 
-    :email => "testy.mcuserton@gmail.com",
+  @visitor ||= { :first_name => "Joe", :last_name => "Doe", 
+    :email => "joe.doe@gmail.com",
     :password => "please", :password_confirmation => "please" }
 end
 
 def find_user
-  @user ||= User.first conditions: {:email => @visitor[:email]}
+  @user ||= User.where('email' => @visitor[:email]).first
 end
 
 def create_unconfirmed_user
@@ -23,27 +23,6 @@ def create_user
   @user = FactoryGirl.create(:user, email: @visitor[:email])
 end
 
-def delete_user
-  @user ||= User.first conditions: {:email => @visitor[:email]}
-  @user.destroy unless @user.nil?
-end
-
-def sign_up
-  delete_user
-  visit '/users/sign_up'
-  fill_in "First Name", :with => @visitor[:first_name]
-  fill_in "Last Name", :with => @visitor[:last_name]
-  fill_in "Email", :with => @visitor[:email]
-  fill_in "PCV ID", :with => "11111111"
-  fill_in "Phone Number", :with => "404-532-8011"
-  fill_in "City", :with => "Roswell"
-#U# Country (menu)
-  fill_in "user_password", :with => @visitor[:password]
-  fill_in "user_password_confirmation", :with => @visitor[:password_confirmation]
-  click_button "Submit"
-  find_user
-end
-
 def sign_in
   visit '/users/sign_in'
   fill_in "Email", :with => @visitor[:email]
@@ -51,7 +30,30 @@ def sign_in
   click_button "Sign in"
 end
 
-### GIVEN ###
+def delete_user
+  @user ||= User.where('email' => @visitor[:email]).first
+  @user.destroy unless @user.nil?
+end
+
+# 7/27/2013: SIGN_UP Functionality not supported currently.
+#U# def sign_up
+#U#   delete_user
+#U#   visit '/users/sign_up'
+#U#   fill_in "First Name", :with => @visitor[:first_name]
+#U#   fill_in "Last Name", :with => @visitor[:last_name]
+#U#   fill_in "Email", :with => @visitor[:email]
+#U#   fill_in "PCV ID", :with => "11111111"
+#U#   fill_in "Phone Number", :with => "404-532-8011"
+#U#   fill_in "City", :with => "Roswell"
+#U# #U# Country (menu)
+#U#   fill_in "user_password", :with => @visitor[:password]
+#U#   fill_in "user_password_confirmation", :with => @visitor[:password_confirmation]
+#U#   click_button "Submit"
+#U#   find_user
+#U# end
+
+### GIVEN ############################################################
+
 Given /^I am not logged in$/ do
   visit '/' #U#
 end
@@ -74,15 +76,15 @@ Given /^I exist as an unconfirmed user$/ do
   create_unconfirmed_user
 end
 
-### WHEN ###
+### WHEN #############################################################
+
 When /^I sign in with valid credentials$/ do
   create_visitor
   sign_in
 end
 
 When /^I sign out$/ do
-  #visit '/users/sign_out'
-  pending
+  click_link "Log out"
 end
 
 When /^I sign up with valid user data$/ do
@@ -139,17 +141,12 @@ When /^I look at the list of users$/ do
   visit '/'
 end
 
-### THEN ###
+### THEN #############################################################
+
 Then /^I should be signed in$/ do
   page.should have_content "Logout"
   page.should_not have_content "Sign up"
   page.should_not have_content "Sign in"
-end
-
-Then /^I should be signed out$/ do
-#U#  page.should have_content "Sign up"
-#U# page.should have_content "Sign in"
-#U#  page.should_not have_content "Log out"
 end
 
 Then /^I see an unconfirmed account message$/ do
@@ -180,7 +177,12 @@ Then /^I should see a mismatched password message$/ do
   page.should have_content "Password doesn't match confirmation"
 end
 
+Then /^I should be signed out$/ do
+  page.should have_content "You need to sign in or sign up before continuing."
+end
+
 Then /^I should see a signed out message$/ do
+  puts "Signed out successfully."
   page.should have_content "Signed out successfully."
 end
 
