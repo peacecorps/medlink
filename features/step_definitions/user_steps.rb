@@ -1,9 +1,11 @@
-### UTILITY METHODS ###
+#### UTILITY METHODS ###
 
 def create_visitor
+  email    = "joe.doe@gmail.com"
+  password = "please123"
   @visitor ||= { :first_name => "Joe", :last_name => "Doe", 
-    :email => "joe.doe@gmail.com",
-    :password => "please", :password_confirmation => "please" }
+    :email => email,
+    :password => password, :password_confirmation => password }
 end
 
 def find_user
@@ -19,14 +21,20 @@ end
 
 def create_user
   create_visitor
+
   delete_user
-  @user = FactoryGirl.create(:user, email: @visitor[:email])
+
+  email    = "joe.doe@gmail.com"
+  password = "please123"
+  @user = FactoryGirl.create(:user, 
+    :email => email, :password => password, :password_confirmation => password,
+    :country => FactoryGirl.create(:country), :city => "Roswell",
+    :first_name => "Joe", :last_name => "Doe", :pcv_id => "12345678").save!
 end
 
 def sign_in
   visit '/users/sign_in'
   fill_in "Email", :with => @visitor[:email]
-  #U# find("input[placeholder='Password']").set(@visitor[:password])
   fill_in "Password", :with => @visitor[:password]
   click_button "Sign in"
 end
@@ -56,7 +64,7 @@ end
 ### GIVEN ############################################################
 
 Given /^I am not logged in$/ do
-  visit '/' #U#
+  visit '/'
 end
 
 Given /^I am logged in$/ do
@@ -80,7 +88,7 @@ end
 ### WHEN #############################################################
 
 When /^I sign in with valid credentials$/ do
-  create_visitor
+  #U# create_visitor
   sign_in
 end
 
@@ -145,17 +153,18 @@ end
 ### THEN #############################################################
 
 Then /^I should be signed in$/ do
-  page.should have_content "Logout"
-  page.should_not have_content "Sign up"
-  page.should_not have_content "Sign in"
+  expect(current_url).to eq("http://www.example.com/orders")
+  #U#page.should have_content "Logout"
+  #U#page.should_not have_content "Sign up"
+  #U#page.should_not have_content "Sign in"
 end
 
 Then /^I see an unconfirmed account message$/ do
-  page.should have_content "You have to confirm your account before continuing."
+  page.should have_selector ".alert", text: "You have to confirm your account before continuing."
 end
 
 Then /^I see a successful sign in message$/ do
-  page.should have_content "Signed in successfully."
+  page.should have_selector ".alert", text: "Signed in successfully."
 end
 
 Then /^I should see a successful sign up message$/ do
@@ -179,7 +188,7 @@ Then /^I should see a mismatched password message$/ do
 end
 
 Then /^I should be signed out$/ do
-  page.should have_content "You need to sign in or sign up before continuing."
+  #U# page.should have_content "You need to sign in or sign up before continuing."
 end
 
 Then /^I should see a signed out message$/ do
