@@ -4,22 +4,20 @@ Feature: Visit "Change Password" Web Page
   so I can know that the site is working
 
   Scenario: Check stuff on "Change Password" page
-    Given I sign in with valid credentials
+    Given I exist as a user
+    And I am not logged in
+    And I sign in with valid credentials
     When I go to the change_password page
     Then I should see the image "brand"
     Then I should see "Peace Corps" inside "h1"
     Then I should see "Medical Supplies" inside "h4"
-#U#    Then I should see "United States"
 
     Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
     Then I should see "Log out" inside "a"
 
-    Then show me the page
-    Then I should see field "Change Password"
-# Al Snow
-# 963607
-    Then I should see field "jasnow@hotmail.com"
+    Then I should see "Change Password" inside "h1"
+    Then I should see field "Email"
     Then I should see field "Current Password"
     Then I should see field "New Password"
     Then I should see field "Password Confirmation"
