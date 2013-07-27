@@ -11,31 +11,30 @@
       = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
 
   %body
+    .flash
+      - flash.each do |name, msg|
+        .flash__message.alert
+          = msg
+    .l-wrapper
+      %header.l-sidebar
+        .l-sidebar__inner
+          = link_to image_tag("/logo.png", id: 'brand'), root_path
+          %hgroup
+            %h1 Peace Corps
+            %h4 Medical Supplies
+            - if current_user
+              %span.badge= current_user.country.name.downcase
+      %div.l-main
+        .l-header
+          %nav
+            .dropdown
+              %a
+                %i.icon-cog
+              %ul.nav.nav--dropdown
+                %li= link_to 'Change Password', edit_user_registration_path
+                %li= link_to 'Help', help_path
+                %li= link_to "Log out", destroy_user_session_path, method: :delete
+        %section
+          = yield
 
-.l-wrapper
-  %header.l-sidebar
-    .l-sidebar__inner
-      = link_to image_tag("/logo.png", id: 'brand'), root_path
-      %hgroup
-        %h1 Peace Corps
-        %h4 Medical Supplies
-        - if current_user
-          %span.badge= current_user.country.name.downcase
-  %div.l-main
-    .l-header
-      %nav
-        .dropdown
-          %a
-            %i.icon-cog
-          %ul.nav.nav--dropdown
-            %li= link_to 'Change Password', edit_user_registration_path
-            %li= link_to 'Help', help_path
-            %li= link_to "Log out", destroy_user_session_path, method: :delete
-    %section
-      = yield
-
-    - if notice
-      %p.alert.alert-notice= notice
-    - if alert
-      %p.alert.alert-error= alert
     = javascript_include_tag "application"
