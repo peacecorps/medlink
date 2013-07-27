@@ -39,7 +39,8 @@ describe OrdersController do
   end
 
   context 'with an existing order' do
-    before(:each) { @order = FactoryGirl.create :order, user_id: current_user.id }
+    before(:each) { @order = FactoryGirl.create :order,
+      user_id: current_user.id }
 
     describe "GET 'edit'" do
       it 'displays a template' do

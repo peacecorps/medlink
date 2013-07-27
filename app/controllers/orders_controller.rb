@@ -24,18 +24,18 @@ class OrdersController < ApplicationController
 
   def edit
     @defaults = {
-      'Delivered to PCV' =>
-        'Please pick up your request at [enter location here] by [enter date here].',
-      'PCV Purchase' =>
-        'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.',
-      'Delivered to Hub' =>
-        'Your request is estimated to arrive at your location on [enter date here].',
+      'Delivered to PCV' => 'Please pick up your request at ' +
+        '[enter location here] by [enter date here].',
+      'PCV Purchase' => 'We do not have your requested item in stock. ' +
+        'Please purchase elsewhere and allow us to reimburse you.',
+      'Delivered to Hub' => 'Your request is estimated to arrive ' +
+        'at your location on [enter date here].',
       'Special Instructions' => ''
     }
   end
 
   def update
-    # FIXME: 
+    # FIXME:
     # - limit to admins
     # - currently, this *can't* fail any validations. Should we check for
     #     instructions here?
