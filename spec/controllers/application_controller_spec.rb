@@ -9,7 +9,7 @@ describe ApplicationController do
   end
 
   describe "GET /help" do
-    pending 'displays a help template' do
+    it 'displays a help template' do
       get 'help'
       expect( response ).to be_success
     end
