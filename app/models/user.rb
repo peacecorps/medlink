@@ -10,8 +10,10 @@ class User < ActiveRecord::Base
   validates_presence_of :city, :country, :first_name, :last_name, :pcv_id
   validates :pcv_id, uniqueness: true
 
-  def admin?
-    role == 'admin'
+  [:pcv, :pcmo, :admin].each do |type|
+    define_method :"#{type}?" do
+      role.to_sym == type
+    end
   end
 
   # FIXME: denormalize on country
