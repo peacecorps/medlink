@@ -15,7 +15,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  scope :unfulfilled, -> { where(fulfilled: false) }
+  scope :unfulfilled, -> { where(fulfilled_at: nil) }
 
   def self.human_attribute_name(attr, options={})
     {

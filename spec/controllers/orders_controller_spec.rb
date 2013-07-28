@@ -34,6 +34,9 @@ describe OrdersController do
       order[:requests_attributes] = {
         supply_id: 'CODE', dose: '5', quantity: 5 }
       post 'create', order: order
+
+      order = Order.last
+      expect( order.fulfilled_at ).to be_nil
       expect( response ).to be_redirection
     end
   end
@@ -53,6 +56,9 @@ describe OrdersController do
       it "redirects on success" do
         put :update, id: @order.id, order: {
           phone: '678-315-5999', email: 'test@example.com'}
+
+        order = Order.last
+        expect( order.fulfilled_at ).not_to be_nil
         expect( response ).to be_redirection
       end
     end

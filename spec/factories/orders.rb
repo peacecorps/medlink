@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :order do
     user
-    fulfilled false
+    fulfilled_at nil
   end
 end

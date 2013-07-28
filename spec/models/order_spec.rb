@@ -54,8 +54,7 @@ describe Order do
     subject { FactoryGirl.create :order, data }
     after(:each) { subject.destroy }
 
-    it { should be_a_kind_of Order }
-    it { should_not be_fulfilled   }
+    its(:fulfilled_at) { should be_nil }
 
     it 'can list its supplies' do
       expect( subject.supplies ).to eq ['Bandages', 'Second thing']
