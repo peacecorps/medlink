@@ -3,8 +3,7 @@
 %p Your order of:
 
 %ul
-- @order.requests.each do |request|
-  %li= "#{request.quantity} #{request.supply.name}"
+  %li= "#{@order.quantity} #{@order.supply.name}"
 
 %p has successfully been filled. Please follow the attached instructions:
 %p= @order.instructions

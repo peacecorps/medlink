@@ -168,6 +168,12 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.11.0)
     rake (10.1.0)
+    reform (0.1.2)
+      activemodel
+      representable (>= 1.5.3)
+    representable (1.6.0)
+      multi_json
+      nokogiri
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rspec (2.14.1)
@@ -258,6 +264,7 @@ DEPENDENCIES
   pry
   rails (= 4.0.0)
   rake
+  reform
   rspec-rails
   sass-rails
   simplecov

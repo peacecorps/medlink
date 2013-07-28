@@ -15,11 +15,10 @@
         %em= "#{@order.user.city}, #{@order.user.country.name}"
     %table.table
       %tbody
-        - @order.requests.includes(:supply).each do |request|
-          %tr
-            %td= request.quantity
-            %td.cell--primary= request.supply.name
-            %td= request.dose
+        %tr
+          %td= @order.quantity
+          %td.cell--primary= @order.supply
+          %td= @order.full_dosage
     .order__extra= @order.extra
 
   = form_for @order, html: {class: 'order__section'} do |f|

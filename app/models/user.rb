@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
   end
 
   def self.lookup str
-    where(['lower(pcv_id) = ?', str.downcase]).first
+    where(['lower(pcv_id) = ?', str.downcase]).first ||
+    raise("Unrecognized PCVID")
   end
 
   def send_reset_password_instructions opts={}

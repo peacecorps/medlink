@@ -14,6 +14,8 @@ gem 'sucker_punch'
 
 gem 'font-awesome-rails'
 
+gem 'reform'
+
 group :assets do
   gem 'sass-rails'
   gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'

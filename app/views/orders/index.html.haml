@@ -26,7 +26,7 @@
           %small.cell--secondary= order.created_at.strftime '%H:%M'
         %td
           %span.cell--primary= order.user.city
-        %td= order.supplies.join ', '
+        %td= order.supply
         %td.cell--arrow
           %i.icon-caret-right
 

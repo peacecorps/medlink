@@ -4,7 +4,9 @@ describe Supply do
   subject { FactoryGirl.create :supply, name: 'Supply item',
     shortcode: 'SPPLY' }
 
-  it { should be_a_kind_of Supply }
+  it 'can be printed' do
+    expect( subject.to_s ).to eq 'Supply item'
+  end
 
   it 'knows its choices' do
     malformed = Supply.choices.find { |choice| choice.length != 2 }

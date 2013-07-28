@@ -14,14 +14,15 @@ describe OrdersController do
   end
 
   describe "POST 'create'" do
+    before(:each) { FactoryGirl.create(:supply, shortcode: 'CODE') }
     it "redirects on creation" do
-      post 'create', order: {user_id: current_user.id}
+      post 'create', order: { 
+        user_id: current_user.id, supply_id: Supply.last.id }
       expect( response ).to be_redirection
     end
     it "renders on failure" do
       FactoryGirl.create(:supply, shortcode: 'CODE')
-      order = {user_id: current_user}
-      order[:requests_attributes] = {supply_id: 'QWERTY'}
+      order = {user_id: current_user, supply_id: 'QWERTY'}
       post 'create', order: order
       expect( response ).to be_success
     end
@@ -30,9 +31,8 @@ describe OrdersController do
   describe "POST 'create' nested requests" do
     before(:each) { FactoryGirl.create(:supply, shortcode: 'CODE') }
     it "returns http success" do
-      order = {user_id: current_user.id}
-      order[:requests_attributes] = {
-        supply_id: 'CODE', dose: '5', quantity: 5 }
+      order = { user_id: current_user.id,
+        supply_id: Supply.last.id, dose: '5', quantity: 5 }
       post 'create', order: order
 
       order = Order.last
@@ -66,8 +66,7 @@ describe OrdersController do
 
   describe "GET 'index'" do
     before do
-      FactoryGirl.create(:order, user_id: current_user.id,
-                         requests: FactoryGirl.create_list(:request, 10))
+      FactoryGirl.create(:order, user_id: current_user.id)
     end
     it "returns success with valid data" do
       get 'index'

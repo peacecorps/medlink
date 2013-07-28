@@ -11,13 +11,10 @@ class OrdersController < ApplicationController
   end
 
   def create
-    clean! params[:order]
-
     @order = current_user.orders.new create_params
     if @order.save
       redirect_to orders_path, notice: "Order submitted successfully"
     else
-      # FIXME: validation messages
       render :new
     end
   end
@@ -51,16 +48,8 @@ class OrdersController < ApplicationController
     @order = current_user.accessible_orders.find params[:id]
   end
 
-  def clean! order
-    return order unless req = order[:requests_attributes]
-    req[:supply_id] = Supply.lookup(req[:supply_id]).id rescue nil
-    req[:dose] = "#{req.delete :dosage}#{req.delete :unit}"
-    order[:requests_attributes] = [req]
-  end
-
   def create_params
-    params.require(:order).permit :extra,
-      requests_attributes: [:supply_id, :dose, :quantity]
+    params.require(:order).permit [:extra, :supply_id, :dose, :unit, :quantity]
   end
 
   def update_params

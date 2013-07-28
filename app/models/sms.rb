@@ -55,7 +55,7 @@ class SMS
       "order.unrecognized_pcvid"
     when /unrecognized shortcode/i
       "order.unrecognized_shortcode"
-    when /duplicate/i
+    when /supply has already been taken/i
       "order.duplicate_order"
     end
 

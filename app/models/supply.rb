@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 class Supply < ActiveRecord::Base
-  has_many :requests
-  has_many :users, through: :requests
+  has_many :orders
+  has_many :users, through: :orders
+
+  def to_s
+    name
+  end
 
   def self.choices
-    all.map { |supply| [supply.name, supply.shortcode] }
+    all.map { |supply| [supply.name, supply.id] }
   end
 
   def self.units
