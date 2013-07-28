@@ -8,16 +8,16 @@ def create_visitor
     :password => password, :password_confirmation => password }
 end
 
-def find_user
-  @user ||= User.where('email' => @visitor[:email]).first
-end
+#U# def find_user
+#U#   @user ||= User.where('email' => @visitor[:email]).first
+#U# end
 
-def create_unconfirmed_user
-  create_visitor
-  delete_user
-  sign_up
-  visit '/users/sign_out'
-end
+#U# def create_unconfirmed_user
+#U#   create_visitor
+#U#   delete_user
+#U#   sign_up
+#U#   visit '/users/sign_out'
+#U# end
 
 def create_user
   create_visitor
@@ -67,11 +67,6 @@ Given /^I am not logged in$/ do
   visit '/'
 end
 
-Given /^I am logged in$/ do
-  create_user
-  sign_in
-end
-
 Given /^I exist as a user$/ do
   create_user
 end
@@ -81,9 +76,14 @@ Given /^I do not exist as a user$/ do
   delete_user
 end
 
-Given /^I exist as an unconfirmed user$/ do
-  create_unconfirmed_user
-end
+#U# Given /^I am logged in$/ do
+#U#   create_user
+#U#   sign_in
+#U# end
+
+#U# Given /^I exist as an unconfirmed user$/ do
+#U#   create_unconfirmed_user
+#U# end
 
 ### WHEN #############################################################
 
@@ -92,38 +92,38 @@ When /^I sign in with valid credentials$/ do
   sign_in
 end
 
-When /^I sign out$/ do
-  click_link "Log out"
-end
+#U# When /^I sign out$/ do
+#U#   click_link "Log out"
+#U# end
 
-When /^I sign up with valid user data$/ do
-  create_visitor
-  sign_up
-end
+#U# When /^I sign up with valid user data$/ do
+#U#   create_visitor
+#U#   sign_up
+#U# end
 
-When /^I sign up with an invalid email$/ do
-  create_visitor
-  @visitor = @visitor.merge(:email => "notanemail")
-  sign_up
-end
+#U# When /^I sign up with an invalid email$/ do
+#U#   create_visitor
+#U#   @visitor = @visitor.merge(:email => "notanemail")
+#U#   sign_up
+#U# end
 
-When /^I sign up without a password confirmation$/ do
-  create_visitor
-  @visitor = @visitor.merge(:password_confirmation => "")
-  sign_up
-end
+#U# When /^I sign up without a password confirmation$/ do
+#U#   create_visitor
+#U#   @visitor = @visitor.merge(:password_confirmation => "")
+#U#   sign_up
+#U# end
 
-When /^I sign up without a password$/ do
-  create_visitor
-  @visitor = @visitor.merge(:password => "")
-  sign_up
-end
+#U# When /^I sign up without a password$/ do
+#U#   create_visitor
+#U#   @visitor = @visitor.merge(:password => "")
+#U#   sign_up
+#U# end
 
-When /^I sign up with a mismatched password confirmation$/ do
-  create_visitor
-  @visitor = @visitor.merge(:password_confirmation => "please123")
-  sign_up
-end
+#U# When /^I sign up with a mismatched password confirmation$/ do
+#U#   create_visitor
+#U#   @visitor = @visitor.merge(:password_confirmation => "please123")
+#U#   sign_up
+#U# end
 
 When /^I return to the site$/ do
   visit '/'
@@ -139,72 +139,69 @@ When /^I sign in with a wrong password$/ do
   sign_in
 end
 
-When /^I edit my account details$/ do
-  click_link "Edit account"
-  fill_in "Name", :with => "newname"
-  fill_in "user_current_password", :with => @visitor[:password]
-  click_button "Update"
-end
+#U# When /^I edit my account details$/ do
+#U#   click_link "Edit account"
+#U#   fill_in "Name", :with => "newname"
+#U#   fill_in "user_current_password", :with => @visitor[:password]
+#U#   click_button "Update"
+#U# end
 
-When /^I look at the list of users$/ do
-  visit '/'
-end
+#U# When /^I look at the list of users$/ do
+#U#   visit '/'
+#U# end
 
 ### THEN #############################################################
 
 Then /^I should be signed in$/ do
   expect(current_url).to eq("http://www.example.com/orders")
-  #U#page.should have_content "Logout"
-  #U#page.should_not have_content "Sign up"
-  #U#page.should_not have_content "Sign in"
 end
 
-Then /^I see an unconfirmed account message$/ do
-  page.should have_selector ".alert", text: "You have to confirm your account before continuing."
-end
+#U# Then /^I see an unconfirmed account message$/ do
+#U#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
+#U# end
 
 Then /^I see a successful sign in message$/ do
   page.should have_selector ".alert", text: "Signed in successfully."
 end
 
-Then /^I should see a successful sign up message$/ do
-  page.should have_content "Welcome! You have signed up successfully."
-end
+#U# Then /^I should see a successful sign up message$/ do
+#U#   page.should have_content "Welcome! You have signed up successfully."
+#U# end
 
-Then /^I should see an invalid email message$/ do
-  page.should have_content "Please enter an email address"
-end
+#U# Then /^I should see an invalid email message$/ do
+#U#   page.should have_content "Please enter an email address"
+#U# end
 
-Then /^I should see a missing password message$/ do
-  page.should have_content "Password can't be blank"
-end
+#U# Then /^I should see a missing password message$/ do
+#U#   page.should have_content "Password can't be blank"
+#U# end
 
-Then /^I should see a missing password confirmation message$/ do
-  page.should have_content "Password doesn't match confirmation"
-end
+#U# Then /^I should see a missing password confirmation message$/ do
+#U#   page.should have_content "Password doesn't match confirmation"
+#U# end
 
-Then /^I should see a mismatched password message$/ do
-  page.should have_content "Password doesn't match confirmation"
-end
+#U# Then /^I should see a mismatched password message$/ do
+#U#   page.should have_content "Password doesn't match confirmation"
+#U# end
 
 Then /^I should be signed out$/ do
   #U# page.should have_content "You need to sign in or sign up before continuing."
 end
 
-Then /^I should see a signed out message$/ do
-  puts "Signed out successfully."
-  page.should have_content "Signed out successfully."
-end
+#U# Then /^I should see a signed out message$/ do
+#U#   puts "Signed out successfully."
+#U#   page.should have_content "Signed out successfully."
+#U# end
 
 Then /^I see an invalid login message$/ do
   page.should have_selector ".alert", text: "Invalid email or password."
 end
 
-Then /^I should see an account edited message$/ do
-  page.should have_content "You updated your account successfully."
-end
+#U# Then /^I should see an account edited message$/ do
+#U#   page.should have_content "You updated your account successfully."
+#U# end
 
-Then /^I should see my name$/ do
-  create_user
-  page.should have_content @user[:name]
-end
+#U# Then /^I should see my name$/ do
+#U#   create_user
+#U#   page.should have_content @user[:name]
+#U# end

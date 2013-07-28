@@ -1,23 +1,3 @@
-Then /^(?:|I )should see "([^\"]*)"$/ do |text|
-  if page.respond_to? :should
-    page.should have_content(text)
-  else
-    assert page.has_content?(text)
-  end
-end
-
-Then(/^I fill in "(.*?)" on "(.*?)"$/) do |field, value|
-  fill_in(field, :with => value)
-end
-
-Then(/^I select "(.*?)" from "(.*?)"$/) do |value, field|
-  select(value, :from => field)
-end
-
-When /^(?:|I )press "(.+)"$/ do |button|
-  click_button(button)
-end
-
 Then /^I should see the image "(.+)"$/ do |image|
   page.should have_xpath("//img[@id=\"#{image}\"]")
 end
@@ -34,20 +14,8 @@ Then /^I should see field "(.+)"$/ do |value|
   find_field(value).visible?
 end
 
-Then /^I should see link "(.+)"$/ do |value|
-  find_link(value).visible?
-end
-
-Then /^I should see column "(.+)"$/ do |column|
-  find('th').find(column).visible?
-end
-
 When /^(?:|I )go to (.+)$/ do |page_name|
    visit path_to(page_name)
-end
-
-When /^(?:|I )follow "([^\"]*)"$/ do |link|
-  click_link(link)
 end
 
 Then /^show me the page$/ do
@@ -55,7 +23,38 @@ Then /^show me the page$/ do
 end
 
 #### # TL;DR: YOU SHOULD DELETE THIS FILE
-#### #
+#### Then /^I should see link "(.+)"$/ do |value|
+####   find_link(value).visible?
+#### end
+####
+#### Then /^I should see column "(.+)"$/ do |column|
+####   find('th').find(column).visible?
+#### end
+####
+#### When /^(?:|I )follow "([^\"]*)"$/ do |link|
+####   click_link(link)
+#### end
+####
+#### Then /^(?:|I )should see "([^\"]*)"$/ do |text|
+####   if page.respond_to? :should
+####     page.should have_content(text)
+####   else
+####     assert page.has_content?(text)
+####   end
+#### end
+####
+#### Then(/^I fill in "(.*?)" on "(.*?)"$/) do |field, value|
+####   fill_in(field, :with => value)
+#### end
+####
+#### Then(/^I select "(.*?)" from "(.*?)"$/) do |value, field|
+####   select(value, :from => field)
+#### end
+####
+#### When /^(?:|I )press "(.+)"$/ do |button|
+####   click_button(button)
+#### end
+####
 #### Then /^the "([^"]*)" field(?: within (.*))? should contain "([^"]*)"$/ do |field, parent, value|
 ####   with_scope(parent) do
 ####     field = find_field(field)
