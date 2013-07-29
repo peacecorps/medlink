@@ -3,6 +3,14 @@ Feature: Visit "Forgot Password" Web Page
   I want to see everything that I expect on the forgot_password_page
   so I can know that the site is working
 
+TOUCHSTART
+  * "mobile - Forgot password"
+    * "Forgot Password", <instructions>, Email, PCVID, Submit button  
+
+  * "desktop - Forgot password"
+    * "Forgot Password", <instructions>, Email, PCVID, Submit button  
+TOUCHEND
+
   Scenario: Check stuff on "Forgot Password" page
 
      When I go to the forgot_password page

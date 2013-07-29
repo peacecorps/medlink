@@ -3,6 +3,25 @@ Feature: Visit "Change Password" Web Page
   I want to see everything that I expect on the change_password page
   so I can know that the site is working
 
+
+TOUCHSTART
+  * PCV - Change Password (Edit User: "#/users/edit")
+    * "Change Password", Gear, Email, "Current Password",
+        "New Password", "Confirm Password", Update button
+    * Removed phone and city.
+
+  * PCMO - Change Password
+    * Icon, 3 tabs(Request Manager, Place a Request, Reports), Gear
+    * "Change Password" title, Email, "Current Password",
+            "New Password", "Confirm Password", Update button
+
+  * Admin - Change Password
+    * Icon, 4 tabs(Admin Home, Request Manager, Place a Request,
+      Reports), Gear
+    * "Change Password" title, Email, "Current Password",
+            "New Password", "Confirm Password", Update button
+TOUCHEND
+
   Scenario: Check stuff on "Change Password" page
     Given I exist as a user
     And I am not logged in

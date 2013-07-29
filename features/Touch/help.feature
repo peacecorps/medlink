@@ -3,6 +3,23 @@ Feature: Visit "Help" Web Page
   I want to see everything that I expect on the help page
   so I can know that the site is working
 
+TOUCHSTART
+  * PCV - Help (shows table of orders: "#/help")
+    * How to order personal medical supplies
+      * Send an SMS
+      * Fill Out a Web Form
+
+  * PCMO - Help
+    * Icon, 3 tabs(Request Manager, Place a Request, Reports),
+      Gear, Current Month
+    * text
+
+  * Admin - Help
+    * Icon, 4 tabs(Admin Home, Request Manager, Place a Request,
+      Reports), Gear
+    * text (TBD)
+TOUCHEND
+
   Scenario: Check stuff on "Help" page
     When I go to the help page
     Then I should see the image "brand"
