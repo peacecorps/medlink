@@ -53,7 +53,7 @@ TOUCHEND
 
     Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
-    Then I should see "Log out" inside "a"
+    Then I should see "Sign Out" inside "a"
 
     Then I should see "Request Form" inside "h1"
     Then I should see "Select Supply" inside "option"

@@ -20,11 +20,11 @@ TOUCHEND
 
      Then I should see "Change Password" inside "a"
      Then I should see "Help" inside "a"
-     Then I should see "Log out" inside "a"
+     Then I should see "Sign Out" inside "a"
 
-     Then I should see "Forgot your password?" inside "h2"
-     Then I should see field "Email"
-
-     Then I should see the button "Send me reset password instructions"
-     Then I should see "Sign up" inside "a"
-     Then I should see "Sign in" inside "a"
+     Then I should see "Forgot Password" inside "h2"
+     Then I should see "Please enter in your email address and PCVID that we have on file." inside "h3"
+     Then I should see "You will receive an email with instructions to help you reset your password." inside "h3"
+     Then I should see field "email@email.com"
+     Then I should see field "PCV ID"
+     Then I should see the button "Submit"

@@ -15,7 +15,7 @@ Feature: Visit "Order Table" Web Page
 
     Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
-    Then I should see "Log out" inside "a"
+    Then I should see "Sign Out" inside "a"
 
     Then I should see "Requester" inside "th"
     Then I should see "Request Date" inside "th"

@@ -28,7 +28,7 @@ TOUCHEND
 
     Then I should see "Change Password" inside "a"
     Then I should see "Help" inside "a"
-    Then I should see "Log out" inside "a"
+    Then I should see "Sign Out" inside "a"
 
     Then I should see "How to order personal medical supplies" inside "h2"
     Then I should see "Send an SMS" inside "h3"
