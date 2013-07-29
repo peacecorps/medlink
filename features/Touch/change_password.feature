@@ -37,7 +37,7 @@ TOUCHEND
     Then I should see "Sign Out" inside "a"
 
     Then I should see "Change Password" inside "h1"
-    Then I should see field "Email"
+#TODO#    Then I should see field "email@email.com"
     Then I should see field "Current Password"
     Then I should see field "New Password"
     Then I should see field "Password Confirmation"

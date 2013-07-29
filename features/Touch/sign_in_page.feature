@@ -38,6 +38,5 @@ TOUCHEND
     Then I should see field "Email"
     Then I should see field "Password"
     Then I should see the button "Sign in"
-    Then I should see "Sign up" inside "a"
-    Then I should see "Forgot Password?" inside "a"
+    Then I should see "Forgot Password" inside "a"
 
