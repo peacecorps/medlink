@@ -16,6 +16,7 @@ TOUCHEND
   Scenario: Check stuff on "Forgot Password" page
      When I go to the forgot_password page
      Then I should see std icon area items
+#TODO: MOBILE VERSION?
      Then I should see std gear area items
 
      Then I should see "Forgot Password" inside "h2"

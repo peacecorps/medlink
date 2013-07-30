@@ -16,4 +16,4 @@ Feature: Visit "Order Table" Web Page
     Then I should see "Request Date" inside "th"
     Then I should see "Location" inside "th"
     Then I should see "Requested Supplies" inside "th"
-    Then I should see "Order" inside "th"
+#TODO: (ADMIN DOES NOT HAVE THIS FIELD)    Then I should see "Order" inside "th"

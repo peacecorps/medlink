@@ -20,10 +20,56 @@ TOUCHSTART
     * text (TBD)
 TOUCHEND
 
-  Scenario: Check stuff on "Help" page
+  Scenario: Check stuff on PCV "Help" page
     When I go to the help page
+    And I am a "pcv"
 #TODO: LOGGED IN OR NOT
-#TODO: ADD ROLE
+    Then I should see std icon area items
+    Then I should see std gear area items
+
+#TODO:    Then I should see std tab area items
+#TODO:    Then I should see NOT "Admin Home" inside "a"
+
+    Then I should see "How to order personal medical supplies" inside "h2"
+    Then I should see "How to place a request" inside "h2"
+    Then I should see "Send an SMS" inside "h3"
+    Then I should see "Fill Out a Web Form" inside "h3"
+    Then I should see "I received a confirmation that my request was received - now what happens?" inside "h2"
+    Then I should see "Pick Up" inside "h3"
+    Then I should see "Delivery" inside "h3"
+    Then I should see "Purchase" inside "h3"
+    Then I should see "I received an error - what do I do?" inside "h2"
+    Then I should see "Errors due to incorrect typing." inside "h3"
+    Then I should see "Duplicate Requests for Same Medication" inside "h3"
+    Then I should see "Network Connectivity" inside "h3"
+
+  Scenario: Check stuff on PCMO "Help" page
+    When I go to the help page
+    And I am a "pcmo"
+#TODO: LOGGED IN OR NOT
+    Then I should see std icon area items
+    Then I should see std gear area items
+
+#TODO:    Then I should see std tab area items
+#TODO:    Then I should see NOT "Admin Home" inside "a"
+
+    Then I should see "How to order personal medical supplies" inside "h2"
+    Then I should see "How to place a request" inside "h2"
+    Then I should see "Send an SMS" inside "h3"
+    Then I should see "Fill Out a Web Form" inside "h3"
+    Then I should see "I received a confirmation that my request was received - now what happens?" inside "h2"
+    Then I should see "Pick Up" inside "h3"
+    Then I should see "Delivery" inside "h3"
+    Then I should see "Purchase" inside "h3"
+    Then I should see "I received an error - what do I do?" inside "h2"
+    Then I should see "Errors due to incorrect typing." inside "h3"
+    Then I should see "Duplicate Requests for Same Medication" inside "h3"
+    Then I should see "Network Connectivity" inside "h3"
+
+  Scenario: Check stuff on Admin "Help" page
+    When I go to the help page
+    And I am a "admin"
+#TODO: LOGGED IN OR NOT
     Then I should see std icon area items
     Then I should see std gear area items
 

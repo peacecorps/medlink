@@ -9,7 +9,7 @@ def create_visitor
 end
 
 #U# def find_user
-#U#   @user ||= User.where('email' => @visitor[:email]).first
+#U#   @pcmo_'user ||= User.where('email' => @visitor[:email]).first
 #U# end
 
 #U# def create_unconfirmed_user
@@ -26,10 +26,17 @@ def create_user
 
   email    = "joe.doe@gmail.com"
   password = "please123"
-  @user = FactoryGirl.create(:user, 
+  @pcmo_user = FactoryGirl.create(:user, 
     :email => email, :password => password, :password_confirmation => password,
     :country => FactoryGirl.create(:country), :city => "Roswell",
     :first_name => "Joe", :last_name => "Doe", :pcv_id => "12345678").save!
+end
+
+def set_role(role)
+  #ADMIN: , :role => 'admin'
+  #PCV:   , :role => 'pcv'
+  #PCMO:  , :role => 'pcmo'
+  @pcmo_user = { :role => role }
 end
 
 def sign_in
@@ -40,8 +47,8 @@ def sign_in
 end
 
 def delete_user
-  @user ||= User.where('email' => @visitor[:email]).first
-  @user.destroy unless @user.nil?
+  @pcmo_user ||= User.where('email' => @visitor[:email]).first
+  @pcmo_user.destroy unless @pcmo_user.nil?
 end
 
 # 7/27/2013: SIGN_UP Functionality not supported currently.
@@ -54,7 +61,7 @@ end
 #U#   fill_in "PCV ID", :with => "11111111"
 #U#   fill_in "Phone Number", :with => "404-532-8011"
 #U#   fill_in "City", :with => "Roswell"
-#U# #U# Country (menu)
+#U# Country (menu)
 #U#   fill_in "user_password", :with => @visitor[:password]
 #U#   fill_in "user_password_confirmation", :with => @visitor[:password_confirmation]
 #U#   click_button "Submit"
@@ -69,6 +76,10 @@ end
 
 Given /^I exist as a user$/ do
   create_user
+end
+
+Given(/^I am a "(.*?)"$/) do |role|
+  set_role(role)
 end
 
 Given /^I do not exist as a user$/ do
