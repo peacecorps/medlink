@@ -22,7 +22,15 @@ Then /^show me the page$/ do
   save_and_open_page
 end
 
-#### # TL;DR: YOU SHOULD DELETE THIS FILE
+#### TL;DR: YOU SHOULD DELETE THIS FILE
+#### Then /^(?:|I )should see "([^\"]*)"$/ do |text|
+####   if page.respond_to? :should
+####     page.should have_content(text)
+####   else
+####     assert page.has_content?(text)
+####   end
+#### end
+####
 #### Then /^I should see link "(.+)"$/ do |value|
 ####   find_link(value).visible?
 #### end
@@ -33,14 +41,6 @@ end
 ####
 #### When /^(?:|I )follow "([^\"]*)"$/ do |link|
 ####   click_link(link)
-#### end
-####
-#### Then /^(?:|I )should see "([^\"]*)"$/ do |text|
-####   if page.respond_to? :should
-####     page.should have_content(text)
-####   else
-####     assert page.has_content?(text)
-####   end
 #### end
 ####
 #### Then(/^I fill in "(.*?)" on "(.*?)"$/) do |field, value|
