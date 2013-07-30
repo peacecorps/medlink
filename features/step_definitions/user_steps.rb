@@ -9,7 +9,7 @@ def create_visitor
 end
 
 #U# def find_user
-#U#   @pcmo_'user ||= User.where('email' => @visitor[:email]).first
+#U#   @user ||= User.where('email' => @visitor[:email]).first
 #U# end
 
 #U# def create_unconfirmed_user
@@ -26,7 +26,7 @@ def create_user
 
   email    = "joe.doe@gmail.com"
   password = "please123"
-  @pcmo_user = FactoryGirl.create(:user, 
+  @user = FactoryGirl.create(:user, 
     :email => email, :password => password, :password_confirmation => password,
     :country => FactoryGirl.create(:country), :city => "Roswell",
     :first_name => "Joe", :last_name => "Doe", :pcv_id => "12345678").save!
@@ -36,7 +36,7 @@ def set_role(role)
   #ADMIN: , :role => 'admin'
   #PCV:   , :role => 'pcv'
   #PCMO:  , :role => 'pcmo'
-  @pcmo_user = { :role => role }
+  @user = { :role => role }
 end
 
 def sign_in
@@ -47,8 +47,8 @@ def sign_in
 end
 
 def delete_user
-  @pcmo_user ||= User.where('email' => @visitor[:email]).first
-  @pcmo_user.destroy unless @pcmo_user.nil?
+  @user ||= User.where('email' => @visitor[:email]).first
+  @user.destroy unless @user.nil?
 end
 
 # 7/27/2013: SIGN_UP Functionality not supported currently.
