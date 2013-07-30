@@ -34,7 +34,7 @@ end
 
 def sign_in
   visit '/users/sign_in'
-  fill_in "Email", :with => @visitor[:email]
+  fill_in "email@email.com", :with => @visitor[:email]
   fill_in "Password", :with => @visitor[:password]
   click_button "Sign in"
 end
@@ -50,7 +50,7 @@ end
 #U#   visit '/users/sign_up'
 #U#   fill_in "First Name", :with => @visitor[:first_name]
 #U#   fill_in "Last Name", :with => @visitor[:last_name]
-#U#   fill_in "Email", :with => @visitor[:email]
+#U#   fill_in "email@email.com", :with => @visitor[:email]
 #U#   fill_in "PCV ID", :with => "11111111"
 #U#   fill_in "Phone Number", :with => "404-532-8011"
 #U#   fill_in "City", :with => "Roswell"
