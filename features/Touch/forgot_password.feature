@@ -5,14 +5,15 @@ Feature: Visit "Forgot Password" Web Page
 
 TOUCHSTART
   * "mobile - Forgot password"
+    -- NOTE: ICON and GEAR NOT ON MOBILE VERSION
     * "Forgot Password", <instructions>, Email, PCVID, Submit button  
 
   * "desktop - Forgot password"
+    * (EXTRA) ICON, GEAR
     * "Forgot Password", <instructions>, Email, PCVID, Submit button  
 TOUCHEND
 
   Scenario: Check stuff on "Forgot Password" page
-
      When I go to the forgot_password page
      Then I should see std icon area items
      Then I should see std gear area items
