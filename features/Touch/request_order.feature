@@ -61,7 +61,7 @@ TOUCHEND
 #TODO:    * Last Name
 #TODO:    * PCV ID
     Then I should see "Select Supply" inside "option"
-#TODO:    Then I should see field "Location"
+    Then I should see field "Location"
     Then I should see field "Dosage"
     Then I should see "Unit" inside "option"
     Then I should see field "Quantity"
@@ -82,7 +82,7 @@ TOUCHEND
 #TODO:    Then I should see "Place a Request" inside "h1"
 #TODO: "Select Volunteer to request for" menu
     Then I should see "Select Supply" inside "option"
-#TODO:    Then I should see field "Location"
+    Then I should see field "Location"
     Then I should see field "Dosage"
     Then I should see "Unit" inside "option"
     Then I should see field "Quantity"
@@ -103,7 +103,7 @@ TOUCHEND
 #TODO:    Then I should see "Place a Request" inside "h1"
 #TODO: "Select Volunteer to request for" menu
     Then I should see "Select Supply" inside "option"
-#TODO:    Then I should see field "Location"
+    Then I should see field "Location"
     Then I should see field "Dosage"
     Then I should see "Unit" inside "option"
     Then I should see field "Quantity"

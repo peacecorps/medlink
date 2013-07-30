@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130730193616) do
+ActiveRecord::Schema.define(version: 20130730200034) do
 
   create_table "countries", force: true do |t|
     t.string   "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20130730193616) do
     t.string   "dose"
     t.integer  "quantity"
     t.string   "unit"
+    t.string   "location"
   end
 
   create_table "supplies", force: true do |t|

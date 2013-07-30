@@ -19,6 +19,9 @@
         %i.icon-caret-down.select__arrow
 
     .input-group
+      = f.text_field :location, placeholder: 'Location', class: 'input input--location'
+
+    .input-group
       = f.text_field :dose, placeholder: 'Dosage', class: 'input input--dosage'
       .select.select--unit
         = f.select :unit, [['Unit', '']] + Supply.units
