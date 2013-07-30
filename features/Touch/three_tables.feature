@@ -51,4 +51,10 @@ TOUCHSTART
 **AL> Fix "Recived"**
 TOUCHEND
 
-  Scenario: Check stuff on "Three Tablers" pages
+  Scenario: Check stuff on "Three Tables: PCMO - Request Manager" pages
+
+  Scenario: Check stuff on "Three Tables: Admin - Request Manager" pages
+
+  Scenario: Check stuff on "Three Tables: PCMO - Responded" pages
+
+  Scenario: Check stuff on "Three Tables: Admin - Fulfilled Order" pages

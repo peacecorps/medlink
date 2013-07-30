@@ -23,4 +23,9 @@ TOUCHSTART
         Dosage, Quantity, Location, Requested, Fulfilled)
 TOUCHEND
 
-  Scenario: Check stuff on "Request History" pages
+  Scenario: Check stuff on PCV "Request History" pages
+
+  Scenario: Check stuff on PCMO "Request History" pages
+
+  Scenario: Check stuff on Admin "Request History" pages
+

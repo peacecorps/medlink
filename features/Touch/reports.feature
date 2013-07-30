@@ -19,4 +19,6 @@ TOUCHSTART
       PCMO Response Times)
 TOUCHEND
 
-  Scenario: Check stuff on Reports pages
+  Scenario: Check stuff on PCMO Reports pages
+
+  Scenario: Check stuff on Admin Reports pages

@@ -22,4 +22,6 @@ TOUCHSTART
     * "Edit Default SMS", <textbox>, "Send Response" button
 TOUCHEND
 
-  Scenario: Check stuff on Response pages
+  Scenario: Check stuff on PCMO Response pages
+
+  Scenario: Check stuff on Admin Response pages
