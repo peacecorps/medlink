@@ -30,7 +30,6 @@ TOUCHEND
 
     Then I should see field "PCV ID"
     Then I should see "Assign Role" inside "option"
-#TODO: Change temp County to role.
 
 #TODO: ADD THESE FIELDS:
     Then I should see field "email@email.com"

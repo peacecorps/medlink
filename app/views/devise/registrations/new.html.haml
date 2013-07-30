@@ -22,7 +22,8 @@
       .select.select--full
         %select
           %option(value="") Assign Role
-          = options_for_select Country.all.map { |c| [c.name.titleize, c.id] }
+          = options_for_select([["Peace Corps Volunteer", "pcv"],
+             ["Peace Corps Medical Officer", "pcmo"], ["Administrator", "admin"] ])
         %i.icon-caret-down.select__arrow
     .input-group
       = f.email_field :email, placeholder: 'email@email.com', class: 'input--full'
