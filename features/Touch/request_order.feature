@@ -12,9 +12,9 @@ TOUCHSTART
     * PCV ID
     * std: (CHANGED) "Select Supply" dropdown (list)
     * std: (NEW) Location
-    * std: Quantity (drop "Dosage" and "Unit")
     * (EXTRA) std: Dosage
 *TODO: MUST ADD DOSAGE BACK.**
+    * std: Quantity (drop "Dosage" and "Unit")
     * std: (NEW) "Special instructions area" (was: "Special
       requests for location or dosage")
     * (DROP) "Add a new supply request" button (duplicates the entry form)
@@ -55,6 +55,7 @@ TOUCHEND
 
     Then I should see "Request Form" inside "h1"
     Then I should see "Select Supply" inside "option"
+#TODO:    Then I should see field "Location"
     Then I should see field "Dosage"
     Then I should see "Unit" inside "option"
     Then I should see field "Quantity"

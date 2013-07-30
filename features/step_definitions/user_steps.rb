@@ -76,10 +76,10 @@ Given /^I do not exist as a user$/ do
   delete_user
 end
 
-#U# Given /^I am logged in$/ do
-#U#   create_user
-#U#   sign_in
-#U# end
+Given /^I am logged in$/ do
+  create_user
+  sign_in
+end
 
 #U# Given /^I exist as an unconfirmed user$/ do
 #U#   create_unconfirmed_user
@@ -92,9 +92,9 @@ When /^I sign in with valid credentials$/ do
   sign_in
 end
 
-#U# When /^I sign out$/ do
-#U#   click_link "Log out"
-#U# end
+When /^I sign out$/ do
+  click_link "Sign Out"
+end
 
 #U# When /^I sign up with valid user data$/ do
 #U#   create_visitor
@@ -156,13 +156,26 @@ Then /^I should be signed in$/ do
   expect(current_url).to eq("http://www.example.com/orders")
 end
 
-#U# Then /^I see an unconfirmed account message$/ do
-#U#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
-#U# end
-
 Then /^I see a successful sign in message$/ do
   page.should have_selector ".alert", text: "Signed in successfully."
 end
+
+Then /^I should be signed out$/ do
+  find("h3", :text => "Sign in").visible?
+end
+
+Then /^I should see a signed out message$/ do
+  #FIXME: page.should have_content "Signed out successfully."
+  page.should have_content "Invalid email or password."
+end
+
+Then /^I see an invalid login message$/ do
+  page.should have_selector ".alert", text: "Invalid email or password."
+end
+
+#U# Then /^I see an unconfirmed account message$/ do
+#U#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
+#U# end
 
 #U# Then /^I should see a successful sign up message$/ do
 #U#   page.should have_content "Welcome! You have signed up successfully."
@@ -183,19 +196,6 @@ end
 #U# Then /^I should see a mismatched password message$/ do
 #U#   page.should have_content "Password doesn't match confirmation"
 #U# end
-
-Then /^I should be signed out$/ do
-  #U# page.should have_content "You need to sign in or sign up before continuing."
-end
-
-#U# Then /^I should see a signed out message$/ do
-#U#   puts "Signed out successfully."
-#U#   page.should have_content "Signed out successfully."
-#U# end
-
-Then /^I see an invalid login message$/ do
-  page.should have_selector ".alert", text: "Invalid email or password."
-end
 
 #U# Then /^I should see an account edited message$/ do
 #U#   page.should have_content "You updated your account successfully."
