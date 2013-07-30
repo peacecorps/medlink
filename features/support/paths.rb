@@ -10,7 +10,7 @@ module NavigationHelpers
     case page_name
     when /the sign_in page/
       '/users/sign_in'
-    when /the sign_up page/
+    when /the admin home page/
       '/users/sign_up'
     when /the forgot_password page/
       '/users/password/new'
