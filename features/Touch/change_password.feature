@@ -5,19 +5,19 @@ Feature: Visit "Change Password" Web Page
 
 TOUCHSTART
   * PCV - Change Password (Edit User: "#/users/edit")
-    * Gear, "Change Password" title, Email, "Current Password",
+    * Gear, "Change Password" title, email@email.com, "Current Password",
         "New Password", "Confirm Password", Update button
     * NOTE: Removed phone and city.
 
   * PCMO - Change Password
     * Icon, 3 tabs(Request Manager, Place a Request, Reports), 
-    * Gear, "Change Password" title, Email, "Current Password",
+    * Gear, "Change Password" title, email@email.com, "Current Password",
         "New Password", "Confirm Password", Update button
 
   * Admin - Change Password
     * Icon, 4 tabs(Admin Home, Request Manager, Place a Request,
       Reports)
-    * Gear, "Change Password" title, Email, "Current Password",
+    * Gear, "Change Password" title, email@email.com, "Current Password",
         "New Password", "Confirm Password", Update button
 TOUCHEND
 
@@ -29,8 +29,11 @@ TOUCHEND
     Then I should see std icon area items
     Then I should see std gear area items
 
+#TODO:    Then I should see std tab area items
+#TODO:    Then I should see "Admin Home" inside "a"
+
     Then I should see "Change Password" inside "h1"
-#TODO#    Then I should see field "email@email.com"
+#TODO:    Then I should see field "email@email.com"
     Then I should see field "Current Password"
     Then I should see field "New Password"
     Then I should see field "Password Confirmation"
