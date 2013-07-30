@@ -18,12 +18,16 @@ module NavigationHelpers
       '/orders/new'
     when /the order_table page/
       '/orders'
+    when /the start page/
+      '/orders'
     when /the first_order page/
       '/orders/1'
     when /the change_password page/
       '/users/edit'
     when /the help page/
       '/help'
+    when /the admin start page/
+      '/admin'
     end
   end
 end

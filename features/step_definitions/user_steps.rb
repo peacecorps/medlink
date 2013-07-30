@@ -112,11 +112,11 @@ end
 #U#   sign_up
 #U# end
 
-#U# When /^I sign up with an invalid email$/ do
-#U#   create_visitor
-#U#   @visitor = @visitor.merge(:email => "notanemail")
-#U#   sign_up
-#U# end
+When /^I sign up with an invalid email$/ do
+  create_visitor
+  @visitor = @visitor.merge(:email => "notanemail")
+  sign_up
+end
 
 #U# When /^I sign up without a password confirmation$/ do
 #U#   create_visitor
