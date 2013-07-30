@@ -51,23 +51,6 @@ def delete_user
   @user.destroy unless @user.nil?
 end
 
-# 7/27/2013: SIGN_UP Functionality not supported currently.
-#U# def sign_up
-#U#   delete_user
-#U#   visit '/users/sign_up'
-#U#   fill_in "First Name", :with => @visitor[:first_name]
-#U#   fill_in "Last Name", :with => @visitor[:last_name]
-#U#   fill_in "email@email.com", :with => @visitor[:email]
-#U#   fill_in "PCV ID", :with => "11111111"
-#U#   fill_in "Phone Number", :with => "404-532-8011"
-#U#   fill_in "City", :with => "Roswell"
-#U# Country (menu)
-#U#   fill_in "user_password", :with => @visitor[:password]
-#U#   fill_in "user_password_confirmation", :with => @visitor[:password_confirmation]
-#U#   click_button "Submit"
-#U#   find_user
-#U# end
-
 ### GIVEN ############################################################
 
 Given /^I am not logged in$/ do
@@ -107,16 +90,16 @@ When /^I sign out$/ do
   click_link "Sign Out"
 end
 
-#U# When /^I sign up with valid user data$/ do
-#U#   create_visitor
-#U#   sign_up
-#U# end
-
 When /^I sign up with an invalid email$/ do
   create_visitor
   @visitor = @visitor.merge(:email => "notanemail")
   sign_up
 end
+
+#U# When /^I sign up with valid user data$/ do
+#U#   create_visitor
+#U#   sign_up
+#U# end
 
 #U# When /^I sign up without a password confirmation$/ do
 #U#   create_visitor

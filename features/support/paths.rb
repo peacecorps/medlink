@@ -12,6 +12,8 @@ module NavigationHelpers
       '/users/sign_in'
     when /the admin home page/
       '/users/sign_up'
+    when /the admin start page/
+      '/admin'
     when /the forgot_password page/
       '/users/password/new'
     when /the new_order page/
@@ -26,8 +28,6 @@ module NavigationHelpers
       '/users/edit'
     when /the help page/
       '/help'
-    when /the admin start page/
-      '/admin'
     end
   end
 end

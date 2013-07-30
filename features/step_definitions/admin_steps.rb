@@ -1,13 +1,25 @@
 Given(/^I am inside the firewall$/) do
-  pending # express the regexp above with the code you wish you had
+  pass
+  #TODO: Add Code.
 end
 
 Then(/^I should see add user form$/) do
-  pending # express the regexp above with the code you wish you had
+  steps %{
+    Then I should see "Add User" inside "h2"
+  }
 end
 
 When(/^I fill out user inputs$/) do
-  pending # express the regexp above with the code you wish you had
+  fill_in "First Name", :with => @visitor[:first_name]
+  fill_in "Last Name", :with => @visitor[:last_name]
+  fill_in "Address/location", :with => "Roswell"
+#TODO: select Country
+  fill_in "PCV ID", :with => "11111111"
+#TODO: select Role
+  fill_in "email@email.com", :with => @visitor[:email]
+  fill_in "user_password", :with => @visitor[:password]
+  fill_in "user_password_confirmation", :with => @visitor[:password_confirmation]
+  click_button "Add"
 end
 
 Then(/^I should see a confirmation dialog$/) do
