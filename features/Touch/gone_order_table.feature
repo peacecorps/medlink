@@ -9,13 +9,8 @@ Feature: Visit "Order Table" Web Page
     When I sign in with valid credentials
 
     When I go to the order_table page
-    Then I should see the image "brand"
-    Then I should see "Peace Corps" inside "h1"
-    Then I should see "Medical Supplies" inside "h4"
-
-    Then I should see "Change Password" inside "a"
-    Then I should see "Help" inside "a"
-    Then I should see "Sign Out" inside "a"
+    Then I should see std icon area items
+    Then I should see std gear area items
 
     Then I should see "Requester" inside "th"
     Then I should see "Request Date" inside "th"

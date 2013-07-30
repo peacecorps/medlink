@@ -24,18 +24,11 @@ TOUCHEND
     When I go to the help page
 #TODO: LOGGED IN OR NOT
 #TODO: ADD ROLE
-    Then I should see the image "brand"
-    Then I should see "Peace Corps" inside "h1"
-    Then I should see "Medical Supplies" inside "h4"
+    Then I should see std icon area items
+    Then I should see std gear area items
 
-    Then I should see "Change Password" inside "a"
-    Then I should see "Help" inside "a"
-    Then I should see "Sign Out" inside "a"
-
+#TODO:    Then I should see std tab area items
 #TODO:    Then I should see "Admin Home" inside "a"
-#TODO:    Then I should see "Request Manager" inside "a"
-#TODO:    Then I should see "Place a Request" inside "a"
-#TODO:    Then I should see "Reports" inside "a"
 
     Then I should see "How to order personal medical supplies" inside "h2"
     Then I should see "How to place a request" inside "h2"

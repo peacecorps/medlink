@@ -26,15 +26,8 @@ TOUCHEND
     And I am not logged in
     And I sign in with valid credentials
     When I go to the change_password page
-#ICON
-    Then I should see the image "brand"
-    Then I should see "Peace Corps" inside "h1"
-    Then I should see "Medical Supplies" inside "h4"
-
-#GEAR
-    Then I should see "Change Password" inside "a"
-    Then I should see "Help" inside "a"
-    Then I should see "Sign Out" inside "a"
+    Then I should see std icon area items
+    Then I should see std gear area items
 
     Then I should see "Change Password" inside "h1"
 #TODO#    Then I should see field "email@email.com"
