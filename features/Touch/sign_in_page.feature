@@ -29,7 +29,7 @@ TOUCHEND
     Then I should see std gear area items
 
     Then I should see "Sign in" inside "h3"
-    Then I should see field "Email"
+    Then I should see field "email@email.com"
     Then I should see field "Password"
     Then I should see the button "Sign in"
     Then I should see "Forgot Password" inside "a"
