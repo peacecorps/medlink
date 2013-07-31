@@ -5,7 +5,7 @@
 
 ## PC Medlink - Peace Corps Medical Supplies
 
-This project grew out of a [National Day of Civic Hacking](http://hackforchange.org/). You can see a live version of the site at [pcmedlink.org](pcmedlink.org).
+This project grew out of a [National Day of Civic Hacking](http://hackforchange.org/). You can see a live version of the site at [pcmedlink.org](http://pcmedlink.org).
 
 ### Developing locally
 
