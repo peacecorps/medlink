@@ -23,10 +23,9 @@ TOUCHSTART
       "Sign In" button, "Forgot Password"
 TOUCHEND
 
-  Scenario: Check stuff on "Sign In" page
+  Scenario: Check stuff on "Sign In" page (not logged in)
     When I go to the sign_in page
     Then I should see std icon area items
-    Then I should see std gear area items
 
     Then I should see "Sign in" inside "h3"
     Then I should see field "email@email.com"

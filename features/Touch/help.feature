@@ -20,12 +20,10 @@ TOUCHSTART
     * text (TBD)
 TOUCHEND
 
-  Scenario: Check stuff on PCV "Help" page
+  Scenario: Check stuff on PCV "Help" page (not logged in)
     When I go to the help page
     And I am a "pcv"
-#TODO: LOGGED IN OR NOT
     Then I should see std icon area items
-    Then I should see std gear area items
 
 #TODO:    Then I should see std tab area items
 #TODO:    Then I should see NOT "Admin Home" inside "a"
@@ -43,12 +41,10 @@ TOUCHEND
     Then I should see "Duplicate Requests for Same Medication" inside "h3"
     Then I should see "Network Connectivity" inside "h3"
 
-  Scenario: Check stuff on PCMO "Help" page
+  Scenario: Check stuff on PCMO "Help" page (not logged in)
     When I go to the help page
     And I am a "pcmo"
-#TODO: LOGGED IN OR NOT
     Then I should see std icon area items
-    Then I should see std gear area items
 
 #TODO:    Then I should see std tab area items
 #TODO:    Then I should see NOT "Admin Home" inside "a"
@@ -66,12 +62,10 @@ TOUCHEND
     Then I should see "Duplicate Requests for Same Medication" inside "h3"
     Then I should see "Network Connectivity" inside "h3"
 
-  Scenario: Check stuff on Admin "Help" page
+  Scenario: Check stuff on Admin "Help" page (not logged)
     When I go to the help page
     And I am a "admin"
-#TODO: LOGGED IN OR NOT
     Then I should see std icon area items
-    Then I should see std gear area items
 
 #TODO:    Then I should see std tab area items
 #TODO:    Then I should see "Admin Home" inside "a"
