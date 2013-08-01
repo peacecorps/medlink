@@ -29,6 +29,9 @@ If it's green, you should be good to go.
 
 A few components require a little extra setup to run:
 
+#### Cucumber (Acceptance Tests)
+ * To run the **cucumber** tests, just go to the top project directory and type **cucumber**.
+
 #### Twilio (SMS integration)
 
 You'll need to sign up for Twilio and set the TWILIO_ACCOUNT_SID, TWILIO_AUTH and TWILIO_PHONE_NUMBER environment variables. If you'd like to receive SMS messages to your local machine, you can set up [localtunnel](http://progrium.com/localtunnel/) and run
