@@ -8,16 +8,16 @@ def create_visitor
     :password => password, :password_confirmation => password }
 end
 
-#U# def find_user
-#U#   @user ||= User.where('email' => @visitor[:email]).first
-#U# end
+#TODO# def find_user
+#TODO#   @user ||= User.where('email' => @visitor[:email]).first
+#TODO# end
 
-#U# def create_unconfirmed_user
-#U#   create_visitor
-#U#   delete_user
-#U#   sign_up
-#U#   visit '/users/sign_out'
-#U# end
+#TODO# def create_unconfirmed_user
+#TODO#   create_visitor
+#TODO#   delete_user
+#TODO#   sign_up
+#TODO#   visit '/users/sign_out'
+#TODO# end
 
 def create_user
   create_visitor
@@ -75,14 +75,14 @@ Given /^I am logged in$/ do
   sign_in
 end
 
-#U# Given /^I exist as an unconfirmed user$/ do
-#U#   create_unconfirmed_user
-#U# end
+#TODO# Given /^I exist as an unconfirmed user$/ do
+#TODO#   create_unconfirmed_user
+#TODO# end
 
 ### WHEN #############################################################
 
 When /^I sign in with valid credentials$/ do
-  #U# create_visitor
+  #TODO# create_visitor
   sign_in
 end
 
@@ -96,28 +96,28 @@ When /^I sign up with an invalid email$/ do
   sign_up
 end
 
-#U# When /^I sign up with valid user data$/ do
-#U#   create_visitor
-#U#   sign_up
-#U# end
+#TODO# When /^I sign up with valid user data$/ do
+#TODO#   create_visitor
+#TODO#   sign_up
+#TODO# end
 
-#U# When /^I sign up without a password confirmation$/ do
-#U#   create_visitor
-#U#   @visitor = @visitor.merge(:password_confirmation => "")
-#U#   sign_up
-#U# end
+#TODO# When /^I sign up without a password confirmation$/ do
+#TODO#   create_visitor
+#TODO#   @visitor = @visitor.merge(:password_confirmation => "")
+#TODO#   sign_up
+#TODO# end
 
-#U# When /^I sign up without a password$/ do
-#U#   create_visitor
-#U#   @visitor = @visitor.merge(:password => "")
-#U#   sign_up
-#U# end
+#TODO# When /^I sign up without a password$/ do
+#TODO#   create_visitor
+#TODO#   @visitor = @visitor.merge(:password => "")
+#TODO#   sign_up
+#TODO# end
 
-#U# When /^I sign up with a mismatched password confirmation$/ do
-#U#   create_visitor
-#U#   @visitor = @visitor.merge(:password_confirmation => "please123")
-#U#   sign_up
-#U# end
+#TODO# When /^I sign up with a mismatched password confirmation$/ do
+#TODO#   create_visitor
+#TODO#   @visitor = @visitor.merge(:password_confirmation => "please123")
+#TODO#   sign_up
+#TODO# end
 
 When /^I return to the site$/ do
   visit '/'
@@ -133,16 +133,16 @@ When /^I sign in with a wrong password$/ do
   sign_in
 end
 
-#U# When /^I edit my account details$/ do
-#U#   click_link "Edit account"
-#U#   fill_in "Name", :with => "newname"
-#U#   fill_in "user_current_password", :with => @visitor[:password]
-#U#   click_button "Update"
-#U# end
+#TODO# When /^I edit my account details$/ do
+#TODO#   click_link "Edit account"
+#TODO#   fill_in "Name", :with => "newname"
+#TODO#   fill_in "user_current_password", :with => @visitor[:password]
+#TODO#   click_button "Update"
+#TODO# end
 
-#U# When /^I look at the list of users$/ do
-#U#   visit '/'
-#U# end
+#TODO# When /^I look at the list of users$/ do
+#TODO#   visit '/'
+#TODO# end
 
 ### THEN #############################################################
 
@@ -167,35 +167,35 @@ Then /^I see an invalid login message$/ do
   page.should have_selector ".alert", text: "Invalid email or password."
 end
 
-#U# Then /^I see an unconfirmed account message$/ do
-#U#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
-#U# end
+#TODO# Then /^I see an unconfirmed account message$/ do
+#TODO#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
+#TODO# end
 
-#U# Then /^I should see a successful sign up message$/ do
-#U#   page.should have_content "Welcome! You have signed up successfully."
-#U# end
+#TODO# Then /^I should see a successful sign up message$/ do
+#TODO#   page.should have_content "Welcome! You have signed up successfully."
+#TODO# end
 
-#U# Then /^I should see an invalid email message$/ do
-#U#   page.should have_content "Please enter an email address"
-#U# end
+#TODO# Then /^I should see an invalid email message$/ do
+#TODO#   page.should have_content "Please enter an email address"
+#TODO# end
 
-#U# Then /^I should see a missing password message$/ do
-#U#   page.should have_content "Password can't be blank"
-#U# end
+#TODO# Then /^I should see a missing password message$/ do
+#TODO#   page.should have_content "Password can't be blank"
+#TODO# end
 
-#U# Then /^I should see a missing password confirmation message$/ do
-#U#   page.should have_content "Password doesn't match confirmation"
-#U# end
+#TODO# Then /^I should see a missing password confirmation message$/ do
+#TODO#   page.should have_content "Password doesn't match confirmation"
+#TODO# end
 
-#U# Then /^I should see a mismatched password message$/ do
-#U#   page.should have_content "Password doesn't match confirmation"
-#U# end
+#TODO# Then /^I should see a mismatched password message$/ do
+#TODO#   page.should have_content "Password doesn't match confirmation"
+#TODO# end
 
-#U# Then /^I should see an account edited message$/ do
-#U#   page.should have_content "You updated your account successfully."
-#U# end
+#TODO# Then /^I should see an account edited message$/ do
+#TODO#   page.should have_content "You updated your account successfully."
+#TODO# end
 
-#U# Then /^I should see my name$/ do
-#U#   create_user
-#U#   page.should have_content @user[:name]
-#U# end
+#TODO# Then /^I should see my name$/ do
+#TODO#   create_user
+#TODO#   page.should have_content @user[:name]
+#TODO# end

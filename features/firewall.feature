@@ -23,4 +23,4 @@ Feature: PCADMIN Firewall (story)
       And I sign in with valid credentials
 
       Then I should see no error
-      And I go to the start page
+      And I go to the sign_in page
