@@ -46,13 +46,14 @@ GEM
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
     arel (4.0.0)
-    atomic (1.1.10)
+    atomic (1.1.12)
     bcrypt-ruby (3.1.1)
     better_errors (0.9.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    breach-mitigation-rails (0.0.2)
     builder (3.1.4)
     capybara (2.1.0)
       mime-types (>= 1.16)
@@ -90,7 +91,7 @@ GEM
       multi_test (>= 0.0.2)
     database_cleaner (1.0.1)
     debug_inspector (0.0.2)
-    devise (3.0.0)
+    devise (3.0.1)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -246,11 +247,12 @@ PLATFORMS
 DEPENDENCIES
   better_errors
   binding_of_caller
+  breach-mitigation-rails
   coffee-rails
   compass-rails!
   coveralls
   cucumber-rails!
-  database_cleaner
+  database_cleaner (= 1.0.1)
   devise
   email_spec
   factory_girl_rails

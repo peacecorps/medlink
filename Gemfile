@@ -15,6 +15,7 @@ gem 'sucker_punch'
 gem 'font-awesome-rails'
 
 gem 'reform'
+gem 'breach-mitigation-rails'
 
 group :assets do
   gem 'sass-rails'
@@ -43,7 +44,7 @@ group :test do
 
   gem 'cucumber-rails', :require => false, :branch => 'master_rails4_test',
     :git => 'https://github.com/cucumber/cucumber-rails.git'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '1.0.1'
 end
 
 group :production do
