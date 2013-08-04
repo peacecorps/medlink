@@ -1,5 +1,5 @@
 Given(/^I am inside the firewall$/) do
-  #TODO: pass "TODO: Add Code."
+  #TODO: pending "TODO: Add Code."
 end
 
 Then(/^I should see add user form$/) do
