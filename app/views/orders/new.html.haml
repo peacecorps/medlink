@@ -1,0 +1,36 @@
+%h1 Request Form
+%h3
+  %span= current_user.name
+  %small= current_user.pcv_id
+
+= form_for @order, html: {class: 'form--order'} do |f|
+  - if @order.errors.any?
+    #error_explanation
+      #{pluralize(@order.errors.count, "error")} prohibited this order from being submitted:
+
+    %ul
+      - @order.errors.full_messages.each do |msg|
+        %li= msg
+
+  .form__section
+    .input-group
+      .select.select--full
+        = f.select :supply_id, [['Select Supply', '']] + Supply.choices
+        %i.icon-caret-down.select__arrow
+
+    .input-group
+      = f.text_field :location, placeholder: 'Location', class: 'input input--location'
+
+    .input-group
+      = f.text_field :dose, placeholder: 'Dosage', class: 'input input--dosage'
+      .select.select--unit
+        = f.select :unit, [['Unit', '']] + Supply.units
+        %i.icon-caret-down.select__arrow
+      = f.text_field :quantity, placeholder: 'Quantity', class: 'input input--quantity'
+
+  .form__section
+    .input-group
+      = f.text_area :extra, placeholder: 'Special instructions area', rows: 3
+
+  .btn-group
+    %button.btn.btn--primary(type="submit") Submit

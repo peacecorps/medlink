@@ -1,5 +1,5 @@
 !!! 5
-%html(lang="en" id="ng-app" ng-app="medSupplies")
+%html(lang="en")
   %head
     %meta(charset="utf-8")
     %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
@@ -10,41 +10,36 @@
     /[if lt IE 8]
       = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
 
-
   %body
     .flash
       - flash.each do |name, msg|
-        %div(class="alert alert-#{name}")
+        .flash__message.alert
           = msg
-      %div.flash__message.alert(ng-cloak ng-repeat="message in flash track by $index") {{message}}
-
-.l-wrapper
-  %header.l-sidebar
-    .l-sidebar__inner
-      = link_to image_tag("/logo.png", id: 'brand'), root_path, target: '_self'
-      %hgroup
-        %h1 Peace Corps
-        %h4 Medical Supplies
-        %span.badge(ng-show="current_user.country" ng-cloak) {{current_user.country.name | lowercase}}
-  %div.l-main
-    .l-header
-      %nav
-        .dropdown
-          %a(ng-click="open = !open")
-            %i.icon-cog
-          %ul.nav.nav--dropdown(ng-class="{'is-active': open}")
-            / %li
-            /   %a(href="#") About
-            /   = link_to 'About', about_path, target: '_self'
-            %li
-              = link_to 'Settings', '#/users/edit'
-            %li
-              /%a(href="#") Help
-              = link_to 'Help', '#/help'
-            %li
-              %a(href="#/users/sign_out") Logout
-    %section(ng-view)
-
-    = yield
+    .l-wrapper
+      %header.l-sidebar
+        .l-sidebar__inner
+          = link_to image_tag("/logo.png", id: 'brand'), root_path
+          %hgroup
+            %h1 Peace Corps
+            %h4 Medical Supplies
+            - if current_user
+              %span.badge= current_user.country.name.downcase
+      %div.l-main
+        = render 'partials/global_nav'
+        .l-header
+          %nav
+            - if current_user
+              .dropdown
+                %a
+                  %i.icon-cog
+                %ul.nav.nav--dropdown
+                  - if current_user.try :pcv?
+                    %li= link_to 'Request Supply', new_order_path
+                  %li= link_to 'Request History', orders_path
+                  %li= link_to 'Change Password', edit_user_registration_path
+                  %li= link_to 'Help', help_path
+                  %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
+        %section
+          = yield
 
     = javascript_include_tag "application"

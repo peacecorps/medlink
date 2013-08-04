@@ -5,29 +5,26 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me,
-    :country_id, :first_name, :last_name, :pcv_id, :city, :role, :phone
-
   belongs_to :country
   has_many :orders
   validates_presence_of :city, :country, :first_name, :last_name, :pcv_id
   validates :pcv_id, uniqueness: true
 
-  def as_json(args)
-    super(args.merge(include: [:country]))
+  [:pcv, :pcmo, :admin].each do |type|
+    define_method :"#{type}?" do
+      role.to_sym == type
+    end
   end
 
-  def is_admin?
-    role == 'admin'
-  end
-  
+  # FIXME: denormalize on country
   def accessible_orders
-    is_admin? ? Order.where(users: {country_id: country_id}) : orders
+    admin? ? Order.includes(:user).where(
+      users: {country_id: country_id}) : orders
   end
 
   def self.lookup str
-    where(['lower(pcv_id) = ?', str.downcase]).first
+    where(['lower(pcv_id) = ?', str.downcase]).first ||
+    raise("Unrecognized PCVID")
   end
 
   def send_reset_password_instructions opts={}
@@ -36,5 +33,9 @@ class User < ActiveRecord::Base
     else
       MailerJob.enqueue :forgotten_password, id
     end
+  end
+
+  def name
+    "#{first_name} #{last_name}".strip
   end
 end

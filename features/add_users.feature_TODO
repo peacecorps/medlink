@@ -1,0 +1,42 @@
+Feature: PCADMIN add users (story)
+  In order to have users in the application
+  An Peace Corps Admin
+  Should be able to add users
+
+    Scenario: Add a PCV user
+      # Given I'm a PCADMIN
+      Given I exist as a user
+      And I am a "admin"
+      And I am not logged in
+      And I sign in with valid credentials
+      And I am inside the firewall
+
+      And I go to the admin home page
+      Then I should see add user form
+
+      # Add a PCV
+      # first / last name, address, country, pcv_id, pcmo, email and role and click 'Add'
+      When I fill out user inputs
+      Then I should see a confirmation dialog
+      Then user should be created
+
+      When I choose a country "Ghana"
+      Then I should have a pick list of PCMOs in that country: "Ghana"
+
+      When I check for a missing field: "Field"
+      Then I should get error message on top of form
+      And see Erroneous fields should be highlighted
+
+      When I enter a duplicate "PCV ID"
+      Then I should get a message saying so
+
+      When I sign up with an invalid email
+      Then I should get a message saying so
+
+    #----------------------------------------------------------------------
+    # Add a PCMO - same as PCV except do not require PCMO list
+    Scenario: Add a PCMO user
+
+    #----------------------------------------------------------------------
+    # Add a PCADMIN - same as PCMO except do not require country
+    Scenario: Add a PCADMIN user

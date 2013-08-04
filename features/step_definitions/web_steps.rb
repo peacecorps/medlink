@@ -1,11 +1,3 @@
-Then /^(?:|I )should see "([^\"]*)"$/ do |text|
-  if page.respond_to? :should
-    page.should have_content(text)
-  else
-    assert page.has_content?(text)
-  end
-end
-
 Then /^I should see the image "(.+)"$/ do |image|
   page.should have_xpath("//img[@id=\"#{image}\"]")
 end
@@ -22,24 +14,47 @@ Then /^I should see field "(.+)"$/ do |value|
   find_field(value).visible?
 end
 
-Then /^I should see link "(.+)"$/ do |value|
-  find_link(value).visible?
-end
-
-Then /^I should see column "(.+)"$/ do |column|
-  find('th').find(column).visible?
-end
-
 When /^(?:|I )go to (.+)$/ do |page_name|
    visit path_to(page_name)
 end
 
-When /^(?:|I )follow "([^\"]*)"$/ do |link|
-  click_link(link)
+Then /^show me the page$/ do
+  save_and_open_page
 end
 
-#### # TL;DR: YOU SHOULD DELETE THIS FILE
-#### #
+#### TL;DR: YOU SHOULD DELETE THIS FILE
+#### Then /^(?:|I )should see "([^\"]*)"$/ do |text|
+####   if page.respond_to? :should
+####     page.should have_content(text)
+####   else
+####     assert page.has_content?(text)
+####   end
+#### end
+####
+#### Then /^I should see link "(.+)"$/ do |value|
+####   find_link(value).visible?
+#### end
+####
+#### Then /^I should see column "(.+)"$/ do |column|
+####   find('th').find(column).visible?
+#### end
+####
+#### When /^(?:|I )follow "([^\"]*)"$/ do |link|
+####   click_link(link)
+#### end
+####
+#### Then(/^I fill in "(.*?)" on "(.*?)"$/) do |field, value|
+####   fill_in(field, :with => value)
+#### end
+####
+#### Then(/^I select "(.*?)" from "(.*?)"$/) do |value, field|
+####   select(value, :from => field)
+#### end
+####
+#### When /^(?:|I )press "(.+)"$/ do |button|
+####   click_button(button)
+#### end
+####
 #### Then /^the "([^"]*)" field(?: within (.*))? should contain "([^"]*)"$/ do |field, parent, value|
 ####   with_scope(parent) do
 ####     field = find_field(field)
@@ -97,13 +112,6 @@ end
 ####   visit path_to(page_name)
 #### end
 
-#### When /^(?:|I )press "([^"]*)"$/ do |button|
-####   click_button(button)
-#### end
-#### When /^(?:|I )fill in "([^"]*)" with "([^"]*)"$/ do |field, value|
-####   fill_in(field, :with => value)
-#### end
-
 #### When /^(?:|I )fill in "([^"]*)" for "([^"]*)"$/ do |value, field|
 ####   fill_in(field, :with => value)
 #### end
@@ -125,10 +133,6 @@ end
 ####   end
 #### end
 ####
-#### When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
-####   select(value, :from => field)
-#### end
-####
 #### When /^(?:|I )check "([^"]*)"$/ do |field|
 ####   check(field)
 #### end
@@ -143,10 +147,6 @@ end
 
 #### When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
 ####   attach_file(field, File.expand_path(path))
-#### end
-####
-#### When /^(?:|I )click "([^"]*)"$/ do |field|
-####   find_field(field).click
 #### end
 ####
 #### When /^(?:|I )change "([^"]*)" to "([^"]*)"$/ do |field, value|
@@ -240,6 +240,3 @@ end
 #### end
 ####
 #### # 8/25/2012: Had two versions so commented out one of them.
-#### #Then /^show me the page$/ do
-#### #  save_and_open_page
-#### #end

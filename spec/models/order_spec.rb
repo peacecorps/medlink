@@ -4,8 +4,8 @@ describe Order do
 
   before :each do
     FactoryGirl.create :user,   pcv_id: 'USR'
-    FactoryGirl.create :supply, shortcode: 'BND'
-    FactoryGirl.create :supply, shortcode: 'SND'
+    FactoryGirl.create :supply, shortcode: 'BND', name: 'Bandages'
+    FactoryGirl.create :supply, shortcode: 'SND', name: 'Second thing'
   end
 
   context 'from text' do
@@ -15,10 +15,10 @@ describe Order do
 
     subject { Order.create_from_text data }
 
-    it { should be_a_kind_of Order }
-
     its(:email) { should match /user\d+@example.com/ }
     its(:phone) { should eq '555-123-4567'     }
+
+    it { should_not be_fulfilled }
 
     it 'raises on invalid pcvid' do
       expect do
@@ -31,7 +31,12 @@ describe Order do
       expect do
         data[:shortcode] = 'NON'
         Order.create_from_text data
-      end.to raise_error  /unrecognized shortcode/i
+      end.to raise_error /unrecognized shortcode/i
+    end
+
+    it 'can display a validation message' do
+      subject.supply = nil
+      expect( subject.confirmation_message ).to match /shortcode/i
     end
 
   end
@@ -40,24 +45,17 @@ describe Order do
 
   context 'from web' do
     let(:data) { {
-      email: 'custom@example.com',
-      phone: 'N/A',
-      requests_attributes: [{
-        supply_id: Supply.first.id,
-        dose:      '10mg'
-      }, {
-        supply_id: Supply.last.id,
-        quantity:  5
-      }]
+      email:     'custom@example.com',
+      phone:     'N/A',
+      supply_id: Supply.first.id,
+      dose:      10,
+      unit:      'mg'
     } }
 
-    subject { FactoryGirl.create :order, data }
-    after(:each) { subject.destroy }
-
-    it { should be_a_kind_of Order }
-    it { should_not be_fulfilled   }
-
-    it 'requires unique supply items'
+    it 'can print its full dosage' do
+      order = FactoryGirl.create :order, data
+      expect( order.full_dosage ).to eq '10mg'
+    end
 
     it 'rejects duplicates' do
       # Sequences generate different Users if we don't do this:
@@ -66,28 +64,7 @@ describe Order do
       expect do
         Order.create! d
         Order.create! d
-      end.to raise_error /duplicate/i
-    end
-
-    its(:email) { should eq 'custom@example.com' }
-    its(:phone) { should eq 'N/A'                }
-
-    context 'when valid' do
-      it { should be_valid }
-
-      it 'can generate a confirmation message' do
-        expect( subject.confirmation_message ).to match /has been received/
-      end
-    end
-
-    context 'when invalid' do
-      before(:each) { subject.user = nil }
-
-      it { should_not be_valid }
-
-      it 'can generate an error message' do
-        expect( subject.confirmation_message ).to match /pcv id/i
-      end
+      end.to raise_error /supply has already been taken/i
     end
 
   end

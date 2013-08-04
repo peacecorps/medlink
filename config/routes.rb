@@ -1,19 +1,17 @@
 Medlink::Application.routes.draw do
-  devise_for :users, :defaults => { :format => 'json' },
-    :controllers => { registrations: 'registrations', sessions: 'sessions' }
+  devise_for :users
 
-  resources :orders
-
-  resources :users, only: [:create, :destroy, :update, :index] do
-    collection { get :current }
+  resources :orders do
+    get :report, on: :collection
   end
 
   resources :supplies, only: [:index]
   resources :requests, only: [:create, :destroy, :update]
+
+  resource :admin
   
-  get '/about' => 'application#about'
-  get '/help'  => 'application#help'
+  get '/help' => 'application#help'
   root to: 'application#root'
 
-  match '/medrequest'  => 'twilio#receive'
+  get '/medrequest' => 'twilio#receive'
 end

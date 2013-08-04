@@ -1,41 +1,37 @@
 class Order < ActiveRecord::Base
-  attr_accessible :confirmed, :email, :extra, :fulfilled,
-    :phone, :user_id, :requests_attributes, :instructions
-
   belongs_to :user
+  belongs_to :supply
   has_many :requests
 
   validates_presence_of :user,   message: "unrecognized"
-  accepts_nested_attributes_for :requests
+  validates_presence_of :supply, message: "unrecognized"
 
-  # UI wants users included with all output
-  def as_json(args)
-    super(args.merge(include: [{:user => {:include => :country}},
-                               {:requests => {:include => :supply}}]))
+  scope :unfulfilled, -> { where(fulfilled_at: nil) }
+
+  def fulfilled?
+    !fulfilled_at.nil?
   end
-  default_scope eager_load(:user, :requests).order('"orders"."created_at" DESC')
 
-  scope :unfulfilled, where(fulfilled: false)
+  validates_uniqueness_of :supply_id, conditions: -> { unfulfilled }
 
   def self.human_attribute_name(attr, options={})
     {
-      user:   "PCV ID"
+      user:   "PCV ID",
+      supply: "shortcode"
     }[attr] || super
   end
 
   def self.create_from_text data
-    user   = User.lookup(data[:pcvid]) || raise("Unrecognized PCVID")
-    supply = Supply.lookup(data[:shortcode]) || raise("Unrecognized shortcode")
+    user   = User.lookup   data[:pcvid]
+    supply = Supply.lookup data[:shortcode]
 
     create!({
       user_id:   user.try(:id),
       phone:     data[:phone],
       email:     user.try(:email),
-      requests_attributes: [{
-        supply_id: supply.try(:id),
-        dose:      "#{data[:dosage_value]}#{data[:dosage_units]}",
-        quantity:  data[:qty]
-      }]
+      supply_id: supply.try(:id),
+      dose:      "#{data[:dosage_value]}#{data[:dosage_units]}",
+      quantity:  data[:qty]
     })
   end
 
@@ -48,27 +44,17 @@ class Order < ActiveRecord::Base
   end
 
   def send_instructions!
+    # FIX
     to = self.phone || user.phone
     SMSJob.enqueue(to, instructions) if to
     MailerJob.enqueue :fulfillment, id
   end
 
-  def dup_hash
-    {
-      user:     user.id,
-      requests: requests.map { |r| [r.supply_id, r.dose, r.quantity]
-        }.sort_by(&:first)
-    }
+  def full_dosage
+    "#{dose}#{unit}"
   end
 
-  def self.create! attrs={}
-    # Prevent creating an order with identical user and requests
-    if user = User.find(attrs[:user_id])
-      dh   = new(attrs).dup_hash
-      dups = user.orders.unfulfilled.select { |o| o.dup_hash == dh }
-      raise "Cannot create duplicate order" unless dups.empty?
-    end
-
-    super
+  # FIXME: store fulfillment action along with message
+  def action
   end
 end

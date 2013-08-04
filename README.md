@@ -1,10 +1,11 @@
 [![Code Climate](https://codeclimate.com/github/atlrug-rhok/medlink.png)](https://codeclimate.com/github/atlrug-rhok/medlink)
 [![Build Status](https://travis-ci.org/atlrug-rhok/medlink.png?branch=master)](https://travis-ci.org/atlrug-rhok/medlink)
 [![Coverage Status](https://coveralls.io/repos/atlrug-rhok/medlink/badge.png?branch=master)](https://coveralls.io/r/atlrug-rhok/medlink?branch=master)
+[![Ready Stories](http://badge.waffle.io/atlrug-rhok/medlink.png)](http://waffle.io/atlrug-rhok/medlink)
 
 ## PC Medlink - Peace Corps Medical Supplies
 
-This project grew out of a [National Day of Civic Hacking](http://hackforchange.org/). You can see a live version of the site at [pcmedlink.org](pcmedlink.org).
+This project grew out of a [National Day of Civic Hacking](http://hackforchange.org/). You can see a live version of the site at [pcmedlink.org](http://pcmedlink.org).
 
 ### Developing locally
 
@@ -28,6 +29,9 @@ If it's green, you should be good to go.
 
 A few components require a little extra setup to run:
 
+#### Cucumber (Acceptance Tests)
+ * To run the **cucumber** tests, just go to the top project directory and type **cucumber**.
+
 #### Twilio (SMS integration)
 
 You'll need to sign up for Twilio and set the TWILIO_ACCOUNT_SID, TWILIO_AUTH and TWILIO_PHONE_NUMBER environment variables. If you'd like to receive SMS messages to your local machine, you can set up [localtunnel](http://progrium.com/localtunnel/) and run
@@ -45,6 +49,7 @@ Special thanks to the consulting Peace Corp members, without whom none of this w
 * Caitlyn Bauer
 * Jeffrey Rhodes
 * Danel Trisi
+* Kevin Sun
 
 Additional thanks to the [RHoK](http://www.rhok.org/) team for their outstanding work getting this project off the ground:
 * John Craft
@@ -62,6 +67,6 @@ Additional thanks to the [RHoK](http://www.rhok.org/) team for their outstanding
 * Patrick Stoica
 * Jake Swanson
 * Nate Tate
-* Kevin Sun
+* Laura Moore
 
 We welcome other contributions - just open up an issue or a pull request.

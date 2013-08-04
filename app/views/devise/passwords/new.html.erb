@@ -2,19 +2,24 @@
 
   <div class="l-main">
     <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :class => 'form-devise', :method => :post }) do |f| %>
-      <h2>Forgot your password?</h2>
+      <h2>Forgot Password</h2>
 
       <%= devise_error_messages! %>
 
+      <h3>Please enter in your email address and PCVID that we have on file.  You will receive an email with instructions to help you reset your password.</h3>
+
       <div class="form__section">
         <div class="input-group">
-          <%= f.email_field :email, :autofocus => true, :placeholder => 'Email', :class => 'input--full', :type => :text %>
+          <%= f.email_field :email, :autofocus => true, :placeholder => 'email@email.com', :class => 'input--full', :type => :text %>
         </div>
-      </div>
 
-      <div class="btn-group">
-        <%= f.submit "Send me reset password instructions", :class => 'btn btn--primary' %>
-        <%= render "devise/shared/links" %>
+        <div class="input-group">
+          <%= f.text_field :pcv_id, :placeholder => 'PCV ID', :class => 'input--full', :type => :text %>
+        </div>
+
+        <div class="btn-group">
+          <%= f.submit "Submit", :class => 'btn btn--primary' %>
+        </div>
       </div>
     <% end %>
 

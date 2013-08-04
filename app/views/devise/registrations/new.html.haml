@@ -1,0 +1,36 @@
+= form_for resource, html: {class: 'form form-horizontal'}, as: resource_name, url: registration_path(resource_name) do |f|  
+
+  = devise_error_messages!
+
+  %h2 Add User
+  .form__section
+    .input-group
+      = f.text_field :first_name, placeholder: 'First Name', class: 'input--full'
+    .input-group
+      = f.text_field :last_name, placeholder: 'Last Name', class: 'input--full'
+    .input-group
+      = f.text_field :location, placeholder: 'Address/location', class: 'input--full'
+    .input-group
+      .select.select--full
+        %select
+          %option(value="") Country
+          = options_for_select Country.all.map { |c| [c.name.titleize, c.id] }
+        %i.icon-caret-down.select__arrow
+    .input-group
+      = f.text_field :pcv_id, placeholder: 'PCV ID', class: 'input--full'
+    .input-group
+      .select.select--full
+        %select
+          %option(value="") Assign Role
+          = options_for_select([["Peace Corps Volunteer", "pcv"],
+             ["Peace Corps Medical Officer", "pcmo"], ["Administrator", "admin"] ])
+        %i.icon-caret-down.select__arrow
+    .input-group
+      = f.email_field :email, placeholder: 'email@email.com', class: 'input--full'
+    .input-group
+      = f.password_field :password, placeholder: 'Password', class: 'input--full'
+    .input-group
+      = f.password_field :password_confirmation, placeholder: 'Password Confirmation', class: 'input--full'
+    .btn-group
+      %button.btn.btn--primary(type="submit") Add
+

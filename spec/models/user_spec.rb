@@ -6,6 +6,9 @@ describe User do
   it 'can be created' do
     expect( subject ).to be_a_kind_of User
   end
+
+  its(:name) { should match /user\d+ user\d+last/ }
+
   context "accessible_orders" do
     describe "for non-admin users" do
       subject { FactoryGirl.create(:user) }

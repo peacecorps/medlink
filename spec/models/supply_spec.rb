@@ -4,9 +4,19 @@ describe Supply do
   subject { FactoryGirl.create :supply, name: 'Supply item',
     shortcode: 'SPPLY' }
 
-  it { should be_a_kind_of Supply }
+  it 'can be printed' do
+    expect( subject.to_s ).to eq 'Supply item'
+  end
 
-  it 'knows what unit options it accepts'
+  it 'knows its choices' do
+    malformed = Supply.choices.find { |choice| choice.length != 2 }
+    expect( malformed ).to be nil
+  end
+
+  it 'knows its unit choices' do
+    malformed = Supply.units.find { |choice| choice.length != 2 }
+    expect( malformed ).to be nil
+  end
 
   context 'lookup' do
     before(:each) { FactoryGirl.create :supply, name: 'Lookup',

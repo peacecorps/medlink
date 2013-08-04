@@ -1,0 +1,7 @@
+- if current_user.try(:pcmo?) || current_user.try(:admin?)
+  %ul
+    - if current_user.admin?
+      %li= link_to 'Admin Home', admin_path
+    %li= link_to 'Request Manager', orders_path
+    %li= link_to 'Place a Request', new_order_path
+    %li= link_to 'Reports', report_orders_path
