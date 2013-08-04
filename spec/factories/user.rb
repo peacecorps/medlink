@@ -12,5 +12,9 @@ FactoryGirl.define do
     factory :admin do
       role 'admin'
     end
+
+    factory :pcmo do
+      role 'pcmo'
+    end
   end
 end
