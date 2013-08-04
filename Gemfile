@@ -14,9 +14,6 @@ gem 'sucker_punch'
 
 gem 'font-awesome-rails'
 
-gem 'reform'
-gem 'breach-mitigation-rails'
-
 group :assets do
   gem 'sass-rails'
   gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'
