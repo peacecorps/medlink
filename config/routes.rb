@@ -1,5 +1,5 @@
 Medlink::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :passwords => "passwords" }
 
   resources :orders do
     get :report, on: :collection
