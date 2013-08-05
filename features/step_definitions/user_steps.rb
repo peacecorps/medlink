@@ -8,28 +8,27 @@ def create_visitor
     :password => password, :password_confirmation => password }
 end
 
-#TODO# def find_user
-#TODO#   @user ||= User.where('email' => @visitor[:email]).first
-#TODO# end
+def create_pcmo
+  create_user(role: :pcmo)
+end
 
-#TODO# def create_unconfirmed_user
-#TODO#   create_visitor
-#TODO#   delete_user
-#TODO#   sign_up
-#TODO#   visit '/users/sign_out'
-#TODO# end
-
-def create_user
-  create_visitor
-
-  delete_user
-
-  email    = "joe.doe@gmail.com"
+def create_user role: :user, name: "joe"
+  email    = "#{name}.doe@gmail.com"
   password = "please123"
-  @user = FactoryGirl.create(:user, 
+  @user = FactoryGirl.create(role, 
     :email => email, :password => password, :password_confirmation => password,
     :country => FactoryGirl.create(:country), :city => "Roswell",
-    :first_name => "Joe", :last_name => "Doe", :pcv_id => "12345678").save!
+    :first_name => "Joe", :last_name => "Doe", :pcv_id => "12345678")
+end
+
+def create_pcv name
+  email    = "#{name}.doe@gmail.com"
+  password = "please123"
+  pcv_id = Random.new.rand(10000000..99999999).to_s
+  FactoryGirl.create(:user, 
+    :email => email, :password => password, :password_confirmation => password,
+    :country => FactoryGirl.create(:country), :city => "Roswell",
+    :first_name => name, :last_name => "Doe", :pcv_id => pcv_id)
 end
 
 def set_role(role)
@@ -61,6 +60,11 @@ Given /^I exist as a user$/ do
   create_user
 end
 
+Given /^the default user exists$/ do
+  create_visitor
+  create_user
+end
+
 Given(/^I am a "(.*?)"$/) do |role|
   set_role(role)
 end
@@ -75,14 +79,14 @@ Given /^I am logged in$/ do
   sign_in
 end
 
-#TODO# Given /^I exist as an unconfirmed user$/ do
-#TODO#   create_unconfirmed_user
-#TODO# end
-
-### WHEN #############################################################
+Given /^I am the PCMO$/ do
+   create_pcmo
+   create_visitor
+   sign_in
+end
 
 When /^I sign in with valid credentials$/ do
-  #TODO# create_visitor
+  create_visitor
   sign_in
 end
 
@@ -95,29 +99,6 @@ When /^I sign up with an invalid email$/ do
   @visitor = @visitor.merge(:email => "notanemail")
   sign_up
 end
-
-#TODO# When /^I sign up with valid user data$/ do
-#TODO#   create_visitor
-#TODO#   sign_up
-#TODO# end
-
-#TODO# When /^I sign up without a password confirmation$/ do
-#TODO#   create_visitor
-#TODO#   @visitor = @visitor.merge(:password_confirmation => "")
-#TODO#   sign_up
-#TODO# end
-
-#TODO# When /^I sign up without a password$/ do
-#TODO#   create_visitor
-#TODO#   @visitor = @visitor.merge(:password => "")
-#TODO#   sign_up
-#TODO# end
-
-#TODO# When /^I sign up with a mismatched password confirmation$/ do
-#TODO#   create_visitor
-#TODO#   @visitor = @visitor.merge(:password_confirmation => "please123")
-#TODO#   sign_up
-#TODO# end
 
 When /^I return to the site$/ do
   visit '/'
@@ -132,19 +113,6 @@ When /^I sign in with a wrong password$/ do
   @visitor = @visitor.merge(:password => "wrongpass")
   sign_in
 end
-
-#TODO# When /^I edit my account details$/ do
-#TODO#   click_link "Edit account"
-#TODO#   fill_in "Name", :with => "newname"
-#TODO#   fill_in "user_current_password", :with => @visitor[:password]
-#TODO#   click_button "Update"
-#TODO# end
-
-#TODO# When /^I look at the list of users$/ do
-#TODO#   visit '/'
-#TODO# end
-
-### THEN #############################################################
 
 Then /^I should be signed in$/ do
   expect(current_url).to eq("http://www.example.com/orders")
@@ -165,6 +133,10 @@ end
 
 Then /^I see an invalid login message$/ do
   page.should have_selector ".alert", text: "Invalid email or password."
+end
+
+Given(/^that pcv "(.*?)" exists$/) do |name|
+  create_pcv name
 end
 
 #TODO# Then /^I see an unconfirmed account message$/ do

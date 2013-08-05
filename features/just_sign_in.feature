@@ -3,25 +3,25 @@ Feature: Sign in
   A user
   Should be able to sign in
 
+    Background:
+      Given the default user exists
+
     Scenario: User enters wrong email
-      Given I exist as a user
-      And I am a "pcv"
+      Given I am a "pcv"
       And I am not logged in
       When I sign in with a wrong email
       Then I see an invalid login message
       And I should be signed out
 
     Scenario: User enters wrong password
-      Given I exist as a user
-      And I am a "pcmo"
+      Given I am a "pcmo"
       And I am not logged in
       When I sign in with a wrong password
       Then I see an invalid login message
       And I should be signed out
 
     Scenario: User signs in successfully
-      Given I exist as a user
-      And I am a "admin"
+      Given I am a "admin"
       And I am not logged in
       When I sign in with valid credentials
       Then I see a successful sign in message
