@@ -9,7 +9,7 @@ Feature: PCADMIN add users (story)
       And I am a "admin"
       And I am not logged in
       And I sign in with valid credentials
-      And I am inside the firewall
+      And I'm inside the firewall
 
       And I go to the admin home page
       Then I should see add user form

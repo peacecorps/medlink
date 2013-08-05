@@ -1,5 +1,6 @@
-Given(/^I am inside the firewall$/) do
-  #TODO: pending "TODO: Add Code."
+Then(/^I attempt admin login$/) do
+  create_visitor
+  sign_in # pending
 end
 
 Then(/^I should see add user form$/) do

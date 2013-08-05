@@ -6,7 +6,7 @@ Feature: PCADMIN Firewall (story)
 
     Scenario: Outside the firewall
       Given I'm outside the firewall
-      # And I attempt admin login
+      And I attempt admin login
       And I exist as a user
       And I am a "admin"
       And I am not logged in
@@ -17,7 +17,7 @@ Feature: PCADMIN Firewall (story)
 
     Scenario: Inside the firewall
       Given I'm inside the firewall
-      # And I attempt admin login
+      And I attempt admin login
       And I exist as a user
       And I am a "admin"
       And I am not logged in

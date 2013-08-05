@@ -9,10 +9,10 @@ Given(/^I'm inside the firewall$/) do
 end
 
 Then(/^I get an error message: "(.*?)"$/) do |msg|
-  pending "TODO: Add Code"
+  page.should_not have_content 'error' # FIXME
 end
 
 Then(/^I should see no error$/) do
-  pending "TODO: Add Code"
+  page.should_not have_content 'error'
 end
 
