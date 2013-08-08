@@ -8,24 +8,11 @@ def create_visitor
     :password => password, :password_confirmation => password }
 end
 
-def create_pcmo
-  create_user(role: :pcmo)
-end
-
 def create_user role: :user, name: "joe"
   email    = "#{name}.doe@gmail.com"
   password = "please123"
-  @user = FactoryGirl.create(role, 
-    :email => email, :password => password, :password_confirmation => password,
-    :country => FactoryGirl.create(:country), :city => "Roswell",
-    :first_name => "Joe", :last_name => "Doe", :pcv_id => "12345678")
-end
-
-def create_pcv name
-  email    = "#{name}.doe@gmail.com"
-  password = "please123"
   pcv_id = Random.new.rand(10000000..99999999).to_s
-  FactoryGirl.create(:user, 
+  @user = FactoryGirl.create(role.to_sym, 
     :email => email, :password => password, :password_confirmation => password,
     :country => FactoryGirl.create(:country), :city => "Roswell",
     :first_name => name, :last_name => "Doe", :pcv_id => pcv_id)
@@ -79,8 +66,8 @@ Given /^I am logged in$/ do
   sign_in
 end
 
-Given /^I am the PCMO$/ do
-   create_pcmo
+Given /^I am logged in as (a|an|the) (\w+)$/ do |_, role|
+   create_user role: role
    create_visitor
    sign_in
 end
@@ -136,7 +123,7 @@ Then /^I see an invalid login message$/ do
 end
 
 Given(/^that pcv "(.*?)" exists$/) do |name|
-  create_pcv name
+  create_user role: :user, name: name
 end
 
 #TODO# Then /^I see an unconfirmed account message$/ do

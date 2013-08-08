@@ -14,6 +14,8 @@ module NavigationHelpers
       '/users/sign_up'
     when /the admin start page/
       '/admin'
+    when /the add user page/
+      '/admin/users/new'
     when /the forgot_password page/
       '/users/password/new'
     when /the new_order page/

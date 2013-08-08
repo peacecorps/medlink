@@ -5,7 +5,7 @@ Feature: TBD
   So that I can choose what to respond to
 
   Background:
-    Given I am the PCMO 
+    Given I am logged in as the PCMO 
     Given that pcv "bill" exists
     Given that pcv "ted" exists
     Given that pcv "jennie" exists
