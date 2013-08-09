@@ -52,7 +52,7 @@ Given /^the default user exists$/ do
   create_user
 end
 
-Given(/^I am a "(.*?)"$/) do |role|
+Given(/^I am (a|an|the) "(.*?)"$/) do |_, role|
   set_role(role)
 end
 

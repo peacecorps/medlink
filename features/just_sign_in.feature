@@ -21,7 +21,7 @@ Feature: Sign in
       And I should be signed out
 
     Scenario: User signs in successfully
-      Given I am a "admin"
+      Given I am an "admin"
       And I am not logged in
       When I sign in with valid credentials
       Then I see a successful sign in message
