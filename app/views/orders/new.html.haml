@@ -13,18 +13,18 @@
         %i.icon-caret-down.select__arrow
 
     .input-group
-      = f.text_field :location, placeholder: 'Location', class: 'input input--location'
+      = f.text_field :location, placeholder: 'Location', class: 'input input--full'
 
     .input-group
-      = f.text_field :dose, placeholder: 'Dosage', class: 'input input--dosage'
-      .select.select--unit
+      = f.text_field :quantity, placeholder: 'Quantity', class: 'input input--full'
+
+    .input-group
+      .select.select--full
         = f.select :unit, [['Unit', '']] + Supply.units
         %i.icon-caret-down.select__arrow
-      = f.text_field :quantity, placeholder: 'Quantity', class: 'input input--quantity'
 
-  .form__section
     .input-group
       = f.text_area :extra, placeholder: 'Special instructions area', rows: 3
 
-  .btn-group
-    %button.btn.btn--primary(type="submit") Submit
+    .btn-group
+      %button.btn.btn--primary(type="submit") Submit
