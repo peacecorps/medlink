@@ -4,5 +4,4 @@
 %h1 Edit User
 = form_tag '', method: :get do
   = select_tag :edit_user, grouped_options_for_select(@users)
-  .btn-group
-    %button.btn.btn--primary(type="submit") Edit
+  %button.btn.btn--primary(type="submit") Edit

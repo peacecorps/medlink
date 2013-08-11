@@ -31,7 +31,7 @@ class Admin::UsersController < AdminController
 
   def update
     if @user.update_attributes user_params
-      redirect_to new_admin_user_path(@user), notice: 'User updated successfully'
+      redirect_to new_admin_user_path, notice: 'User updated successfully'
     else
       render :edit
     end

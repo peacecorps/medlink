@@ -19,5 +19,5 @@ $ ->
   instructions.keyup(update_counts).keyup()
 
   # -- Settings dropdown -----
-  $(".dropdown a").click ->
+  $("#dropdown-nav a").click ->
     $(".nav--dropdown").toggle()
