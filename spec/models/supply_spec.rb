@@ -13,11 +13,6 @@ describe Supply do
     expect( malformed ).to be nil
   end
 
-  it 'knows its unit choices' do
-    malformed = Supply.units.find { |choice| choice.length != 2 }
-    expect( malformed ).to be nil
-  end
-
   context 'lookup' do
     before(:each) { FactoryGirl.create :supply, name: 'Lookup',
       shortcode: 'LOOK' }
