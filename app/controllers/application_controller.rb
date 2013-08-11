@@ -14,7 +14,7 @@ require 'ipaddr'
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_action :check_ip_for_admins
+  # before_action :check_ip_for_admins
 
   def root
     redirect_to orders_path
