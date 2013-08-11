@@ -4,13 +4,7 @@
   %small= current_user.pcv_id
 
 = form_for @order, html: {class: 'form--order'} do |f|
-  - if @order.errors.any?
-    #error_explanation
-      #{pluralize(@order.errors.count, "error")} prohibited this order from being submitted:
-
-    %ul
-      - @order.errors.full_messages.each do |msg|
-        %li= msg
+  = render partial: 'partials/errors', locals: {object: @order}
 
   .form__section
     .input-group

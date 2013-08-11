@@ -8,8 +8,10 @@ Medlink::Application.routes.draw do
   resources :supplies, only: [:index]
   resources :requests, only: [:create, :destroy, :update]
 
-  resource :admin
-  
+  namespace :admin do
+    resources :users, only: [:new, :create, :edit, :update]
+  end
+
   get '/help' => 'application#help'
   root to: 'application#root'
 

@@ -7,13 +7,25 @@ class User < ActiveRecord::Base
 
   belongs_to :country
   has_many :orders
-  validates_presence_of :city, :country, :first_name, :last_name, :pcv_id
+  validates_presence_of :country, :location, :phone, :first_name, :last_name, :pcv_id
   validates :pcv_id, uniqueness: true
 
-  [:pcv, :pcmo, :admin].each do |type|
+  Roles = {
+    pcv:   'PCV',
+    pcmo:  'PCMO',
+    admin: 'Admin'
+  }
+
+  Roles.each do |type, _|
     define_method :"#{type}?" do
       role.to_sym == type
     end
+
+    scope type.to_s.pluralize, -> { where(role: type) }
+  end
+
+  def self.pcmos_by_country
+    pcmos.includes(:country).group_by &:country
   end
 
   # FIXME: denormalize on country
@@ -37,5 +49,9 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}".strip
+  end
+
+  def to_s
+    "#{name} (#{pcv_id})"
   end
 end
