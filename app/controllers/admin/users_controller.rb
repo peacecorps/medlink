@@ -1,7 +1,5 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < AdminController
   before_action :set_user, except: [:new, :create]
-
-  # FIXME!!! ADD AUTHORIZATION LOGIC
 
   def new
     @user = User.new
