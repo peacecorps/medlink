@@ -17,7 +17,7 @@ class Admin::UsersController < AdminController
 
   def create
     password = Devise.friendly_token.first 8
-    @user = User.new create_params.merge(password: password)
+    @user = User.new user_params.merge(password: password)
     if @user.save
       redirect_to new_admin_user_path, notice: 'User created successfully'
       # FIXME: email password to the user
