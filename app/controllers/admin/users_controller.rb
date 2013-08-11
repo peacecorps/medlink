@@ -30,6 +30,11 @@ class Admin::UsersController < AdminController
   end
 
   def update
+    if @user.update_attributes user_params
+      redirect_to new_admin_user_path(@user), notice: 'User updated successfully'
+    else
+      render :edit
+    end
   end
 
   private # ----------
@@ -39,7 +44,7 @@ class Admin::UsersController < AdminController
     @user = User.find params[:id]
   end
 
-  def create_params
+  def user_params
     params.require(:user).permit [:first_name, :last_name, :location, :country_id,
       :phone, :email, :pcv_id, :role, :pcmo_id]
   end

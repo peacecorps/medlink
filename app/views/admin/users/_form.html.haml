@@ -1,0 +1,20 @@
+- url = action == :edit ? admin_user_path(user) : admin_users_path
+= form_for user, url: url do |f|
+  = render partial: 'partials/errors', locals: {object: user}
+
+  %div
+    = f.text_field :first_name, placeholder: 'First Name'
+    = f.text_field :last_name, placeholder: 'Last Name'
+    = f.text_field :location, placeholder: 'Address / location'
+    = f.select :country_id, Country.choices, include_blank: 'Country'
+    = f.phone_field :phone, placeholder: 'Phone Number'
+    = f.email_field :email, placeholder: 'Email'
+  %div
+    / FIXME? Password?
+    = f.text_field :pcv_id, placeholder: 'PCV ID'
+    = f.select :role, User::Roles.invert , include_blank: 'Role'
+    = f.select :pcmo_id, User.pcmos_by_country, include_blank: 'PCMO'
+
+  .btn-group
+    %button.btn.btn--primary(type="submit")
+      = action.capitalize
