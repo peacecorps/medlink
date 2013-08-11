@@ -53,9 +53,6 @@ module Medlink
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    # For Heroku
-    config.assets.initialize_on_precompile = false
-
     # IPs whitelisted to log in as admins
     config.allowed_ips = ['127.0.0.1']
   end

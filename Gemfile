@@ -48,4 +48,5 @@ group :production do
   gem 'unicorn'
   gem 'newrelic_rpm'
   gem 'pg'
+  gem 'rails_12factor' # For asset compilation
 end
