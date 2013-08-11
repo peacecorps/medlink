@@ -1,3 +1,4 @@
+%h1 Add User
 = form_for @user, url: admin_users_path(@user) do |f|
   = render partial: 'partials/errors', locals: {object: @user}
 
@@ -15,4 +16,10 @@
     = f.select :pcmo_id, User.pcmos_by_country, include_blank: 'PCMO'
 
   .btn-group
-    %button.btn.btn--primary(type="submit") Submit
+    %button.btn.btn--primary(type="submit") Add
+
+%h1 Edit User
+= form_tag '', method: :get do
+  = select_tag :edit_user, grouped_options_for_select(@users)
+  .btn-group
+    %button.btn.btn--primary(type="submit") Edit

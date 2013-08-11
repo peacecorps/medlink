@@ -2,7 +2,17 @@ class Admin::UsersController < AdminController
   before_action :set_user, except: [:new, :create]
 
   def new
-    @user = User.new
+    if u = params[:edit_user]
+      # This is a terrible hack to accomodate the edit user selection being on
+      # the new user (/admin home) page, and should be removed once we have
+      # a javascripty user selection mechanism
+      id = u =~ /\((.*)\)/ && $1
+      user = User.where(pcv_id: id).first!
+      redirect_to edit_admin_user_path(user)
+    end
+
+    @users = User.all.group_by &:country
+    @user  = User.new
   end
 
   def create
