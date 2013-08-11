@@ -6,11 +6,7 @@
       %th Location
       %th Requested Supplies
       %th
-        - if current_user.admin?
-          = link_to orders_path(format: :csv), class: "btn btn--primary" do
-            Download
-            %i.icon-download-alt
-        - else
+        - if current_user.pcv?
           = link_to new_order_path, class: "btn btn--primary" do
             Order
             %i.icon-file

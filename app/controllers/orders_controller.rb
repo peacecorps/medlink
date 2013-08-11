@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :find_order, except: [:index, :new, :create]
+  before_filter :find_order, except: [:index, :new, :create, :report]
 
   def index
     @orders = current_user.accessible_orders
@@ -40,6 +40,9 @@ class OrdersController < ApplicationController
     @order.update_attributes update_params.merge(fulfilled_at: Time.now)
     @order.send_instructions!
     redirect_to orders_path, notice: "Order updated successfully"
+  end
+
+  def report
   end
 
   private # -----
