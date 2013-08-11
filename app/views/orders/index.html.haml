@@ -21,7 +21,7 @@
           %span= order.created_at.strftime '%-m/%-d/%y'
           %small.cell--secondary= order.created_at.strftime '%H:%M'
         %td
-          %span.cell--primary= order.user.city
+          %span.cell--primary= order.user.location
         %td= order.supply
         %td.cell--arrow
           %i.icon-caret-right
