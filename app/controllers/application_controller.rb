@@ -17,7 +17,9 @@ class ApplicationController < ActionController::Base
   # before_action :check_ip_for_admins
 
   def root
-    redirect_to orders_path
+    authenticate_user!
+    start_page = current_user.try(:admin?) ? new_admin_user_path : orders_path
+    redirect_to start_page
   end
 
   def help

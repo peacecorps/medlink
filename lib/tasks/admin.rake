@@ -21,6 +21,8 @@ namespace :admin do
     user.country = Country.first || raise("Please generate a country to admin")
     user.city = '-'
     user.role = 'admin'
+    user.location = 'Buckhead'
+    user.phone = '404-555-1212'
     user.save!
   end
 
