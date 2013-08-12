@@ -52,7 +52,7 @@ class OrdersController < ApplicationController
   end
 
   def create_params
-    params.require(:order).permit [:extra, :supply_id, :dose, :unit, :quantity]
+    params.require(:order).permit [:extra, :supply_id, :location, :unit, :quantity]
   end
 
   def update_params

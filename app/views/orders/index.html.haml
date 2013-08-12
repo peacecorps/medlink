@@ -2,9 +2,11 @@
   %thead
     %tr
       %th Requester
-      %th Request Date
-      %th Location
       %th Requested Supplies
+      %th Unit
+      %th Quantity
+      %th Location
+      %th Request Date
       %th
         - if current_user.pcv?
           = link_to new_order_path, class: "btn btn--primary" do
@@ -17,12 +19,14 @@
         %td
           %span.cell--primary= order.user.name
           %small.cell--secondary= order.user.pcv_id
+        %td= order.supply
+        %td= order.unit
+        %td= order.quantity
+        %td
+          %span.cell--primary= order.location 
         %td
           %span= order.created_at.strftime '%-m/%-d/%y'
           %small.cell--secondary= order.created_at.strftime '%H:%M'
-        %td
-          %span.cell--primary= order.user.location
-        %td= order.supply
         %td.cell--arrow
           %i.icon-caret-right
 
