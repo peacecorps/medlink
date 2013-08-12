@@ -12,7 +12,8 @@ class Order < ActiveRecord::Base
     !fulfilled_at.nil?
   end
 
-  validates_uniqueness_of :supply_id, conditions: -> { unfulfilled }
+  validates_uniqueness_of :supply_id, scope: :user_id,
+    conditions: -> { unfulfilled }
 
   def self.human_attribute_name(attr, options={})
     {
@@ -31,7 +32,8 @@ class Order < ActiveRecord::Base
       email:     user.try(:email),
       supply_id: supply.try(:id),
       dose:      "#{data[:dosage_value]}#{data[:dosage_units]}",
-      quantity:  data[:qty]
+      quantity:  data[:qty],
+      location:  data[:loc] || user.try(:location)
     })
   end
 

@@ -12,7 +12,7 @@
           = @order.user.name
         %small.pcv-id= @order.user.pcv_id
       %div
-        %em= "#{@order.user.city}, #{@order.user.country.name}"
+        %em= "#{@order.location}, #{@order.user.country.name}"
     %table.table
       %tbody
         %tr

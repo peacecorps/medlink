@@ -19,9 +19,7 @@
       = f.text_field :quantity, placeholder: 'Quantity', class: 'input input--full'
 
     .input-group
-      .select.select--full
-        = f.select :unit, [['Unit', '']] + Supply.units
-        %i.icon-caret-down.select__arrow
+      = f.text_field :unit, placeholder: 'Units', class: 'input input--full'
 
     .input-group
       = f.text_area :extra, placeholder: 'Special instructions area', rows: 3

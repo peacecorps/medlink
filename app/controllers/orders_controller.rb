@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = current_user.orders.new
+    @order = current_user.orders.new location: current_user.location
   end
 
   def create

@@ -21,3 +21,11 @@ $ ->
   # -- Settings dropdown -----
   $("#dropdown-nav a").click ->
     $(".nav--dropdown").toggle()
+
+  # -- Add user role -----
+  $("#user_role").change( ->
+    if $("#user_role").val() == 'pcv'
+      $("#user_pcmo_id").show()
+    else
+      $("#user_pcmo_id").hide()
+  ).change()
