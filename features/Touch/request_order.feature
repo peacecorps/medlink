@@ -62,8 +62,8 @@ TOUCHEND
 #TODO:    * PCV ID
     Then I should see "Select Supply" inside "option"
     Then I should see field "Location"
-    Then I should see "Unit" inside "option"
     Then I should see field "Quantity"
+    Then I should see field "Units"
     Then I should see field "Special instructions area"
     Then I should see the button "Submit"
 
@@ -82,8 +82,8 @@ TOUCHEND
 #TODO: "Select Volunteer to request for" menu
     Then I should see "Select Supply" inside "option"
     Then I should see field "Location"
-    Then I should see "Unit" inside "option"
     Then I should see field "Quantity"
+    Then I should see field "Units"
     Then I should see field "Special instructions area"
     Then I should see the button "Submit"
 
@@ -102,8 +102,8 @@ TOUCHEND
 #TODO: "Select Volunteer to request for" menu
     Then I should see "Select Supply" inside "option"
     Then I should see field "Location"
-    Then I should see "Unit" inside "option"
     Then I should see field "Quantity"
+    Then I should see field "Units"
     Then I should see field "Special instructions area"
     Then I should see the button "Submit"
 
