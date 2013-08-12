@@ -12,7 +12,8 @@ class Order < ActiveRecord::Base
     !fulfilled_at.nil?
   end
 
-  validates_uniqueness_of :supply_id, conditions: -> { unfulfilled }
+  validates_uniqueness_of :supply_id, scope: :user_id,
+    conditions: -> { unfulfilled }
 
   def self.human_attribute_name(attr, options={})
     {
