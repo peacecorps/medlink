@@ -32,7 +32,8 @@ class Order < ActiveRecord::Base
       email:     user.try(:email),
       supply_id: supply.try(:id),
       dose:      "#{data[:dosage_value]}#{data[:dosage_units]}",
-      quantity:  data[:qty]
+      quantity:  data[:qty],
+      location:  data[:loc] || user.try(:location)
     })
   end
 
