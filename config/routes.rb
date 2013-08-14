@@ -6,7 +6,7 @@ Medlink::Application.routes.draw do
   end
 
   resources :supplies, only: [:index]
-  resources :requests, only: [:create, :destroy, :update]
+  #resources :requests, only: [:create, :destroy, :update]
 
   namespace :admin do
     resources :users, only: [:new, :create, :edit, :update]
