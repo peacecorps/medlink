@@ -39,9 +39,6 @@ class OrdersController < ApplicationController
     redirect_to orders_path, notice: "Order updated successfully"
   end
 
-  def report
-  end
-
   private # -----
 
   def find_order
