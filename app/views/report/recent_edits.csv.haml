@@ -1,0 +1,7 @@
+- require 'csv'
+
+= CSV.generate do |csv|
+  - csv << ["Updated At", "PCV ID", "First", "Last", "Email", "Phone", "Country", "Role", "Location", "PCMO", "Date Created"]
+  - @users.each do |user|
+    - # FIXME: user should be eager loaded, but supply name is an n+1
+    - csv << [user.updated_at, user.pcv_id, user.first_name, user.last_name,  user.email, user.phone, user.country_id, user.role, user.location, user.pcmo_id, user.created_at]
