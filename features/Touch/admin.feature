@@ -14,19 +14,23 @@ Feature: Visit "Admin Home" Web Page
     Then I should see std tab area items
     Then I should see "Admin Home" inside "a"
 
-Then show me the page
-
-    Then I should see "Add User" inside "h2"
+    Then I should see "Add User" inside "h1"
     Then I should see field "First Name"
     Then I should see field "Last Name"
-    Then I should see field "Address/location"
-    Then I should see "Country" inside "option"
-#TODO: (NEW)    Then I should see field "Phone Number"
-#TODO: (NEW)    Then I should see field "EmailAddress"
+    Then I should see field "Address / location"
+    Then I should see field "user_country_id"
+    Then I should see field "Phone Number"
+    Then I should see field "Email"
 
     Then I should see field "PCV ID"
     Then I should see "Assign Role" inside "option"
+# "Role" or "Assign Role"
     Then I should see the button "Add"
+
+    #EDIT PART
+    Then I should see "Edit Account" inside "h1"
+#TODO/FIXME:    Then I should see "Select Volunteer to edit" inside "option"
+    Then I should see the button "Edit"
 
 #----------------------------------------------------------------------
 
@@ -35,23 +39,19 @@ Then show me the page
     And I am a "admin"
     And I am not logged in
     And I sign in with valid credentials
-    And I go to the admin home page
+    And I go to the admin edit page
     Then I should see std gear area items
     Then I should see std icon area items
     Then I should see std tab area items
     Then I should see "Admin Home" inside "a"
 
-#*******************************************************************
-#TODO DUPLICATE FIELD NAMES ****************************************
-#TODO: Change temp County to users?
-#*******************************************************************
-#    Then I should see "Edit Account" inside "h2"
-#    Then I should see "Select Volunteer to edit" inside "option"
-#    Then I should see field "First Name"
-#    Then I should see field "Last Name"
-#    Then I should see field "Address/location"
-#    Then I should see "Country" inside "option"
-#TODO: (NEW)    Then I should see field "EmailAddress"
-#    Then I should see field "PCV ID"
-#    Then I should see "Assign PCMO" inside "option"
-#    Then I should see the button "Edit"
+    Then I should see "Edit Account" inside "h1"
+    Then I should see field "First Name"
+    Then I should see field "Last Name"
+    Then I should see field "Address / location"
+    Then I should see field "user_country_id"
+    Then I should see field "Phone Number"
+    Then I should see field "Email"
+    Then I should see field "PCV ID"
+    Then I should see "Assign Role" inside "option"
+    Then I should see the button "Edit"

@@ -13,7 +13,7 @@
     .col-right
       / FIXME? Password?
       = f.text_field :pcv_id, placeholder: 'PCV ID'
-      = f.select :role, User::Roles.invert , include_blank: 'Role'
+      = f.select :role, User::Roles.invert , include_blank: 'Assign Role'
       = f.select :pcmo_id, User.pcmos_by_country, include_blank: 'PCMO'
 
       .btn-group

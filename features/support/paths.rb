@@ -16,6 +16,8 @@ module NavigationHelpers
       '/admin'
     when /the add user page/
       '/admin/users/new'
+    when /the admin edit page/
+      '/admin/users/1/edit'
     when /the forgot_password page/
       '/users/password/new'
     when /the new_order page/
