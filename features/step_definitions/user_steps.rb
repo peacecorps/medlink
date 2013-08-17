@@ -22,7 +22,13 @@ def set_role(role)
   #ADMIN: , :role => 'admin'
   #PCV:   , :role => 'pcv'
   #PCMO:  , :role => 'pcmo'
-  @user = { :role => role }
+  #WAS: @user = { :role => role }
+  if @user
+    @user.update_attributes(role: role)
+    @user.save
+  else
+    @user = User.new(role: role)
+  end
 end
 
 def sign_in
@@ -99,6 +105,14 @@ end
 When /^I sign in with a wrong password$/ do
   @visitor = @visitor.merge(:password => "wrongpass")
   sign_in
+end
+
+Then (/^I should be signed in as "(.*?)"$/) do |role|
+  if role == "admin"
+    expect(current_url).to eq("http://www.example.com/admin/users/new")
+  else
+    expect(current_url).to eq("http://www.example.com/orders")
+  end
 end
 
 Then /^I should be signed in$/ do
