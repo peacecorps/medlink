@@ -24,7 +24,6 @@ Feature: Visit "Admin Home" Web Page
 
     Then I should see field "PCV ID"
     Then I should see "Assign Role" inside "option"
-# "Role" or "Assign Role"
     Then I should see the button "Add"
 
     #EDIT PART

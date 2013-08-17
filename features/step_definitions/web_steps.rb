@@ -29,3 +29,10 @@ end
 Then /^I should see tab "(.+)"$/ do |tab|
   page.should have_content tab
 end 
+
+Then /^I should see column "(.*?)"$/ do |column|
+  steps %{
+    Then I should see "#{column}" inside "th"
+  }
+end
+

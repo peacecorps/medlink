@@ -22,7 +22,7 @@ module NavigationHelpers
       '/users/password/new'
     when /the new_order page/
       '/orders/new'
-    when /the order_table page/
+    when /the request history page/
       '/orders'
     when /the pcmo start page/
       '/orders'
