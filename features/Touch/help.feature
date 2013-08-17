@@ -7,8 +7,7 @@ Feature: Visit "Help" Web Page
     When I go to the help page
     And I am a "pcv"
     Then I should see std icon area items
-
-#TODO(WHY DIFFERENT FROM OTHER TABS):    Then I should see std tab area items
+#TODO/FIXME:    Then I should see std tab area items
 
     Then I should see "How to order personal medical supplies" inside "h2"
     Then I should see "How to place a request" inside "h2"
@@ -27,8 +26,7 @@ Feature: Visit "Help" Web Page
     When I go to the help page
     And I am a "pcmo"
     Then I should see std icon area items
-
-#TODO(WHY DIFFERENT FROM OTHER TABS):    Then I should see std tab area items
+#TODO/FIXME:    Then I should see std tab area items
 
     Then I should see "How to order personal medical supplies" inside "h2"
     Then I should see "How to place a request" inside "h2"
@@ -47,9 +45,8 @@ Feature: Visit "Help" Web Page
     When I go to the help page
     And I am a "admin"
     Then I should see std icon area items
-
-#TODO(WHY DIFFERENT FROM OTHER TABS):    Then I should see std tab area items
-#TODO:    Then I should see "Admin Home" inside "a"
+#TODO/FIXME:    Then I should see std tab area items
+#TODO/FIXME:    Then I should see tab "Admin Home"
 
     Then I should see "How to order personal medical supplies" inside "h2"
     Then I should see "How to place a request" inside "h2"

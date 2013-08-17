@@ -12,8 +12,6 @@ Feature: Visit "Change Password" Web Page
     Then I should see std icon area items
     Then I should see std gear area items
 
-#TODO:    Then I should see std tab area items
-
     Then I should see "Change Password" inside "h1"
     Then I should see field "Current Password"
     Then I should see field "New Password"
@@ -28,8 +26,7 @@ Feature: Visit "Change Password" Web Page
     When I go to the change_password page
     Then I should see std icon area items
     Then I should see std gear area items
-
-#TODO:    Then I should see std tab area items
+    Then I should see std tab area items
 
     Then I should see "Change Password" inside "h1"
     Then I should see field "Current Password"
@@ -45,9 +42,8 @@ Feature: Visit "Change Password" Web Page
     When I go to the change_password page
     Then I should see std icon area items
     Then I should see std gear area items
-
-#TODO:    Then I should see std tab area items
-#TODO:    Then I should see "Admin Home" inside "a"
+    Then I should see std tab area items
+    Then I should see tab "Admin Home"
 
     Then I should see "Change Password" inside "h1"
     Then I should see field "Current Password"

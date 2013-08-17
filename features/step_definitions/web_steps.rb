@@ -25,3 +25,7 @@ end
 Then /^I should see link "(.+)"$/ do |value|
   find_link(value).visible?
 end 
+
+Then /^I should see tab "(.+)"$/ do |tab|
+  page.should have_content tab
+end 

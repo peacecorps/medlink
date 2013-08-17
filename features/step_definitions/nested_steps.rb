@@ -17,9 +17,9 @@ end
 
 Then /I should see std tab area items/ do
   steps %{
-    Then I should see "Request Manager" inside "a"
-    Then I should see "Place a Request" inside "a"
-    Then I should see "Reports" inside "a"
+    Then I should see tab "Request Manager"
+    Then I should see tab "Place a Request"
+    Then I should see tab "Reports"
   }
 end
 
