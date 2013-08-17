@@ -1,2 +1,3 @@
-%h1 Report#request_history
-%p Find me in app/views/report/request_history.html.haml
+= link_to report_request_history_path(format: :csv), class: "btn btn--primary" do
+  Download all Orders
+  %i.icon-download-alt

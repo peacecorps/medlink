@@ -1,11 +1,13 @@
 class ReportController < ApplicationController
   def request_history
+    @orders = current_user.accessible_orders
   end
 
   def fulfillment_history
   end
 
   def recent_adds
+    @user
   end
 
   def recent_edits
