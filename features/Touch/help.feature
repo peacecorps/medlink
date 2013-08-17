@@ -3,30 +3,12 @@ Feature: Visit "Help" Web Page
   I want to see everything that I expect on the help page
   so I can know that the site is working
 
-TOUCHSTART
-  * PCV - Help (shows table of orders: "#/help")
-    * How to order personal medical supplies
-      * Send an SMS
-      * Fill Out a Web Form
-
-  * PCMO - Help
-    * Icon, 3 tabs(Request Manager, Place a Request, Reports),
-      Gear, Current Month
-    * text
-
-  * Admin - Help
-    * Icon, 4 tabs(Admin Home, Request Manager, Place a Request,
-      Reports), Gear
-    * text (TBD)
-TOUCHEND
-
   Scenario: Check stuff on PCV "Help" page (not logged in)
     When I go to the help page
     And I am a "pcv"
     Then I should see std icon area items
 
-#TODO:    Then I should see std tab area items
-#TODO:    Then I should see NOT "Admin Home" inside "a"
+#TODO(WHY DIFFERENT FROM OTHER TABS):    Then I should see std tab area items
 
     Then I should see "How to order personal medical supplies" inside "h2"
     Then I should see "How to place a request" inside "h2"
@@ -46,8 +28,7 @@ TOUCHEND
     And I am a "pcmo"
     Then I should see std icon area items
 
-#TODO:    Then I should see std tab area items
-#TODO:    Then I should see NOT "Admin Home" inside "a"
+#TODO(WHY DIFFERENT FROM OTHER TABS):    Then I should see std tab area items
 
     Then I should see "How to order personal medical supplies" inside "h2"
     Then I should see "How to place a request" inside "h2"
@@ -67,7 +48,7 @@ TOUCHEND
     And I am a "admin"
     Then I should see std icon area items
 
-#TODO:    Then I should see std tab area items
+#TODO(WHY DIFFERENT FROM OTHER TABS):    Then I should see std tab area items
 #TODO:    Then I should see "Admin Home" inside "a"
 
     Then I should see "How to order personal medical supplies" inside "h2"
