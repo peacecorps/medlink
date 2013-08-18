@@ -31,9 +31,9 @@
             %li
               = f.radio_button :action, i, data: {message: desc}
               %label(for="order_action_#{i}")= title
+      Edit Default SMS
       .order__instructions
         = f.text_area :instructions
         .order__characters 160 characters remaining
-
     .btn-group
       %button.btn.btn--primary(type="submit") Submit

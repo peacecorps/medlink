@@ -21,10 +21,10 @@ class OrdersController < ApplicationController
 
   def edit
     @defaults = {
-      'Delivered to PCV' => 'Your request will be delivered to you at your site on [enter date here].',
-      'PCV Purchase' => 'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.',
-      'Delivered to Hub' => 'Your request will be delivered to [enter location here] on [enter date here].',
-      'Special Instructions' => ''
+      'Delivery' => 'Your request is estimated to arrive at your location on this date [enter date here].',
+      'Pickup' => 'Please pick up your request at this [enter location here] by this [enter date]',
+      'Purchase & Reimburse' => 'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.',
+      'Special Instructions' => 'Please contact me at this [phone number] concerning your request.'
     }
   end
 
