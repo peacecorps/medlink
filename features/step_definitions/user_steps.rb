@@ -8,13 +8,14 @@ def create_visitor
     :password => password, :password_confirmation => password }
 end
 
-def create_user role: :user, name: "joe"
+def create_user role: :user, name: "joe", country: nil
   email    = "#{name}.doe@gmail.com"
   password = "please123"
   pcv_id = Random.new.rand(10000000..99999999).to_s
+  user_country = country || FactoryGirl.create(:country)
   @user = FactoryGirl.create(role.to_sym, 
     :email => email, :password => password, :password_confirmation => password,
-    :country => FactoryGirl.create(:country), :city => "Roswell",
+    :country => user_country, :city => "Roswell",
     :first_name => name, :last_name => "Doe", :pcv_id => pcv_id)
 end
 
@@ -74,6 +75,12 @@ end
 
 Given /^I am logged in as (a|an|the) (\w+)$/ do |_, role|
    create_user role: role
+   create_visitor
+   sign_in
+end
+
+Given(/^I am logged in as (a|an|the) (\w+) of (\w+)$/) do |_, role, country|
+   create_user role: role, country: Country.find_by_name(country)
    create_visitor
    sign_in
 end
@@ -140,6 +147,12 @@ Given(/^that pcv "(.*?)" exists$/) do |name|
   create_user role: :user, name: name
 end
 
+Given(/^that the following pcvs exist:$/) do |users|
+  users.hashes.each do |user|
+    FactoryGirl.create :user, first_name: user['name'], pcv_id: user['pcv_id'], country: Country.find_by_name(user['country'])
+  end
+end
+ 
 #TODO# Then /^I see an unconfirmed account message$/ do
 #TODO#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
 #TODO# end
