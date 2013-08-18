@@ -21,10 +21,14 @@ class OrdersController < ApplicationController
 
   def edit
     @defaults = {
-      'Delivery' => 'Your request is estimated to arrive at your location on this date [enter date here].',
-      'Pickup' => 'Please pick up your request at this [enter location here] by this [enter date]',
-      'Purchase & Reimburse' => 'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.',
-      'Special Instructions' => 'Please contact me at this [phone number] concerning your request.'
+      'Delivery' => 'Your request is estimated to arrive at your location on ' +
+        'this date [enter date here].',
+      'Pickup' => 'Please pick up your request at this [enter location here] ' +
+        'by this [enter date]',
+      'Purchase & Reimburse' => 'We do not have your requested item in ' +
+        'stock. Please purchase elsewhere and allow us to reimburse you.',
+      'Special Instructions' => 'Please contact me at this [phone number] ' +
+        'concerning your request.'
     }
   end
 
@@ -46,7 +50,8 @@ class OrdersController < ApplicationController
   end
 
   def create_params
-    params.require(:order).permit [:extra, :supply_id, :location, :unit, :quantity]
+    params.require(:order).permit [:extra, :supply_id, :location,
+                                   :unit, :quantity]
   end
 
   def update_params
