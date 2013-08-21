@@ -45,8 +45,7 @@ Feature: Visit "Request History" Web Page
     And I go to the request history page
     Then I should see std gear area items
     Then I should see std icon area items
-    Then I should see std tab area items
-    Then I should see "Admin Home" inside "a"
+    Then I should see admin tab area items
 
     Then I should see column "Requester"
     Then I should see column "Requested Supplies"

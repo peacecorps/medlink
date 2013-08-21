@@ -1,17 +1,17 @@
 Then /I should see std icon area items/ do
   steps %{
     Then I should see the image "brand"
-    Then I should see "Peace Corps" inside "h1"
-    Then I should see "Medical Supplies" inside "h4"
+    Then I should see header with text "Peace Corps"
+    Then I should see header with text "Medical Supplies"
   }
 end
 
 Then /I should see std gear area items/ do
   steps %{
-    Then I should see "Request History" inside "a"
-    Then I should see "Change Password" inside "a"
-    Then I should see "Help" inside "a"
-    Then I should see "Sign Out" inside "a"
+    Then I should see link "Request History"
+    Then I should see link "Change Password"
+    Then I should see link "Help"
+    Then I should see link "Sign Out"
   }
 end
 
@@ -23,3 +23,9 @@ Then /I should see std tab area items/ do
   }
 end
 
+Then /I should see admin tab area items/ do
+  steps %{
+    Then I should see std tab area items
+    Then I should see link "Admin Home"
+  }
+end

@@ -12,8 +12,7 @@ Feature: Visit Response Web Pages
 #    And I go to the response page
 #    Then I should see std gear area items
 #    Then I should see std icon area items
-#    Then I should see std tab area items
-#    Then I should see "Admin Home" inside "a"
+#    Then I should see admin tab area items
 #
 #    Then I should see "Order From:"
 #    Then I should see "Order Action:"

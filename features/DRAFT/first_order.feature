@@ -1,3 +1,4 @@
+@wip
 Feature: Visit "First Order" Web Page
   As a visitor to the website
   I want to see everything that I expect on the first_order page
@@ -14,9 +15,9 @@ Feature: Visit "First Order" Web Page
     Then I should see "Peace Corps" inside "h1"
     Then I should see "Medical Supplies" inside "h4"
 
-    Then I should see "Change Password" inside "a"
-    Then I should see "Help" inside "a"
-    Then I should see "Log out" inside "a"
+    Then I should see link "Change Password"
+    Then I should see link "Help"
+    Then I should see link "Log out"
 
 #U#    Then I should see "Back to all Orders" (inside span)
 #U#    Then I should see "Order Form:" (inside span)

@@ -7,9 +7,9 @@ Feature: Visit "Sign In" Web Page
     When I go to the sign_in page
     Then I should see std icon area items
 
-    Then I should see "Sign in" inside "h3"
+    Then I should see header with text "Sign in"
     Then I should see field "email@email.com"
     Then I should see field "Password"
     Then I should see the button "Sign in"
-    Then I should see "Forgot Password" inside "a"
+    Then I should see link "Forgot Password"
 
