@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/cucumber/cucumber-rails.git
-  revision: 44ca43ebc4d8cef3093a250aa671254158ce1ac1
+  revision: 25e6170c4260042c20c86099d3b6832dad7eb81f
   branch: master_rails4_test
   specs:
     cucumber-rails (1.3.1)
@@ -100,8 +100,7 @@ GEM
       launchy (~> 2.1)
       mail (~> 2.2)
     erubis (2.7.0)
-    execjs (1.4.0)
-      multi_json (~> 1.0)
+    execjs (2.0.0)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
