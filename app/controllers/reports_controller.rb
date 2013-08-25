@@ -1,4 +1,7 @@
-class ReportController < ApplicationController
+class ReportsController < ApplicationController
+  def index
+  end
+
   def request_history
     @orders = current_user.accessible_orders
   end
