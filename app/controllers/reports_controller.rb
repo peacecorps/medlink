@@ -11,16 +11,16 @@ class ReportsController < ApplicationController
   end
 
   def recent_adds
-    @users = User.all
-    # User.where("updated_at >= :start_date AND updated_at <= :end_date",
-                #{start_date: params[:start_date], end_date: params[:end_date]})
+    #@users = User.all
+    @users = User.where("created_at >= ?", 1.month.ago)
   end
 
   def recent_edits
-    @users = User.all
+    @users = User.all.order("updated_at DESC")
   end
 
   def pcmo_response_times
+    @orders = Order.group(Order.user_id.pcmo_id).all
   end
 
   def supply_history
