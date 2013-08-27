@@ -9,7 +9,9 @@ before_action :verify_access
   end
 
   def request_history
+    puts "HELLO WORLD"
     @orders = current_user.accessible_orders
+    puts current_user.inspect
   end
 
   def fulfillment_history
@@ -22,7 +24,7 @@ before_action :verify_access
   end
 
   def recent_edits
-    @users = User.where("updated_at >= ?", 1.mont.ago)
+    @users = User.all.order("updated_at DESC")
   end
 
   def pcmo_response_times
