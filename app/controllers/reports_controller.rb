@@ -13,7 +13,7 @@ before_action :verify_access
   end
 
   def fulfillment_history
-    @orders = current_user.accessible_orders
+    @orders = current_user.accessible_orders.where('fulfilled_at IS NOT NULL')
   end
 
   def recent_adds
