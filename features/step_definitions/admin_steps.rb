@@ -5,7 +5,7 @@ end
 
 Then(/^I should see add user form$/) do
   steps %{
-    Then I should see "Add User" inside "h2"
+    Then I should see header with text "Add User"
   }
 end
 

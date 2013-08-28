@@ -13,8 +13,8 @@ Feature: Visit "Request Order" Web Page
     Then I should see std icon area items
     Then I should see std gear area items
 
-    Then I should see "Request Form" inside "h1"
-    Then I should see "Select Supply" inside "option"
+    Then I should see header with text "Request Form"
+    Then I should see dropdownmenu "Select Supply"
     Then I should see field "Location"
     Then I should see field "Quantity"
     Then I should see field "Units"
@@ -31,9 +31,9 @@ Feature: Visit "Request Order" Web Page
     Then I should see std icon area items
     Then I should see std gear area items
 
-    Then I should see "Request Form" inside "h1"
+    Then I should see header with text "Request Form"
 #TODO/FIXME: Then I should see field "Select Volunteer to request for"
-    Then I should see "Select Supply" inside "option"
+    Then I should see dropdownmenu "Select Supply"
     Then I should see field "Location"
     Then I should see field "Quantity"
     Then I should see field "Units"
@@ -49,11 +49,11 @@ Feature: Visit "Request Order" Web Page
     When I go to the new_order page
     Then I should see std icon area items
     Then I should see std gear area items
-    Then I should see "Admin Home" inside "a"
+    Then I should see admin tab area items
 
-    Then I should see "Request Form" inside "h1"
+    Then I should see header with text "Request Form"
 #TODO/FIXME: Then I should see field "Select Volunteer to request for"
-    Then I should see "Select Supply" inside "option"
+    Then I should see dropdownmenu "Select Supply"
     Then I should see field "Location"
     Then I should see field "Quantity"
     Then I should see field "Units"

@@ -12,7 +12,7 @@ Feature: Visit "Change Password" Web Page
     Then I should see std icon area items
     Then I should see std gear area items
 
-    Then I should see "Change Password" inside "h1"
+    Then I should see header with text "Change Password"
     Then I should see field "Current Password"
     Then I should see field "New Password"
     Then I should see field "Password Confirmation"
@@ -28,7 +28,7 @@ Feature: Visit "Change Password" Web Page
     Then I should see std gear area items
     Then I should see std tab area items
 
-    Then I should see "Change Password" inside "h1"
+    Then I should see header with text "Change Password"
     Then I should see field "Current Password"
     Then I should see field "New Password"
     Then I should see field "Password Confirmation"
@@ -42,10 +42,9 @@ Feature: Visit "Change Password" Web Page
     When I go to the change_password page
     Then I should see std icon area items
     Then I should see std gear area items
-    Then I should see std tab area items
-    Then I should see tab "Admin Home"
+    Then I should see admin tab area items
 
-    Then I should see "Change Password" inside "h1"
+    Then I should see header with text "Change Password"
     Then I should see field "Current Password"
     Then I should see field "New Password"
     Then I should see field "Password Confirmation"
