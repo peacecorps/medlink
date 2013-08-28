@@ -3,24 +3,6 @@ Feature: Visit "Change Password" Web Page
   I want to see everything that I expect on the change_password page
   so I can know that the site is working
 
-TOUCHSTART
-  * PCV - Change Password (Edit User: "#/users/edit")
-    * Gear, "Change Password" title, email@email.com, "Current Password",
-        "New Password", "Confirm Password", Update button
-    * NOTE: Removed phone and city.
-
-  * PCMO - Change Password
-    * Icon, 3 tabs(Request Manager, Place a Request, Reports), 
-    * Gear, "Change Password" title, email@email.com, "Current Password",
-        "New Password", "Confirm Password", Update button
-
-  * Admin - Change Password
-    * Icon, 4 tabs(Admin Home, Request Manager, Place a Request,
-      Reports)
-    * Gear, "Change Password" title, email@email.com, "Current Password",
-        "New Password", "Confirm Password", Update button
-TOUCHEND
-
   Scenario: Check stuff on PCV "Change Password" page
     Given I exist as a user
     And I am a "pcv"
@@ -30,11 +12,7 @@ TOUCHEND
     Then I should see std icon area items
     Then I should see std gear area items
 
-#TODO:    Then I should see std tab area items
-#TODO:    Then I should see NOT "Admin Home" inside "a"
-
-    Then I should see "Change Password" inside "h1"
-#TODO:    Then I should see field "email@email.com"
+    Then I should see header with text "Change Password"
     Then I should see field "Current Password"
     Then I should see field "New Password"
     Then I should see field "Password Confirmation"
@@ -48,12 +26,9 @@ TOUCHEND
     When I go to the change_password page
     Then I should see std icon area items
     Then I should see std gear area items
+    Then I should see std tab area items
 
-#TODO:    Then I should see std tab area items
-#TODO:    Then I should see NOT "Admin Home" inside "a"
-
-    Then I should see "Change Password" inside "h1"
-#TODO:    Then I should see field "email@email.com"
+    Then I should see header with text "Change Password"
     Then I should see field "Current Password"
     Then I should see field "New Password"
     Then I should see field "Password Confirmation"
@@ -67,12 +42,9 @@ TOUCHEND
     When I go to the change_password page
     Then I should see std icon area items
     Then I should see std gear area items
+    Then I should see admin tab area items
 
-#TODO:    Then I should see std tab area items
-#TODO:    Then I should see "Admin Home" inside "a"
-
-    Then I should see "Change Password" inside "h1"
-#TODO:    Then I should see field "email@email.com"
+    Then I should see header with text "Change Password"
     Then I should see field "Current Password"
     Then I should see field "New Password"
     Then I should see field "Password Confirmation"

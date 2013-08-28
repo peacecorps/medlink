@@ -8,13 +8,14 @@ def create_visitor
     :password => password, :password_confirmation => password }
 end
 
-def create_user role: :user, name: "joe"
+def create_user role: :user, name: "joe", country: nil
   email    = "#{name}.doe@gmail.com"
   password = "please123"
   pcv_id = Random.new.rand(10000000..99999999).to_s
+  user_country = country || FactoryGirl.create(:country)
   @user = FactoryGirl.create(role.to_sym, 
     :email => email, :password => password, :password_confirmation => password,
-    :country => FactoryGirl.create(:country), :city => "Roswell",
+    :country => user_country, :city => "Roswell",
     :first_name => name, :last_name => "Doe", :pcv_id => pcv_id)
 end
 
@@ -22,7 +23,13 @@ def set_role(role)
   #ADMIN: , :role => 'admin'
   #PCV:   , :role => 'pcv'
   #PCMO:  , :role => 'pcmo'
-  @user = { :role => role }
+  #WAS: @user = { :role => role }
+  if @user
+    @user.update_attributes(role: role)
+    @user.save
+  else
+    @user = User.new(role: role)
+  end
 end
 
 def sign_in
@@ -72,6 +79,12 @@ Given /^I am logged in as (a|an|the) (\w+)$/ do |_, role|
    sign_in
 end
 
+Given(/^I am logged in as (a|an|the) (\w+) of (\w+)$/) do |_, role, country|
+   create_user role: role, country: Country.find_by_name(country)
+   create_visitor
+   sign_in
+end
+
 When /^I sign in with valid credentials$/ do
   create_visitor
   sign_in
@@ -101,6 +114,14 @@ When /^I sign in with a wrong password$/ do
   sign_in
 end
 
+Then (/^I should be signed in as "(.*?)"$/) do |role|
+  if role == "admin"
+    expect(current_url).to eq("http://www.example.com/admin/users/new")
+  else
+    expect(current_url).to eq("http://www.example.com/orders")
+  end
+end
+
 Then /^I should be signed in$/ do
   expect(current_url).to eq("http://www.example.com/orders")
 end
@@ -126,6 +147,12 @@ Given(/^that pcv "(.*?)" exists$/) do |name|
   create_user role: :user, name: name
 end
 
+Given(/^that the following pcvs exist:$/) do |users|
+  users.hashes.each do |user|
+    FactoryGirl.create :user, first_name: user['name'], pcv_id: user['pcv_id'], country: Country.find_by_name(user['country'])
+  end
+end
+ 
 #TODO# Then /^I see an unconfirmed account message$/ do
 #TODO#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
 #TODO# end

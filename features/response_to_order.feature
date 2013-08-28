@@ -1,23 +1,38 @@
-@wip
 Feature: TBD
   As a PCMO to the website
   I want to view my pending or past-due request
   So that I can choose what to respond to
 
   Background:
-    Given I am logged in as the PCMO 
-    Given that pcv "bill" exists
-    Given that pcv "ted" exists
-    Given that pcv "jennie" exists
-    #Given that "jennie" has created the following requests
-    #Given that "bill" has created the following requests
-    #Given that "ted" has created the following requests
+    Given that "Quirm" is a country
+    Given that "Neverland" is a country
+    Given that the following supplies exist:
+      | name      | shortcode |
+      | Froyo     | FRO       |
+      | Geckos    | GEC       |
+      | Bacon     | BAC       |
+      | Melons    | MEL       |
+      | Chocolate | CHO       |
+    And that the following pcvs exist:
+      | name      | pcv_id | country   |
+      | bill      | 1      | Quirm     |
+      | ted       | 2      | Quirm     |
+      | jennie    | 3      | Quirm     |
+      | tink      | 4      | Neverland |
+    And that the following orders have been made 
+      | pcv | supply | quantity |
+      | 1   | BAC    | 10       |
+      | 1   | GEC    | 7        |
+      | 2   | BAC    | 9        |
+      | 2   | MEL    | 3        |
+      | 3   | BAC    | 11       |
+      | 3   | CHO    | 8        | 
+      | 4   | GEC    | 56       |
+    And I am logged in as the pcmo of Quirm
     When I go to the pcmo start page
 
-  @wip
   Scenario: view my requests
-    Then my "pending" requests should have "223344"
-    And my "past due" requests should have 2 requests
+    Then I should have 6 orders to process
 
   @wip
   Scenario: respond to  my requests

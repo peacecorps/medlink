@@ -12,7 +12,7 @@ Feature: PCADMIN Firewall (story)
       And I am not logged in
       And I sign in with valid credentials
 
-      Then I get an error message: "TODO"
+      Then I get an error message: "Admin users may only login from approved ip addresses"
       And I am not logged in
 
     Scenario: Inside the firewall

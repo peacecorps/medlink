@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
 
   belongs_to :country
   has_many :orders
-  validates_presence_of :country, :location, :phone, :first_name, :last_name, :pcv_id
+  validates_presence_of :country, :location, :phone, :first_name,
+    :last_name, :pcv_id
   validates :pcv_id, uniqueness: true
 
   Roles = {
@@ -30,7 +31,7 @@ class User < ActiveRecord::Base
 
   # FIXME: denormalize on country
   def accessible_orders
-    admin? ? Order.includes(:user).where(
+    admin? || pcmo? ? Order.includes(:user).where(
       users: {country_id: country_id}) : orders
   end
 

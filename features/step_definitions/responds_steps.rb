@@ -25,3 +25,8 @@ end
 Then(/^I should see the other PCMO's id on the request$/) do
   pending #FIXME: Write code.
 end
+
+Then(/^I should have (\d+) orders to process$/) do |expected_orders|
+  number_of_orders_in_table = page.all('table#orders tr').count - 1
+  number_of_orders_in_table.should == expected_orders.to_i
+end
