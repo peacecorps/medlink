@@ -22,7 +22,7 @@ before_action :verify_access
   end
 
   def recent_edits
-    @users = User.where("updated_at >= ?", 1.mont.ago)
+    @users = User.where("updated_at >= ?", 1.month.ago)
   end
 
   def pcmo_response_times
