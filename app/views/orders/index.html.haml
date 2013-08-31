@@ -1,12 +1,16 @@
 %table(class="table.table--bordered.table--striped.table--linked" id="orders")
   %thead
     %tr
-      %th Requester
-      %th Requested Supplies
+      %th First Name
+      %th Last Name
+      %th PCVID
+      %th Supply
       %th Unit
       %th Quantity
       %th Location
-      %th Request Date
+      %th Requested
+      %th Response
+      %th Fulfilled
       %th
         - if current_user.pcv?
           = link_to new_order_path, class: "btn btn--primary" do
@@ -16,9 +20,9 @@
     - @orders.each do |order|
       - next if order.fulfilled?
       %tr(data-link="#{edit_order_path order}")
-        %td
-          %span.cell--primary= order.user.name
-          %small.cell--secondary= order.user.pcv_id
+        %td= order.user.first_name
+        %td= order.user.last_name
+        %td= order.user.pcv_id
         %td= order.supply
         %td= order.unit
         %td= order.quantity
@@ -27,6 +31,8 @@
         %td
           %span= order.created_at.strftime '%-m/%-d/%y'
           %small.cell--secondary= order.created_at.strftime '%H:%M'
+        %td TBD
+        %td TBD
         %td.cell--arrow
           %i.icon-caret-right
 

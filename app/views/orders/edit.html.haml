@@ -16,24 +16,30 @@
     %table.table
       %tbody
         %tr
+          %td= @order.user.first_name
+          %td= @order.user.last_name
+          %td= @order.user.pcv_id
+          %td= @order.supply
+          %td= @order.unit
           %td= @order.quantity
-          %td.cell--primary= @order.supply
           %td= @order.full_dosage
+          %td= @order.user.location
+          %td= @order.user.country
+          %td= @order.created_at.strftime '%-m/%-d/%y'
     .order__extra= @order.extra
 
   = form_for @order, html: {class: 'order__section'} do |f|
-    %h4.order__action Order Action:
+    %h4.order__action Fulfillment Method
     .order__message
       %ul.radio-group
-        / FIXME: 3 %ul.list-columns for (0,1) (2) and (3)?
         %ul.list-column
           - @defaults.each_with_index do |(title, desc), i|
             %li
               = f.radio_button :action, i, data: {message: desc}
               %label(for="order_action_#{i}")= title
-      Edit Default SMS
-      .order__instructions
-        = f.text_area :instructions
-        .order__characters 160 characters remaining
+        Edit Default SMS
+        .order__instructions
+          = f.text_area :instructions
+        .order__characters "160 characters remaining"
     .btn-group
-      %button.btn.btn--primary(type="submit") Submit
+      %button.btn.btn--primary(type="submit") Send Response
