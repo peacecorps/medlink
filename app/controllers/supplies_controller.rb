@@ -2,6 +2,6 @@ class SuppliesController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @supplies = Order.joins(:supply).all
+    @supplies = Supply.all
   end
 end

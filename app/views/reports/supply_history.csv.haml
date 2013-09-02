@@ -1,7 +1,0 @@
-- require 'csv'
-
-= CSV.generate do |csv|
-  - csv << ["Supply Code", "Quantity"]
-  - @supplies.each do |supply|
-    - # FIXME: user should be eager loaded, but supply name is an n+1
-    - csv << [supply.shortcode, supply.quantity]
