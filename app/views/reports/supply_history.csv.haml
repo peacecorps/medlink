@@ -1,7 +1,7 @@
 - require 'csv'
 
 = CSV.generate do |csv|
-  - csv << ["ID", "Placed", "Fulfilled", "First name", "Last name", "Email", "Phone", "Item", "Amount", "Unit", "Location"]
-  - @orders.each do |order|
+  - csv << ["Supply Code", "Quantity"]
+  - @supplies.each do |supply|
     - # FIXME: user should be eager loaded, but supply name is an n+1
-    - csv << [order.user.pcmo_id, order.id, order.created_at, order.fulfilled_at, order.user.first_name, order.user.last_name, order.email || order.user.email, order.phone || order.user.phone, order.supply, order.quantity, order.unit, order.location]
+    - csv << [supply.shortcode, supply.quantity]

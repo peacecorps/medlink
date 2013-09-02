@@ -30,6 +30,7 @@ group :development do
   gem 'letter_opener'
   gem 'simplecov'
   gem 'coveralls', require: false
+  gem 'table_print'
 end
 
 gem 'rspec-rails', group: [:development, :test]
