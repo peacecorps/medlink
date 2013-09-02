@@ -1,3 +1,4 @@
+%h2 Request History
 %table(class="table.table--bordered.table--striped.table--linked" id="orders")
   %thead
     %tr
@@ -32,7 +33,7 @@
           %span= order.created_at.strftime '%-m/%-d/%y'
           %small.cell--secondary= order.created_at.strftime '%H:%M'
         %td TBD
-        %td TBD
+        %td 
         %td.cell--arrow
           %i.icon-caret-right
 

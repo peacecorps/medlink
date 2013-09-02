@@ -18,7 +18,7 @@ Feature: Visit "Help" Web Page
     Then I should see header with text "Delivery"
     Then I should see header with text "Purchase"
     Then I should see header with text "I received an error - what do I do?"
-    Then I should see header with text "Errors due to incorrect typing."
+    Then I should see header with text "Errors due to incorrect typing:"
     Then I should see header with text "Duplicate Requests for Same Medication"
     Then I should see header with text "Network Connectivity"
 
@@ -37,7 +37,7 @@ Feature: Visit "Help" Web Page
     Then I should see header with text "Delivery"
     Then I should see header with text "Purchase"
     Then I should see header with text "I received an error - what do I do?"
-    Then I should see header with text "Errors due to incorrect typing."
+    Then I should see header with text "Errors due to incorrect typing:"
     Then I should see header with text "Duplicate Requests for Same Medication"
     Then I should see header with text "Network Connectivity"
 
@@ -56,6 +56,6 @@ Feature: Visit "Help" Web Page
     Then I should see header with text "Delivery"
     Then I should see header with text "Purchase"
     Then I should see header with text "I received an error - what do I do?"
-    Then I should see header with text "Errors due to incorrect typing."
+    Then I should see header with text "Errors due to incorrect typing:"
     Then I should see header with text "Duplicate Requests for Same Medication"
     Then I should see header with text "Network Connectivity"
