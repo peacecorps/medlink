@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :supply
-  has_many :requests
+  #UNDO# has_many :requests
 
   validates_presence_of :user,   message: "unrecognized"
   validates_presence_of :supply, message: "unrecognized"
