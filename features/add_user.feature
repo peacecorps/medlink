@@ -36,8 +36,6 @@ Feature: Add User
     Then I should see a confirmation dialog
     And the user should be created
 
-  Scenario: adding a PCMO
-#TODO:
+#TODO: Scenario: adding a PCMO
 
-  Scenario: adding an admin
-#TODO:
+#TODO: Scenario: adding an admin
