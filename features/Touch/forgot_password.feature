@@ -15,5 +15,5 @@ Feature: Visit "Forgot Password" Web Page
     Then I should see header with text "You will receive an email with instructions to help you reset your password."
     Then I should see field "email@email.com"
     Then I should see field "PCV ID"
-#TODO: 8/17/2013: ONLY MOBILE:    Then I should see the button "Cancel"
+#TODO:    Then I should see the button "Cancel"
     Then I should see the button "Submit"

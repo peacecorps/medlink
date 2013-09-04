@@ -3,8 +3,6 @@ Feature: Visit "Reports" Web Page
   I want to see everything that I expect on the Reports pages
   so I can know that the site is working
 
-  Scenario: Check stuff on PCMO Reports pages
-#TODO
+#TODO: Scenario: Check stuff on PCMO Reports pages
 
-  Scenario: Check stuff on Admin Reports pages
-#TODO
+#TODO: Scenario: Check stuff on Admin Reports pages

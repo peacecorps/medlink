@@ -152,36 +152,38 @@ Given(/^that the following pcvs exist:$/) do |users|
     FactoryGirl.create :user, first_name: user['name'], pcv_id: user['pcv_id'], country: Country.find_by_name(user['country'])
   end
 end
- 
-#TODO# Then /^I see an unconfirmed account message$/ do
-#TODO#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
-#TODO# end
 
-#TODO# Then /^I should see a successful sign up message$/ do
-#TODO#   page.should have_content "Welcome! You have signed up successfully."
-#TODO# end
+#TODO: Unimplemented Steps in user_step.rb file.
 
-#TODO# Then /^I should see an invalid email message$/ do
-#TODO#   page.should have_content "Please enter an email address"
-#TODO# end
+# Then /^I see an unconfirmed account message$/ do
+#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
+# end
 
-#TODO# Then /^I should see a missing password message$/ do
-#TODO#   page.should have_content "Password can't be blank"
-#TODO# end
+# Then /^I should see a successful sign up message$/ do
+#   page.should have_content "Welcome! You have signed up successfully."
+# end
 
-#TODO# Then /^I should see a missing password confirmation message$/ do
-#TODO#   page.should have_content "Password doesn't match confirmation"
-#TODO# end
+# Then /^I should see an invalid email message$/ do
+#   page.should have_content "Please enter an email address"
+# end
 
-#TODO# Then /^I should see a mismatched password message$/ do
-#TODO#   page.should have_content "Password doesn't match confirmation"
-#TODO# end
+# Then /^I should see a missing password message$/ do
+#   page.should have_content "Password can't be blank"
+# end
 
-#TODO# Then /^I should see an account edited message$/ do
-#TODO#   page.should have_content "You updated your account successfully."
-#TODO# end
+# Then /^I should see a missing password confirmation message$/ do
+#   page.should have_content "Password doesn't match confirmation"
+# end
 
-#TODO# Then /^I should see my name$/ do
-#TODO#   create_user
-#TODO#   page.should have_content @user[:name]
-#TODO# end
+# Then /^I should see a mismatched password message$/ do
+#   page.should have_content "Password doesn't match confirmation"
+# end
+
+# Then /^I should see an account edited message$/ do
+#   page.should have_content "You updated your account successfully."
+# end
+
+# Then /^I should see my name$/ do
+#   create_user
+#   page.should have_content @user[:name]
+# end
