@@ -2,7 +2,7 @@
   %ul#global-nav
     - if current_user.admin?
       %li= link_to 'Admin Home', new_admin_user_path, class: 'btn'
-    %li= link_to 'Request Manager', orders_path, class: 'btn'
+    %li= link_to 'Request Manager', manage_orders_path, class: 'btn'
     %li= link_to 'Place a Request', new_order_path, class: 'btn'
     %li= link_to 'Reports', report_orders_path, class: 'btn'
 

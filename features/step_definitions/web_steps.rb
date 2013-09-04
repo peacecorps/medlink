@@ -30,6 +30,10 @@ Then /^I should see column "(.*?)"$/ do |column|
   find("th", :text => column).visible?
 end
 
+Then(/^I should see (\d+) columns of "(.*?)"$/) do |thecount, column|
+  page.should have_css("th", :text => column, :count => thecount)
+end
+
 Then /^I should see dropdownmenu "(.*?)"$/ do |menu|
   find("option", :text => menu).visible?
 end

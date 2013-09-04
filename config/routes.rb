@@ -3,6 +3,7 @@ Medlink::Application.routes.draw do
 
   resources :orders do
     get :report, on: :collection
+    get :manage, on: :collection
   end
 
   resources :supplies, only: [:index]

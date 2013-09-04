@@ -1,0 +1,94 @@
+%h2 Request Manager
+
+%h3 Past Due Requests
+
+%table(class="table.table--bordered.table--striped.table--linked" id="orders")
+  %thead
+    %tr
+      %th PCVID
+      %th First Name
+      %th Last Name
+      %th Supply
+      %th Unit
+      %th Quantity
+      %th Location
+      %th Request
+  %tbody
+    - @orders.each do |order|
+      - next if order.fulfilled?
+      %tr(data-link="#{edit_order_path order}")
+        %td= order.user.pcv_id
+        %td= order.user.first_name
+        %td= order.user.last_name
+        %td= order.supply
+        %td= order.unit
+        %td= order.quantity
+        %td
+          %span.cell--primary= order.location 
+        %td
+          %span= order.created_at.strftime '%-m/%-d/%y'
+          %small.cell--secondary= order.created_at.strftime '%H:%M'
+
+%h3 Pending Requests
+
+%table(class="table.table--bordered.table--striped.table--linked" id="orders")
+  %thead
+    %tr
+      %th PCVID
+      %th First Name
+      %th Last Name
+      %th Supply
+      %th Unit
+      %th Quantity
+      %th Location
+      %th Request
+  %tbody
+    - @orders.each do |order|
+      - next if order.fulfilled?
+      %tr(data-link="#{edit_order_path order}")
+        %td= order.user.pcv_id
+        %td= order.user.first_name
+        %td= order.user.last_name
+        %td= order.supply
+        %td= order.unit
+        %td= order.quantity
+        %td
+          %span.cell--primary= order.location 
+        %td
+          %span= order.created_at.strftime '%-m/%-d/%y'
+          %small.cell--secondary= order.created_at.strftime '%H:%M'
+
+%h3 Response Tracker
+
+%table(class="table.table--bordered.table--striped.table--linked" id="orders")
+  %thead
+    %tr
+      %th PCVID
+      %th First Name
+      %th Last Name
+      %th Supply
+      %th Unit
+      %th Quantity
+      %th Location
+      %th Request
+      %th Response
+      %th Fulfilled
+      %th Received
+  %tbody
+    - @orders.each do |order|
+      - next if order.fulfilled?
+      %tr(data-link="#{edit_order_path order}")
+        %td= order.user.pcv_id
+        %td= order.user.first_name
+        %td= order.user.last_name
+        %td= order.supply
+        %td= order.unit
+        %td= order.quantity
+        %td
+          %span.cell--primary= order.location 
+        %td
+          %span= order.created_at.strftime '%-m/%-d/%y'
+          %small.cell--secondary= order.created_at.strftime '%H:%M'
+        %td TBD
+        %td TBD
+        %td TBD

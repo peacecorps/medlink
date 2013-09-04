@@ -1,8 +1,12 @@
 class OrdersController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :find_order, except: [:index, :new, :create, :report]
+  before_filter :find_order, except: [:index, :new, :create, :report, :manage]
 
   def index
+    @orders = current_user.accessible_orders
+  end
+
+  def manage
     @orders = current_user.accessible_orders
   end
 
