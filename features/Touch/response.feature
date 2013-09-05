@@ -3,8 +3,7 @@ Feature: Visit Response Web Pages
   I want to see everything that I expect on the response pages
   so I can know that the site is working
 
-  Scenario: Check stuff on PCMO Response pages
-#TODO
+#TODO: Scenario: Check stuff on PCMO Response pages
 #    Given I exist as a user
 #    And I am a "pcmo"
 #    And I am not logged in
@@ -25,5 +24,4 @@ Feature: Visit Response Web Pages
 #    Then I should see "characters remaining"
 #    Then I should see the button "Submit"
 
-  Scenario: Check stuff on Admin Response pages
-#TODO
+#TODO: Scenario: Check stuff on Admin Response pages
