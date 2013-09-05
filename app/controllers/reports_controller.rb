@@ -30,7 +30,7 @@ before_action :verify_access
   end
 
   def supply_history
-    @supplies = Supply.all
+    @orders = Order.order("supplies.name").joins(:supply).select("orders.*, supplies.name as supply_name")
   end
 
   private
