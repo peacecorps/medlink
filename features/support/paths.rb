@@ -30,6 +30,8 @@ module NavigationHelpers
       '/orders/1'
     when /the change_password page/
       '/users/edit'
+    when /the response page/
+      '/orders/1/edit'
     when /the help page/
       '/help'
     end
