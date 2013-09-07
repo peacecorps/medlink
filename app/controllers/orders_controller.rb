@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
     # - currently, this *can't* fail any validations. Should we check for
     #     instructions here?
     # - should we always send instructions on an update?
-    @order.update_attributes update_params.merge(fulfilled_at: Time.now)
+    @order.update_attributes update_params.merge(responded_at: Time.now)
     @order.send_instructions!
     redirect_to orders_path, notice: "Order updated successfully"
   end

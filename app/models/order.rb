@@ -1,12 +1,15 @@
 class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :supply
-  has_many :requests
 
   validates_presence_of :user,   message: "unrecognized"
   validates_presence_of :supply, message: "unrecognized"
 
   scope :unfulfilled, -> { where(fulfilled_at: nil) }
+
+  def responded?
+    !responded_at.nil?
+  end
 
   def fulfilled?
     !fulfilled_at.nil?

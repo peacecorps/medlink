@@ -36,7 +36,7 @@ describe OrdersController do
       post 'create', order: order
 
       order = Order.last
-      expect( order.fulfilled_at ).to be_nil
+      expect( order.responded_at ).to be_nil
       expect( response ).to be_redirection
     end
   end
@@ -58,7 +58,7 @@ describe OrdersController do
           phone: '678-315-5999', email: 'test@example.com'}
 
         order = Order.last
-        expect( order.fulfilled_at ).not_to be_nil
+        expect( order.responded_at ).not_to be_nil
         expect( response ).to be_redirection
       end
     end
