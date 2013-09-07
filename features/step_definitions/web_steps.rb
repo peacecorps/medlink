@@ -37,3 +37,7 @@ end
 Then /^I should see header with text "(.*?)"$/ do |header_text|
   page.should have_css("h1,h2,h3,h4,h5", :text => header_text)
 end
+
+Then /^I should see div with text "(.*?)"$/ do |the_text|
+  page.should have_css("div", :text => the_text)
+end
