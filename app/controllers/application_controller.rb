@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   def root
     authenticate_user!
-    start_page = current_user.try(:admin?) ? new_admin_user_path : orders_path
+    start_page = current_user.try(:admin?) ? new_admin_user_path : manage_orders_path
     redirect_to start_page
   end
 

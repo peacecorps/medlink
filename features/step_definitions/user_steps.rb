@@ -117,6 +117,8 @@ end
 Then (/^I should be signed in as "(.*?)"$/) do |role|
   if role == "admin"
     expect(current_url).to eq("http://www.example.com/admin/users/new")
+  elsif role == "pcmo"
+    expect(current_url).to eq("http://www.example.com/orders/manage")
   else
     expect(current_url).to eq("http://www.example.com/orders")
   end
