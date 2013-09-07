@@ -15,7 +15,8 @@
       %th Request
   %tbody
     - @orders.each do |order|
-      - next if Time.now.yesterday.strftime("%s").to_i < (order.created_at.strftime("%s").to_i + (24*60*60))
+      - next if order.fulfilled?
+      - next if 3.business_days.before(Time.now).strftime("%s").to_i < (order.created_at.strftime("%s").to_i + (24*60*60))
       %tr(data-link="#{edit_order_path order}")
         %td= order.user.pcv_id
         %td= order.user.first_name
@@ -44,6 +45,8 @@
       %th Request
   %tbody
     - @orders.each do |order|
+      - next if order.fulfilled?
+      - next if 3.business_days.before(Time.now).strftime("%s").to_i >= (order.created_at.strftime("%s").to_i + (24*60*60))
       %tr(data-link="#{edit_order_path order}")
         %td= order.user.pcv_id
         %td= order.user.first_name
@@ -75,6 +78,7 @@
       %th Received
   %tbody
     - @orders.each do |order|
+      - next unless order.fulfilled?
       %tr(data-link="#{edit_order_path order}")
         %td= order.user.pcv_id
         %td= order.user.first_name
@@ -87,6 +91,7 @@
         %td
           %span= order.created_at.strftime '%-m/%-d/%y'
           %small.cell--secondary= order.created_at.strftime '%H:%M'
-        %td 
+        / FIXME: Next line is wrong (need order.responded_at timestamp)
+        %td= order.updated_at.strftime '%-m/%-d/%y'
         %td 
         %td 
