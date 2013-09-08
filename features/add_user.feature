@@ -39,3 +39,5 @@ Feature: Add User
 #TODO: Scenario: adding a PCMO
 
 #TODO: Scenario: adding an admin
+
+#TODO: Check same validations when editing a user
