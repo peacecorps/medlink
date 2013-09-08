@@ -27,7 +27,7 @@ Feature: Visit "Admin Home" Web Page
 
     #EDIT PART
     Then I should see header with text "Edit Account"
-#TODO/FIXME:    Then I should see dropdownmenu "Select Volunteer to edit"
+#TODO:    Then I should see dropdownmenu "Select Volunteer to edit"
     Then I should see the button "Edit"
 
 #----------------------------------------------------------------------

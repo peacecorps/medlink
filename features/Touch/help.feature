@@ -7,7 +7,7 @@ Feature: Visit "Help" Web Page
     When I go to the help page
     And I am a "pcv"
     Then I should see std icon area items
-#TODO/FIXME:    Then I should see std tab area items
+#FIXME:    Then I should see std tab area items
 
     Then I should see header with text "How to order personal medical supplies"
     Then I should see header with text "How to place a request"
@@ -26,7 +26,7 @@ Feature: Visit "Help" Web Page
     When I go to the help page
     And I am a "pcmo"
     Then I should see std icon area items
-#TODO/FIXME:    Then I should see std tab area items
+#FIXME:    Then I should see std tab area items
 
     Then I should see header with text "How to order personal medical supplies"
     Then I should see header with text "How to place a request"
@@ -45,7 +45,7 @@ Feature: Visit "Help" Web Page
     When I go to the help page
     And I am a "admin"
     Then I should see std icon area items
-#TODO/FIXME:    Then I should see admin tab area items
+#FIXME:    Then I should see admin tab area items
 
     Then I should see header with text "How to order personal medical supplies"
     Then I should see header with text "How to place a request"

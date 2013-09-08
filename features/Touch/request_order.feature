@@ -32,7 +32,7 @@ Feature: Visit "Request Order" Web Page
     Then I should see std gear area items
 
     Then I should see header with text "Place a Order"
-#TODO/FIXME: Then I should see field "Select Volunteer to request for"
+#TODO: Then I should see field "Select Volunteer to request for"
     Then I should see dropdownmenu "Select Supply"
     Then I should see field "Location"
     Then I should see field "Quantity"
@@ -52,7 +52,7 @@ Feature: Visit "Request Order" Web Page
     Then I should see admin tab area items
 
     Then I should see header with text "Place a Order"
-#TODO/FIXME: Then I should see field "Select Volunteer to request for"
+#TODO: Then I should see field "Select Volunteer to request for"
     Then I should see dropdownmenu "Select Supply"
     Then I should see field "Location"
     Then I should see field "Quantity"
