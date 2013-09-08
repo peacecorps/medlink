@@ -1,4 +1,4 @@
-Feature: TBD
+Feature: Respone_to_order Feature
   As a PCMO to the website
   I want to view my pending or past-due request
   So that I can choose what to respond to
@@ -35,7 +35,23 @@ Feature: TBD
     Then I should have 6 orders to process
 
   @wip
-  Scenario: respond to  my requests
+  Scenario: view my pending request
+    When I select a "pending" request
+
+    Then I should be able to assign one of four actions: "TBD"
+    When I save my response
+    Then I should see the response date and PCMO id on the request
+
+  @wip
+  Scenario: view my past-due request
+    When I select a "past-due" request
+
+    Then I should be able to assign one of four actions: "TBD"
+    When I save my response
+    Then I should see the response date and PCMO id on the request
+
+  @wip
+  Scenario: Respond to my requests
     When I select a "pending" request
     When I select a "past-due" request
 

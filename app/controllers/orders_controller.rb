@@ -1,8 +1,12 @@
 class OrdersController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :find_order, except: [:index, :new, :create, :report]
+  before_filter :find_order, except: [:index, :new, :create, :report, :manage]
 
   def index
+    @orders = current_user.accessible_orders
+  end
+
+  def manage
     @orders = current_user.accessible_orders
   end
 
@@ -33,11 +37,9 @@ class OrdersController < ApplicationController
   end
 
   def update
-    # FIXME:
-    # - limit to admins
-    # - currently, this *can't* fail any validations. Should we check for
-    #     instructions here?
-    # - should we always send instructions on an update?
+    # FIXME: limit to admins
+    # FIXME: currently, this *can't* fail any validations. Should we check for instructions here?
+    # FIXME: should we always send instructions on an update?
     @order.update_attributes update_params.merge(responded_at: Time.now)
     @order.send_instructions!
     redirect_to orders_path, notice: "Order updated successfully"

@@ -13,6 +13,7 @@ gem 'devise'
 gem 'sucker_punch'
 
 gem 'font-awesome-rails'
+gem 'business_time'
 
 group :assets do
   gem 'sass-rails'

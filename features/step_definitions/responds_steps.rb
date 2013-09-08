@@ -1,12 +1,17 @@
 When(/^I select a "(.*?)" request$/) do |request|
+  # within(request).click on 1s item.
+  first(".orders > td").click
   pending #FIXME: Write code.
 end
 
 Then(/^I should be able to assign one of four actions: "(.*?)"$/) do |action|
+  # GOAL: click on one of the radio buttons
+  #     -- first('.list_column').click_link(action)
   pending #FIXME: Write code.
 end
 
 When(/^I save my response$/) do
+  # GOAL: Check value in database.
   pending #FIXME: Write code.
 end
 

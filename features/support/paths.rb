@@ -34,6 +34,8 @@ module NavigationHelpers
       '/orders/1/edit'
     when /the reports page/
       '/reports'   
+    when /the request_manager page/
+      '/orders/manage'
     when /the help page/
       '/help'
     end
