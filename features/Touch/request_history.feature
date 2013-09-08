@@ -13,12 +13,16 @@ Feature: Visit "Request History" Web Page
     Then I should see std icon area items
     Then I should see std tab area items
 
-    Then I should see column "Requester"
-    Then I should see column "Requested Supplies"
+    Then I should see column "First Name"
+    Then I should see column "Last Name"
+    Then I should see column "PCVID"
+    Then I should see column "Supply"
     Then I should see column "Unit"
     Then I should see column "Quantity"
     Then I should see column "Location"
-    Then I should see column "Request Date"
+    Then I should see column "Requested"
+    Then I should see column "Response"
+    Then I should see column "Fulfilled"
 
   Scenario: Check stuff on PCMO "Request History" pages
     Given I exist as a user
@@ -30,12 +34,16 @@ Feature: Visit "Request History" Web Page
     Then I should see std icon area items
     Then I should see std tab area items
 
-    Then I should see column "Requester"
-    Then I should see column "Requested Supplies"
+    Then I should see column "First Name"
+    Then I should see column "Last Name"
+    Then I should see column "PCVID"
+    Then I should see column "Supply"
     Then I should see column "Unit"
     Then I should see column "Quantity"
     Then I should see column "Location"
-    Then I should see column "Request Date"
+    Then I should see column "Requested"
+    Then I should see column "Response"
+    Then I should see column "Fulfilled"
 
   Scenario: Check stuff on Admin "Request History" pages
     Given I exist as a user
@@ -47,9 +55,13 @@ Feature: Visit "Request History" Web Page
     Then I should see std icon area items
     Then I should see admin tab area items
 
-    Then I should see column "Requester"
-    Then I should see column "Requested Supplies"
+    Then I should see column "First Name"
+    Then I should see column "Last Name"
+    Then I should see column "PCVID"
+    Then I should see column "Supply"
     Then I should see column "Unit"
     Then I should see column "Quantity"
     Then I should see column "Location"
-    Then I should see column "Request Date"
+    Then I should see column "Requested"
+    Then I should see column "Response"
+    Then I should see column "Fulfilled"

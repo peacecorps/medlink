@@ -22,7 +22,7 @@ Feature: Visit "Request Order" Web Page
     Then I should see the button "Submit"
 
 #----------------------------------------------------------------------
-  Scenario: Check stuff on PCMO "Request Order" page
+  Scenario: Check stuff on PCMO "Place a Request" page
     Given I exist as a user
     And I am a "pcmo"
     And I am not logged in
@@ -31,7 +31,7 @@ Feature: Visit "Request Order" Web Page
     Then I should see std icon area items
     Then I should see std gear area items
 
-    Then I should see header with text "Request Form"
+    Then I should see header with text "Place a Order"
 #TODO/FIXME: Then I should see field "Select Volunteer to request for"
     Then I should see dropdownmenu "Select Supply"
     Then I should see field "Location"
@@ -41,7 +41,7 @@ Feature: Visit "Request Order" Web Page
     Then I should see the button "Submit"
 
 #----------------------------------------------------------------------
-  Scenario: Check stuff on ADMIN "Request Order" page
+  Scenario: Check stuff on ADMIN "Place a Request" page
     Given I exist as a user
     And I am a "admin"
     And I am not logged in
@@ -51,7 +51,7 @@ Feature: Visit "Request Order" Web Page
     Then I should see std gear area items
     Then I should see admin tab area items
 
-    Then I should see header with text "Request Form"
+    Then I should see header with text "Place a Order"
 #TODO/FIXME: Then I should see field "Select Volunteer to request for"
     Then I should see dropdownmenu "Select Supply"
     Then I should see field "Location"

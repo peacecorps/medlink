@@ -32,6 +32,8 @@ module NavigationHelpers
       '/users/edit'
     when /the response page/
       '/orders/1/edit'
+    when /the reports page/
+      '/reports'   
     when /the help page/
       '/help'
     end
