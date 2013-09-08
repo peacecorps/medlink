@@ -29,10 +29,10 @@ Feature: Respone_to_order Feature
       | 3   | CHO    | 8        | 
       | 4   | GEC    | 56       |
     And I am logged in as the pcmo of Quirm
-    When I go to the pcmo start page
+    When I go to the start page
 
   Scenario: view my requests
-    Then I should have 6 orders to process
+    Then I should have 6 pending orders to process
 
   @wip
   Scenario: view my pending request

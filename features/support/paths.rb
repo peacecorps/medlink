@@ -9,35 +9,31 @@ module NavigationHelpers
   def path_to(page_name)
     case page_name
     when /the sign_in page/
-      '/users/sign_in'
-    when /the admin home page/
-      '/users/sign_up'
-    when /the admin start page/
-      '/admin'
+      new_user_session_path
+    when /the start page/
+      root_path
     when /the add user page/
-      '/admin/users/new'
+      new_admin_user_path
     when /the admin edit page/
-      '/admin/users/1/edit'
+      edit_admin_user_path 1
     when /the forgot_password page/
-      '/users/password/new'
+      new_user_password_path
     when /the new_order page/
-      '/orders/new'
+      new_order_path
     when /the request history page/
-      '/orders'
-    when /the pcmo start page/
-      '/orders'
+      orders_path
     when /the first_order page/
-      '/orders/1'
+      order_path 1
     when /the change_password page/
-      '/users/edit'
+      edit_user_registration_path
     when /the response page/
-      '/orders/1/edit'
+      edit_order_path 1
     when /the reports page/
-      '/reports'   
+      reports_path 
     when /the request_manager page/
-      '/orders/manage'
+      manage_orders_path
     when /the help page/
-      '/help'
+      help_path
     end
   end
 end
