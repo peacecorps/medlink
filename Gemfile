@@ -30,7 +30,7 @@ group :development do
   gem 'letter_opener'
   gem 'simplecov'
   gem 'coveralls', require: false
-  gem 'table_print', '~> 1.3.2'
+  gem 'table_print'
 end
 
 gem 'rspec-rails', group: [:development, :test]
@@ -41,7 +41,7 @@ group :test do
   gem 'sms-spec'
 
   gem 'cucumber-rails', :require => false
-  gem 'database_cleaner', '1.0.1'
+  gem 'database_cleaner'
   gem 'selenium-webdriver'
 end
 
