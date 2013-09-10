@@ -1,4 +1,4 @@
-Feature: Respone_to_order Feature
+Feature: Response_to_order Feature
   As a PCMO to the website
   I want to view my pending or past-due request
   So that I can choose what to respond to
