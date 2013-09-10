@@ -1,3 +1,4 @@
+@touch
 Feature: Visit "Request Order" Web Page
   As a visitor to the website
   I want to see everything that I expect on the request_order page

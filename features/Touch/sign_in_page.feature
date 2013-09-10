@@ -1,3 +1,4 @@
+@touch
 Feature: Visit "Sign In" Web Page
   As a visitor to the website
   I want to see everything that I expect on the sign_in_page

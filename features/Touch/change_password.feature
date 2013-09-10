@@ -1,3 +1,4 @@
+@touch
 Feature: Visit "Change Password" Web Page
   As a visitor to the website
   I want to see everything that I expect on the change_password page

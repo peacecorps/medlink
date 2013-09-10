@@ -1,3 +1,4 @@
+@touch
 Feature: Visit "Forgot Password" Web Page
   As a visitor to the website
   I want to see everything that I expect on the forgot_password_page
