@@ -44,4 +44,10 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+
+  # Redirects to the login path to allow the flash messages to display for sign_out.
+  def after_sign_out_path_for(resource_or_scope)
+    new_user_session_path
+  end
 end
