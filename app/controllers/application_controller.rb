@@ -18,7 +18,13 @@ class ApplicationController < ActionController::Base
 
   def root
     authenticate_user!
-    start_page = current_user.try(:admin?) ? new_admin_user_path : manage_orders_path
+    if current_user.try(:admin?)
+      start_page = new_admin_user_path
+    elsif current_user.try(:pcmo?)
+      start_page = manage_orders_path
+    else # PCV
+      start_page = orders_path
+    end
     redirect_to start_page
   end
 
