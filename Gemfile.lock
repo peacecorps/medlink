@@ -203,6 +203,8 @@ GEM
       rubyzip (< 1.0.0)
       websocket (~> 1.0.4)
     sexp_processor (4.3.0)
+    show_me_the_cookies (2.1.0)
+      capybara (~> 2.0)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
@@ -278,6 +280,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails
   selenium-webdriver
+  show_me_the_cookies
   simplecov
   sms-spec
   sqlite3
