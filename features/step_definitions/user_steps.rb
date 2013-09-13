@@ -32,10 +32,15 @@ def set_role(role)
   end
 end
 
-def sign_in
+def sign_in(remember=false)
   visit '/users/sign_in'
-  fill_in "email@email.com", :with => @visitor[:email]
-  fill_in "Password", :with => @visitor[:password]
+  fill_in "user_email", :with => @visitor[:email]
+  fill_in "user_password", :with => @visitor[:password]
+  if (remember)
+    check "user_remember_me"
+  else
+    uncheck "user_remember_me"
+  end
   click_button "Sign in"
 end
 
@@ -43,6 +48,7 @@ def delete_user
   @user ||= User.where('email' => @visitor[:email]).first
   @user.destroy unless @user.nil?
 end
+
 
 ### GIVEN ############################################################
 
@@ -88,6 +94,20 @@ end
 When /^I sign in with valid credentials$/ do
   create_visitor
   sign_in
+end
+
+
+When /^I sign in with valid credentials after checking remember me$/ do
+  sign_in(true)
+end
+
+When(/^I close my browser \(clearing the session\)$/) do
+  expire_cookies
+end
+
+When(/^I clear my remember me cookie and close my browser$/) do
+  expire_cookies
+  delete_cookie "remember_user_token"
 end
 
 When /^I sign out$/ do

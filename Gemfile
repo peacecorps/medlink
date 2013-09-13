@@ -44,6 +44,8 @@ group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner', '1.0.1'
   gem 'selenium-webdriver'
+
+  gem 'show_me_the_cookies'
 end
 
 group :production do
