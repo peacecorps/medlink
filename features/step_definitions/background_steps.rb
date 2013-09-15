@@ -1,3 +1,7 @@
+Given(/^that "(.*?)" is a country$/) do |name|
+  FactoryGirl.create :country, name: name
+end
+
 Given(/^that the following supplies exist:$/) do |supplies|
   supplies.hashes.each do |supply|
     FactoryGirl.create :supply, shortcode: supply['shortcode'], name: supply['name']
@@ -10,3 +14,8 @@ Given(/^that the following orders have been made$/) do |orders|
   end  
 end
 
+Given(/^that the following pcmos exist:$/) do |pcmos|
+  pcmos.hashes.each do |pcmo|
+    FactoryGirl.create :pcmo, country: Country.where(name: pcmo[:country]).first!
+  end
+end
