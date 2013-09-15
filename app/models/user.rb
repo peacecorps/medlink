@@ -12,8 +12,8 @@ class User < ActiveRecord::Base
   validates :pcv_id, uniqueness: true
 
   Roles = {
-    pcv:   'PCV',
-    pcmo:  'PCMO',
+    pcv:   'Peace Corps Volunteer',
+    pcmo:  'Peace Corps Medical Officer',
     admin: 'Admin'
   }
 
