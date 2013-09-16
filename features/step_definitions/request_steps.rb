@@ -14,6 +14,33 @@ When(/^I give it all inputs but "(.*?)"$/) do |field|
   click_button "Submit"
 end
 
+When(/^I give it all inputs but location$/) do
+  #FIXME: Add "Select Supply"
+  # FYI: Do nothing for "Locaton"
+  fill_in "Units",    :with => @user[:units]
+  fill_in "Quantity", :with => @user[:qty]
+  fill_in "Special instructions area",  :with => @user[:special]
+  click_button "Submit"
+end
+
+When(/^I give it all inputs but quantity$/) do
+  #FIXME: Add "Select Supply"
+  fill_in "Location", :with => @user[:location]
+  fill_in "Units",    :with => @user[:units]
+  # FYI: Do nothing for "Quantity"
+  fill_in "Special instructions area",  :with => @user[:special]
+  click_button "Submit"
+end
+
+When(/^I give it all inputs but units$/) do
+  #FIXME: Add "Select Supply"
+  fill_in "Location", :with => @user[:location]
+  # FYI: Do nothing for "Units"
+  fill_in "Quantity", :with => @user[:qty]
+  fill_in "Special instructions area",  :with => @user[:special]
+  click_button "Submit"
+end
+
 #P9 (SUCCESS)
 Then(/^I see a successful request message$/) do
   page.should have_selector ".alert", text: "Order submitted successfully."
@@ -21,6 +48,10 @@ end
 
 Then(/^I see a invalid supply request message$/) do
   page.should have_content "shortcode unrecognized"
+end
+
+Then(/^I see a invalid "(.*?)" request message$/) do |field| 
+  page.should have_content "#{field} is Missing"
 end
 
 When(/^I give it all the valid inputs$/) do

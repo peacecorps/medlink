@@ -13,8 +13,8 @@ describe User do
     describe "for non-admin users" do
       subject { FactoryGirl.create(:user) }
       before do
-        @unowned_orders = FactoryGirl.create_list(:order, 10)
-        @orders = FactoryGirl.create_list(:order, 10, user_id: subject.id)
+        @unowned_orders = FactoryGirl.create_list(:order, 10, location: 'Unowned Loc')
+        @orders = FactoryGirl.create_list(:order, 10, user_id: subject.id, location: 'orders Loc')
       end
       it 'should only show their own orders' do
         owned_ids = @orders.map(&:id).uniq.sort
@@ -33,9 +33,9 @@ describe User do
       }
       before do
         @orders1 = FactoryGirl.create_list(:order, 10,
-          user_id: managed_user1.id)
+          user_id: managed_user1.id, location: 'user loc 1')
         @orders2 = FactoryGirl.create_list(:order, 10,
-          user_id: managed_user2.id)
+          user_id: managed_user2.id, location: 'Loc 2')
       end
       it 'should show orders for the admins whole country' do
         combined_ids = @orders1.map(&:id) + @orders2.map(&:id)

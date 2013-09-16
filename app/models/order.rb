@@ -5,6 +5,10 @@ class Order < ActiveRecord::Base
   validates_presence_of :user,   message: "unrecognized"
   validates_presence_of :supply, message: "unrecognized"
 
+  validates_presence_of :location, message: "is missing"
+  validates_presence_of :unit, message: "is missing"
+  validates_presence_of :quantity, message: "is missing"
+
   scope :unfulfilled, -> { where(fulfilled_at: nil) }
 
   def responded?
@@ -34,7 +38,7 @@ class Order < ActiveRecord::Base
       phone:     data[:phone],
       email:     user.try(:email),
       supply_id: supply.try(:id),
-      dose:      "#{data[:dosage_value]}#{data[:dosage_units]}",
+      unit:      "#{data[:dosage_value]}#{data[:dosage_units]}",
       quantity:  data[:qty],
       location:  data[:loc] || user.try(:location)
     })

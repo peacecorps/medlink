@@ -11,7 +11,7 @@ describe Order do
   context 'from text' do
 
     let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND',
-      phone: '555-123-4567' } }
+      phone: '555-123-4567', qty: 1, dosage_value: 11, dosage_units: 'mg' } }
 
     subject { Order.create_from_text data }
 
@@ -49,7 +49,9 @@ describe Order do
       phone:     'N/A',
       supply_id: Supply.first.id,
       dose:      10,
-      unit:      'mg'
+      unit:      'mg',
+      location:  'Roswell',
+      quantity:  1
     } }
 
     it 'can print its full dosage' do
