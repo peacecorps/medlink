@@ -12,10 +12,6 @@ module NavigationHelpers
       new_user_session_path
     when /the start page/
       root_path
-    when /the add user page/
-      new_admin_user_path
-    when /the admin edit page/
-      edit_admin_user_path 1
     when /the forgot_password page/
       new_user_password_path
     when /the new_order page/
@@ -26,14 +22,18 @@ module NavigationHelpers
       order_path 1
     when /the change_password page/
       edit_user_registration_path
-    when /the response page/
-      edit_order_path 1
-    when /the reports page/
-      reports_path 
     when /the request_manager page/
       manage_orders_path
     when /the help page/
       help_path
+    when /the response page/
+      edit_order_path 1
+    when /the reports page/
+      reports_path 
+    when /the add user page/
+      new_admin_user_path
+    when /the admin edit page/
+      edit_admin_user_path 1
     end
   end
 end

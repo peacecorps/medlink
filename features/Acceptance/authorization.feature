@@ -1,3 +1,4 @@
+@wip
 Feature: Authorization control
   As a site owner
   I want to be sure to limit access to sensitive areas
