@@ -175,37 +175,64 @@ Given(/^that the following pcvs exist:$/) do |users|
   end
 end
 
-#TODO: Unimplemented Steps in user_step.rb file.
+When(/^I give valid password inputs$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => @visitor[:password]
+  fill_in "New Password", :with => @visitor[:password] + "1"
+  fill_in "Password Confirmation", :with => @visitor[:password] + "1"
+  click_button "Update"
+end
 
-# Then /^I see an unconfirmed account message$/ do
-#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
-# end
+Then /^I should see an account edited message$/ do
+  page.should have_content "You updated your account successfully."
+end
 
-# Then /^I should see a successful sign up message$/ do
-#   page.should have_content "Welcome! You have signed up successfully."
-# end
+When(/^I give invalid password$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => "WRONG PW"
+  fill_in "New Password", :with => @visitor[:password] + "1"
+  fill_in "Password Confirmation", :with => @visitor[:password] + "1"
+  click_button "Update"
+end
 
-# Then /^I should see an invalid email message$/ do
-#   page.should have_content "Please enter an email address"
-# end
+Then(/^I should see an invalid current password message$/) do
+  page.should have_content "Current password is invalid"
+end
 
-# Then /^I should see a missing password message$/ do
-#   page.should have_content "Password can't be blank"
-# end
+When(/^I give blank password$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => "WRONG PW"
+  fill_in "New Password", :with => ''
+  fill_in "Password Confirmation", :with => ''
+  click_button "Update"
+end
 
-# Then /^I should see a missing password confirmation message$/ do
-#   page.should have_content "Password doesn't match confirmation"
-# end
+Then(/^I should see an blank current password message$/) do
+  page.should have_content "Current password is invalid"
+end
 
-# Then /^I should see a mismatched password message$/ do
-#   page.should have_content "Password doesn't match confirmation"
-# end
+When(/^I give mismatched passwords$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => @visitor[:password]
+  fill_in "New Password", :with => @visitor[:password] + "1"
+  fill_in "Password Confirmation", :with => @visitor[:password] + "2"
+  click_button "Update"
+end
 
-# Then /^I should see an account edited message$/ do
-#   page.should have_content "You updated your account successfully."
-# end
+Then /^I should see a mismatched password message$/ do
+  page.should have_content "Password confirmation doesn't match Password"
+end
 
-# Then /^I should see my name$/ do
-#   create_user
-#   page.should have_content @user[:name]
-# end
+When(/^I give too short new password$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => @visitor[:password]
+  fill_in "New Password", :with => "2short"
+  fill_in "Password Confirmation", :with => "2short"
+  click_button "Update"
+end
+
+Then(/^I should see a too short password message$/) do
+  page.should have_content "Password is too short (minimum is 8 characters)"
+end
+
+
