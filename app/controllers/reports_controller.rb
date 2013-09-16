@@ -1,11 +1,8 @@
 class ReportsController < ApplicationController
   
-before_action :verify_access
-
-  
+  before_action :verify_access
 
   def index
-    puts "hello"
   end
 
   def request_history
