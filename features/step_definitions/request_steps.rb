@@ -100,6 +100,19 @@ When(/^I give it all the valid inputs$/) do
   click_button "Submit"
 end
 
+When(/^I give it all inputs with non\-number "(.*?)"$/) do |field|
+  fill_in "Location", :with => "loc valid inputs"
+  fill_in "Units",    :with => "mg"
+  if (field == "Quantity")
+    fill_in "Quantity", :with => "BADVALUE" #WRONG
+  else
+    fill_in "Quantity", :with => "1"
+  end
+  fill_in "Special instructions area", :with => "S/I/A valid"
+  select_supply
+  click_button "Submit"
+end
+
 #P9 (SUCCESS)
 Then(/^I see a successful request message$/) do
 save_and_open_page #FIXME
@@ -112,5 +125,9 @@ end
 
 Then(/^I see a invalid "(.*?)" request message$/) do |field| 
   page.should have_content "#{field} is Missing"
+end
+
+Then(/^I see a nonnumber "(.*?)" request message$/) do |field|
+  page.should have_content "#{field} is not a number"
 end
 #save_and_open_page

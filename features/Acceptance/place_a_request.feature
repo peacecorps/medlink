@@ -150,11 +150,38 @@ Feature: Place a Request
 #FIXME    And I give it all inputs but units
 #FIXME    Then I see a invalid "Units" request message
 
-#STOPHERE #############################################################
+#......................................................................
 #ERROR/BAD VALUES
 
+  Scenario: PCV: bad qty - I (invalid/non-numbers qty)
+    Given I am an "pcv"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
+    When I place a request
+    And I give it all inputs with non-number "Quantity"
+    Then I see a nonnumber "Quantity" request message
+
+  Scenario: PCMO: bad qty - I (invalid/non-numbers qty)
+    Given I am an "pcmo"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
+    When I place a request
+    And I give it all inputs with non-number "Quantity"
+    Then I see a nonnumber "Quantity" request message
+
+  Scenario: Admin: bad qty - I (invalid/non-numbers qty)
+    Given I am an "admin"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
+    When I place a request
+    And I give it all inputs with non-number "Quantity"
+    Then I see a nonnumber "Quantity" request message
+
+#FIXME: STOPHERE #############################################################
   Scenario: bad location (AL: not validation)
-  Scenario: bad qty - I (invalid qty) (AL: not validation)
   Scenario: bad units - H (invalid unit) (AL: not validation)
 
 #......................................................................

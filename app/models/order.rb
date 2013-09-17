@@ -9,6 +9,8 @@ class Order < ActiveRecord::Base
   validates_presence_of :unit, message: "is missing"
   validates_presence_of :quantity, message: "is missing"
 
+  validates_numericality_of :quantity, :only_integer => true, on: :create
+
   scope :unfulfilled, -> { where(fulfilled_at: nil) }
 
   def responded?
