@@ -60,5 +60,8 @@ When(/^I change (\w+) to (\w*)$/) do |field, value|
 end
 
 Then(/^I should see a (\w+) error message$/) do |type|
-  expect( page ).to have_css(".error", text: type)
+  #WAS: expect( page ).to have_css(".error", text: type)
+  expect( page ).to have_content("errors prohibited this user from being submitted:")
+  expect( page ).to have_content("can't be blank")
 end
+
