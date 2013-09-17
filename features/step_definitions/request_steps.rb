@@ -19,8 +19,33 @@ def select_supply
   #NO: within '#order_supply_id' do ; find("option[value='18']").click ; end
   #NO: select(find(:xpath, "//*[@name='order[supply_id]']/option[@value='18']").text, :from => 'order_supply_id')
   #NO: find_by_id('order_supply_id').find("Gauze").select_option
-
-  find_field('#order_supply_id > option:nth-child(2)').click
+  #NO: find_field('#order_supply_id > option:nth-child(2)').click
+  #NO: find_field("option", :text => 'Gauze').click
+  #YES: find_by_id('order_supply_id').click
+  #NO: select("Gauze", :from => "input-group")
+  #NO: select("Gauze", :from => "select select--full")
+  #NO: select("Gauze", :from => "form__section")
+  #NO/CLOSER: select("Gauze", :from => "order_supply_id")
+  #NO: select("Gauze", :from => "order_supply_id")
+  #NO: find('select').find('Gauze')
+  #NO: find('select').find_field("option", :text => 'Gauze')
+  #YES find('select').click
+  #NO: find('#order_supply_id > option:nth-child(3)')
+  #NO: puts find_field('#order_supply_id option[18]').text.inspect
+  #YES: puts find_field('order_supply_id').text
+  #YES puts find_field('order_supply_id').find('option[value]').text (same as previous line) 
+  #YES: puts find(:xpath, ".//select[contains(@id, 'order_supply_id')]").text
+  #NO: puts page.should have_xpath "//select[@id = 'order_supply_id']/option[18]"
+  #NO: puts page.should have_xpath "//select[@id = 'order_supply_id']/option[@value='18']"
+  #YES: puts page.should have_xpath "//select[@id = 'order_supply_id']"
+  #YES: puts page.should have_xpath "//select[@id = 'order_supply_id']/option[@value]"
+  #YES: puts page.should have_xpath "//select[@id = 'order_supply_id']/option[text()]"
+  #NO:: puts page.should have_xpath "//select[@id = 'order_supply_id']/option[@value = '18']"
+  #NO: find(:css, '.select select--full').find(:xpath, XPath::HTML.option("Gauze")).select_option
+  #NO: puts find("//select[@id='order_supply_id']/option[18]/@value").inspect
+  #YES: select(find(:xpath, "//*[@id='order_supply_id']/option[@value]").text, :from => "order_supply_id")
+  #YES: find_by_id('order_supply_id').find('option[@value]').select_option
+  puts find_field('order_supply_id').text
 end
 
 When(/^I place a request$/) do
@@ -77,7 +102,7 @@ end
 
 #P9 (SUCCESS)
 Then(/^I see a successful request message$/) do
-save_and_open_page  
+save_and_open_page #FIXME
   page.should have_selector ".alert", text: "Order submitted successfully."
 end
 
