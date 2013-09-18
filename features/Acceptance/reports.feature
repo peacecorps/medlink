@@ -11,23 +11,22 @@ Feature: Reports
 # pg.14 (6 reports: Supply Requests, Fulfillment History, Request History,
 #    Recently Added Users, PCMO Response Times, ERRORS?)
 
-
 ######################################################################
-# TODO: Add PCMO, ADMIN
 
-# TODO: The other 5 reports
-
-# TODO: Invalid Outputs?
+# TODO: Invalid Outputs? (Answer: GIGO)
 
 #......................................................................
   Scenario Outline: <user> successfully create report: <report>
     Given I am an "<user>"
     And I am not logged in
+
     When I sign in with valid credentials
     Then I see a successful sign in message
+
     When I create a "<report>" report
     Then I see a successful file download dialog
     And I got the correct "<report>" output
+    Then I am finished
 
     Examples:
       | user  | report          |

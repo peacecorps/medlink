@@ -15,4 +15,3 @@ Then(/^I got the correct "(.*?)" output$/) do |arg1|
   #FIXME: pending
   # 1. Check the output file (# of columns, etc)
 end
-
