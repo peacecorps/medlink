@@ -45,7 +45,14 @@ def select_supply
   #NO: puts find("//select[@id='order_supply_id']/option[18]/@value").inspect
   #YES: select(find(:xpath, "//*[@id='order_supply_id']/option[@value]").text, :from => "order_supply_id")
   #YES: find_by_id('order_supply_id').find('option[@value]').select_option
-  puts find_field('order_supply_id').text
+  #YES: puts find_field('order_supply_id').text
+  #NO: puts find('option[value=Gauze]').text 
+  #NO/CLOSER: select("18", :from => "order[supply_id]")
+  #NO: page.select("5", :from => "order_supply_id")
+  #NO: page.select("Bandage scissors", :from => "order_supply_id")
+  #NO: page.select(Nokogiri::HTML("Bandage scissors").text, from: "order_supply_id")
+  #NO: page.find_and_select_option("Bandage scissors")
+  find_field('order_supply_id').find("option").click
 end
 
 When(/^I place a request$/) do
