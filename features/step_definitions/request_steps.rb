@@ -52,7 +52,7 @@ def select_supply
   #NO: page.select("Bandage scissors", :from => "order_supply_id")
   #NO: page.select(Nokogiri::HTML("Bandage scissors").text, from: "order_supply_id")
   #NO: page.find_and_select_option("Bandage scissors")
-  find_field('order_supply_id').find("option").click
+  puts find_field('order_supply_id').text
 end
 
 When(/^I place a request$/) do

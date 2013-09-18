@@ -32,6 +32,7 @@ group :development do
   gem 'simplecov'
   gem 'coveralls', require: false
   gem 'table_print'
+
 end
 
 gem 'rspec-rails', group: [:development, :test]
