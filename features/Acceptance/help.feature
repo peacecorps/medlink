@@ -1,4 +1,3 @@
-@touch
 Feature: Visit "Help" Web Page
   As a visitor to the website
   I want to see everything that I expect on the help page

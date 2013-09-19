@@ -29,3 +29,7 @@ Then /I should see admin tab area items/ do
     Then I should see link "Admin Home"
   }
 end
+
+Then(/^I should see none tab area items$/) do
+  # NO TAB for "none"
+end
