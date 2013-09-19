@@ -3,6 +3,13 @@ Feature: Response_to_order Feature
   I want to view my pending or past-due request
   So that I can choose what to respond to
 
+# DESIGN DOC TAGS:
+#R1, R2, R3, R4 (pg.7) - 4 responses
+#B (missing date), C (missing location), D (exc. char
+#    limit) ,M (select fulfillment method) (p.8)
+#P6 (success) (p.9)
+#M1 (EMAIL TEXT) (p.9)
+
   Background:
     Given that "Quirm" is a country
     Given that "Neverland" is a country

@@ -1,1 +1,17 @@
-#TODO: Add request_manager acceptance tests. (P6, B, C, M, M1, R1, R2, R3, R4; B, C, D, M)
+Feature: Request Manager
+  In order to have medical supplies during the whole deployment
+  A PCMO or Admin 
+  Should be able to manager the requests of replacement medical supplies
+
+  Scenario Outline: Basic Page Behavior
+    Given the default user exists
+    Given I am an "<role>"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
+    When I go to the request_manager page
+    Examples:
+      | role  |
+      | pcv   |
+      | pcmo  |
+      | admin |
