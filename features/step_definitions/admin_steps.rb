@@ -61,7 +61,30 @@ end
 
 Then(/^I should see a (\w+) error message$/) do |type|
   #WAS: expect( page ).to have_css(".error", text: type)
-  expect( page ).to have_content("errors prohibited this user from being submitted:")
-  expect( page ).to have_content("can't be blank")
+  if type == "required"    
+    expect( page ).to have_content("can't be blank")
+    expect( page ).to have_content("prohibited this user from being submitted:")
+  end
+  if type == "invalid"
+    expect( page ).to have_content("is invalid")
+    expect( page ).to have_content("prohibited this user from being submitted:")
+  end
+  if type == "unique"
+    expect( page ).to have_content("has already been taken")
+  end
 end
 
+Then(/^I should see the edit account form$/) do
+  expect( page ).to have_content('Edit Account')
+end
+
+When(/^I fill out the edit user form$/) do
+  fill_in "First Name",         with: @visitor[:first_name]
+  fill_in "Last Name",          with: @visitor[:last_name]
+  fill_in "Address / location", with: "Roswell"
+  fill_in "PCV ID",             with: "11111111"
+  fill_in "Email",              with: @visitor[:email]
+
+  select  "Chad",                  from: 'user_country_id'
+  select  "Peace Corps Volunteer", from: 'user_role'
+end

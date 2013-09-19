@@ -32,7 +32,7 @@ module NavigationHelpers
       reports_path 
     when /the add user page/
       new_admin_user_path
-    when /the admin edit page/
+    when /the edit user page/
       edit_admin_user_path 1
     end
   end

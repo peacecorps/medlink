@@ -39,11 +39,11 @@ Feature: Add User
       | field           | value | message  |
       | user_first_name |       | required |
       | user_last_name  |       | required |
-      #FIXME: | user_country_id |       | required |
       | user_location   |       | required |
       | user_phone      |       | required |
       | user_email      | nope  | required |
       | user_email      | nope  | invalid  |
       | user_pcv_id     |       | required |
       | user_pcv_id     | 11111 | unique   |
+      #FIXME: | user_country_id |       | required |
       #FIXME: | user_role       |       | required |

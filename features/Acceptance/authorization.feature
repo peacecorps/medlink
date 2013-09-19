@@ -13,7 +13,7 @@ Feature: Authorization control
     Examples:
       | role  | authorized_page   | 
       | admin | add user          |
-      | admin | admin edit        |
+      | admin | edit user         |
 
       | user  | new_order         |
 
