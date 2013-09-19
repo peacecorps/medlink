@@ -52,7 +52,19 @@ def select_supply
   #NO: page.select("Bandage scissors", :from => "order_supply_id")
   #NO: page.select(Nokogiri::HTML("Bandage scissors").text, from: "order_supply_id")
   #NO: page.find_and_select_option("Bandage scissors")
-  puts find_field('order_supply_id').text
+  #NO: find_field('order_supply_id').click_link("Gauze")
+  #NO: find_field('order_supply_id').click("Gauze")
+  #NO: find_field('order_supply_id').find('option[@value=18]').inspect
+  #NO: find("//select[@id = 'order_supply_id']/option[@value = '18']").inspect
+  #NO: puts "LINE59=[" + find(:select, 'order_supply_id').all('option').find{|o| o.value=='18'}.inspect
+  #NO: puts find(:select, 'order_supply_id').first(:option, '18').inspect
+  #NO: select_box('order_supply_id').select('Gauze')
+  #NO: find(:xpath, '//option[contains(text(), "Gauze")]', 'order_supply_id').select_option
+  #............................................................
+  #YES: puts find(:xpath, "//*[@id='order_supply_id']/option[@value]").text
+  #YES: puts find_by_id('order_supply_id').find('option[@value]').text.inspect # gives "Supply Select"
+#GOAL: How to add "18" or "Gauze" to previous line?
+  puts find_by_id('order_supply_id').find('option[@value]').text.inspect # gives "Supply Select"
 end
 
 When(/^I place a request$/) do

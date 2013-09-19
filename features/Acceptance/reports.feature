@@ -29,26 +29,20 @@ Feature: Reports
     Then I am finished
 
     Examples:
-      | user  | report          |
+      | user  | report                |
 
-      | pcv   | Supply Requests | 
-      | pcmo  | Supply Requests | 
-      | admin | Supply Requests | 
+      | pcv   | Supply Requests       | 
+      | pcv   | Fulfillment History   |
+      | pcv   | Request History       |
 
-      | pcv   | Fulfillment History |
-      | pcmo  | Fulfillment History |
-      | admin | Fulfillment History |
+      | pcmo  | Supply Requests       |
+      | pcmo  | Fulfillment History   |
+      | pcmo  | Request History       |
 
-      | pcv   | Request History |
-      | pcmo  | Request History |
-      | admin | Request History |
-
-      | pcmo  | Recently Added Users |
-      | admin | Recently Added Users |
-
-      | pcmo  | Recently Edited Users |
+      | admin | Supply Requests       | 
+      | admin | Fulfillment History   |
+      | admin | Request History       |
+      | admin | Recently Added Users  |
       | admin | Recently Edited Users |
-
-      | pcmo  | PCMO Response Times |
-      | admin | PCMO Response Times |
+      | admin | PCMO Response Times   |
 
