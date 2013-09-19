@@ -11,3 +11,5 @@ Feature: Sign out
       Then I should see a signed out message
       When I return to the site
       Then I should be signed out
+
+#FIXME: new_sign_out.feature - do we need this now?
