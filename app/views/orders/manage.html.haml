@@ -91,7 +91,9 @@
         %td
           %span= order.created_at.strftime '%-m/%-d/%y'
           %small.cell--secondary= order.created_at.strftime '%H:%M'
-        / FIXME: Next line is wrong (need order.responded_at timestamp)
-        %td= order.updated_at.strftime '%-m/%-d/%y'
+        - if order.responded?
+          %td= order.responded.strftime '%-m/%-d/%y'
+        - else
+          %td
         %td 
         %td 

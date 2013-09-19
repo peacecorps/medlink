@@ -3,7 +3,7 @@ class Admin::UsersController < AdminController
 
   def new
     if u = params[:edit_user]
-      # This is a terrible hack to accomodate the edit user selection being on
+      # FIXME: This is a terrible hack to accomodate the edit user selection being on
       # the new user (/admin home) page, and should be removed once we have
       # a javascripty user selection mechanism
       id = u =~ /\((.*)\)/ && $1
@@ -41,7 +41,6 @@ class Admin::UsersController < AdminController
   end
 
   private # ----------
-
 
   def set_user
     @user = User.find params[:id]
