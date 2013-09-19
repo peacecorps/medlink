@@ -1,23 +1,31 @@
 When(/^I select a "(.*?)" request$/) do |request|
-  # within(request).click on 1s item.
-  first(".orders > td").click
-  pending #FIXME: Write code.
+#DEBUG: puts all("#" + request + "-orders tbody tr")[0].text
+  all("#" + request + "-orders tbody tr")[0].click()
+  visit('3/edit') #FIXME: above click problem
+#FIXME: The table row "click" above does not work
 end
 
 Then(/^I should be able to assign one of four actions: "(.*?)"$/) do |action|
-  # GOAL: click on one of the radio buttons
-  #     -- first('.list_column').click_link(action)
-  pending #FIXME: Write code.
+  choose(action)
 end
 
 When(/^I save my response$/) do
   # GOAL: Check value in database.
-  pending #FIXME: Write code.
+  click_button('Send Response')
 end
 
 Then(/^I should see the response date and PCMO id on the request$/) do
-  pending #FIXME: Write code.
+  visit('orders/manage')
+  pending #FIXME: manage_orders page does not have order
+
 end
+
+Then(/^I should have (\d+) pending orders to process$/) do |expected_orders|
+  pending_orders_in_table = page.all('table#pending-orders tr').count - 1
+  pending_orders_in_table.should == expected_orders.to_i
+end
+
+######################################################################
 
 Given(/^I select a request that another PCMO has responded to$/) do
   pending #FIXME: Write code.
@@ -30,8 +38,4 @@ end
 Then(/^I should see the other PCMO's id on the request$/) do
   pending #FIXME: Write code.
 end
-
-Then(/^I should have (\d+) pending orders to process$/) do |expected_orders|
-  pending_orders_in_table = page.all('table#pending-orders tr').count - 1
-  pending_orders_in_table.should == expected_orders.to_i
-end
+#save_and_open_page

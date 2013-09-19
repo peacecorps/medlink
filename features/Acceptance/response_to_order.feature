@@ -38,31 +38,65 @@ Feature: Response_to_order Feature
     And I am logged in as the pcmo of Quirm
     When I go to the start page
 
-  Scenario: view my requests
+  Scenario: View my requests
     Then I should have 6 pending orders to process
 
+#......................................................................
   @wip
-  Scenario: view my pending request
+  Scenario: View my Pending request
     When I select a "pending" request
 
-    Then I should be able to assign one of four actions: "TBD"
+    Then I should be able to assign one of four actions: "Delivery"
+    Then I should be able to assign one of four actions: "Pickup"
+    Then I should be able to assign one of four actions: "Purchase & Reimburse"
+    Then I should be able to assign one of four actions: "Special Instructions"
     When I save my response
     Then I should see the response date and PCMO id on the request
+
+#......................................................................
+
+# FIXME: Add Past-Due to cuke test
 
   @wip
-  Scenario: view my past-due request
+  Scenario: View my Past-Due request
     When I select a "past-due" request
 
-    Then I should be able to assign one of four actions: "TBD"
+    Then I should be able to assign one of four actions: "Delivery"
+    Then I should be able to assign one of four actions: "Pickup"
+    Then I should be able to assign one of four actions: "Purchase & Reimburse"
+    Then I should be able to assign one of four actions: "Special Instructions"
     When I save my response
     Then I should see the response date and PCMO id on the request
+
+#......................................................................
+
+# FIXME: Add Past-Due to cuke test
+
+  @wip
+  Scenario: View my Responded request
+    When I select a "responded" request
+
+    Then I should be able to assign one of four actions: "Pickup"
+    Then I should be able to assign one of four actions: "Delivery"
+    Then I should be able to assign one of four actions: "Pickup"
+    Then I should be able to assign one of four actions: "Purchase & Reimburse"
+    Then I should be able to assign one of four actions: "Special Instructions"
+    When I save my response
+    Then I should see the response date and PCMO id on the request
+
+#......................................................................
+
+# FIXME: Do not understand this cuke.
 
   @wip
   Scenario: Respond to my requests
     When I select a "pending" request
     When I select a "past-due" request
 
-    Then I should be able to assign one of four actions: "TBD"
+    Then I should be able to assign one of four actions: "Delivery"
+    Then I should be able to assign one of four actions: "Pickup"
+    Then I should be able to assign one of four actions: "Purchase & Reimburse"
+    Then I should be able to assign one of four actions: "Special Instructions"
     When I save my response
     Then I should see the response date and PCMO id on the request
 
