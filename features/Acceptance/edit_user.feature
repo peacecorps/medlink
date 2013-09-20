@@ -15,6 +15,7 @@ Feature: Edit User
     When I go to the edit user page
     Then I should see the edit account form
 
+# Tag P8
 #......................................................................
   Scenario: successfully editng a user
     When I choose a "Peace Corps Medical Officer" role
