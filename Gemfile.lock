@@ -69,7 +69,7 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
-    coveralls (0.6.9)
+    coveralls (0.7.0)
       multi_json (~> 1.3)
       rest-client
       simplecov (>= 0.7)
@@ -233,11 +233,11 @@ GEM
       atomic
     tilt (1.4.1)
     timers (1.1.0)
-    tins (0.9.0)
+    tins (0.10.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    twilio-ruby (3.10.1)
+    twilio-ruby (3.11.0)
       builder (>= 2.1.2)
       jwt (>= 0.1.2)
       multi_json (>= 1.3.0)
