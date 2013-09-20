@@ -87,6 +87,6 @@ Feature: Place a Request
 
 #......................................................................
 #OTHER
-# TODO: P4(suggorate request)
+# TODO: P4(suggorate request), M4 (EMAIL TEXT that goes with P2...)
 # TODO/SMS(i guess): F (bad pcvid), L (bad pw)
 # TODO: M1 ("EMAIL TEXT that goes with sms message RE1 thru RE4 (msg redundancy)

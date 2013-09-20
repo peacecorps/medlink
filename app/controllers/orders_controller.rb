@@ -44,7 +44,8 @@ class OrdersController < ApplicationController
     # FIXME: should we always send instructions on an update?
     @order.update_attributes update_params.merge(responded_at: Time.now)
     @order.send_instructions!
-    redirect_to orders_path, notice: "Order updated successfully"
+    # Tag P6
+    redirect_to orders_path, notice: "Success! Your response has been sent to #{@order.user.first_name} #{@order.user.last_name} #{@order.user.pcv_id}. This request will now appear in the response tracker awaiting fullment."
   end
 
   private # -----

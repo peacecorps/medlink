@@ -7,7 +7,7 @@ Feature: Response_to_order Feature
 #R1, R2, R3, R4 (pg.7) - 4 responses
 #B (missing date), C (missing location), D (exc. char
 #    limit) ,M (select fulfillment method) (p.8)
-#P6 (success) (p.9)
+#TODO: P6 (success) (p.9)
 #M1 (EMAIL TEXT) (p.9)
 
   Background:
