@@ -22,7 +22,8 @@ class Admin::UsersController < AdminController
     @user = User.new user_params.merge(password: password)
 
     if @user.save
-      redirect_to new_admin_user_path, notice: 'User created successfully'
+      # Tag P7 below
+      redirect_to new_admin_user_path, notice: 'Success! You have added a new user to PC Medlink'
       # FIXME: email password to the user
     else
       render :new
