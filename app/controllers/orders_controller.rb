@@ -15,9 +15,11 @@ class OrdersController < ApplicationController
   end
 
   def create
+#FIXME: Missing post-"Place a Request" Submit button.
     @order = current_user.orders.new create_params
     if @order.save
-      redirect_to orders_path, notice: "Order submitted successfully"
+      # Tag P6
+      redirect_to orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name} #{@order.user.last_name} has been sent."
     else
       render :new
     end
