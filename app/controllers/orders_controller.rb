@@ -19,10 +19,11 @@ class OrdersController < ApplicationController
     if @order.save
       if current_user.try(:pcv?)
         # Tag P6
-        redirect_to another_orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name} #{@order.user.last_name} has been sent."
+#FIXME: Need to add "Another Supply" web page.
+        redirect_to orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name.humanize} #{@order.user.last_name.humanize} has been sent."
       else # PCMO or ADMIN
         # Tag P6
-        redirect_to orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name} #{@order.user.last_name} has been sent."
+        redirect_to orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name.humanize} #{@order.user.last_name.humanize} has been sent."
       end
     else
       render :new

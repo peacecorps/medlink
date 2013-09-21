@@ -4,6 +4,9 @@ Feature: Place a Request
   Should be able to submit a request for replacement medical supplies
 
   Background:
+    Given that the following supplies exist:
+      | shortcode | name  |
+      | gz        | Gauze | 
     Given the default user exists
     Given I am an "<role>"
     And I am not logged in
@@ -24,8 +27,8 @@ Feature: Place a Request
 #----------------------------------------------------------------------
   Scenario Outline: User successfully requests medical supplies (P9 tag)
     When I place a request
-#FIXME    And I give it all the valid inputs
-#FIXME    Then I see a successful request message
+    And I give it all the valid inputs
+    Then I see a successful request message
     Examples:
       | role  |
       | pcv   |
@@ -38,21 +41,10 @@ Feature: Place a Request
 # NOTE: Unclear how location, qty, and units are bad.
 
 #......................................................................
-  Scenario Outline: User does not give a location
-      When I place a request
-#FIXME    And I give it all inputs but location
-#FIXME    Then I see a invalid "Location" request message
-    Examples:
-      | role  |
-      | pcv   |
-      | pcmo  |
-      | admin |
-
-#......................................................................
   Scenario Outline: User does not give a Quantity - I (invalid qty)
     When I place a request
-#FIXME    And I give it all inputs but quantity
-#FIXME    Then I see a invalid "Quantity" request message
+    And I give it all inputs but quantity
+    Then I see a invalid quantity request message
     Examples:
       | role  |
       | pcv   |
@@ -62,8 +54,8 @@ Feature: Place a Request
 #......................................................................
   Scenario Outline: User does not give a Units -- H (invalid unit)
     When I place a request
-#FIXME    And I give it all inputs but units
-#FIXME    Then I see a invalid "Units" request message
+    And I give it all inputs but units
+    Then I see a invalid units request message
     Examples:
       | role  |
       | pcv   |
@@ -74,14 +66,16 @@ Feature: Place a Request
 #ERROR/BAD VALUES
 
   Scenario Outline: User gives a bad Quantity value. - I (invalid/non-numbers qty)
+    When I place a request
     And I give it all inputs with non-number "Quantity"
-    Then I see a nonnumber "Quantity" request message
+    Then I see a nonnumber quantity request message
     Examples:
       | role  |
       | pcv   |
       | pcmo  |
       | admin |
 
+#FIXME:  Scenario Outline: User does not give a location (AL: Appears to have a default value)
 #FIXME: Scenario: User gives a bad location value. (AL: not validation)
 #FIXME: Scenario: User gives a bad units value. - H (invalid unit) (AL: not validation)
 
