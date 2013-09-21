@@ -4,6 +4,9 @@ Feature: Place a Request
   Should be able to submit a request for replacement medical supplies
 
   Background:
+    Given that the following supplies exist:
+      | shortcode | name  |
+      | gz        | Gauze |
     Given the default user exists
     Given I am an "<role>"
     And I am not logged in
