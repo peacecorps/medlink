@@ -24,8 +24,8 @@ Feature: Place a Request
 #----------------------------------------------------------------------
   Scenario Outline: User successfully requests medical supplies (P9 tag)
     When I place a request
-#FIXME    And I give it all the valid inputs
-#FIXME    Then I see a successful request message
+    And I give it all the valid inputs
+    Then I see a successful request message
     Examples:
       | role  |
       | pcv   |
