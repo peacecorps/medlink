@@ -4,43 +4,43 @@ else
     NORMAL="no"
 fi
 
-echo "FILES with TODO TAG ........................................"
+echo "* #FILES with TODO TAG ........................................"
 if [ "X${NORMAL}X" == "XyesX" ] ; then
-    find . -type f -exec grep -l "TODO" {} \; |egrep -v "chk|cache/|git/" | sed -e "s,^,   ,"
+    find . -type f -exec grep -l "TODO" {} \; |egrep -v "chk|cache/|git/" | sed -e "s,^,  * ,"
 else
-    git grep TODO | sed -e "s,^,   ,"
+    git grep TODO | sed -e "s,^,  * ,"
 fi
 
-echo "FILES with FIXME TAG ........................................"
+echo "* #FILES with FIXME TAG ........................................"
 if [ "X${NORMAL}X" == "XyesX" ] ; then
-    find . -type f -exec grep -l "FIXME" {} \; |egrep -v "chk|cache/|log/|git/" | sed -e "s,^,   ,"
+    find . -type f -exec grep -l "FIXME" {} \; |egrep -v "chk|cache/|log/|git/" | sed -e "s,^,  * ,"
 else
-    git grep FIXME | sed -e "s,^,   ,"
+    git grep FIXME | sed -e "s,^,  * ,"
 fi
 
-echo "FILES with @wip TAG ........................................"
+echo "* #FILES with @wip TAG ........................................"
 if [ "X${NORMAL}X" == "XyesX" ] ; then
-    find . -type f -exec grep -l "@wip" {} \; |egrep -v "chk|cache/|log/|git/" | sed -e "s,^,   ,"
+    find . -type f -exec grep -l "@wip" {} \; |egrep -v "chk|cache/|log/|git/" | sed -e "s,^,  * ,"
 else
-    git grep '@wip' | sed -e "s,^,   ,"
+    git grep '@wip' | sed -e "s,^,  * ,"
 fi
 
-echo "_HID FILES ........................................"
-find . -type f -name "*_HID" | sed -e "s,^,   ,"
+echo "* #_HID FILES ........................................"
+find . -type f -name "*_HID" | sed -e "s,^,  * ,"
 
-echo "FILE with #U# TAG:"
+echo "* #FILE with #U# TAG:"
 if [ "X${NORMAL}X" == "XyesX" ] ; then
-    find . -type f -exec grep -l "#U#" {} \; |egrep -v "chk|HID|git/" | sed -e "s,^,   ,"
+    find . -type f -exec grep -l "#U#" {} \; |egrep -v "chk|HID|git/" | sed -e "s,^,  * ,"
 else
-    git grep '#U#' | sed -e "s,^,   ,"
+    git grep '#U#' | sed -e "s,^,  * ,"
 fi
 
-echo "~ FILES ........................................"
-find . -type f -name "*~" | sed -e "s,^,   ,"
+echo "* #~ FILES ........................................"
+find . -type f -name "*~" | sed -e "s,^,  * ,"
 
-echo "-old FILES ........................................"
-find . -type f -name "*-old" | sed -e "s,^,   ,"
+echo "* #-old FILES ........................................"
+find . -type f -name "*-old" | sed -e "s,^,  * ,"
 
-echo "GITHUB BRANCHES ........................................"
-egrep "git:|:git|hub:" Gemfile |egrep -v "#" | sed -e "s,^,   ,"
+echo "* #GITHUB BRANCHES ........................................"
+egrep "git:|:git|hub:" Gemfile |egrep -v "#" | sed -e "s,^,  * ,"
 

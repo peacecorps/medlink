@@ -15,11 +15,15 @@ class OrdersController < ApplicationController
   end
 
   def create
-#FIXME: Missing post-"Place a Request" Submit button.
     @order = current_user.orders.new create_params
     if @order.save
-      # Tag P6
-      redirect_to orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name} #{@order.user.last_name} has been sent."
+      if current_user.try(:pcv?)
+        # Tag P6
+        redirect_to another_orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name} #{@order.user.last_name} has been sent."
+      else # PCMO or ADMIN
+        # Tag P6
+        redirect_to orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name} #{@order.user.last_name} has been sent."
+      end
     else
       render :new
     end
@@ -45,7 +49,7 @@ class OrdersController < ApplicationController
     @order.update_attributes update_params.merge(responded_at: Time.now)
     @order.send_instructions!
     # Tag P6
-    redirect_to orders_path, notice: "Success! Your response has been sent to #{@order.user.first_name} #{@order.user.last_name} #{@order.user.pcv_id}. This request will now appear in the response tracker awaiting fullment."
+    redirect_to manage_orders_path, notice: "Success! Your response has been sent to #{@order.user.first_name} #{@order.user.last_name} #{@order.user.pcv_id}. This request will now appear in the response tracker awaiting fullment."
   end
 
   private # -----
