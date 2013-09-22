@@ -15,7 +15,7 @@
       %th Request
   %tbody
     - @orders.each do |order|
-      - next if order.fulfilled?
+      - next if order.responded?
       - next if 3.business_days.before(Time.now).strftime("%s").to_i < (order.created_at.strftime("%s").to_i + (24*60*60))
       %tr(data-link="#{edit_order_path order}")
         %td= order.user.pcv_id
@@ -45,7 +45,7 @@
       %th Request
   %tbody
     - @orders.each do |order|
-      - next if order.fulfilled?
+      - next if order.responded?
       - next if 3.business_days.before(Time.now).strftime("%s").to_i >= (order.created_at.strftime("%s").to_i + (24*60*60))
       %tr(data-link="#{edit_order_path order}")
         %td= order.user.pcv_id
@@ -78,7 +78,7 @@
       %th Received
   %tbody
     - @orders.each do |order|
-      - next unless order.fulfilled?
+      - next unless order.responded?
       %tr(data-link="#{edit_order_path order}")
         %td= order.user.pcv_id
         %td= order.user.first_name
@@ -94,9 +94,9 @@
         - if order.responded?
           %td= order.responded_at.strftime '%-m/%-d/%y'
         - else
-          %td NIL
+          %td ___
         - if order.fulfilled?
           %td= order.fulfilled_at.strftime '%-m/%-d/%y'
         - else
-          %td NIL
-        %td
+          %td ___
+        %td ___
