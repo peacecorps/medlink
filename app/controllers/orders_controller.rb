@@ -17,14 +17,12 @@ class OrdersController < ApplicationController
   def create
     @order = current_user.orders.new create_params
     if @order.save
-      if current_user.try(:pcv?)
-        # Tag P6
-#FIXME: Need to add "Another Supply" web page.
-        redirect_to orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name.humanize} #{@order.user.last_name.humanize} has been sent."
-      else # PCMO or ADMIN
-        # Tag P6
-        redirect_to orders_path, notice: "Success! The Order you placed on behalf of #{@order.user.first_name.humanize} #{@order.user.last_name.humanize} has been sent."
-      end
+      #FIXME: Need to add "Another Supply" web page. -- current_user.try(:pcv?)
+      # Tag P6
+      redirect_to orders_path,
+        notice: "Success! The Order you placed on behalf of " +
+          "#{@order.user.first_name.humanize} " +
+          "#{@order.user.last_name.humanize} has been sent."
     else
       render :new
     end
@@ -45,12 +43,16 @@ class OrdersController < ApplicationController
 
   def update
     # FIXME: limit to admins
-    # FIXME: currently, this *can't* fail any validations. Should we check for instructions here?
+    # FIXME: currently, this *can't* fail any validations. Should we
+    # check for instructions here?
     # FIXME: should we always send instructions on an update?
     @order.update_attributes update_params.merge(responded_at: Time.now)
     @order.send_instructions!
     # Tag P6
-    redirect_to manage_orders_path, notice: "Success! Your response has been sent to #{@order.user.first_name} #{@order.user.last_name} #{@order.user.pcv_id}. This request will now appear in the response tracker awaiting fullment."
+    redirect_to manage_orders_path, notice: "Success! Your response " +
+      "has been sent to #{@order.user.first_name} #{@order.user.last_name} " +
+      "#{@order.user.pcv_id}. This request will now appear in the " +
+      "response tracker awaiting fullment."
   end
 
   private # -----

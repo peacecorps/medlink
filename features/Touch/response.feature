@@ -20,14 +20,14 @@ Feature: Visit Response Web Pages
       | ted       | 2      | Quirm     |
       | jennie    | 3      | Quirm     |
       | tink      | 4      | Neverland |
-    And that the following orders have been made 
+    And that the following orders have been made
       | pcv | supply | quantity |
       | 1   | BAC    | 10       |
       | 1   | GEC    | 7        |
       | 2   | BAC    | 9        |
       | 2   | MEL    | 3        |
       | 3   | BAC    | 11       |
-      | 3   | CHO    | 8        | 
+      | 3   | CHO    | 8        |
       | 4   | GEC    | 56       |
 
   Scenario: Check stuff on PCMO Response page

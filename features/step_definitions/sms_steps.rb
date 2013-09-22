@@ -37,10 +37,10 @@ Then(/^I see a invalid supply sms request message$/) do
     "PCVID, Supply short name, ,dose, qty, location."
 end
 
-#H 
+#H
 Then(/^I see a invalid dose sms request message$/) do
   onev = "Dose"
-  twov = "dose" 
+  twov = "dose"
   page.should have_selector ".alert", text: "#{onev} invalid: " +
     "Your request was not submitted because #{twov} was incorrect. " +
     "Please resubmit the request in this format: " +

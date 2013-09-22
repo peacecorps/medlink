@@ -17,7 +17,7 @@ describe OrdersController do
     before(:each) { FactoryGirl.create(:supply, shortcode: 'CODE') }
     it "redirects on creation" do
       post 'create', order: {
-        user_id: current_user.id, supply_id: Supply.last.id, 
+        user_id: current_user.id, supply_id: Supply.last.id,
         location: 'Roswell', unit: '20', quantity: 20 }
       expect( response ).to be_redirection
     end
@@ -33,7 +33,8 @@ describe OrdersController do
     before(:each) { FactoryGirl.create(:supply, shortcode: 'CODE') }
     it "returns http success" do
       order = { user_id: current_user.id,
-        supply_id: Supply.last.id, unit: '5', quantity: 5, location: 'Sandy Springs' }
+        supply_id: Supply.last.id, unit: '5', quantity: 5,
+        location: 'Sandy Springs' }
       post 'create', order: order
 
       order = Order.last

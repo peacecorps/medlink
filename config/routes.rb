@@ -7,7 +7,7 @@ Medlink::Application.routes.draw do
       get r, on: :collection
     end
   end
-  
+
   resources :orders do
     get :manage, on: :collection
   end

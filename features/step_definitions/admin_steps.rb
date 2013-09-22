@@ -61,7 +61,7 @@ end
 
 Then(/^I should see a (\w+) error message$/) do |type|
   #WAS: expect( page ).to have_css(".error", text: type)
-  if type == "required"    
+  if type == "required"
     expect( page ).to have_content("can't be blank")
     expect( page ).to have_content("prohibited this user from being submitted:")
   end

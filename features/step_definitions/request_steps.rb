@@ -1,5 +1,5 @@
 def select_supply(supply = "Gauze")
-  select supply, from: "order_supply_id" 
+  select supply, from: "order_supply_id"
 end
 
 When(/^I place a request$/) do
@@ -89,7 +89,7 @@ Then(/^I see a nonnumber quantity request message$/) do
   page.should have_content "Quantity is not a number"
 end
 
-Then(/^I see an invalid "(.*?)" request message$/) do |field| 
+Then(/^I see an invalid "(.*?)" request message$/) do |field|
   page.should have_content "#{field} is missing"
 end
 

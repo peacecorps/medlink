@@ -11,7 +11,7 @@ Feature: Authorization control
     Then  I should not be asked to authenticate with the right credentials
 
     Examples:
-      | role  | authorized_page   | 
+      | role  | authorized_page   |
       | admin | add user          |
       | admin | edit user         |
 
@@ -29,7 +29,7 @@ Feature: Authorization control
     Then  I should be asked to authenticate with the right credentials
 
     Examples:
-      | role | unauthorized_page | 
+      | role | unauthorized_page |
       | user | add user          |
       | user | admin edit        |
       | user | response          |

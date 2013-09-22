@@ -31,7 +31,7 @@ Feature: Reports
     Examples:
       | user  | report                |
 
-      | pcv   | Supply Requests       | 
+      | pcv   | Supply Requests       |
       | pcv   | Fulfillment History   |
       | pcv   | Request History       |
 
@@ -39,7 +39,7 @@ Feature: Reports
       | pcmo  | Fulfillment History   |
       | pcmo  | Request History       |
 
-      | admin | Supply Requests       | 
+      | admin | Supply Requests       |
       | admin | Fulfillment History   |
       | admin | Request History       |
       | admin | Recently Added Users  |

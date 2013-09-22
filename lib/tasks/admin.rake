@@ -1,5 +1,5 @@
 namespace :admin do
-  
+
   desc "Creates an admin user from your git config (password optional)"
   task :create, [:password] => :environment do |_, args|
 

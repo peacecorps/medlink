@@ -6,7 +6,7 @@ describe ReportsController do
     pending 'Add specs for GET reports'
   end
 
-=begin  
+=begin
   describe "GET 'reports'" do
     it 'displays a template' do
       rslt = ReportsController.request_history

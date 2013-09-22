@@ -28,7 +28,7 @@ module NavigationHelpers
     when /the response page/
       edit_order_path 1
     when /the reports page/
-      reports_path 
+      reports_path
     when /the add user page/
       new_admin_user_path
     when /the edit user page/

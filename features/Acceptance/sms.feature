@@ -98,7 +98,7 @@ Feature: SMS
 #......................................................................
 #OTHER
 # TODO: P4(suggorate request), M4 (EMAIL TEXT that goes with P2...)
-# TODO/SMS(i guess): 
+# TODO/SMS(i guess):
 # L (bad pw)
 # TODO: M1 ("EMAIL TEXT that goes with sms message RE1 thru RE4 (msg redundancy)
 

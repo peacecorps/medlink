@@ -13,8 +13,10 @@ describe User do
     describe "for non-admin users" do
       subject { FactoryGirl.create(:user) }
       before do
-        @unowned_orders = FactoryGirl.create_list(:order, 10, location: 'Unowned Loc')
-        @orders = FactoryGirl.create_list(:order, 10, user_id: subject.id, location: 'orders Loc')
+        @unowned_orders = FactoryGirl.create_list(:order, 10,
+          location: 'Unowned Loc')
+        @orders = FactoryGirl.create_list(:order, 10,
+          user_id: subject.id, location: 'orders Loc')
       end
       it 'should only show their own orders' do
         owned_ids = @orders.map(&:id).uniq.sort

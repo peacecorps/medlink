@@ -3,7 +3,7 @@
 def create_visitor
   email    = "joe.doe@gmail.com"
   password = "please123"
-  @visitor ||= { :first_name => "Joe", :last_name => "Doe", 
+  @visitor ||= { :first_name => "Joe", :last_name => "Doe",
     :email => email,
     :password => password, :password_confirmation => password }
 end
@@ -13,7 +13,7 @@ def create_user role: :user, name: "joe", country: nil
   password = "please123"
   pcv_id = Random.new.rand(10000000..99999999).to_s
   user_country = country || FactoryGirl.create(:country)
-  @user = FactoryGirl.create(role.to_sym, 
+  @user = FactoryGirl.create(role.to_sym,
     :email => email, :password => password, :password_confirmation => password,
     :country => user_country, :city => "Roswell",
     :first_name => name, :last_name => "Doe", :pcv_id => pcv_id)

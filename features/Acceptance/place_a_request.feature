@@ -1,4 +1,4 @@
-Feature: Place a Request 
+Feature: Place a Request
   In order to have medical supplies during the whole deployment
   A user
   Should be able to submit a request for replacement medical supplies
@@ -6,7 +6,7 @@ Feature: Place a Request
   Background:
     Given that the following supplies exist:
       | shortcode | name  |
-      | gz        | Gauze | 
+      | gz        | Gauze |
     Given the default user exists
     Given I am an "<role>"
     And I am not logged in

@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  
+
   before_action :verify_access
 
   def index
@@ -27,14 +27,16 @@ class ReportsController < ApplicationController
   end
 
   def supply_history
-    @orders = Order.order("supplies.name").joins(:supply).select("orders.*, supplies.name as supply_name")
+    @orders = Order.order("supplies.name").joins(:supply).select(
+      "orders.*, supplies.name as supply_name")
   end
 
   private
 
   def verify_access
     unless current_user.try( :pcmo? ) || current_user.try( :admin? )
-      redirect_to root_url, notice: 'You must be an pcmo or admin to view that page'
+      redirect_to root_url,
+        notice: 'You must be an pcmo or admin to view that page'
     end
   end
 

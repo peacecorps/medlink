@@ -1,6 +1,6 @@
 Feature: Request Manager
   In order to have medical supplies during the whole deployment
-  A PCMO or Admin 
+  A PCMO or Admin
   Should be able to manager the requests of replacement medical supplies
 
   Scenario Outline: Basic Page Behavior
