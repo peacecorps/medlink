@@ -92,8 +92,11 @@
           %span= order.created_at.strftime '%-m/%-d/%y'
           %small.cell--secondary= order.created_at.strftime '%H:%M'
         - if order.responded?
-          %td= order.responded.strftime '%-m/%-d/%y'
+          %td= order.responded_at.strftime '%-m/%-d/%y'
         - else
-          %td
-        %td
+          %td NIL
+        - if order.fulfilled?
+          %td= order.fulfilled_at.strftime '%-m/%-d/%y'
+        - else
+          %td NIL
         %td

@@ -9,9 +9,16 @@ Given(/^that the following supplies exist:$/) do |supplies|
 end
 
 Given(/^that the following orders have been made$/) do |orders|
+  i = 0
   orders.hashes.each do |order|
-    FactoryGirl.create :order, user: User.find(order['pcv']), supply: Supply.lookup(order['supply']), location: User.find(order['pcv']).location
+    FactoryGirl.create :order, user: User.find(order['pcv']),
+      supply: Supply.lookup(order['supply']),
+      location: User.find(order['pcv']).location,
+      created_at: i.business_days.before(Time.now)
+    i = i + 1
   end
+
+  # TODO: Add one to "Response Tracker" table. Set "responded_at: Time.now"
 end
 
 Given(/^that the following pcmos exist:$/) do |pcmos|

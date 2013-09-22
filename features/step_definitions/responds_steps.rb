@@ -17,11 +17,20 @@ end
 Then(/^I should see the response date and PCMO id on the request$/) do
   visit('orders/manage')
   pending #FIXME: manage_orders page does not have order
-
 end
 
 Then(/^I should have (\d+) pending orders to process$/) do |expected_orders|
   pending_orders_in_table = page.all('table#pending-orders tr').count - 1
+  pending_orders_in_table.should == expected_orders.to_i
+end
+
+Then(/^I should have (\d+) past due orders to process$/) do |expected_orders|
+  pending_orders_in_table = page.all('table#past-due-orders tr').count - 1
+  pending_orders_in_table.should == expected_orders.to_i
+end
+
+Then(/^I should have (\d+) response tracker orders$/) do |expected_orders|
+  pending_orders_in_table = page.all('table#responded-orders tr').count - 1
   pending_orders_in_table.should == expected_orders.to_i
 end
 

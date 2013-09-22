@@ -39,7 +39,9 @@ Feature: Response_to_order Feature
     When I go to the start page
 
   Scenario: View my requests
-    Then I should have 6 pending orders to process
+    Then I should have 4 pending orders to process
+    Then I should have 2 past due orders to process
+    Then I should have 0 response tracker orders
 
 #......................................................................
   @wip
