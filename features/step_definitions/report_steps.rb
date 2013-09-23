@@ -15,3 +15,7 @@ Then(/^I got the correct "(.*?)" output$/) do |arg1|
   #FIXME: pending
   # 1. Check the output file (# of columns, etc)
 end
+
+Then(/^I am finished$/) do
+  pending # express the regexp above with the code you wish you had
+end
