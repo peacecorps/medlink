@@ -31,14 +31,13 @@ end
 
 Then(/^I should be asked to authenticate with the right credentials$/) do
 
-  # ask for credential, unable to distinguish between pcmo and admin due to redirection
+  # Ask for credential, unable to distinguish between pcmo and admin due to redirection
   page.should have_content 'You must be an'
 
 end
 
-Then(/^I should not be asked to authenticate with the right crendentials$/) do
+Then(/^I should not be asked to authenticate with the right credentials$/) do
 
-  # shouldn't ask for credential
+  # Shouldn't ask for credential
   page.should have_no_content 'You must be an'
-
 end
