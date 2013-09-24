@@ -17,7 +17,7 @@ gem 'business_time'
 
 group :assets do
   gem 'sass-rails'
-  gem 'compass-rails', github: 'milgner/compass-rails', branch: 'rails4'
+  gem 'compass'
   gem 'coffee-rails'
   gem 'haml'
   gem 'uglifier'
