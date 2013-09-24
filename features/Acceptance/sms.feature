@@ -1,4 +1,4 @@
-@wip
+#@wip
 Feature: SMS
   In order to have medical supplies during the whole deployment
   A user
@@ -6,15 +6,15 @@ Feature: SMS
 
   Background:
     Given the default user exists
-    Given I am an "<role>"
-    When I send a sms request
 
 #----------------------------------------------------------------------
 @wip
   Scenario Outline: User successfully requests medical supplies (P5 tag)
-  And I give it all the valid sms inputs
+    Given I am an "<role>"
+    When I send a sms request
+  
+    And I give it all the valid sms inputs
     Then I see a successful sms request message
-
     Examples:
       | role  |
       | pcv   |
@@ -30,6 +30,9 @@ Feature: SMS
 #......................................................................
 @wip
   Scenario Outline: Users does not give "Select Supply" value - G (invalid supply)
+    Given I am an "<role>"
+    When I send a sms request
+  
     And I give it all sms inputs but "Select Supply"
     Then I see a invalid supply sms request message
     Examples:
@@ -41,6 +44,9 @@ Feature: SMS
 #......................................................................
 @wip
   Scenario Outline: User does not give a location value - J  (invalid location)
+    Given I am an "<role>"
+    When I send a sms request
+  
     And I give it all sms inputs but "location"
     Then I see a invalid Location sms request message
     Examples:
@@ -52,6 +58,9 @@ Feature: SMS
 #......................................................................
 @wip
   Scenario Outline: User does not give a Qty value - I (invalid qty)
+    Given I am an "<role>"
+    When I send a sms request
+  
     And I give it all sms inputs but "qty"
     Then I see a invalid Qty sms request message
     Examples:
@@ -63,6 +72,9 @@ Feature: SMS
 #......................................................................
 @wip
   Scenario Outline: User does not give a Dose value -- H (invalid dose)
+    Given I am an "<role>"
+    When I send a sms request
+  
     And I give it all inputs but "dose"
     Then I see a invalid dose sms request message
     Examples:
@@ -74,6 +86,9 @@ Feature: SMS
 #......................................................................
 @wip
   Scenario Outline: User does not give a PCVID value -- F (bad pcvid)
+    Given I am an "<role>"
+    When I send a sms request
+  
     And I give it all inputs but "bad pcvid"
     Then I see a bad PCVID sms request message
     Examples:
@@ -84,6 +99,9 @@ Feature: SMS
 
 @wip
   Scenario Outline: User gives a bad Quantity value - I (invalid/non-numbers qty)
+    Given I am an "<role>"
+    When I send a sms request
+  
     And I give it all sms inputs but "invalid Qty"
     Then I see a nonnumber Qty sms request message
     Examples:

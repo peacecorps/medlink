@@ -17,9 +17,17 @@ class OrdersController < ApplicationController
   def create
     @order = current_user.orders.new create_params
     if @order.save
-      #FIXME: Need to add "Another Supply" web page. -- current_user.try(:pcv?)
+      nextpage = orders_path
+      if current_user.try(:admin?)
+        nextpage = new_admin_user_path
+      elsif current_user.try(:pcmo?)
+        nextpage = manage_orders_path
+      else # current_user.try(:pcv?)
+        #FIXME: Need to add "Another Supply" web page. -- current_user.try(:pcv?)
+        nextpage = orders_path
+      end
       # Tag P6
-      redirect_to orders_path,
+      redirect_to nextpage,
         notice: "Success! The Order you placed on behalf of " +
           "#{@order.user.first_name.humanize} " +
           "#{@order.user.last_name.humanize} has been sent."

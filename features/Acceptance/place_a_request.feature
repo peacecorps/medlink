@@ -5,35 +5,43 @@ Feature: Place a Request
 
   Background:
     Given that the following supplies exist:
-      | shortcode | name  |
-      | gz        | Gauze |
+      | shortcode | name  | location  |
+      | gz        | Gauze | doraville |
     Given the default user exists
+
+#----------------------------------------------------------------------
+  Scenario Outline: User successfully requests medical supplies (P9 tag)
     Given I am an "<role>"
     And I am not logged in
     When I sign in with valid credentials
     Then I see a successful sign in message
-    When I place a request
 
-#......................................................................
-  Scenario Outline: Users does not give "Select Supply" value - G (invalid supply)
-    When I give it all inputs but "Select Supply"
-    Then I see a invalid supply request message
-    Examples:
-      | role  |
-      | pcv   |
-      | pcmo  |
-      | admin |
-
-#----------------------------------------------------------------------
-  Scenario Outline: User successfully requests medical supplies (P9 tag)
     When I place a request
     And I give it all the valid inputs
     Then I see a successful request message
+    And I stay on <afterpage> page
     Examples:
-      | role  |
-      | pcv   |
-      | pcmo  |
-      | admin |
+      | role  | afterpage       |
+      | pcv   | Request Form    |
+      | pcmo  | Request Manager |
+      | admin | Admin Home      |
+
+#......................................................................
+  Scenario Outline: Users does not give "Select Supply" value - G (invalid supply)
+    Given I am an "<role>"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
+
+    When I place a request
+    When I give it all inputs but "Select Supply"
+    Then I see a invalid supply request message
+    And I stay on <afterpage> page
+    Examples:
+      | role  | afterpage       |
+      | pcv   | Request Form    |
+      | pcmo  | Place a Request |
+      | admin | Place a Request |
 
 #......................................................................
 #ERRORS
@@ -42,40 +50,58 @@ Feature: Place a Request
 
 #......................................................................
   Scenario Outline: User does not give a Quantity - I (invalid qty)
+    Given I am an "<role>"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
+
     When I place a request
     And I give it all inputs but quantity
     Then I see a invalid quantity request message
+    And I stay on <afterpage> page
     Examples:
-      | role  |
-      | pcv   |
-      | pcmo  |
-      | admin |
+      | role  | afterpage       |
+      | pcv   | Request Form    |
+      | pcmo  | Place a Request |
+      | admin | Place a Request |
 
 #......................................................................
   Scenario Outline: User does not give a Units -- H (invalid unit)
+    Given I am an "<role>"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
+
     When I place a request
     And I give it all inputs but units
     Then I see a invalid units request message
+    And I stay on <afterpage> page
     Examples:
-      | role  |
-      | pcv   |
-      | pcmo  |
-      | admin |
+      | role  | afterpage       |
+      | pcv   | Request Form    |
+      | pcmo  | Place a Request |
+      | admin | Place a Request |
 
 #......................................................................
 #ERROR/BAD VALUES
 
   Scenario Outline: User gives a bad Quantity value. - I (invalid/non-numbers qty)
+    Given I am an "<role>"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
+
     When I place a request
     And I give it all inputs with non-number "Quantity"
     Then I see a nonnumber quantity request message
+    And I stay on <afterpage> page
     Examples:
-      | role  |
-      | pcv   |
-      | pcmo  |
-      | admin |
+      | role  | afterpage       |
+      | pcv   | Request Form    |
+      | pcmo  | Place a Request |
+      | admin | Place a Request |
 
-#FIXME:  Scenario Outline: User does not give a location (AL: Appears to have a default value)
+#FIXME: Scenario Outline: User does not give a location (AL: Appears to have a default value)
 #FIXME: Scenario: User gives a bad location value. (AL: not validation)
 #FIXME: Scenario: User gives a bad units value. - H (invalid unit) (AL: not validation)
 

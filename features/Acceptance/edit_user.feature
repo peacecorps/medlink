@@ -31,7 +31,6 @@ Feature: Edit User
     And  I change <field> to <value>
     And  I click "Edit"
     Then I should see a <message> error message
-
     Examples:
       | field           | value   | message  |
       | user_first_name |         | required |

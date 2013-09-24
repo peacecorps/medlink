@@ -26,7 +26,7 @@ Feature: Reports
     When I create a "<report>" report
     Then I see a successful file download dialog
     And I got the correct "<report>" output
-    Then I am finished
+    Then I stay on reports page
 
     Examples:
       | user  | report                |

@@ -14,8 +14,9 @@ end
 Then(/^I got the correct "(.*?)" output$/) do |arg1|
   #FIXME: pending
   # 1. Check the output file (# of columns, etc)
+  visit '/reports'
 end
 
-Then(/^I am finished$/) do
-  pending # express the regexp above with the code you wish you had
+Then(/^I stay on reports page$/) do
+  expect(current_url).to eq("http://www.example.com/reports")
 end
