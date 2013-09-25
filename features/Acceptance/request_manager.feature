@@ -10,6 +10,7 @@ Feature: Request Manager
     When I sign in with valid credentials
     Then I see a successful sign in message
     When I go to the request_manager page
+#TODO: Select from "Select Country" dropdown menu for Admin.
     Examples:
       | role  |
       | pcv   |

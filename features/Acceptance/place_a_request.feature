@@ -18,6 +18,7 @@ Feature: Place a Request
 
     When I place a request
     And I give it all the valid inputs
+# TODO: Select from "Select Volunteer to request for" dropdown menu for PCMO and ADMIN.
     Then I see a successful request message
     And I stay on <afterpage> page
     Examples:

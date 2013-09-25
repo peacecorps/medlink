@@ -1,4 +1,3 @@
-#@wip
 Feature: SMS
   In order to have medical supplies during the whole deployment
   A user

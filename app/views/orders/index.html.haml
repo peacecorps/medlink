@@ -1,6 +1,13 @@
 %h2 Request History
 %table(class="table.table--bordered.table--striped.table--linked" id="orders")
   %thead
+    - if current_user.try(:pcmo?) || current_user.try(:admin?)
+      %select{ :name => "Previous Month" }
+        %option{:value => 1}= "Current Month"
+        %option{:value => 2}= "Previous Month"
+        %option{:value => 3}= "Last 3 Months"
+        %option{:value => 4}= "Last 6 Months"
+        %option{:value => 5}= "1 year"
     %tr
       %th First Name
       %th Last Name

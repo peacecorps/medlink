@@ -1,5 +1,15 @@
 %h2 Request Manager
 
+- if current_user.try(:admin?)
+  %select{ :name => "Select Country" }
+    %option{:value => 0}= "Select Country"
+    %option{:value => 1}= "Country 1"
+    %option{:value => 2}= "Country 2"
+    %option{:value => 3}= "Country 3"
+    %option{:value => 4}= "Country 4"
+    %option{:value => 5}= "Country 5"
+  %hr
+
 %h3 Past Due Requests
 
 %table(class="table.table--bordered.table--striped.table--linked" id="past-due-orders")

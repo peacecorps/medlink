@@ -18,6 +18,7 @@ Feature: Edit User
 # Tag P8
 #......................................................................
   Scenario: successfully editng a user
+#TODO: Select from "Select Volunteer to edit" dropdown menu for Admin.
     When I choose a "Peace Corps Medical Officer" role
     When I choose the country "Chad"
     And  I choose a "Peace Corps Volunteer" role
