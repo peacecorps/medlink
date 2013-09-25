@@ -39,13 +39,9 @@ Feature: Visit "Request History" Web Page
     Then I should see std gear area items
     Then I should see std icon area items
 
-    Then I should see column "First Name"
-    Then I should see column "Last Name"
-    Then I should see column "PCVID"
     Then I should see column "Supply"
     Then I should see column "Unit"
     Then I should see column "Quantity"
-    Then I should see column "Location"
     Then I should see column "Requested"
     Then I should see column "Response"
-    Then I should see column "Fulfilled"
+
