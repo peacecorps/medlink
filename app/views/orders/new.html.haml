@@ -9,13 +9,7 @@
   .form__section
     .input-group
       - if current_user.try(:pcmo?) || current_user.try(:admin?)
-        %select{ :name => "Select Volunteer to request for" }
-          %option{:value => 0}= "Select Volunteer to request for"
-          %option{:value => 1}= "Volunteer 1"
-          %option{:value => 2}= "Volunteer 2"
-          %option{:value => 3}= "Volunteer 3"
-          %option{:value => 4}= "Volunteer 4"
-          %option{:value => 5}= "Volunteer 5"
+        = select(:user, :id, User.where(:role => "pcv").collect { |userx| [userx.name, userx.id] }, {:prompt => "Select Volunteer to request for" })
       - else
         %span= current_user.name
         %small= current_user.pcv_id
