@@ -83,7 +83,7 @@
   %tbody
     - @orders.each do |order|
       - next unless order.responded?
-      %tr(data-link="#{edit_order_path order}")
+      %tr
         %td= order.user.pcv_id
         %td= order.user.first_name
         %td= order.user.last_name
