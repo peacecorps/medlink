@@ -98,9 +98,12 @@
         - if order.responded?
           %td= order.responded_at.strftime '%-m/%-d/%y'
         - else
-          %td ___
+          %td
+            = date_field :order, :responded_at, size: 10
         - if order.fulfilled?
           %td= order.fulfilled_at.strftime '%-m/%-d/%y'
         - else
-          %td ___
-        %td ___
+          %td
+            = date_field :order, :fulfilled_at, size: 10
+        %td 
+          = date_field :order, :received_at, size: 10
