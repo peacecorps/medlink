@@ -34,4 +34,4 @@
 
 coverage
 libpeerconnection.log
-
+/sandi_meter/*

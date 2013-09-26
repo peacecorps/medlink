@@ -42,6 +42,8 @@ $ localtunnel 3000  # Assuming your development server is running on port 3000
 
 and point your Twilio request URL at the address it specifies (http://something.localtunnel.com).
 
+If you would like to see the **#TODO's/#FIXME's/etc,** then run "./bin/chk" or "./bin/chk more" bash scripts from the top project directory.
+
 ## Contributors
 
 Special thanks to the consulting Peace Corp members, without whom none of this would be possible:
