@@ -22,7 +22,6 @@ Feature: Authorization control
       | pcmo  | reports           |
 
 #......................................................................
-@wip
   Scenario Outline: Unauthorized Page Functionality
     Given I am logged in as a <role>
     When  I go to the <unauthorized_page> page
@@ -30,10 +29,11 @@ Feature: Authorization control
 
     Examples:
       | role | unauthorized_page |
-      | user | add user          |
-      | user | admin edit        |
-      | user | response          |
-      | user | reports           |
-
       | pcmo | add user          |
-      | pcmo | admin edit        |
+      | pcmo | edit user         |
+
+      | user | add user          |
+      | user | edit user         |
+      | user | reports           |
+#FIXME      | user | response          |
+
