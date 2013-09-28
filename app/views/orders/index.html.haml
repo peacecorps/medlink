@@ -30,7 +30,7 @@
   %tbody
     - @orders.each do |order|
       - next if order.fulfilled?
-      %tr(data-link="#{edit_order_path order}")
+      %tr
         - if current_user.try(:pcmo?) || current_user.try(:admin?)
           %td= order.user.first_name
           %td= order.user.last_name
