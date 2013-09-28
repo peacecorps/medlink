@@ -44,8 +44,11 @@
           %td
             %span= order.created_at.strftime '%-m/%-d/%y'
             %small.cell--secondary= order.created_at.strftime '%H:%M'
-        %td ___
-        %td ___
-        %td.cell--arrow
-          %i.icon-caret-right
-
+        - if order.responded?
+          %td= order.responded_at.strftime '%-m/%-d/%y'
+        - else
+          %td EMPTY
+        - if order.fulfilled?
+          %td= order.fulfilled_at.strftime '%-m/%-d/%y'
+        - else
+          %td EMPTY
