@@ -1,7 +1,5 @@
 %h1 Edit Account
-- if current_user.try(:admin?)
-  = select(:user, :id, User.where(:role => "pcv").collect { |userx| [userx.name, userx.id] }, {:prompt => "Select Volunteer to edit"})
-
-  %hr
+= select(:user, :id, User.where(:role => "pcv").collect { |userx| [userx.name, userx.id] }, {:prompt => "Select Volunteer to edit"})
+%hr
 
 = render partial: 'form', locals: {user: @user, action: :edit}
