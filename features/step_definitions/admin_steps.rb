@@ -56,7 +56,13 @@ Then(/^I should see a "(.*?)" confirmation$/) do |arg1|
 end
 
 When(/^I change (\w+) to (\w*)$/) do |field, value|
-  fill_in field, with: value
+  if field == "user_country_id"
+    select  value, from: field
+  elsif field == "user_role"
+    select  "Assign Role", from: field
+  else
+    fill_in field, with: value
+  end
 end
 
 Then(/^I should see a (\w+) error message$/) do |type|

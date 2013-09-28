@@ -45,5 +45,5 @@ Feature: Add User
       | user_email      | nope  | invalid  |
       | user_pcv_id     |       | required |
       | user_pcv_id     | 11111 | unique   |
-      #FIXME: | user_country_id |       | required |
-      #FIXME: | user_role       |       | required |
+      | user_country_id | Country | required |
+      | user_role       | Assign_Role | required |
