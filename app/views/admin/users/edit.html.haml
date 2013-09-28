@@ -1,5 +1,5 @@
 %h1 Edit Account
-= select(:user, :id, User.where(:role => "pcv").collect { |userx| [userx.name, userx.id] }, {:prompt => "Select Volunteer to edit"})
+= select(:user, :id, User.where(:role => "pcv").collect { |userx| [userx.name, userx.id] }, { :include_blank => "Select Volunteer to edit" } )
 %hr
 
 = render partial: 'form', locals: {user: @user, action: :edit}
