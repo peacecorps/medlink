@@ -99,11 +99,11 @@
           %td= order.responded_at.strftime '%-m/%-d/%y'
         - else
           %td
-            = date_field :order, :responded_at, size: 10
+            = date_select :order, :responded_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
         - if order.fulfilled?
           %td= order.fulfilled_at.strftime '%-m/%-d/%y'
         - else
           %td
-            = date_field :order, :fulfilled_at, size: 10
+            = date_select :order, :fulfilled_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
         %td 
-          = date_field :order, :received_at, size: 10
+          = date_select :order, :received_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
