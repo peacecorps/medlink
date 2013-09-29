@@ -14,6 +14,8 @@ end
 
 require 'cucumber/rails'
 
+require 'headless'
+
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
 # selectors in your step definitions to use the XPath syntax.
@@ -66,3 +68,15 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 
 # Capybara.default_driver = :selenium
 
+headless = Headless.new
+at_exit do
+  headless.destroy
+end
+
+Before("@selenium,@javascript", "~@no-headless") do
+  headless.start if Capybara.current_driver == :selenium
+end
+
+After("@selenium,@javascript", "~@no-headless") do
+  headless.stop if Capybara.current_driver == :selenium
+end

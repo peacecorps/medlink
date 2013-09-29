@@ -1,8 +1,5 @@
 When(/^I select a "(.*?)" request$/) do |request|
-#DEBUG: puts all("#" + request + "-orders tbody tr")[0].text
   all("#" + request + "-orders tbody tr")[0].click()
-  visit('3/edit') #FIXME: above click problem
-#FIXME: The table row "click" above does not work
 end
 
 Then(/^I should be able to assign one of four actions: "(.*?)"$/) do |action|
@@ -10,13 +7,14 @@ Then(/^I should be able to assign one of four actions: "(.*?)"$/) do |action|
 end
 
 When(/^I save my response$/) do
-  # GOAL: Check value in database.
   click_button('Send Response')
+  save_page("/home/dell/resp_shot")
 end
 
-Then(/^I should see the response date and PCMO id on the request$/) do
-  visit('orders/manage')
-  pending #FIXME: manage_orders page does not have order
+Then(/^I should see the response date and PCMO id "(.*)" on the request$/) do |pcmo_id|
+  # FYI: Month/Day have no-padding.
+  all('table#responded-orders tr td')[8].should have_content( DateTime.now.strftime("%-m/%-d/%y") )
+  all('table#responded-orders tr td')[0].should have_content( pcmo_id )
 end
 
 Then(/^I should have (\d+) pending orders to process$/) do |expected_orders|
