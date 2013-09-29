@@ -2,7 +2,7 @@ class DeliveryMethod
   attr_accessor :name, :title, :text
 
   def initialize name, text, title=nil
-    @name, @text = name, text
+    @name, @text, @title = name, text, title
     @title ||= @name.capitalize
     freeze
   end
