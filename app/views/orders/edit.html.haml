@@ -29,14 +29,14 @@
     .order__extra= @order.extra
 
   = form_for @order, html: {class: 'order__section'} do |f|
-    %h4.order__action Fulfillment Method
+    %h4.order__method Fulfillment Method
     .order__message
       %ul.radio-group
         %ul.list-column
-          - @defaults.each_with_index do |(title, desc), i|
+          - DeliveryMethod.each do |method|
             %li
-              = f.radio_button :action, i, data: {message: desc}
-              %label(for="order_action_#{i}")= title
+              = f.radio_button :delivery_method, method.name, data: {message: method.text}
+              %label(for="order_delivery_method_#{method.name}")= method.title
         Edit Default SMS
         .order__instructions
           = f.text_area :instructions, :size => "40x4"
