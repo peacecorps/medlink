@@ -17,8 +17,8 @@ class DeliveryMethod
     def each
       yield new :delivery, 'Your request is estimated to arrive at your location on this date [enter date here].'
       yield new :pickup, 'Please pick up your request at this [enter location here] by this [enter date]'
-      yield new :purchase, 'We do not have the requested item in stock. Please purchase elsewhere and allow us to reimburse you.'
-      yield new :special, 'Please contact me at this [phone number] concerning your request.'
+      yield new :purchase, 'We do not have the requested item in stock. Please purchase elsewhere and allow us to reimburse you.', 'Purchase & Reimburse'
+      yield new :special, 'Please contact me at this [phone number] concerning your request.', 'Special Instructions'
     end
   end
 end
