@@ -1,4 +1,3 @@
-@javascript
 Feature: Response_to_order Feature
   As a PCMO to the website
   I want to view my pending or past-due request
@@ -38,6 +37,7 @@ Feature: Response_to_order Feature
     Then I should have 0 response tracker orders
 
 #......................................................................
+  @javascript
   Scenario: View my Pending request
     When I select a "pending" request
 
@@ -45,10 +45,12 @@ Feature: Response_to_order Feature
     Then I should be able to assign one of four actions: "Pickup"
     Then I should be able to assign one of four actions: "Purchase & Reimburse"
     Then I should be able to assign one of four actions: "Special Instructions"
+    Then I should be able to assign a special instruction
     When I save my response
     Then I should see the response date and PCMO id "1" on the request
 
 #......................................................................
+  @javascript
   Scenario: View my Past-Due request
     When I select a "past-due" request
 
@@ -56,6 +58,7 @@ Feature: Response_to_order Feature
     Then I should be able to assign one of four actions: "Pickup"
     Then I should be able to assign one of four actions: "Purchase & Reimburse"
     Then I should be able to assign one of four actions: "Special Instructions"
+    Then I should be able to assign a special instruction
     When I save my response
     Then I should see the response date and PCMO id "3" on the request
 
@@ -67,11 +70,30 @@ Feature: Response_to_order Feature
     Then I should see the other PCMO's id on the request
 
 ######################################################################
+# ERRORS
+
+#......................................................................
+  # Tag M (select fulfillment method) (p.8)
+  @javascript
+  Scenario: Missing Delivery_method
+    When I select a "past-due" request
+    When I save my response
+    Then I should see the missing_delivery_method error message
+
+#......................................................................
+  # Tag D (exc. char limit) (p.8)
+  @javascript
+  Scenario: "Special Instructions" exceeds 160 Characer Limit
+    When I select a "past-due" request
+    Then I should be able to assign a special instruction of 170 characters
+    When I save my response
+    Then I should see the exceeds_char_limit error message
+
+######################################################################
 # DESIGN DOC TAGS:
 #R1, R2, R3, R4 (pg.7) - 4 responses (DONE)
 #P6 (success) (p.9) (DONE)
 
 #TODO -- B (missing date), C (missing location) (p.8)
-#TODO -- D (exc. char limit) ,M (select fulfillment method) (p.8)
 #TODO -- M1 (EMAIL TEXT) (p.9)
 

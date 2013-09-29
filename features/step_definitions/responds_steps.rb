@@ -6,6 +6,14 @@ Then(/^I should be able to assign one of four actions: "(.*?)"$/) do |action|
   choose(action)
 end
 
+Then(/^I should be able to assign a special instruction of (\d+) characters$/) do |char_count|
+  fill_in "order_instructions", :with => "a" * char_count.to_i
+end
+
+Then(/^I should be able to assign a special instruction$/) do
+  fill_in "order_instructions", :with => "a" * 160
+end
+
 When(/^I save my response$/) do
   click_button('Send Response')
   save_page("/home/dell/resp_shot")
@@ -30,6 +38,14 @@ end
 Then(/^I should have (\d+) response tracker orders$/) do |expected_orders|
   pending_orders_in_table = page.all('table#responded-orders tr').count - 1
   pending_orders_in_table.should == expected_orders.to_i
+end
+
+Then(/^I should see the missing_delivery_method error message$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see the exceeds_char_limit error message$/) do
+  pending # express the regexp above with the code you wish you had
 end
 
 ######################################################################
