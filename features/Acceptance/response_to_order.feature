@@ -1,14 +1,8 @@
+@javascript
 Feature: Response_to_order Feature
   As a PCMO to the website
   I want to view my pending or past-due request
   So that I can choose what to respond to
-
-# DESIGN DOC TAGS:
-#R1, R2, R3, R4 (pg.7) - 4 responses
-#B (missing date), C (missing location), D (exc. char
-#    limit) ,M (select fulfillment method) (p.8)
-#P6 (success) (p.9)
-#M1 (EMAIL TEXT) (p.9)
 
   Background:
     Given that "Quirm" is a country
@@ -44,7 +38,6 @@ Feature: Response_to_order Feature
     Then I should have 0 response tracker orders
 
 #......................................................................
-  @wip
   Scenario: View my Pending request
     When I select a "pending" request
 
@@ -53,13 +46,9 @@ Feature: Response_to_order Feature
     Then I should be able to assign one of four actions: "Purchase & Reimburse"
     Then I should be able to assign one of four actions: "Special Instructions"
     When I save my response
-    Then I should see the response date and PCMO id on the request
+    Then I should see the response date and PCMO id "1" on the request
 
 #......................................................................
-
-# FIXME: Add Past-Due to cuke test
-
-  @wip
   Scenario: View my Past-Due request
     When I select a "past-due" request
 
@@ -68,42 +57,21 @@ Feature: Response_to_order Feature
     Then I should be able to assign one of four actions: "Purchase & Reimburse"
     Then I should be able to assign one of four actions: "Special Instructions"
     When I save my response
-    Then I should see the response date and PCMO id on the request
+    Then I should see the response date and PCMO id "3" on the request
 
 #......................................................................
-
-# FIXME: Add Past-Due to cuke test
-
   @wip
-  Scenario: View my Responded request
-    When I select a "responded" request
-
-    Then I should be able to assign one of four actions: "Pickup"
-    Then I should be able to assign one of four actions: "Delivery"
-    Then I should be able to assign one of four actions: "Pickup"
-    Then I should be able to assign one of four actions: "Purchase & Reimburse"
-    Then I should be able to assign one of four actions: "Special Instructions"
-    When I save my response
-    Then I should see the response date and PCMO id on the request
-
-#......................................................................
-
-# FIXME: Do not understand this cuke.
-
-  @wip
-  Scenario: Respond to my requests
-    When I select a "pending" request
-    When I select a "past-due" request
-
-    Then I should be able to assign one of four actions: "Delivery"
-    Then I should be able to assign one of four actions: "Pickup"
-    Then I should be able to assign one of four actions: "Purchase & Reimburse"
-    Then I should be able to assign one of four actions: "Special Instructions"
-    When I save my response
-    Then I should see the response date and PCMO id on the request
-
-  @wip
-  Scenario: Duplicate request
+  Scenario: Duplicate request #TODO
     Given I select a request that another PCMO has responded to
     Then I should see a message that the request has been handled
     Then I should see the other PCMO's id on the request
+
+######################################################################
+# DESIGN DOC TAGS:
+#R1, R2, R3, R4 (pg.7) - 4 responses (DONE)
+#P6 (success) (p.9) (DONE)
+
+#TODO -- B (missing date), C (missing location) (p.8)
+#TODO -- D (exc. char limit) ,M (select fulfillment method) (p.8)
+#TODO -- M1 (EMAIL TEXT) (p.9)
+
