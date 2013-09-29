@@ -2,21 +2,21 @@ class Admin::UsersController < AdminController
   before_action :set_user, except: [:new, :create]
 
   def new
-    if u = params[:edit_user]
-      # FIXME: This is a terrible hack to accomodate the edit user
-      #    selection being on the new user (/admin home) page, and
-      #    should be removed once we have a javascripty user
-      #selection mechanism
-      id = u =~ /\((.*)\)/ && $1
-      user = User.where(pcv_id: id).first!
-      redirect_to edit_admin_user_path(user)
-    end
-
     @users = User.all.group_by &:country
     @user  = User.new
   end
 
   def create
+    if u = params[:edit_user]
+      # FIXME: This is a terrible hack to accomodate the edit user
+      #    selection being on the new user (/admin home) page, and
+      #    should be removed once we have a javascripty user
+      #    selection mechanism
+      id = u =~ /\((.*)\)/ && $1
+      user = User.where(pcv_id: id).first!
+      redirect_to edit_admin_user_path(user) and return
+    end
+
     password = 'password' # Devise.friendly_token.first 8
 
     @users = User.all.group_by &:country
