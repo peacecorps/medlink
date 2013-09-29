@@ -32,6 +32,7 @@ group :development do
   gem 'simplecov'
   gem 'coveralls', require: false
   gem 'table_print'
+  gem 'quiet_assets'
 
 end
 
