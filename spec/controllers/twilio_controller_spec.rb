@@ -37,8 +37,9 @@ describe TwilioController do
     it "sends sms but forget PCVID" do
       post :receive, From: number, Body: '      , ASDF, 30mg, 50, Somewhere'
       open_last_text_message_for number
-      current_text_message.should have_body "Your request was not " +
-        "submitted because the PCVID was incorrect. Please resubmit " +
+      # SE1 (p.7)
+      current_text_message.should have_body "PCVID Invalid: Your request was " +
+        "not submitted because the PCVID was incorrect. Please resubmit " +
         "your request in this format: PCVID, Supply short name, dose, " +
         "qty, location."
     end
@@ -46,20 +47,36 @@ describe TwilioController do
     it "sends sms but forget supply shortcode" do
       post :receive, From: number, Body: '123456,     , 30mg, 50, Somewhere'
       open_last_text_message_for number
-      current_text_message.should have_body "Your request was not " +
-        "submitted because supply name was incorrect. Please resubmit " +
-        "the request in this format: PCVID, Supply short name, dose, " +
-        "qty, location."
+      # SE2 (p.7)
+      current_text_message.should have_body "Supply short name invalid: " +
+        "Your request was not submitted because supply name was incorrect. " +
+        "Please resubmit the request in this format: PCVID, Supply " +
+        "short name, dose, qty, location."
     end
 
     #FIXME: Field 3: Is dosage required? '123456, ASDF, , 50, Somewhere'
     it "sends sms but forget dosage (REQUIRED?)"
+    # SE3 (p.7)
+    #    "Dose invalid: " +
+    #    "Your request was not submitted because dose was incorrect. " +
+    #    "Please resubmit the request in this format: PCVID, Supply " +
+    #    "short name, dose, qty, location."
 
     #FIXME: Field 4: Is qty required? '123456, ASDF, 30mg,   , Somewhere'
     it "sends sms but forget qty (REQUIRED?)"
+    # SE4 (p.7)
+    #    "Qty invalid: " +
+    #    "Your request was not submitted because quantity was incorrect. " +
+    #    "Please resubmit the request in this format: PCVID, Supply " +
+    #    "short name, dose, qty, location."
 
     #FIXME: Field 5: Is location required? '123456, ASDF, 30mg, 50,          '
     it "sends sms but forget location (REQUIRED?)"
+    # SE5 (p.7)
+    #    "Location invalid: " +
+    #    "Your request was not submitted because location was incorrect. " +
+    #    "Please resubmit the request in this format: PCVID, Supply " +
+    #    "short name, dose, qty, location."
 
     it 'notifies on duplicate submission' do
       msg = '123456, ASDF, 30mg, 50, Somewhere'

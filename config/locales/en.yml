@@ -5,6 +5,6 @@ en:
   order:
     confirmation: "Your request has been received. Fulfillment details will follow within 24 hrs via email and text message."
     unparseable: "Your request was not submitted. Please resubmit your request in this Format: PCVID, Supply short name, dose, qty, location."
-    unrecognized_pcvid: "Your request was not submitted because the PCVID was incorrect. Please resubmit your request in this format: PCVID, Supply short name, dose, qty, location."
-    unrecognized_shortcode: "Your request was not submitted because supply name was incorrect. Please resubmit the request in this format: PCVID, Supply short name, dose, qty, location."
+    unrecognized_pcvid: "PCVID Invalid: Your request was not submitted because the PCVID was incorrect. Please resubmit your request in this format: PCVID, Supply short name, dose, qty, location."
+    unrecognized_shortcode: "Supply short name invalid: Your request was not submitted because supply name was incorrect. Please resubmit the request in this format: PCVID, Supply short name, dose, qty, location."
     duplicate_order: "We have already received your request. Please refrain from sending multiple requests."
