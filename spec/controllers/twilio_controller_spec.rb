@@ -54,29 +54,41 @@ describe TwilioController do
         "short name, dose, qty, location."
     end
 
-    #FIXME: Field 3: Is dosage required? '123456, ASDF, , 50, Somewhere'
-    it "sends sms but forget dosage (REQUIRED?)"
+    # FIXME: to add translation
     # SE3 (p.7)
-    #    "Dose invalid: " +
+    it "sends sms but forget dosage" 
+    #do
+    #  post :receive, From: number, Body: '123456, ASDF, , 50, Somewhere'
+    #  open_last_text_message_for number
+    #  current_text_message.should have_body "Dose invalid: " +
     #    "Your request was not submitted because dose was incorrect. " +
     #    "Please resubmit the request in this format: PCVID, Supply " +
     #    "short name, dose, qty, location."
+    #end
 
-    #FIXME: Field 4: Is qty required? '123456, ASDF, 30mg,   , Somewhere'
-    it "sends sms but forget qty (REQUIRED?)"
+    # FIXME: to add translation
     # SE4 (p.7)
-    #    "Qty invalid: " +
+    it "sends sms but forget qty"
+    #do
+    #  post :receive, From: number, Body: '123456, ASDF, 30mg,   , Somewhere'
+    #  open_last_text_message_for number
+    #  current_text_message.should have_body "Qty invalid: " +
     #    "Your request was not submitted because quantity was incorrect. " +
     #    "Please resubmit the request in this format: PCVID, Supply " +
     #    "short name, dose, qty, location."
+    #end
 
-    #FIXME: Field 5: Is location required? '123456, ASDF, 30mg, 50,          '
-    it "sends sms but forget location (REQUIRED?)"
+    # FIXME: Need to add validation
     # SE5 (p.7)
-    #    "Location invalid: " +
+    it "sends sms but forget location"
+    # do
+    #  post :receive, From: number, Body: '123456, ASDF, 30mg, 50,          '
+    #  open_last_text_message_for number
+    #  current_text_message.should have_body "Location invalid: " +
     #    "Your request was not submitted because location was incorrect. " +
     #    "Please resubmit the request in this format: PCVID, Supply " +
     #    "short name, dose, qty, location."
+    #end
 
     it 'notifies on duplicate submission' do
       msg = '123456, ASDF, 30mg, 50, Somewhere'
