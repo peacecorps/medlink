@@ -32,6 +32,35 @@ describe TwilioController do
       end
     end
 
+    # -- unFriendly messages -----
+
+    it "sends sms but forget PCVID" do
+      post :receive, From: number, Body: '      , ASDF, 30mg, 50, Somewhere'
+      open_last_text_message_for number
+      current_text_message.should have_body "Your request was not " +
+        "submitted because the PCVID was incorrect. Please resubmit " +
+        "your request in this format: PCVID, Supply short name, dose, " +
+        "qty, location."
+    end
+
+    it "sends sms but forget supply shortcode" do
+      post :receive, From: number, Body: '123456,     , 30mg, 50, Somewhere'
+      open_last_text_message_for number
+      current_text_message.should have_body "Your request was not " +
+        "submitted because supply name was incorrect. Please resubmit " +
+        "the request in this format: PCVID, Supply short name, dose, " +
+        "qty, location."
+    end
+
+    #FIXME: Field 3: Is dosage required? '123456, ASDF, , 50, Somewhere'
+    it "sends sms but forget dosage (REQUIRED?)"
+
+    #FIXME: Field 4: Is qty required? '123456, ASDF, 30mg,   , Somewhere'
+    it "sends sms but forget qty (REQUIRED?)"
+
+    #FIXME: Field 5: Is location required? '123456, ASDF, 30mg, 50,          '
+    it "sends sms but forget location (REQUIRED?)"
+
     it 'notifies on duplicate submission' do
       msg = '123456, ASDF, 30mg, 50, Somewhere'
       3.times do
