@@ -38,7 +38,7 @@ Feature: Visit "Admin Home" Web Page
     And I am a "admin"
     And I am not logged in
     And I sign in with valid credentials
-    And I go to the admin edit page
+    And I go to the edit user page
     Then I should see std gear area items
     Then I should see std icon area items
     Then I should see admin tab area items
