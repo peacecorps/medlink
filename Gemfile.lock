@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/Compass/compass-rails.git
-  revision: 3e0040191220992eb6d5ccc17ddcc053733ee538
-  branch: rails4
-  specs:
-    compass-rails (1.0.3)
-      compass (>= 0.12.2, < 0.14)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -69,6 +61,8 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
+    compass-rails (2.0.alpha.0)
+      compass (>= 0.12.2, < 0.14)
     coveralls (0.7.0)
       multi_json (~> 1.3)
       rest-client
@@ -266,7 +260,7 @@ DEPENDENCIES
   binding_of_caller
   business_time
   coffee-rails
-  compass-rails!
+  compass-rails (~> 2.0.alpha.0)
   coveralls
   cucumber-rails
   database_cleaner (= 1.0.1)
