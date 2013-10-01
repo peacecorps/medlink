@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/milgner/compass-rails.git
-  revision: c86e7fd9c2605c80816a2f64a3fb8b7c3a09e494
+  remote: git://github.com/Compass/compass-rails.git
+  revision: 3e0040191220992eb6d5ccc17ddcc053733ee538
   branch: rails4
   specs:
     compass-rails (1.0.3)
@@ -88,7 +88,7 @@ GEM
       rails (>= 3.0.0)
     database_cleaner (1.0.1)
     debug_inspector (0.0.2)
-    devise (3.1.0)
+    devise (3.1.1)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
