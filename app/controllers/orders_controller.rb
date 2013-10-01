@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_order, except: [:index, :new, :create, :report, :manage]
+  before_action :verify_access, only: [:manage]
 
   def index
     @orders = current_user.accessible_orders
@@ -54,6 +55,13 @@ class OrdersController < ApplicationController
   end
 
   private # -----
+
+  def verify_access
+    unless current_user.try( :pcmo? ) || current_user.try( :admin? )
+      redirect_to root_url,
+        notice: 'You must be an pcmo or admin to view that page'
+    end
+  end
 
   def find_order
     @order = current_user.accessible_orders.find params[:id]
