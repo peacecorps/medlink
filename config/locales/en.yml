@@ -7,4 +7,7 @@ en:
     unparseable: "Your request was not submitted. Please resubmit your request in this Format: PCVID, Supply short name, dose, qty, location."
     unrecognized_pcvid: "PCVID Invalid: Your request was not submitted because the PCVID was incorrect. Please resubmit your request in this format: PCVID, Supply short name, dose, qty, location."
     unrecognized_shortcode: "Supply short name invalid: Your request was not submitted because supply name was incorrect. Please resubmit the request in this format: PCVID, Supply short name, dose, qty, location."
+    invalid_dose: "Dose invalid: Your request was not submitted because dose was incorrect. Please resubmit the request in this format: PCVID, Supply short name, dose, qty, location."
+    invalid_quantity: "Qty invalid: Your request was not submitted because quantity was incorrect. Please resubmit the request in this format: PCVID, Supply short name, dose, qty, location."
+    invalid_location: "Location invalid: Your request was not submitted because location was incorrect. Please resubmit the request in this format: PCVID, Supply short name, dose, qty, location."
     duplicate_order: "We have already received your request. Please refrain from sending multiple requests."

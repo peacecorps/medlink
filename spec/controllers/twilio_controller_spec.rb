@@ -18,7 +18,7 @@ describe TwilioController do
         }.to raise_error /Not Implemented/
     end
 
-    # -- Friendly messages -----
+    # -- i18n codes -----
     {
       unparseable:            'This message should not parse as a valid order',
       confirmation:           '123456, ASDF, 30mg, 50, Somewhere',
@@ -32,63 +32,36 @@ describe TwilioController do
       end
     end
 
-    # -- unFriendly messages -----
-
-    it "sends sms but forget PCVID" do
-      post :receive, From: number, Body: '      , ASDF, 30mg, 50, Somewhere'
-      open_last_text_message_for number
-      # SE1 (p.7)
-      current_text_message.should have_body "PCVID Invalid: Your request was " +
+    # -- English translations -----
+    # Note that we have some translations for events that can't ever happen
+    #   (like dose being invalid). Such is the nature of spec-driven development.
+    #
+    # TODO: are these deliberately inconsistent in phrasing "the/your request"?
+    { unrecognized_pcvid: "PCVID Invalid: Your request was " +
         "not submitted because the PCVID was incorrect. Please resubmit " +
         "your request in this format: PCVID, Supply short name, dose, " +
-        "qty, location."
-    end
-
-    it "sends sms but forget supply shortcode" do
-      post :receive, From: number, Body: '123456,     , 30mg, 50, Somewhere'
-      open_last_text_message_for number
-      # SE2 (p.7)
-      current_text_message.should have_body "Supply short name invalid: " +
+        "qty, location.",
+      unrecognized_shortcode: "Supply short name invalid: " +
         "Your request was not submitted because supply name was incorrect. " +
         "Please resubmit the request in this format: PCVID, Supply " +
+        "short name, dose, qty, location.",
+      invalid_dose: "Dose invalid: " + 
+        "Your request was not submitted because dose was incorrect. " +
+        "Please resubmit the request in this format: PCVID, Supply " +
+        "short name, dose, qty, location.",
+      invalid_quantity: "Qty invalid: " +
+        "Your request was not submitted because quantity was incorrect. " +
+        "Please resubmit the request in this format: PCVID, Supply " +
+        "short name, dose, qty, location.",
+      invalid_location: "Location invalid: " +
+        "Your request was not submitted because location was incorrect. " +
+        "Please resubmit the request in this format: PCVID, Supply " +
         "short name, dose, qty, location."
+    }.each do |key, translation|
+      it "translates order.#{key} correctly into English" do
+        expect( I18n.t "order.#{key}" ).to eq translation
+      end
     end
-
-    # FIXME: to add translation
-    # SE3 (p.7)
-    it "sends sms but forget dosage" 
-    #do
-    #  post :receive, From: number, Body: '123456, ASDF, , 50, Somewhere'
-    #  open_last_text_message_for number
-    #  current_text_message.should have_body "Dose invalid: " +
-    #    "Your request was not submitted because dose was incorrect. " +
-    #    "Please resubmit the request in this format: PCVID, Supply " +
-    #    "short name, dose, qty, location."
-    #end
-
-    # FIXME: to add translation
-    # SE4 (p.7)
-    it "sends sms but forget qty"
-    #do
-    #  post :receive, From: number, Body: '123456, ASDF, 30mg,   , Somewhere'
-    #  open_last_text_message_for number
-    #  current_text_message.should have_body "Qty invalid: " +
-    #    "Your request was not submitted because quantity was incorrect. " +
-    #    "Please resubmit the request in this format: PCVID, Supply " +
-    #    "short name, dose, qty, location."
-    #end
-
-    # FIXME: Need to add validation
-    # SE5 (p.7)
-    it "sends sms but forget location"
-    # do
-    #  post :receive, From: number, Body: '123456, ASDF, 30mg, 50,          '
-    #  open_last_text_message_for number
-    #  current_text_message.should have_body "Location invalid: " +
-    #    "Your request was not submitted because location was incorrect. " +
-    #    "Please resubmit the request in this format: PCVID, Supply " +
-    #    "short name, dose, qty, location."
-    #end
 
     it 'notifies on duplicate submission' do
       msg = '123456, ASDF, 30mg, 50, Somewhere'
