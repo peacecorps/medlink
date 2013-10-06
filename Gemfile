@@ -34,9 +34,6 @@ group :development do
   gem 'table_print'
   gem 'quiet_assets'
 
-  gem 'guard', git: 'git@github.com:jamesdabbs/guard.git'
-  gem 'guard-rspec'
-
 end
 
 gem 'rspec-rails', group: [:development, :test]
