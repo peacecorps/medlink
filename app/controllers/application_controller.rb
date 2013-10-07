@@ -2,7 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to new_user_session_path, error: 'You are not authorized to view that page'
+    # TODO: it'd be nice to redirect to the login page in case the user wants to
+    #   sign in with another (authorized) account. Devise redirects logged in users
+    #   away from that page, however, and clobbers the flash message in the process.
+    redirect_to root_path, notice: 'You are not authorized to view that page'
   end
 
   def root

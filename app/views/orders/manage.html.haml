@@ -21,7 +21,7 @@
     - @orders.each do |order|
       - next if order.responded?
       - next if 3.business_days.before(Time.now).strftime("%s").to_i < (order.created_at.strftime("%s").to_i + (24*60*60))
-      %tr(data-link="#{edit_order_path order}")
+      %tr(data-link="#{new_order_response_path order}")
         %td= order.user.pcv_id
         %td= order.user.first_name
         %td= order.user.last_name
@@ -51,7 +51,7 @@
     - @orders.each do |order|
       - next if order.responded?
       - next if 3.business_days.before(Time.now).strftime("%s").to_i >= (order.created_at.strftime("%s").to_i + (24*60*60))
-      %tr(data-link="#{edit_order_path order}")
+      %tr(data-link="#{new_order_response_path order}")
         %td= order.user.pcv_id
         %td= order.user.first_name
         %td= order.user.last_name

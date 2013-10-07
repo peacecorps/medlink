@@ -2,6 +2,8 @@ class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :supply
 
+  has_one :response
+
   validates_presence_of :user,   message: "unrecognized"
   validates_presence_of :supply, message: "unrecognized"
 
@@ -9,16 +11,20 @@ class Order < ActiveRecord::Base
   validates_presence_of :unit, message: "is missing"
   validates_presence_of :quantity, message: "is missing"
 
-  validates_numericality_of :quantity, :only_integer => true, on: :create
+  validates_numericality_of :quantity, only_integer: true, on: :create
 
   scope :unfulfilled, -> { where(fulfilled_at: nil) }
 
   def responded?
-    !responded_at.nil?
+    response.present?
+  end
+
+  def responded_at
+    response && response.created_at
   end
 
   def fulfilled?
-    !fulfilled_at.nil?
+    fulfilled_at.present?
   end
 
   validates_uniqueness_of :supply_id, scope: :user_id,
@@ -54,18 +60,8 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def send_instructions!
-    # FIX
-    to = self.phone || user.phone
-    SMSJob.enqueue(to, instructions) if to
-    MailerJob.enqueue :fulfillment, id
-  end
-
   def full_dosage
     "#{dose}#{unit}"
   end
-
-  # FIXME: store fulfillment action along with message
-  def action
-  end
 end
+
