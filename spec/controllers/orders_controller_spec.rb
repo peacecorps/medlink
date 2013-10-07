@@ -38,8 +38,6 @@ describe OrdersController do
   end
 
   describe "POST 'create'" do
-    before(:each) { FactoryGirl.create(:supply, shortcode: 'CODE') }
-
     it "redirects on creation" do
       post 'create', order: {
         user_id: current_user.id, supply_id: Supply.last.id,

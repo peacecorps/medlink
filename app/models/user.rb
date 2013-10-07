@@ -29,6 +29,17 @@ class User < ActiveRecord::Base
     pcmos.includes(:country).group_by &:country
   end
 
+  def pcvs
+    case role.to_sym
+    when :admin
+      User.all.pcvs
+    when :pcmo
+      country.users.pcvs
+    else
+      raise "No PCVs for #{role}"
+    end
+  end
+
   # FIXME: denormalize on country
   def accessible_orders
     admin? || pcmo? ? Order.includes(:user).where(

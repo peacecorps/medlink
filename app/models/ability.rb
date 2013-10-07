@@ -4,12 +4,19 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    if user.pcmo? || user.admin?
-      can :manage, Order
-    end
+    case user.role.to_sym
+    when :pcv
+      can :create, Order, user_id: user.id
 
-    if user.admin?
+    when :pcmo
+      can :manage, Order, user: { country_id: user.country_id }
+
+    when :admin
       can :manage, User
+      can :manage, Order
+
+    else
+      raise "Can't check authorization for unknown role (#{user.role})"
     end
   end
 end

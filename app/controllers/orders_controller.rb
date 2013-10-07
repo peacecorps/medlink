@@ -17,7 +17,9 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = current_user.orders.new create_params
+    @order = Order.new create_params
+    authorize! :create, @order
+
     if @order.save
       next_page = case current_user.role.to_sym
       when :admin
@@ -27,6 +29,7 @@ class OrdersController < ApplicationController
       else
         orders_path
       end
+
       # Tag P6
       redirect_to next_page,
         notice: "Success! The Order you placed on behalf of " +
@@ -41,10 +44,8 @@ class OrdersController < ApplicationController
   end
 
   def update
-    # FIXME: currently, this *can't* fail any validations. Should we
-    # check for instructions here?
-    # FIXME: should we always send instructions on an update?
     authorize! :manage, @order
+
     @order.update_attributes update_params.merge(responded_at: Time.now)
     @order.send_instructions!
     # Tag P6
@@ -62,7 +63,7 @@ class OrdersController < ApplicationController
 
   def create_params
     params.require(:order).permit [:extra, :supply_id, :location,
-                                   :unit, :quantity]
+                                   :unit, :quantity, :user_id]
   end
 
   def update_params

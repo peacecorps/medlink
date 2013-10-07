@@ -1,18 +1,16 @@
-- if current_user.pcv?
-  %h1 Request Form
-- else
-  %h1 Place a Order
+%h1= current_user.pcv? ? "Request Form" : "Place an Order"
 
 = form_for @order, html: {class: 'form--order'} do |f|
   = render partial: 'partials/errors', locals: {object: @order}
 
   .form__section
     .input-group
-      - if current_user.try(:pcmo?) || current_user.try(:admin?)
-        = select(:user, :id, User.where(:role => "pcv").collect { |userx| [userx.name, userx.id] }, {:prompt => "Select Volunteer to request for" })
-      - else
+      - if current_user.pcv?
         %span= current_user.name
         %small= current_user.pcv_id
+        = f.hidden_field :user_id, value: current_user.id
+      - else
+        = f.select :user_id, [['Select Volunteer to request for', '']] + current_user.pcvs.map { |u| [u.name, u.id] }
       %hr
 
     .input-group

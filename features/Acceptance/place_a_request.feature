@@ -5,8 +5,8 @@ Feature: Place a Request
 
   Background:
     Given that the following supplies exist:
-      | shortcode | name  | location  |
-      | gz        | Gauze | doraville |
+      | shortcode | name  |
+      | gz        | Gauze |
     Given the default user exists
 
 #----------------------------------------------------------------------
