@@ -23,7 +23,7 @@ class ReportsController < ApplicationController
   end
 
   def pcmo_response_times
-    @orders = Order.group(Order.user_id.pcmo_id).all
+    #@orders = Order.group(Order.user_id.pcmo_id).all
   end
 
   def supply_history
