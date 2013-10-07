@@ -3,5 +3,5 @@
 
 %h1 Edit Account
 = form_tag admin_users_path do
-  = select_tag :edit_user, grouped_options_for_select(@users)
+  = select_tag :edit_user, grouped_options_for_select(@users), prompt: 'Select Volunteer to edit'
   %button.btn.btn--primary(type="submit") Edit

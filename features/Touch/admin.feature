@@ -26,9 +26,8 @@ Feature: Visit "Admin Home" Web Page
     Then I should see dropdownmenu "Assign Role"
     Then I should see the button "Add"
 
-    #EDIT PART
     Then I should see header with text "Edit Account"
-#TODO:    Then I should see dropdownmenu "Select Volunteer to edit"
+    Then I should see dropdownmenu "Select Volunteer to edit"
     Then I should see the button "Edit"
 
 #----------------------------------------------------------------------

@@ -35,7 +35,6 @@ Feature: Visit "Three Tables" Web Page
 
 #----------------------------------------------------------------------
   Scenario: Check stuff on "Three Tables: Admin - Request Manager" pages
-#TODO: Missing country dropdown menu.
     Given I exist as a user
     And I am a "admin"
     And I am not logged in
@@ -50,6 +49,8 @@ Feature: Visit "Three Tables" Web Page
     Then I should see header with text "Past Due Requests"
     Then I should see header with text "Pending Requests"
     Then I should see header with text "Response Tracker"
+
+    Then I should see dropdownmenu "Select Country"
 
     Then I should see column "Response"
     Then I should see column "Fulfilled"
