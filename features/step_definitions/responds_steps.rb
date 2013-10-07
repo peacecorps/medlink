@@ -16,7 +16,7 @@ end
 
 When(/^I save my response$/) do
   click_button('Send Response')
-  save_page("/home/dell/resp_shot")
+#  save_page("/home/dell/resp_shot")
 end
 
 Then(/^I should see the response date and PCMO id "(.*)" on the request$/) do |pcmo_id|
@@ -41,11 +41,11 @@ Then(/^I should have (\d+) response tracker orders$/) do |expected_orders|
 end
 
 Then(/^I should see the missing_delivery_method error message$/) do
-  pending # express the regexp above with the code you wish you had
+  pending # page.should have_selector ".alert", text: "error msg"
 end
 
 Then(/^I should see the exceeds_char_limit error message$/) do
-  pending # express the regexp above with the code you wish you had
+  pending # page.should have_selector ".alert", text: "error msg"
 end
 
 ######################################################################
