@@ -1,34 +1,34 @@
 class OrdersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_order, except: [:index, :new, :create, :report, :manage]
-  before_action :verify_access, only: [:manage]
 
   def index
     @orders = current_user.accessible_orders
   end
 
   def manage
+    authorize! :manage, Order
     @orders = current_user.accessible_orders
   end
 
   def new
+    # FIXME: need "Add Another Supply" functionality for PCVs
     @order = current_user.orders.new location: current_user.location
   end
 
   def create
     @order = current_user.orders.new create_params
     if @order.save
-      nextpage = orders_path
-      if current_user.try(:admin?)
-        nextpage = new_admin_user_path
-      elsif current_user.try(:pcmo?)
-        nextpage = manage_orders_path
-      else # current_user.try(:pcv?)
-        #FIXME: Need to add "Another Supply" web page. -- current_user.try(:pcv?)
-        nextpage = orders_path
+      next_page = case current_user.role.to_sym
+      when :admin
+        new_admin_user_path
+      when :pcmo
+        manage_orders_path
+      else
+        orders_path
       end
       # Tag P6
-      redirect_to nextpage,
+      redirect_to next_page,
         notice: "Success! The Order you placed on behalf of " +
           "#{@order.user.first_name.humanize} " +
           "#{@order.user.last_name.humanize} has been sent."
@@ -41,10 +41,10 @@ class OrdersController < ApplicationController
   end
 
   def update
-    # FIXME: limit to admins
     # FIXME: currently, this *can't* fail any validations. Should we
     # check for instructions here?
     # FIXME: should we always send instructions on an update?
+    authorize! :manage, @order
     @order.update_attributes update_params.merge(responded_at: Time.now)
     @order.send_instructions!
     # Tag P6
@@ -55,13 +55,6 @@ class OrdersController < ApplicationController
   end
 
   private # -----
-
-  def verify_access
-    unless current_user.try( :pcmo? ) || current_user.try( :admin? )
-      redirect_to root_url,
-        notice: 'You must be an pcmo or admin to view that page'
-    end
-  end
 
   def find_order
     @order = current_user.accessible_orders.find params[:id]

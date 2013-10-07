@@ -9,6 +9,7 @@ gem 'haml-rails'
 gem 'twilio-ruby'
 
 gem 'devise'
+gem 'cancan'
 
 gem 'sucker_punch'
 

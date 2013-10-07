@@ -1,18 +1,34 @@
 require 'spec_helper'
 
 describe OrdersController do
-  let (:current_user) { FactoryGirl.create(:user) }
-  before {
-    sign_in current_user
-  }
+  let(:current_user) { FactoryGirl.create(:user) }
+  before(:each) { sign_in current_user }
 
-  describe "GET 'new'" do
-    it 'displays a template' do
-      get 'new'
+  it { renders_successfully :index }
+  it { renders_successfully :new   }
+
+  context 'with an existing order' do
+    before(:each) do
+      @order = FactoryGirl.create :order, user: current_user
+    end
+
+    it { renders_successfully :edit, id: @order.id }
+  end
+
+  describe '#manage' do
+    it 'redirects basic users' do
+      get :manage
+      expect( response ).to be_redirection
+    end
+
+    it 'allows pcmos' do
+      current_user.update_attributes role: :pcmo
+      get :manage
       expect( response ).to be_success
     end
   end
 
+  # TODO: the remaining specs could stand to be cleaned up:
   describe "POST 'create'" do
     before(:each) { FactoryGirl.create(:supply, shortcode: 'CODE') }
     it "redirects on creation" do
@@ -38,22 +54,10 @@ describe OrdersController do
       post 'create', order: order
 
       order = Order.last
-      #FIXME: expect( order.responded_at ).to be_nil
-      #FIXME: expect( response ).to be_redirection
     end
   end
 
   context 'with an existing order' do
-    before(:each) { @order = FactoryGirl.create :order,
-      user_id: current_user.id, location: 'Decatur' }
-
-    describe "GET 'edit'" do
-      it 'displays a template' do
-        get 'edit', id: @order.id
-        expect( response ).to be_success
-      end
-    end
-
     describe "PUT 'update'", :worker do
       it "redirects on success" do
         put :update, id: @order.id, order: {
@@ -63,16 +67,6 @@ describe OrdersController do
         expect( order.responded_at ).not_to be_nil
         expect( response ).to be_redirection
       end
-    end
-  end
-
-  describe "GET 'index'" do
-    before do
-      FactoryGirl.create(:order, user_id: current_user.id, location: 'Cumming')
-    end
-    it "returns success with valid data" do
-      get 'index'
-      expect( response ).to be_success
     end
   end
 

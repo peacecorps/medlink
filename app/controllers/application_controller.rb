@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to new_user_session_path, error: 'You are not authorized to view that page'
+  end
+
   def root
     authenticate_user!
     if current_user.try(:admin?)
