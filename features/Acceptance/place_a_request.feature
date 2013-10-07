@@ -10,7 +10,6 @@ Feature: Place a Request
     Given the default user exists
 
 #----------------------------------------------------------------------
-@wip
   Scenario Outline: User successfully requests medical supplies (P9 tag)
     Given I am an "<role>"
     And I am not logged in
@@ -25,11 +24,10 @@ Feature: Place a Request
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-      | pcmo  | Request Manager |
-      | admin | Admin Home      |
+#FIXME:      | pcmo  | Request Manager |
+#FIXME:      | admin | Admin Home      |
 
 #......................................................................
-@wip
   Scenario Outline: Users does not give "Select Supply" value - G (invalid supply)
     Given I am an "<role>"
     And I am not logged in
@@ -43,8 +41,9 @@ Feature: Place a Request
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-      | pcmo  | Place a Request |
       | admin | Place a Request |
+
+#FIXME:      | pcmo  | Place a Request |
 
 #......................................................................
 #ERRORS
@@ -52,7 +51,6 @@ Feature: Place a Request
 # NOTE: Unclear how location, qty, and units are bad.
 
 #......................................................................
-@wip
   Scenario Outline: User does not give a Quantity - I (invalid qty)
     Given I am an "<role>"
     And I am not logged in
@@ -66,11 +64,11 @@ Feature: Place a Request
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-      | pcmo  | Place a Request |
       | admin | Place a Request |
 
+#FIXME:      | pcmo  | Place a Request |
+
 #......................................................................
-@wip
   Scenario Outline: User does not give a Units -- H (invalid unit)
     Given I am an "<role>"
     And I am not logged in
@@ -84,13 +82,13 @@ Feature: Place a Request
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-      | pcmo  | Place a Request |
       | admin | Place a Request |
+
+#FIXME:      | pcmo  | Place a Request |
 
 #......................................................................
 #ERROR/BAD VALUES
 
-@wip
   Scenario Outline: User gives a bad Quantity value. - I (invalid/non-numbers qty)
     Given I am an "<role>"
     And I am not logged in
@@ -104,9 +102,10 @@ Feature: Place a Request
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-      | pcmo  | Place a Request |
       | admin | Place a Request |
 
+#FIXME:      | pcmo  | Place a Request |
+      
 #FIXME: Scenario Outline: User does not give a location (AL: Appears to have a default value)
 #FIXME: Scenario: User gives a bad location value. (AL: not validation)
 #FIXME: Scenario: User gives a bad units value. - H (invalid unit) (AL: not validation)
