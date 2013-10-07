@@ -37,6 +37,7 @@ describe TwilioController do
     #   (like dose being invalid). Such is the nature of spec-driven development.
     #
     # TODO: are these deliberately inconsistent in phrasing "the/your request"?
+    # ANSWER: Check Design document for phrasing.
     { unrecognized_pcvid: "PCVID Invalid: Your request was " +
         "not submitted because the PCVID was incorrect. Please resubmit " +
         "your request in this format: PCVID, Supply short name, dose, " +
