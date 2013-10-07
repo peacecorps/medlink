@@ -23,11 +23,11 @@ Feature: Add User
     When I choose the country "Chad"
     And  I choose a "Peace Corps Volunteer" role
     Then I should see the PCMO select box
-    #TODO: And  I should be able to select from PCMOs in "Chad"
+    #TODO (#97#): And  I should be able to select from PCMOs in "Chad"
 
     When I fill out the add user form
     And  I click "Add"
-    #TODO: Then I should see a "Success!" confirmation
+    #TODO (#97#) : Then I should see a "Success!" confirmation
 
   Scenario Outline: validating errors
     When I fill out the add user form

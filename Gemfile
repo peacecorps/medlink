@@ -34,7 +34,6 @@ group :development do
   gem 'coveralls', require: false
   gem 'table_print'
   gem 'quiet_assets'
-
 end
 
 gem 'rspec-rails', group: [:development, :test]
@@ -50,6 +49,7 @@ group :test do
   end
   gem 'database_cleaner', '1.0.1'
   gem 'selenium-webdriver'
+  gem 'zonebie'
 
   gem 'show_me_the_cookies'
 end

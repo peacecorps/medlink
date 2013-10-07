@@ -83,3 +83,5 @@ end
 After("@selenium,@javascript", "~@no-headless") do
   headless.stop if Capybara.current_driver == :selenium
 end
+
+Zonebie.set_random_timezone
