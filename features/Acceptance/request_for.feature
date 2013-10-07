@@ -8,23 +8,21 @@ Feature: Request For
     Given that "Georgia" is a country
     Given that the following supplies exist:
       | shortcode | name  |
-      | gz        | Gauze |
+      | GAUZE     | Gauze |
     Given that the following pcvs exist:
       | name      | pcv_id | country |
       | alice     | 1      | Alabama |
       | bob       | 2      | Georgia |
 
   Scenario:
-    Given that I am logged in as the pcmo of Alabama
-    When I go to the new order page
+    Given I am logged in as the pcmo of Alabama
+    When I go to the new_order page
     Then I should see a pcmo dropdown containing only "alice"
 
     When I place an order for "alice"
     Then I should see an order for "alice" in the queue
 
   Scenario:
-    Given that I am logged in as an admin
-    When I go to the new order page
-    Then I should see a pcmo dropdown containing only "alice" and "bob"
-
-
+    Given I am logged in as an admin
+    When I go to the new_order page
+    Then I should see a pcmo dropdown containing both "alice" and "bob"

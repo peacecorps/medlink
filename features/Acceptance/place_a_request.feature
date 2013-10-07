@@ -10,6 +10,7 @@ Feature: Place a Request
     Given the default user exists
 
 #----------------------------------------------------------------------
+@wip
   Scenario Outline: User successfully requests medical supplies (P9 tag)
     Given I am an "<role>"
     And I am not logged in
@@ -28,6 +29,7 @@ Feature: Place a Request
       | admin | Admin Home      |
 
 #......................................................................
+@wip
   Scenario Outline: Users does not give "Select Supply" value - G (invalid supply)
     Given I am an "<role>"
     And I am not logged in
@@ -50,6 +52,7 @@ Feature: Place a Request
 # NOTE: Unclear how location, qty, and units are bad.
 
 #......................................................................
+@wip
   Scenario Outline: User does not give a Quantity - I (invalid qty)
     Given I am an "<role>"
     And I am not logged in
@@ -67,6 +70,7 @@ Feature: Place a Request
       | admin | Place a Request |
 
 #......................................................................
+@wip
   Scenario Outline: User does not give a Units -- H (invalid unit)
     Given I am an "<role>"
     And I am not logged in
@@ -86,6 +90,7 @@ Feature: Place a Request
 #......................................................................
 #ERROR/BAD VALUES
 
+@wip
   Scenario Outline: User gives a bad Quantity value. - I (invalid/non-numbers qty)
     Given I am an "<role>"
     And I am not logged in
