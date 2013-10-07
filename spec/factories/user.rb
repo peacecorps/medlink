@@ -3,6 +3,7 @@ FactoryGirl.define do
     sequence(:email)   {|n| "user#{n}@example.com"}
     password 'password'
     phone    '555-867-5309'
+    role     'pcv'
     country { FactoryGirl.create(:country) }
     sequence(:first_name) { |n| "user#{n}"}
     sequence(:last_name)  { |n| "user#{n}last"}

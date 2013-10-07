@@ -39,8 +39,9 @@ describe OrdersController do
 
   describe "POST 'create'" do
     it "redirects on creation" do
+      supply = FactoryGirl.create :supply
       post 'create', order: {
-        user_id: current_user.id, supply_id: Supply.last.id,
+        user_id: current_user.id, supply_id: supply.id,
         location: 'Roswell', unit: '20', quantity: 20 }
       expect( response ).to be_redirection
     end
