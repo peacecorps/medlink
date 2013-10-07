@@ -17,7 +17,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new create_params
+    @order = Order.new create_params.merge entered_by: current_user
     authorize! :create, @order
 
     if @order.save
