@@ -9,7 +9,7 @@ Feature: Place a Request
       | gz        | Gauze |
     Given the default user exists
 
-#----------------------------------------------------------------------
+#......................................................................
   Scenario Outline: User successfully requests medical supplies (P9 tag)
     Given I am an "<role>"
     And I am not logged in
@@ -18,14 +18,13 @@ Feature: Place a Request
 
     When I place a request
     And I give it all the valid inputs
-# TODO: Select from "Select Volunteer to request for" dropdown menu for PCMO and ADMIN.
     Then I see a successful request message
     And I stay on <afterpage> page
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-#FIXME:      | pcmo  | Request Manager |
-#FIXME:      | admin | Admin Home      |
+      | pcmo  | Request Manager |
+      | admin | Admin Home      |
 
 #......................................................................
   Scenario Outline: Users does not give "Select Supply" value - G (invalid supply)
@@ -42,8 +41,7 @@ Feature: Place a Request
       | role  | afterpage       |
       | pcv   | Request Form    |
       | admin | Place a Request |
-
-#FIXME:      | pcmo  | Place a Request |
+      | pcmo  | Place a Request |
 
 #......................................................................
 #ERRORS
@@ -65,8 +63,7 @@ Feature: Place a Request
       | role  | afterpage       |
       | pcv   | Request Form    |
       | admin | Place a Request |
-
-#FIXME:      | pcmo  | Place a Request |
+      | pcmo  | Place a Request |
 
 #......................................................................
   Scenario Outline: User does not give a Units -- H (invalid unit)
@@ -83,8 +80,7 @@ Feature: Place a Request
       | role  | afterpage       |
       | pcv   | Request Form    |
       | admin | Place a Request |
-
-#FIXME:      | pcmo  | Place a Request |
+      | pcmo  | Place a Request |
 
 #......................................................................
 #ERROR/BAD VALUES
@@ -103,12 +99,11 @@ Feature: Place a Request
       | role  | afterpage       |
       | pcv   | Request Form    |
       | admin | Place a Request |
-
-#FIXME:      | pcmo  | Place a Request |
+      | pcmo  | Place a Request |
       
-#FIXME: Scenario Outline: User does not give a location (AL: Appears to have a default value)
-#FIXME: Scenario: User gives a bad location value. (AL: not validation)
-#FIXME: Scenario: User gives a bad units value. - H (invalid unit) (AL: not validation)
+#TODO: Scenario Outline: User does not give a location (AL: Appears to have a default value)
+#TODO: Scenario: User gives a bad location value. (AL: not validation)
+#TODO: Scenario: User gives a bad units value. - H (invalid unit) (AL: not validation)
 
 #......................................................................
 #OTHER
