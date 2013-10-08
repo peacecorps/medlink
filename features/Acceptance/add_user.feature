@@ -36,14 +36,14 @@ Feature: Add User
     Then I should see a <message> error message
 
     Examples:
-      | field           | value | message  |
-      | user_first_name |       | required |
-      | user_last_name  |       | required |
-      | user_location   |       | required |
-      | user_phone      |       | required |
-      | user_email      | nope  | required |
-      | user_email      | nope  | invalid  |
-      | user_pcv_id     |       | required |
-      | user_pcv_id     | 11111 | unique   |
-      | user_country_id | Country | required |
+      | field           | value       | message  |
+      | user_first_name |             | required |
+      | user_last_name  |             | required |
+      | user_location   |             | required |
+      | user_phone      |             | required |
+      | user_email      | nope        | required |
+      | user_email      | nope        | invalid  |
+      | user_pcv_id     |             | required |
+      | user_pcv_id     | 11111       | unique   |
+      | user_country_id | Country     | required |
       | user_role       | Assign_Role | required |
