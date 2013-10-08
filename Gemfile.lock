@@ -113,7 +113,6 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (>= 3.1, < 4.1)
       railties (>= 3.1, < 4.1)
-    headless (1.0.1)
     hike (1.2.3)
     i18n (0.6.5)
     jquery-rails (3.0.4)
@@ -163,7 +162,7 @@ GEM
       rails_serve_static_assets
       rails_stdout_logging
     rails_serve_static_assets (0.0.1)
-    rails_stdout_logging (0.0.2)
+    rails_stdout_logging (0.0.3)
     railties (4.0.0)
       actionpack (= 4.0.0)
       activesupport (= 4.0.0)
@@ -273,7 +272,6 @@ DEPENDENCIES
   font-awesome-rails
   haml
   haml-rails
-  headless
   jquery-rails
   letter_opener
   newrelic_rpm

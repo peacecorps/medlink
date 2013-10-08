@@ -44,9 +44,6 @@ group :test do
   gem 'sms-spec'
 
   gem 'cucumber-rails', :require => false
-  group :cucumber do
-    gem 'headless'
-  end
   gem 'database_cleaner', '1.0.1'
   gem 'selenium-webdriver'
   gem 'zonebie'
