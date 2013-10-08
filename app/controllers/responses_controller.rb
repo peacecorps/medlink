@@ -10,8 +10,8 @@ class ResponsesController < ApplicationController
     if @response.save
       @response.send!
       # Tag P6
-      redirect_to manage_orders_path, notice: "Success! Your response" +
-        "has been sent to #{@order.user.name} #{@order.user.pcv_id}." +
+      redirect_to manage_orders_path, notice: "Success! Your response " +
+        "has been sent to #{@order.user.name} #{@order.user.pcv_id}. " +
         "This request will now appear in the response tracker awaiting " +
         "fullment."
     else
