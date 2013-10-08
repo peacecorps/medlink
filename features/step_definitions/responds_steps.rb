@@ -3,15 +3,15 @@ When(/^I select a "(.*?)" request$/) do |request|
 end
 
 Then(/^I should be able to assign one of four actions: "(.*?)"$/) do |action|
-  choose(action)
+  choose("response_delivery_method_" + action.split[0].downcase)
 end
 
 Then(/^I should be able to assign a special instruction of (\d+) characters$/) do |char_count|
-  fill_in "order_instructions", :with => "a" * char_count.to_i
+  fill_in "response_instructions", :with => "a" * char_count.to_i
 end
 
 Then(/^I should be able to assign a special instruction$/) do
-  fill_in "order_instructions", :with => "a" * 160
+  fill_in "response_instructions", :with => "a" * 160
 end
 
 When(/^I save my response$/) do
