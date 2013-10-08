@@ -14,8 +14,6 @@ end
 
 require 'cucumber/rails'
 
-require 'headless'
-
 require 'sms_spec'
 require 'sms_spec/cucumber'
 
@@ -71,17 +69,21 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 
 # Capybara.default_driver = :selenium
 
-headless = Headless.new
-at_exit do
-  headless.destroy
-end
-
-Before("@selenium,@javascript", "~@no-headless") do
-  headless.start if Capybara.current_driver == :selenium
-end
-
-After("@selenium,@javascript", "~@no-headless") do
-  headless.stop if Capybara.current_driver == :selenium
-end
-
 Zonebie.set_random_timezone
+
+unless RUBY_PLATFORM.include?("x86_64-darwin")
+  require 'headless'
+
+  headless = Headless.new
+  at_exit do
+    headless.destroy
+  end
+
+  Before("@selenium,@javascript", "~@no-headless") do
+    headless.start if Capybara.current_driver == :selenium
+  end
+
+  After("@selenium,@javascript", "~@no-headless") do
+    headless.stop if Capybara.current_driver == :selenium
+  end
+end
