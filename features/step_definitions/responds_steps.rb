@@ -41,11 +41,11 @@ Then(/^I should have (\d+) response tracker orders$/) do |expected_orders|
 end
 
 Then(/^I should see the missing_delivery_method error message$/) do
-  pending # page.should have_selector ".alert", text: "error msg"
+  page.should have_content "Delivery method is missing"
 end
 
 Then(/^I should see the exceeds_char_limit error message$/) do
-  pending # page.should have_selector ".alert", text: "error msg"
+  page.should have_content "Instructions is too long (maximum is 160 characters)"
 end
 
 ######################################################################

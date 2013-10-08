@@ -3,6 +3,9 @@
     %i.icon-caret-left
     %span Back to all Orders
 
+  %p
+  = render partial: 'partials/errors', locals: {object: @response}
+
 .order
   .order__section
     %hgroup
