@@ -45,7 +45,7 @@ group :test do
 
   gem 'cucumber-rails', :require => false
   group :cucumber do
-    gem 'headless'
+    gem 'headless' unless RUBY_PLATFORM.include?("x86_64-darwin")
   end
   gem 'database_cleaner', '1.0.1'
   gem 'selenium-webdriver'
