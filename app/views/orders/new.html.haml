@@ -10,7 +10,7 @@
         %small= current_user.pcv_id
         = f.hidden_field :user_id, value: current_user.id
       - else
-        = f.select :user_id, [['Select Volunteer to request for', '']] + current_user.pcvs.map { |u| [u.name, u.id] }
+        = f.select :user_id, [['Select Volunteer to request for', '']] + User.all.map { |u| [u.name, u.id] }
       %hr
 
     .input-group
