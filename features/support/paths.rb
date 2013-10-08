@@ -26,7 +26,7 @@ module NavigationHelpers
     when /the help page/
       help_path
     when /the response page/
-      edit_order_path 1
+      new_order_response_path 1
     when /the reports page/
       reports_path
     when /the add user page/

@@ -16,6 +16,10 @@ When(/^I choose the country "(.*?)"$/) do |name|
   select name, from: 'user_country_id'
 end
 
+When(/^I unselect the country$/) do
+  select 'Country', from: 'user_country_id'
+end
+
 Then(/^I should see the PCMO select box$/) do
   find_field('user_pcmo_id').visible?
 end

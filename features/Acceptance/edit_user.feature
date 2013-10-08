@@ -41,6 +41,6 @@ Feature: Edit User
       | user_email      |         | required |
       | user_email      | nope    | invalid  |
       | user_pcv_id     |         | required |
-#FIXME      | user_pcv_id     | 11111   | unique |
-#FIXME      | user_role       |         | required |
-#FIXME      | user_country_id |         | required |
+      | user_role       |         | required |
+      | user_country_id | Country | required |
+#FIXME:      | user_pcv_id     | 11111   | unique   |
