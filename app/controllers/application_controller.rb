@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_filter :authenticate_user!
+  skip_before_filter :authenticate_user!, only: :help
+
   rescue_from CanCan::AccessDenied do |exception|
     # TODO: it'd be nice to redirect to the login page in case the user wants to
     #   sign in with another (authorized) account. Devise redirects logged in users
@@ -9,14 +12,14 @@ class ApplicationController < ActionController::Base
   end
 
   def root
-    authenticate_user!
-    if current_user.try(:admin?)
-      start_page = new_admin_user_path
-    elsif current_user.try(:pcmo?)
-      start_page = manage_orders_path
+    start_page = if current_user.admin?
+      new_admin_user_path
+    elsif current_user.pcmo?
+      manage_orders_path
     else # PCV
-      start_page = orders_path
+      orders_path
     end
+
     redirect_to start_page
   end
 

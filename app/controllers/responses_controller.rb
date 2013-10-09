@@ -1,5 +1,4 @@
 class ResponsesController < ApplicationController
-  before_filter :authenticate_user!
   before_filter :initialize_response
 
   def new
