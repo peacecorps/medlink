@@ -112,4 +112,13 @@ end
 Then(/^I stay on Place a Request page$/) do
   expect(current_url).to eq("http://www.example.com/orders")
 end
+
+When(/^I place a request for "(.*?)"$/) do |name|
+  visit '/orders/new'
+  select name, from: "order_user_id"
+end
+
+When(/^I unselect volunteer$/) do
+  select 'Select Volunteer to request for', from: 'order[user_id]'
+end
 #save_and_open_page

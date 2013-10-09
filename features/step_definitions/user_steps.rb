@@ -282,6 +282,10 @@ Then(/^I see a successful message$/) do
   page.should have_selector ".alert", text: "Success! A temporary password has been sent to the email we have on file. Please check your e-mail and click on the link to complete the log in. (web experience)"
 end
 
+Then(/^I see a pcv_id unrecognized message$/) do
+  page.should have_content "PCV ID unrecognized"
+end
+
 # E1 ERROR MSG
 Then /^I see an invalid email message$/ do
   #FIXME:  (#114#: E1)

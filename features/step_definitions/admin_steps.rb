@@ -98,3 +98,8 @@ When(/^I fill out the edit user form$/) do
   select  "Chad",                  from: 'user_country_id'
   select  "Peace Corps Volunteer", from: 'user_role'
 end
+
+When(/^I choose a "(.*?)" edit user$/) do |name|
+  select "#{name} (#{User.find(1).pcv_id})", from: 'edit_user'
+end
+#save_and_open_page
