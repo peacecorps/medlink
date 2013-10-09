@@ -1,0 +1,38 @@
+%thead
+  %tr
+    %th PCVID
+    %th First Name
+    %th Last Name
+    %th Supply
+    %th Unit
+    %th Quantity
+    %th Location
+    %th Request
+    - if responded
+      %th Response
+      %th Fulfilled
+      %th Received
+%tbody
+  - orders.each do |order|
+    %tr(data-link="#{new_order_response_path order}")
+      %td= order.user.pcv_id
+      %td= order.user.first_name
+      %td= order.user.last_name
+      %td= order.supply
+      %td= order.unit
+      %td= order.quantity
+      %td
+        %span.cell--primary= order.location
+      %td
+        %span= order.created_at.strftime '%-m/%-d/%y'
+        %small.cell--secondary= order.created_at.strftime '%H:%M'
+      - if responded
+        %td= order.responded_at.strftime '%-m/%-d/%y'
+        - if order.fulfilled?
+          %td= order.fulfilled_at.strftime '%-m/%-d/%y'
+        - else
+          %td
+            = date_select :order, :fulfilled_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
+        %td
+          = date_select :order, :received_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
+

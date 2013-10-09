@@ -13,7 +13,11 @@ class Order < ActiveRecord::Base
 
   validates_numericality_of :quantity, only_integer: true, on: :create
 
-  scope :unfulfilled, -> { where(fulfilled_at: nil) }
+  scope :responded,   -> { includes(:response).references(:response).where("responses.id IS NOT NULL") }
+  scope :unresponded, -> { includes(:response).references(:response).where("responses.id IS NULL")     }
+
+  scope :past_due, -> { unresponded.where(["orders.created_at < ?",  3.business_days.ago]) }
+  scope :pending,  -> { unresponded.where(["orders.created_at >= ?", 3.business_days.ago]) }
 
   def responded?
     response.present?
@@ -28,7 +32,7 @@ class Order < ActiveRecord::Base
   end
 
   validates_uniqueness_of :supply_id, scope: :user_id,
-    conditions: -> { unfulfilled }
+    conditions: -> { unresponded }
 
   def self.human_attribute_name(attr, options={})
     {

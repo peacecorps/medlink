@@ -5,105 +5,14 @@
   %hr
 
 %h3 Past Due Requests
-
 %table(class="table.table--bordered.table--striped.table--linked" id="past-due-orders")
-  %thead
-    %tr
-      %th PCVID
-      %th First Name
-      %th Last Name
-      %th Supply
-      %th Unit
-      %th Quantity
-      %th Location
-      %th Request
-  %tbody
-    - @orders.each do |order|
-      - next if order.responded?
-      - next if 3.business_days.before(Time.now).strftime("%s").to_i < (order.created_at.strftime("%s").to_i + (24*60*60))
-      %tr(data-link="#{new_order_response_path order}")
-        %td= order.user.pcv_id
-        %td= order.user.first_name
-        %td= order.user.last_name
-        %td= order.supply
-        %td= order.unit
-        %td= order.quantity
-        %td
-          %span.cell--primary= order.location
-        %td
-          %span= order.created_at.strftime '%-m/%-d/%y'
-          %small.cell--secondary= order.created_at.strftime '%H:%M'
+  = render partial: 'table', locals: { orders: @orders.past_due, responded: false }
 
 %h3 Pending Requests
-
 %table(class="table.table--bordered.table--striped.table--linked" id="pending-orders")
-  %thead
-    %tr
-      %th PCVID
-      %th First Name
-      %th Last Name
-      %th Supply
-      %th Unit
-      %th Quantity
-      %th Location
-      %th Request
-  %tbody
-    - @orders.each do |order|
-      - next if order.responded?
-      - next if 3.business_days.before(Time.now).strftime("%s").to_i >= (order.created_at.strftime("%s").to_i + (24*60*60))
-      %tr(data-link="#{new_order_response_path order}")
-        %td= order.user.pcv_id
-        %td= order.user.first_name
-        %td= order.user.last_name
-        %td= order.supply
-        %td= order.unit
-        %td= order.quantity
-        %td
-          %span.cell--primary= order.location
-        %td
-          %span= order.created_at.strftime '%-m/%-d/%y'
-          %small.cell--secondary= order.created_at.strftime '%H:%M'
+  = render partial: 'table', locals: { orders: @orders.pending, responded: false }
 
 %h3 Response Tracker
-
 %table(class="table.table--bordered.table--striped.table--linked" id="responded-orders")
-  %thead
-    %tr
-      %th PCVID
-      %th First Name
-      %th Last Name
-      %th Supply
-      %th Unit
-      %th Quantity
-      %th Location
-      %th Request
-      %th Response
-      %th Fulfilled
-      %th Received
-  %tbody
-    - @orders.each do |order|
-      - next unless order.responded?
-      %tr
-        %td= order.user.pcv_id
-        %td= order.user.first_name
-        %td= order.user.last_name
-        %td= order.supply
-        %td= order.unit
-        %td= order.quantity
-        %td
-          %span.cell--primary= order.location
-        %td
-          %span= order.created_at.strftime '%-m/%-d/%y'
-          %small.cell--secondary= order.created_at.strftime '%H:%M'
-        - if order.responded?
-          %td= order.responded_at.strftime '%-m/%-d/%y'
-        - else
-          %td
-            = date_select :order, :responded_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
-        - if order.fulfilled?
-          %td= order.fulfilled_at.strftime '%-m/%-d/%y'
-        - else
-          %td
-            = date_select :order, :fulfilled_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
-        %td 
-          = date_select :order, :received_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
+  = render partial: 'table', locals: { orders: @orders.responded, responded: true }
+

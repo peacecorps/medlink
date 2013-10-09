@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 20131007033459) do
 
   create_table "countries", force: true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string   "code"
   end
 
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(version: 20131007033459) do
     t.string   "phone"
     t.string   "email"
     t.text     "extra"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.date     "fulfilled_at"
     t.date     "received_at"
     t.integer  "supply_id"
@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 20131007033459) do
   create_table "supplies", force: true do |t|
     t.string   "shortcode"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode"
@@ -69,8 +69,8 @@ ActiveRecord::Schema.define(version: 20131007033459) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "phone"
     t.string   "first_name"
     t.string   "last_name"
