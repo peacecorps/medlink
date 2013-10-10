@@ -74,13 +74,13 @@ Then(/^I should see a (\w+) error message$/) do |type|
   if type == "required"
     expect( page ).to have_content("can't be blank")
     expect( page ).to have_content("prohibited this user from being submitted:")
-  end
-  if type == "invalid"
+  elsif type == "invalid"
     expect( page ).to have_content("is invalid")
     expect( page ).to have_content("prohibited this user from being submitted:")
-  end
-  if type == "unique"
+  elsif type == "unique"
     expect( page ).to have_content("has already been taken")
+  else
+    fail
   end
 end
 
@@ -101,5 +101,9 @@ end
 
 When(/^I choose a "(.*?)" edit user$/) do |name|
   select "#{name} (#{User.find(1).pcv_id})", from: 'edit_user'
+end
+
+Then(/^I should see a required edit volunteer error message$/) do
+  page.should have_selector ".alert", text: 'Please select a volunteer to edit.'
 end
 #save_and_open_page

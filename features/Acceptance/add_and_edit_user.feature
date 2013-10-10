@@ -13,9 +13,7 @@ Feature: Admin Home then Edit User
     And  I click "Edit"
     Then I should see the edit account form
 
-#FIXME: BUG: #138
-  @wip
   Scenario: Rainy: Click on "Edit" on Admin Home without selecting user
     And  I click "Edit"
-    Then I should see a UNKNOWN error message
+    Then I should see a required edit volunteer error message
 

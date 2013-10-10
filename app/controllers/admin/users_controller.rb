@@ -1,5 +1,6 @@
 class Admin::UsersController < AdminController
   before_action :set_user, except: [:new, :create]
+  around_filter :catch_no_record
 
   def new
     @users = User.all.group_by &:country
@@ -56,5 +57,10 @@ class Admin::UsersController < AdminController
     params.require(:user).permit [:first_name, :last_name, :location,
       :country_id, :phone, :email, :pcv_id, :role, :pcmo_id, :remember_me]
   end
-end
 
+  def catch_no_record
+    yield
+  rescue ActiveRecord::RecordNotFound
+    redirect_to new_admin_user_path, :flash => { :error => "Please select a volunteer to edit." }
+  end
+end
