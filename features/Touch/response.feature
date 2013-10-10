@@ -38,14 +38,14 @@ Feature: Visit Response Web Pages
 
     Then I should see header with text "Order From:"
     Then I should see header with text "Fulfillment Method"
-    Then I should see field "Delivery"
-    Then I should see field "Pickup"
-    Then I should see field "Purchase & Reimburse"
-    Then I should see field "Special Instructions"
+    Then I should see radiobutton "Delivery"
+    Then I should see radiobutton "Pickup"
+    Then I should see radiobutton "Purchase & Reimburse"
+    Then I should see radiobutton "Special Instructions"
 
     Then I should see div with text "Edit Default SMS"
     Then I should see div with text "characters remaining"
-    Then I should see field "order_instructions"
+    Then I should see field "response_instructions"
     Then I should see the button "Send Response"
 
   Scenario: Check stuff on Admin Response pages
@@ -58,12 +58,12 @@ Feature: Visit Response Web Pages
 
     Then I should see header with text "Order From:"
     Then I should see header with text "Fulfillment Method"
-    Then I should see field "Delivery"
-    Then I should see field "Pickup"
-    Then I should see field "Purchase & Reimburse"
-    Then I should see field "Special Instructions"
+    Then I should see radiobutton "Delivery"
+    Then I should see radiobutton "Pickup"
+    Then I should see radiobutton "Purchase & Reimburse"
+    Then I should see radiobutton "Special Instructions"
 
     Then I should see div with text "Edit Default SMS"
     Then I should see div with text "characters remaining"
-    Then I should see field "order_instructions"
+    Then I should see field "response_instructions"
     Then I should see the button "Send Response"
