@@ -39,4 +39,4 @@ Feature: Place a Request for Someone else
     Examples:
       | role  |
       | admin |
-#FIXME:      | pcmo  |
+      | pcmo  |
