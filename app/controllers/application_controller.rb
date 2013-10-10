@@ -5,9 +5,10 @@ class ApplicationController < ActionController::Base
   skip_before_filter :authenticate_user!, only: :help
 
   rescue_from CanCan::AccessDenied do |exception|
-    # TODO: it'd be nice to redirect to the login page in case the user wants to
-    #   sign in with another (authorized) account. Devise redirects logged in users
-    #   away from that page, however, and clobbers the flash message in the process.
+    # TODO: it'd be nice to redirect to the login page in case the user wants
+    #   to sign in with another (authorized) account. Devise redirects logged
+    #   in users away from that page, however, and clobbers the flash message
+    #   in the process.
     redirect_to root_path, notice: 'You are not authorized to view that page'
   end
 

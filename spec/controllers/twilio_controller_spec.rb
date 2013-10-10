@@ -34,7 +34,8 @@ describe TwilioController do
 
     # -- English translations -----
     # Note that we have some translations for events that can't ever happen
-    #   (like dose being invalid). Such is the nature of spec-driven development.
+    #   (like dose being invalid). Such is the nature of spec-driven
+    #   development.
     #
     # TODO: are these deliberately inconsistent in phrasing "the/your request"?
     # ANSWER: Check Design document for phrasing.
@@ -46,7 +47,7 @@ describe TwilioController do
         "Your request was not submitted because supply name was incorrect. " +
         "Please resubmit the request in this format: PCVID, Supply " +
         "short name, dose, qty, location.",
-      invalid_dose: "Dose invalid: " + 
+      invalid_dose: "Dose invalid: " +
         "Your request was not submitted because dose was incorrect. " +
         "Please resubmit the request in this format: PCVID, Supply " +
         "short name, dose, qty, location.",
