@@ -104,9 +104,3 @@ Feature: Place a Request
 #TODO: Scenario Outline: User does not give a location (AL: Appears to have a default value)
 #TODO: Scenario: User gives a bad location value. (AL: not validation)
 #TODO: Scenario: User gives a bad units value. - H (invalid unit) (AL: not validation)
-
-#......................................................................
-#OTHER
-# TODO: P4(suggorate request), M4 (EMAIL TEXT that goes with P2...)
-# TODO/SMS(i guess): F (bad pcvid), L (bad pw)
-# TODO: M1 ("EMAIL TEXT that goes with sms message RE1 thru RE4 (msg redundancy)

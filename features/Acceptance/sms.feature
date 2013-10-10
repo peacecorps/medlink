@@ -122,3 +122,5 @@ Feature: SMS
 #TODO: F invalid pcvid
 #TODO: M2 - "EMAIL TEXT tha goes with sms message P4) (msg dup)
 #TODO: M1 - "EMAIL TEXT tha goes with sms message RE1 to RE4 (msg dup)
+
+# TODO: M4 (EMAIL TEXT that goes with P2...)
