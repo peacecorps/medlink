@@ -1,4 +1,3 @@
-# @focus
 Feature: Edit User
   As an admin to the website
   I want to be able to edit users
@@ -12,6 +11,9 @@ Feature: Edit User
       | name    | country |
       | patrick | Senegal |
       | ricky   | Chad    |
+    And that the following pcvs exist:
+      | name  | pcv_id | country |
+      | James | 11111  | Chad    |
     When I go to the edit user page
     Then I should see the edit account form
 
@@ -42,4 +44,4 @@ Feature: Edit User
       | user_pcv_id     |         | required |
       | user_role       |         | required |
       | user_country_id | Country | required |
-#FIXME:      | user_pcv_id     | 11111   | unique   |
+      | user_pcv_id     | 11111   | unique   |
