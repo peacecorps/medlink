@@ -42,7 +42,8 @@
               %label(for="order_delivery_method_#{method.name}")= method.title
         Edit Default SMS
         .order__instructions
-          = f.text_area :instructions, :size => "40x4"
+          = f.text_area :instructions, size: "40x4", maxlength: 160
         .order__characters "160 characters remaining"
     .btn-group
       %button.btn.btn--primary(type="submit") Send Response
+
