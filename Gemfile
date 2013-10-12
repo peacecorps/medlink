@@ -34,6 +34,7 @@ group :development do
   gem 'coveralls', require: false
   gem 'table_print'
   gem 'quiet_assets'
+  gem 'awesome_print'
 end
 
 gem 'rspec-rails', group: [:development, :test]
