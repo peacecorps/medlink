@@ -39,6 +39,9 @@ describe TwilioController do
     #
     # TODO: are these deliberately inconsistent in phrasing "the/your request"?
     # ANSWER: Check Design document for phrasing.
+    #
+    # From Design Doc: SE1(unrecognized_pcvid), SE2(unrecognized_shortcode),
+    #    SE3(invalid_dose), SE4(invalid_quantity), SE5(invalid_quantity)
     { unrecognized_pcvid: "PCVID Invalid: Your request was " +
         "not submitted because the PCVID was incorrect. Please resubmit " +
         "your request in this format: PCVID, Supply short name, dose, " +
