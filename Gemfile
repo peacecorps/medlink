@@ -45,7 +45,7 @@ group :test do
   gem 'sms-spec'
 
   gem 'cucumber-rails', :require => false
-  gem 'database_cleaner', '1.0.1'
+  gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'zonebie'
 
