@@ -1,6 +1,6 @@
 %h2 Request Manager
 
-- if current_user.try(:admin?)
+- if current_user.admin?
   = select(:country, :country_id, Country.all.collect { |country| [country.name.humanize, country.id] }, {:include_blank => "Select Country"})
   %hr
 
