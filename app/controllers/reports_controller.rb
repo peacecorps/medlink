@@ -6,11 +6,14 @@ class ReportsController < ApplicationController
   end
 
   def request_history
+    # pcmo and admin
     @orders = current_user.accessible_orders
   end
 
   def fulfillment_history
-    @orders = current_user.accessible_orders.where('fulfilled_at IS NOT NULL')
+    # pcmo and admin
+    # this is really response via entering a delivery method
+    @orders = current_user.accessible_orders.responded
   end
 
   def recent_adds
@@ -24,6 +27,7 @@ class ReportsController < ApplicationController
 
   def pcmo_response_times
     #@orders = Order.group(Order.user_id.pcmo_id).all
+    @orders = Order.where('fulfilled_at IS NOT NULL')
   end
 
   def supply_history
