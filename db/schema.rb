@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131013173812) do
+ActiveRecord::Schema.define(version: 20131013204551) do
 
   create_table "countries", force: true do |t|
     t.string   "name"
@@ -36,9 +36,7 @@ ActiveRecord::Schema.define(version: 20131013173812) do
     t.integer  "quantity"
     t.string   "unit"
     t.string   "location"
-    t.datetime "responded_at"
     t.string   "entered_by"
-    t.integer  "response_id"
   end
 
   create_table "responses", force: true do |t|
