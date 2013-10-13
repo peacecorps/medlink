@@ -19,7 +19,6 @@ namespace :admin do
     user.last_name = names.last
     user.password = user.password_confirmation = password
     user.country = Country.first || raise("Please generate a country to admin")
-    user.city = '-'
     user.role = 'admin'
     user.location = 'Buckhead'
     user.phone = '404-555-1212'

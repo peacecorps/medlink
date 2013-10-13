@@ -15,7 +15,7 @@ def create_user role: :user, name: "joe", country: nil
   user_country = country || FactoryGirl.create(:country)
   @user = FactoryGirl.create(role.to_sym,
     :email => email, :password => password, :password_confirmation => password,
-    :country => user_country, :city => "Roswell",
+    :country => user_country,
     :first_name => name, :last_name => "Doe", :pcv_id => pcv_id)
 end
 

@@ -8,7 +8,6 @@ FactoryGirl.define do
     sequence(:first_name) { |n| "user#{n}"}
     sequence(:last_name)  { |n| "user#{n}last"}
     sequence(:pcv_id)     { |n| n}
-    sequence(:city)       { |n| "city#{n}"}
     sequence(:location)   { |n| "location#{n}"}
 
     factory :admin do

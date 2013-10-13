@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131007033459) do
+ActiveRecord::Schema.define(version: 20131013173812) do
 
   create_table "countries", force: true do |t|
     t.string   "name"
@@ -77,7 +77,6 @@ ActiveRecord::Schema.define(version: 20131007033459) do
     t.string   "pcv_id"
     t.integer  "country_id"
     t.string   "role",                   default: "user"
-    t.string   "city"
     t.string   "location"
     t.integer  "pcmo_id"
   end
