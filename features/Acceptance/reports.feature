@@ -6,6 +6,7 @@ Feature: Reports
   Background:
     Given the default user exists
 
+  @javascript
   Scenario Outline: <user> successfully create report: <report>
     Given I am an "<user>"
     And I am not logged in
@@ -14,7 +15,7 @@ Feature: Reports
     Then I see a successful sign in message
 
     When I create a "<report>" report
-    Then I see a successful file download dialog
+    When I follow CSV link "<report>"
     And I got the correct "<report>" output
     Then I stay on reports page
 
@@ -32,11 +33,10 @@ Feature: Reports
       | admin | Recently Edited Users |
       | admin | PCMO Response Times   |
 
-# FYI: PCV does not have the report page or any of the 6 reports.
-
-# pg.13 (PCMO: 3 reports: Supply Requests, Fulfillment History, Request History, ERRORS?)
-# pg.14 (ADMIN: 6 reports: Supply Requests, Fulfillment History, Request History,
-#    Recently Added Users, PCMO Response Times, ERRORS?)
-
 # TODO: Invalid Outputs? (Answer: GIGO)
 
+# FYI: PCV does not have the report page or any of the 6 reports.
+# FYI: pg.13 (PCMO: 3 reports: Supply Requests, Fulfillment History,
+#    Request History, ERRORS?)
+# FYI: pg.14 (ADMIN: 6 reports: Supply Requests, Fulfillment History, Request
+#    History, Recently Added Users, PCMO Response Times, ERRORS?)
