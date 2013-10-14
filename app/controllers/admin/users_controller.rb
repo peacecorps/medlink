@@ -61,6 +61,7 @@ class Admin::UsersController < AdminController
   def catch_no_record
     yield
   rescue ActiveRecord::RecordNotFound
-    redirect_to new_admin_user_path, :flash => { :error => "Please select a volunteer to edit." }
+    redirect_to new_admin_user_path,
+      :flash => { :error => "Please select a volunteer to edit." }
   end
 end

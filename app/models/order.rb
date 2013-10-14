@@ -13,20 +13,20 @@ class Order < ActiveRecord::Base
 
   validates_numericality_of :quantity, only_integer: true, on: :create
 
-  scope :responded,   -> { includes(:response).references(:response).where(
-    "responses.id IS NOT NULL") }
-  scope :unresponded, -> { includes(:response).references(:response).where(
-    "responses.id IS NULL")     }
+  scope :responded,   -> { includes(:response).references(:response
+    ).where("responses.id IS NOT NULL") }
+  scope :unresponded, -> { includes(:response).references(:response
+    ).where("responses.id IS NULL")     }
 
   scope :past_due, -> { unresponded.where(["orders.created_at < ?",
     3.business_days.ago]) }
   scope :pending,  -> { unresponded.where(["orders.created_at >= ?",
     3.business_days.ago]) }
 
-  scope :responded_by_country,   -> { includes(:response).references(:response).where(
-    "responses.id IS NOT NULL") }
-  scope :unresponded_by_country, -> { includes(:response).references(:response).where(
-    "responses.id IS NULL")     }
+  scope :responded_by_country,   -> { includes(:response).references(:response
+    ).where("responses.id IS NOT NULL") }
+  scope :unresponded_by_country, -> { includes(:response).references(:response
+    ).where("responses.id IS NULL")     }
 
   scope :past_due_by_country, -> { unresponded.where(["orders.created_at < ?",
     3.business_days.ago]) }
