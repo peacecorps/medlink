@@ -48,6 +48,14 @@ Then(/^I should see the exceeds_char_limit error message$/) do
   page.should have_content "Instructions is too long (maximum is 160 characters)"
 end
 
+Then(/^I should see the success error message$/) do
+  page.should have_content "Success! Your response has been sent to"
+end
+
+Then(/^I should be able to assign "(.*?)" to special instruction$/) do |str|
+  fill_in "response_instructions", :with => str
+end
+
 ######################################################################
 
 Given(/^I select a request that another PCMO has responded to$/) do

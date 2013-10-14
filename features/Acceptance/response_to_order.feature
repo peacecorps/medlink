@@ -19,6 +19,10 @@ Feature: Response_to_order Feature
       | ted       | 2      | Quirm     |
       | jennie    | 3      | Quirm     |
       | tink      | 4      | Neverland |
+      | sally     | 5      | Neverland |
+      | john      | 6      | Neverland |
+      | peter     | 7      | Neverland |
+      | paul      | 8      | Neverland |
     And that the following orders have been made
       | pcv | supply | quantity |
       | 1   | BAC    | 10       |
@@ -28,6 +32,10 @@ Feature: Response_to_order Feature
       | 3   | BAC    | 11       |
       | 3   | CHO    | 8        |
       | 4   | GEC    | 56       |
+      | 5   | GEC    | 11       |
+      | 6   | MEL    | 22       |
+      | 7   | CHO    | 33       |
+      | 8   | FRO    | 44       |
     And I am logged in as the pcmo of Quirm
     When I go to the start page
 
@@ -62,7 +70,7 @@ Feature: Response_to_order Feature
     Then I should be able to assign one of four actions: "Special Instructions"
     Then I should be able to assign a special instruction
     When I save my response
-    Then I should see the response date and PCMO id "3" on the request
+    Then I should see the response date and PCMO id "2" on the request
 
 #......................................................................
   @wip
@@ -82,14 +90,35 @@ Feature: Response_to_order Feature
     When I save my response
     Then I should see the missing_delivery_method error message
 
-#......................................................................
-  # Tag D (exc. char limit) (p.8)
+######################################################################
+# VALIDATION
+
+# empty, just-chars, just-digits, special-chars+blanks
+
   @javascript
-  Scenario: "Special Instructions" exceeds 160 Characer Limit
+  Scenario: Accept empty "Special Instructions" textbox
     When I select a "past-due" request
-    Then I should be able to assign a special instruction of 170 characters
+    Then I should be able to assign one of four actions: "Delivery"
+    Then I should be able to assign a special instruction of 0 characters
     When I save my response
-    Then I should see the exceeds_char_limit error message
+    Then I should see the success error message
+
+  @javascript
+  Scenario: Accept "Special Instructions" textbox with 1 character
+    When I select a "past-due" request
+    Then I should be able to assign one of four actions: "Delivery"
+    Then I should be able to assign a special instruction of 1 characters
+    When I save my response
+    Then I should see the success error message
+
+    @javascript
+  Scenario: Accept "Special Instructions" textbox with ([0-9], " ", special chars).
+    When I select a "past-due" request
+    Then I should be able to assign one of four actions: "Delivery"
+    Then I should be able to assign "abcdefghijklmnop 0123456789 !@#$%^&*()_+-={}|:;'<,>.?/~`" to special instruction
+    When I save my response
+    Then I should see the success error message
+
 
 ######################################################################
 # DESIGN DOC TAGS:

@@ -2,9 +2,10 @@ class Response < ActiveRecord::Base
   belongs_to :order
 
   validates_presence_of :delivery_method, message: "is missing"
-  validates :instructions, length: { maximum: 160 },
-    format: { :with => /\A[a-zA-Z0-9\.\/ ]*\z/,
-    :message => "- Please replace the [placeholders] with values." }
+  validates :instructions, format: { :with => /\A[^\[\]]*\z/,
+    :message => "- Please replace the [placeholders] with values." },
+    length: { maximum: 160 }
+#/\A[a-zA-Z0-9\.\/ ]*\z/,
 
   def send!
     to = order.phone || order.user.phone
