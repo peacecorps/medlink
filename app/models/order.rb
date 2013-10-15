@@ -23,16 +23,6 @@ class Order < ActiveRecord::Base
   scope :pending,  -> { unresponded.where(["orders.created_at >= ?",
     3.business_days.ago]) }
 
-  scope :responded_by_country,   -> { includes(:response).references(:response
-    ).where("responses.id IS NOT NULL") }
-  scope :unresponded_by_country, -> { includes(:response).references(:response
-    ).where("responses.id IS NULL")     }
-
-  scope :past_due_by_country, -> { unresponded.where(["orders.created_at < ?",
-    3.business_days.ago]) }
-  scope :pending_by_country,  -> { unresponded.where(["orders.created_at >= ?",
-    3.business_days.ago]) }
-
   def responded?
     response.present?
   end

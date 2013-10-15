@@ -4,20 +4,15 @@
   = select(:country, :country_id, Country.all.collect { |country| [country.name.humanize, country.id] }, {:include_blank => "Select Country"})
   %hr
 
-  -# Given you have a :country value, then filter the 3 tables in the partial file.
-  = render partial: 'manage'
+%h3 Past Due Requests
+%table(class="table.table--bordered.table--striped.table--linked" id="past-due-orders")
+  = render partial: 'table', locals: { orders: @orders.past_due, responded: false }
 
-- else
+%h3 Pending Requests
+%table(class="table.table--bordered.table--striped.table--linked" id="pending-orders")
+  = render partial: 'table', locals: { orders: @orders.pending, responded: false }
 
-  %h3 Past Due Requests
-  %table(class="table.table--bordered.table--striped.table--linked" id="past-due-orders")
-    = render partial: 'table', locals: { orders: @orders.past_due, responded: false }
-
-  %h3 Pending Requests
-  %table(class="table.table--bordered.table--striped.table--linked" id="pending-orders")
-    = render partial: 'table', locals: { orders: @orders.pending, responded: false }
-
-  %h3 Response Tracker
-  %table(class="table.table--bordered.table--striped.table--linked" id="responded-orders")
-    = render partial: 'table_no_links', locals: { orders: @orders.responded, responded: true }
+%h3 Response Tracker
+%table(class="table.table--bordered.table--striped.table--linked" id="responded-orders")
+  = render partial: 'table_no_links', locals: { orders: @orders.responded, responded: true }
 
