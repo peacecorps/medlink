@@ -37,11 +37,19 @@ class Admin::UsersController < AdminController
   end
 
   def update
-# FIXME: Changed <list of field changes> to actual values.
+    field_chgs = ""
+    user_params.each do |key,value|
+      if user_params[key] != @user[key]
+        if !user_params[key].empty?
+          field_chgs << "#{key}=[#{user_params[key]}]; "
+        end
+      end    
+    end
+ 
     if @user.update_attributes user_params
       redirect_to new_admin_user_path,
         notice: 'Success! You have made the following changes ' +
-          'to this user account: <list of field changes>'
+          "to this user account: #{field_chgs}"
     else
       render :edit
     end
@@ -65,3 +73,4 @@ class Admin::UsersController < AdminController
       :flash => { :error => "Please select a volunteer to edit." }
   end
 end
+

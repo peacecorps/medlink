@@ -17,8 +17,6 @@ Given(/^that the following orders have been made$/) do |orders|
       created_at: i.business_days.before(Time.now)
     i = i + 1
   end
-
-  # TODO: Add one to "Response Tracker" table. Set "responded_at: Time.now"
 end
 
 Given(/^that the following pcmos exist:$/) do |pcmos|
