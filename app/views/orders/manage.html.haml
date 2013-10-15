@@ -19,5 +19,5 @@
 
   %h3 Response Tracker
   %table(class="table.table--bordered.table--striped.table--linked" id="responded-orders")
-    = render partial: 'table_no_links', locals: { orders: @orders.responded, responded: true }
+    = render partial: 'table', locals: { orders: @orders.responded, responded: true }
 
