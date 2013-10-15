@@ -14,7 +14,7 @@
       %th Received
 %tbody
   - orders.each do |order|
-    %tr(data-link="#{new_order_response_path order}")
+    %tr{ responded ? {} : { "data-link" => new_order_response_path(order) } }
       %td= order.user.pcv_id
       %td= order.user.first_name
       %td= order.user.last_name
