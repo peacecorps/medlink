@@ -2,16 +2,17 @@
 
 = CSV.generate do |csv|
 
-  - csv << ["User ID", "Order ID", "Placed", "Fulfilled", "First name",
-    "Last name", "Email", "Phone", "Item#", "Amount", "Unit", "Location"]
-  -# "Country", "Response Time", "How Past Due"
+  - csv << ["User ID", "Order ID", "Placed", "Responded", "First name",
+    "Last name", "Email", "Phone", "Supply Type", "Amount", "Unit",
+    "Location", "Country", "Response Time", "How Past Due"]
 
   - @orders.each do |order|
     - csv << [order.user_id, order.id, order.created_at,
-      order.fulfilled_at, order.user.first_name, order.user.last_name,
-      order.email || order.user.email, order.phone || order.user.phone,
-      order.supply, order.quantity, order.unit, order.location]
-  -# order.find_by_id(order.user_id).country,
-  -# order.response.created_at - order.created_at,
-  -# 3.business_days.after(order.created_at) - order.response.created_at
+      "ORCA",
+      order.user.first_name, order.user.last_name, order.user.email,
+      order.user.phone, order.supply, order.quantity, order.unit,
+      order.location, order.user.country.name, "ORCAM", "3OCATM"]
 
+  -# ORCA: order.response || order.response.created_at, 
+  -# ORCAM: order.response.created_at - order.created_at,
+  -# 3OCATM: 3.business_days.after(order.created_at) - order.response.created_at

@@ -26,9 +26,11 @@ class ReportsController < ApplicationController
   end
 
   def pcmo_response_times
-    #@orders = Order.group(Order.user_id.pcmo_id).all
-    #GOAL: JOIN ORDER AND RESPONSE AND ASSIGN RECORDS RESPONSE.CREATED_AT HAS A VALUE.
-    @orders = Order.where('fulfilled_at IS NOT NULL')
+    # @orders = Order.group(Order.user_id.pcmo_id).all
+    # GOAL: JOIN ORDER AND RESPONSE AND ASSIGN RECORDS RESPONSE.CREATED_AT HAS A VALUE.
+    # @orders = Order.where('fulfilled_at IS NOT NULL')
+    # NOT: @orders = Order.where("responded_at IS NOT NULL") 
+    @orders = Order.all
   end
 
   def supply_history
