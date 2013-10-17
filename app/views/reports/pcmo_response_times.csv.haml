@@ -4,7 +4,7 @@
 
   - csv << ["User ID", "Order ID", "Placed", "Responded", "First name",
     "Last name", "Email", "Phone", "Supply Type", "Amount", "Unit",
-    "Location", "Country", "Response Time", "How Past Due"]
+    "Location", "Country", "Response Days", "Day Past Due"]
 
   - @orders.each do |order|
     - csv << [order.user_id, order.id, order.created_at,
@@ -12,7 +12,4 @@
       order.user.first_name, order.user.last_name, order.user.email,
       order.user.phone, order.supply, order.quantity, order.unit,
       order.location, order.user.country.name, 
-      "ORCAM", "3OCATM"]
-
-  -# ORCAM: (order.responded_at - order.created_at)
-  -# 3OCATM: 3.business_days.after(order.created_at) - order.response.created_at
+      order.response_time, order.how_past_due]
