@@ -8,11 +8,11 @@
 
   - @orders.each do |order|
     - csv << [order.user_id, order.id, order.created_at,
-      "ORCA",
+      order.responded_at,
       order.user.first_name, order.user.last_name, order.user.email,
       order.user.phone, order.supply, order.quantity, order.unit,
-      order.location, order.user.country.name, "ORCAM", "3OCATM"]
+      order.location, order.user.country.name, 
+      "ORCAM", "3OCATM"]
 
-  -# ORCA: order.response || order.response.created_at, 
-  -# ORCAM: order.response.created_at - order.created_at,
+  -# ORCAM: (order.responded_at - order.created_at)
   -# 3OCATM: 3.business_days.after(order.created_at) - order.response.created_at
