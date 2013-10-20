@@ -1,8 +1,21 @@
+:javascript
+  function countrySelect() {
+    
+    var selectedCountryId = $('#country_country_id').val(); 
+    var selectedCountryText = $('#country_country_id option:selected').text();
+    //alert(selectedCountryText);
+
+    //if (selectedCountry) {
+    //    $('#' + selectedCountry + '-select').show();
+    // }
+  }  
+
 %h2 Request Manager
 
 - if current_user.admin?
-  = select(:country, :country_id, Country.all.collect { |country| [country.name.humanize, country.id] }, {:include_blank => "Select Country"})
+  = select(:country, :country_id, Country.all.collect { |country| [country.name.humanize, country.id] }, {:include_blank => "Select Country"}, {:onChange => "countrySelect();"})
   %hr
+  // %select#selection_1{:name => "selection_1", :onChange => "UpdateSelect();"}
 
 %h3 Past Due Requests
 %table(class="table.table--bordered.table--striped.table--linked" id="past-due-orders")
