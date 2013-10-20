@@ -47,7 +47,7 @@ class User < ActiveRecord::Base
       Order.all
     when :pcmo
       Order.includes(:user).where users: {country_id: country_id}
-    when
+    else
       orders
     end
   end
