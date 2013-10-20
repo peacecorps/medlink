@@ -42,8 +42,14 @@ class User < ActiveRecord::Base
 
   # FIXME: denormalize on country
   def accessible_orders
-    admin? || pcmo? ? Order.includes(:user).where(
-      users: {country_id: country_id}) : orders
+    case role.to_sym
+    when :admin
+      Order.all
+    when :pcmo
+      Order.includes(:user).where users: {country_id: country_id}
+    when
+      orders
+    end
   end
 
   def self.lookup str
