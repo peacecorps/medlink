@@ -17,6 +17,8 @@
   %hr
   // %select#selection_1{:name => "selection_1", :onChange => "UpdateSelect();"}
 
+  = render partial: 'manage'
+
 - elsif current_user.pcmo?
   %h3 Past Due Requests
   %table(class="table.table--bordered.table--striped.table--linked" id="past-due-orders")
