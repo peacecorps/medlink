@@ -100,7 +100,7 @@ Feature: Place a Request
       | pcv   | Request Form    |
       | admin | Place a Request |
       | pcmo  | Place a Request |
-      
+
 #TODO: Scenario Outline: User does not give a location (AL: Appears to have a default value)
 #TODO: Scenario: User gives a bad location value. (AL: not validation)
 #TODO: Scenario: User gives a bad units value. - H (invalid unit) (AL: not validation)

@@ -45,7 +45,7 @@ When(/^I give it all the valid sms inputs$/) do
   set_current_number "+5555555512"
 
   msg = '123456, ASDF, 30mg, 50, Somewhere'
-puts msg  
+puts msg
   #FORMAT:  "PCVID, Supply short name, ,dose, qty, location."
   # FIXME: add_message Message.new :number => "5555555512", :body => msg
 end
