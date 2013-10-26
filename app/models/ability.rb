@@ -4,14 +4,14 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    case user.role.to_sym
-    when :pcv
+    case user.role
+    when "pcv"
       can :create, Order, user_id: user.id
 
-    when :pcmo
+    when "pcmo"
       can :manage, Order, user: { country_id: user.country_id }
 
-    when :admin
+    when "admin"
       can :manage, User
       can :manage, Order
 
