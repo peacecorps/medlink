@@ -111,7 +111,7 @@ Feature: Response_to_order Feature
     When I save my response
     Then I should see the success error message
 
-    @javascript
+  @javascript
   Scenario: Accept "Special Instructions" textbox with ([0-9], " ", special chars).
     When I select a "past-due" request
     Then I should be able to assign one of four actions: "Delivery"
@@ -119,6 +119,12 @@ Feature: Response_to_order Feature
     When I save my response
     Then I should see the success error message
 
+  @javascript
+  Scenario: Check for fogetting to replace the "[word]" in default messages.
+    When I select a "past-due" request
+    Then I should be able to assign one of four actions: "Delivery"
+    When I save my response
+    Then I should see the replace_placeholder error message
 
 ######################################################################
 # DESIGN DOC TAGS:

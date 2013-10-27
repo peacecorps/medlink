@@ -48,6 +48,10 @@ Then(/^I should see the exceeds_char_limit error message$/) do
   page.should have_content "Instructions is too long (maximum is 160 characters)"
 end
 
+Then(/^I should see the replace_placeholder error message$/) do
+  page.should have_content 'Instructions - Please replace the [placeholders] with values.'
+end
+
 Then(/^I should see the success error message$/) do
   page.should have_content "Success! Your response has been sent to"
 end
