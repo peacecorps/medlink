@@ -16,6 +16,8 @@ gem 'sucker_punch'
 gem 'font-awesome-rails'
 gem 'business_time'
 
+gem 'ffi', '1.9.0'
+
 group :assets do
   gem 'sass-rails'
   gem "compass-rails", "~> 2.0.alpha.0"
