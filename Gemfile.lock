@@ -102,7 +102,7 @@ GEM
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     ffi (1.9.1)
-    font-awesome-rails (4.0.0.0)
+    font-awesome-rails (4.0.1.0)
       railties (>= 3.2, < 5.0)
     fssm (0.2.10)
     gherkin (2.12.2)
