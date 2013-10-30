@@ -86,3 +86,15 @@ Feature: "Request History" Web Page's Dropdown
     | Last 6 Months  | 99    | 
     | 1 year         | 99    | 
     | Current Month  | 99    |
+
+# (StartDate, EndDate) Test cases:
+# 0. Legend: "<<" mean large difference.
+# 0. Assume you use the same time on each date.
+# 1. Start == End 
+# 2. Start << End
+# 3. Start <  End (Start = E + 1) (close dates)
+# 4. Start >  End (Start + 1 = E) (close dates)
+# 5. Start >> End
+# 6. Start == null (not set)  
+# 7. End   == null (not set)
+# 8. Invalid dates (Feb. 30, Sep. 31, Feb. 29 on Non-Leap years)
