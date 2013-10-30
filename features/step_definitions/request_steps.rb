@@ -121,4 +121,13 @@ end
 When(/^I unselect volunteer$/) do
   select 'Select Volunteer to request for', from: 'order[user_id]'
 end
+
+Given(/^I select duration "(.*?)"$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I see (\d+) lines in the table$/) do |expected_lines|
+  history_orders_in_table = page.all('table#pending-orders tr').count - 1
+  history_orders_in_table.should == expected_lines.to_i
+end
 #save_and_open_page

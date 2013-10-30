@@ -15,7 +15,7 @@
 %table(class="table.table--bordered.table--striped.table--linked" id="orders")
   %thead
     - if current_user.try(:pcmo?) || current_user.try(:admin?)
-      %select{ :name => "Previous Month" }
+      %select{ :name => "duration" }
         %option{:value => 1}= "Current Month"
         %option{:value => 2}= "Previous Month"
         %option{:value => 3}= "Last 3 Months"
