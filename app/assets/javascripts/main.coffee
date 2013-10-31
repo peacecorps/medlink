@@ -29,3 +29,6 @@ $ ->
     else
       $("#user_pcmo_id").hide()
   ).change()
+
+  # -- To pick start and end dates -----
+  $("#duration").daterangepicker();

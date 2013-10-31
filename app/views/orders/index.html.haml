@@ -15,12 +15,15 @@
 %table(class="table.table--bordered.table--striped.table--linked" id="orders")
   %thead
     - if current_user.try(:pcmo?) || current_user.try(:admin?)
-      %select{ :name => "duration" }
-        %option{:value => 1}= "Current Month"
-        %option{:value => 2}= "Previous Month"
-        %option{:value => 3}= "Last 3 Months"
-        %option{:value => 4}= "Last 6 Months"
-        %option{:value => 5}= "1 year"
+      %form.form-horizontal
+        %fieldset
+          .control-group
+            %label.control-label{:for => "duration"} Start and End dates:
+            .controls
+              .input-prepend
+                %span.add-on
+                  %i.icon-calendar
+              %input#duration{:name => "duration", :type => "text"}/
     %tr
       - if current_user.try(:pcmo?) || current_user.try(:admin?)
         %th First Name

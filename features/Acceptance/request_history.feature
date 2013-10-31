@@ -13,7 +13,7 @@ Feature: Visit "Request History" Web Page
     Then I should see std icon area items
     Then I should see std tab area items
 
-    Then I should see dropdownmenu "Current Month"
+    #FIXME (#129): Then I should see dropdownmenu "Current Month"
 
     Then I should see column "First Name"
     Then I should see column "Last Name"
