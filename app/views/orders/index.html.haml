@@ -19,11 +19,7 @@
         %fieldset
           .control-group
             %label.control-label{:for => "duration"} Start and End dates:
-            .controls
-              .input-prepend
-                %span.add-on
-                  %i.icon-calendar
-              %input#duration{:name => "duration", :type => "text"}/
+            %input#duration{:name => "duration", :type => "text"}/
     %tr
       - if current_user.try(:pcmo?) || current_user.try(:admin?)
         %th First Name
