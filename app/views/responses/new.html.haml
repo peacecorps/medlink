@@ -1,0 +1,49 @@
+.order-back
+  = link_to manage_orders_path do
+    %i.icon-caret-left
+    %span Back to all Orders
+
+  %p
+  = render partial: 'partials/errors', locals: {object: @response}
+
+.order
+  .order__section
+    %hgroup
+      %h3
+        %span
+          Order From:
+          = @order.user.name
+        %small.pcv-id= @order.user.pcv_id
+      %div
+        %em= "#{@order.location}, #{@order.user.country.name}"
+    %table.table
+      %tbody
+        %tr
+          %td= @order.user.first_name
+          %td= @order.user.last_name
+          %td= @order.user.pcv_id
+          %td= @order.supply
+          %td= @order.unit
+          %td= @order.quantity
+          %td= @order.full_dosage
+          %td= @order.user.location
+          %td= @order.user.country
+          %td= @order.created_at.strftime '%-m/%-d/%y'
+    .order__extra= @order.extra
+
+  = form_for @response, url: order_response_path(@order, @response), html: {class: 'order__section'} do |f|
+    %h4.order__method Fulfillment Method
+    .order__message
+      %ul.radio-group
+        %ul.list-column
+          - DeliveryMethod.each do |method|
+            %li
+              = f.radio_button :delivery_method, method.name, data: {message: method.text}
+              %label(for="order_delivery_method_#{method.name}")= method.title
+        Edit Default SMS
+        .order__instructions
+          = f.text_area :instructions, size: "40x4", maxlength: 160
+        .order__characters "160 characters remaining"
+    .btn-group
+      %button.btn.btn--primary(type="submit") Send Response
+

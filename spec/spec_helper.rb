@@ -78,4 +78,6 @@ RSpec.configure do |config|
   config.after :each do
     DatabaseCleaner.clean
   end
+
+  Zonebie.set_random_timezone
 end

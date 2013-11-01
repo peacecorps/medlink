@@ -1,0 +1,11 @@
+%h3 Past Due Requests
+%table(class="table.table--bordered.table--striped.table--linked" id="past-due-orders")
+  = render partial: 'table', locals: { orders: @orders.past_due, responded: false }
+
+%h3 Pending Requests
+%table(class="table.table--bordered.table--striped.table--linked" id="pending-orders")
+  = render partial: 'table', locals: { orders: @orders.pending, responded: false }
+
+%h3 Response Tracker
+%table(class="table.table--bordered.table--striped.table--linked" id="responded-orders")
+  = render partial: 'table', locals: { orders: @orders.responded, responded: true }

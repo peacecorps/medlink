@@ -29,3 +29,11 @@ $ ->
     else
       $("#user_pcmo_id").hide()
   ).change()
+
+  # -- To pick start and end dates -----
+  $("input[name='duration']").daterangepicker
+    format: "YYYY-MM-DD"
+    startDate: "2013-01-01"
+    endDate: "2013-12-31"
+  , (start, end) ->
+    alert "A date range was chosen: " + start.format("YYYY-MM-DD") + " to " + end.format("YYYY-MM-DD")

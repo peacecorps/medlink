@@ -1,2 +1,5 @@
-%h1 Edit User
+%h1 Edit Account
+= select(:user, :id, User.all.collect { |userx| [userx.name, userx.id] }, { :include_blank => "Select Volunteer to edit" } )
+%hr
+
 = render partial: 'form', locals: {user: @user, action: :edit}

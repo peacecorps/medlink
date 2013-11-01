@@ -1,58 +1,53 @@
 class OrdersController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :find_order, except: [:index, :new, :create, :report]
-
   def index
     @orders = current_user.accessible_orders
   end
 
+  def manage
+    authorize! :manage, Order
+    @orders = current_user.accessible_orders
+  end
+
   def new
+    # FIXME: need "Add Another Supply" functionality for PCVs
     @order = current_user.orders.new location: current_user.location
   end
 
   def create
-    @order = current_user.orders.new create_params
+    @order = Order.new create_params.merge entered_by: current_user
+
+    if @order.user_id
+      authorize! :create, @order
+    else
+      # Not enough info to authorize; redisplay with validation errors
+      @order.valid?
+      render :new and return
+    end
+
     if @order.save
-      redirect_to orders_path, notice: "Order submitted successfully"
+      next_page = case current_user.role.to_sym
+      when :admin
+        new_admin_user_path
+      when :pcmo
+        manage_orders_path
+      else
+        orders_path
+      end
+
+      # Tag P6
+      redirect_to next_page,
+        notice: "Success! The Order you placed on behalf of " +
+          "#{@order.user.name} has been sent."
     else
       render :new
     end
   end
 
-  def edit
-    @defaults = {
-      'Delivered to PCV' => 'Your request will be delivered to you at your site on [enter date here].',
-      'PCV Purchase' => 'We do not have your requested item in stock. Please purchase elsewhere and allow us to reimburse you.',
-      'Delivered to Hub' => 'Your request will be delivered to [enter location here] on [enter date here].',
-      'Special Instructions' => ''
-    }
-  end
-
-  def update
-    # FIXME:
-    # - limit to admins
-    # - currently, this *can't* fail any validations. Should we check for
-    #     instructions here?
-    # - should we always send instructions on an update?
-    @order.update_attributes update_params.merge(fulfilled_at: Time.now)
-    @order.send_instructions!
-    redirect_to orders_path, notice: "Order updated successfully"
-  end
-
-  def report
-  end
-
   private # -----
 
-  def find_order
-    @order = current_user.accessible_orders.find params[:id]
-  end
-
   def create_params
-    params.require(:order).permit [:extra, :supply_id, :location, :unit, :quantity]
-  end
-
-  def update_params
-    params.require(:order).permit [:instructions]
+    params.require(:order).permit [:extra, :supply_id, :location,
+                                   :unit, :quantity, :user_id]
   end
 end
+

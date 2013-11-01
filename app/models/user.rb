@@ -7,12 +7,13 @@ class User < ActiveRecord::Base
 
   belongs_to :country
   has_many :orders
-  validates_presence_of :country, :location, :phone, :first_name, :last_name, :pcv_id
+  validates_presence_of :country, :location, :phone, :first_name,
+    :last_name, :pcv_id, :role
   validates :pcv_id, uniqueness: true
 
   Roles = {
-    pcv:   'PCV',
-    pcmo:  'PCMO',
+    pcv:   'Peace Corps Volunteer',
+    pcmo:  'Peace Corps Medical Officer',
     admin: 'Admin'
   }
 
@@ -28,10 +29,27 @@ class User < ActiveRecord::Base
     pcmos.includes(:country).group_by &:country
   end
 
+  def pcvs
+    case role.to_sym
+    when :admin
+      User.all.pcvs
+    when :pcmo
+      country.users.pcvs
+    else
+      raise "No PCVs for #{role}"
+    end
+  end
+
   # FIXME: denormalize on country
   def accessible_orders
-    admin? ? Order.includes(:user).where(
-      users: {country_id: country_id}) : orders
+    case role.to_sym
+    when :admin
+      Order.all
+    when :pcmo
+      Order.includes(:user).where users: {country_id: country_id}
+    else
+      orders
+    end
   end
 
   def self.lookup str

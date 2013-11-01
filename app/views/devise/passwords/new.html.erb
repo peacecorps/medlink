@@ -17,9 +17,8 @@
           <%= f.text_field :pcv_id, :placeholder => 'PCV ID', :class => 'input--full', :type => :text %>
         </div>
 
-        <div class="btn-group">
-          <%= f.submit "Submit", :class => 'btn btn--primary' %>
-        </div>
+        <%= link_to "Cancel", new_user_session_path, :class => 'btn btn--primary' %>
+        <%= f.submit "Submit", :class => 'btn btn--primary' %>
       </div>
     <% end %>
 

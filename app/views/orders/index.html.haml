@@ -1,32 +1,53 @@
-%table.table.table--bordered.table--striped.table--linked
+%h2 Request History
+%table(class="table.table--bordered.table--striped.table--linked" id="orders")
   %thead
+    - if current_user.try(:pcmo?) || current_user.try(:admin?)
+      %form.form-horizontal
+        %fieldset
+          .control-group
+            %label.control-label{:for => "duration"} Start and End dates:
+            %input#duration{:name => "duration", :type => "text"}/
     %tr
-      %th Requester
-      %th Requested Supplies
+      - if current_user.try(:pcmo?) || current_user.try(:admin?)
+        %th First Name
+        %th Last Name
+        %th PCVID
+      %th Supply
       %th Unit
       %th Quantity
-      %th Location
-      %th Request Date
-      %th
-        - if current_user.pcv?
-          = link_to new_order_path, class: "btn btn--primary" do
-            Order
-            %i.icon-file
+      - if current_user.try(:pcmo?) || current_user.try(:admin?)
+        %th Location
+      %th Requested
+      %th Response
+      - if current_user.try(:pcmo?) || current_user.try(:admin?)
+        %th Fulfilled
+        %th
+          - if current_user.pcv?
+            = link_to new_order_path, class: "btn btn--primary" do
+              Order
+              %i.icon-file
   %tbody
     - @orders.each do |order|
       - next if order.fulfilled?
-      %tr(data-link="#{edit_order_path order}")
-        %td
-          %span.cell--primary= order.user.name
-          %small.cell--secondary= order.user.pcv_id
+      %tr
+        - if current_user.try(:pcmo?) || current_user.try(:admin?)
+          %td= order.user.first_name
+          %td= order.user.last_name
+          %td= order.user.pcv_id
         %td= order.supply
         %td= order.unit
         %td= order.quantity
-        %td
-          %span.cell--primary= order.location 
-        %td
-          %span= order.created_at.strftime '%-m/%-d/%y'
-          %small.cell--secondary= order.created_at.strftime '%H:%M'
-        %td.cell--arrow
-          %i.icon-caret-right
-
+        - if current_user.try(:pcmo?) || current_user.try(:admin?)
+          %td
+            %span.cell--primary= order.location
+          %td
+            %span= order.created_at.strftime '%-m/%-d/%y'
+            %small.cell--secondary= order.created_at.strftime '%H:%M'
+        - if order.responded?
+          %td= order.responded_at.strftime '%-m/%-d/%y'
+        - else
+          %td EMPTY
+        - if order.fulfilled?
+          %td= order.fulfilled_at.strftime '%-m/%-d/%y'
+        - else
+          %td EMPTY

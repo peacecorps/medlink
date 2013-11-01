@@ -3,18 +3,19 @@
 def create_visitor
   email    = "joe.doe@gmail.com"
   password = "please123"
-  @visitor ||= { :first_name => "Joe", :last_name => "Doe", 
+  @visitor ||= { :first_name => "Joe", :last_name => "Doe",
     :email => email,
     :password => password, :password_confirmation => password }
 end
 
-def create_user role: :user, name: "joe"
+def create_user role: :user, name: "joe", country: nil
   email    = "#{name}.doe@gmail.com"
   password = "please123"
   pcv_id = Random.new.rand(10000000..99999999).to_s
-  @user = FactoryGirl.create(role.to_sym, 
+  user_country = country || FactoryGirl.create(:country)
+  @user = FactoryGirl.create(role.to_sym,
     :email => email, :password => password, :password_confirmation => password,
-    :country => FactoryGirl.create(:country), :city => "Roswell",
+    :country => user_country,
     :first_name => name, :last_name => "Doe", :pcv_id => pcv_id)
 end
 
@@ -22,13 +23,24 @@ def set_role(role)
   #ADMIN: , :role => 'admin'
   #PCV:   , :role => 'pcv'
   #PCMO:  , :role => 'pcmo'
-  @user = { :role => role }
+  #WAS: @user = { :role => role }
+  if @user
+    @user.update_attributes(role: role)
+    @user.save
+  else
+    @user = User.new(role: role)
+  end
 end
 
-def sign_in
+def sign_in(remember=false)
   visit '/users/sign_in'
-  fill_in "email@email.com", :with => @visitor[:email]
-  fill_in "Password", :with => @visitor[:password]
+  fill_in "user_email", :with => @visitor[:email]
+  fill_in "user_password", :with => @visitor[:password]
+  if (remember)
+    check "user_remember_me"
+  else
+    uncheck "user_remember_me"
+  end
   click_button "Sign in"
 end
 
@@ -72,33 +84,150 @@ Given /^I am logged in as (a|an|the) (\w+)$/ do |_, role|
    sign_in
 end
 
+Given(/^I am logged in as (a|an|the) (\w+) of (\w+)$/) do |_, role, country|
+   create_user role: role, country: Country.find_by_name(country)
+   create_visitor
+   sign_in
+end
+
+Given(/^that pcv "(.*?)" exists$/) do |name|
+  create_user role: :user, name: name
+end
+
+Given(/^that the following pcvs exist:$/) do |users|
+  users.hashes.each do |user|
+    FactoryGirl.create :user, first_name: user['name'],
+      pcv_id: user['pcv_id'], country: Country.find_by_name(user['country'])
+  end
+end
+
+### WHEN ############################################################
+
 When /^I sign in with valid credentials$/ do
   create_visitor
   sign_in
+end
+
+When /^I sign in with valid credentials after checking remember me$/ do
+  sign_in(true)
+end
+
+When(/^I close my browser \(clearing the session\)$/) do
+  expire_cookies
+end
+
+When(/^I clear my remember me cookie and close my browser$/) do
+  expire_cookies
+  delete_cookie "remember_user_token"
 end
 
 When /^I sign out$/ do
   click_link "Sign Out"
 end
 
-When /^I sign up with an invalid email$/ do
-  create_visitor
-  @visitor = @visitor.merge(:email => "notanemail")
-  sign_up
-end
-
 When /^I return to the site$/ do
   visit '/'
 end
 
-When /^I sign in with a wrong email$/ do
-  @visitor = @visitor.merge(:email => "wrong@example.com")
+When(/^I sign in with a blank password$/) do
+  @visitor = @visitor.merge(:password => "")
   sign_in
 end
 
-When /^I sign in with a wrong password$/ do
-  @visitor = @visitor.merge(:password => "wrongpass")
+# E1
+When(/^I sign in with a invalid email$/) do
+  create_visitor
+  @visitor = @visitor.merge(:email => "notanemail")
   sign_in
+end
+
+# E2
+When /^I sign in with a unknown email$/ do
+  @visitor = @visitor.merge(:email => "unknown@example.com")
+  sign_in
+end
+
+When(/^I give valid password inputs$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => @visitor[:password]
+  fill_in "New Password", :with => @visitor[:password] + "1"
+  fill_in "Password Confirmation", :with => @visitor[:password] + "1"
+  click_button "Update"
+end
+
+When(/^I give invalid password$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => "WRONG PW"
+  fill_in "New Password", :with => @visitor[:password] + "1"
+  fill_in "Password Confirmation", :with => @visitor[:password] + "1"
+  click_button "Update"
+end
+
+When(/^I give blank password$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => "WRONG PW"
+  fill_in "New Password", :with => ''
+  fill_in "Password Confirmation", :with => ''
+  click_button "Update"
+end
+
+When(/^I give mismatched passwords$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => @visitor[:password]
+  fill_in "New Password", :with => @visitor[:password] + "1"
+  fill_in "Password Confirmation", :with => @visitor[:password] + "2"
+  click_button "Update"
+end
+
+When(/^I give too short new password$/) do
+  visit '/users/edit'
+  fill_in "Current Password", :with => @visitor[:password]
+  fill_in "New Password", :with => "2short"
+  fill_in "Password Confirmation", :with => "2short"
+  click_button "Update"
+end
+
+# K
+When(/^I sign in with a invalid password$/) do
+  @visitor = @visitor.merge(:password => "123")
+  sign_in
+end
+
+When(/^I ask for a forgotten password$/) do
+  visit 'http://localhost:3000/users/password/new'
+end
+
+When(/^I give an invalid email$/) do
+  delete_user ; create_user
+  fill_in "email@email.com", :with => "notanemail" # BAD
+  fill_in "PCV ID", :with => @user[:pcv_id] # GOOD
+  click_button "Submit"
+end
+
+When(/^I give an invalid pcvid$/) do
+  delete_user ; create_user
+  fill_in "email@email.com", :with => @user[:email] # GOOD
+  fill_in "PCV ID", :with => "" # BAD
+  click_button "Submit"
+end
+
+When(/^I give all valid inputs$/) do
+  delete_user ; create_user
+  fill_in "email@email.com", :with => @user[:email] # GOOD
+  fill_in "PCV ID", :with => @user[:pcv_id] # GOOD
+  click_button "Submit"
+end
+
+### THEN ############################################################
+
+Then (/^I should be signed in as "(.*?)"$/) do |role|
+  if role == "admin"
+    expect(current_url).to eq("http://www.example.com/admin/users/new")
+  elsif role == "pcmo"
+    expect(current_url).to eq("http://www.example.com/orders/manage")
+  else # PCV
+    expect(current_url).to eq("http://www.example.com/orders")
+  end
 end
 
 Then /^I should be signed in$/ do
@@ -114,47 +243,91 @@ Then /^I should be signed out$/ do
 end
 
 Then /^I should see a signed out message$/ do
-  #FIXME: page.should have_content "Signed out successfully."
-  page.should have_content "Invalid email or password."
+  page.should have_content "Signed out successfully."
 end
 
 Then /^I see an invalid login message$/ do
   page.should have_selector ".alert", text: "Invalid email or password."
 end
 
-Given(/^that pcv "(.*?)" exists$/) do |name|
-  create_user role: :user, name: name
+Then /^I should see an account edited message$/ do
+  page.should have_content "You updated your account successfully."
 end
 
-#TODO# Then /^I see an unconfirmed account message$/ do
-#TODO#   page.should have_selector ".alert", text: "You have to confirm your account before continuing."
-#TODO# end
+Then(/^I should see an invalid current password message$/) do
+  page.should have_content "Current password is invalid"
+end
 
-#TODO# Then /^I should see a successful sign up message$/ do
-#TODO#   page.should have_content "Welcome! You have signed up successfully."
-#TODO# end
+Then(/^I should see an blank current password message$/) do
+  page.should have_content "Current password is invalid"
+end
 
-#TODO# Then /^I should see an invalid email message$/ do
-#TODO#   page.should have_content "Please enter an email address"
-#TODO# end
+Then /^I should see a mismatched password message$/ do
+  page.should have_content "Password confirmation doesn't match Password"
+end
 
-#TODO# Then /^I should see a missing password message$/ do
-#TODO#   page.should have_content "Password can't be blank"
-#TODO# end
+Then(/^I should see a too short password message$/) do
+  page.should have_content "Password is too short (minimum is 8 characters)"
+end
 
-#TODO# Then /^I should see a missing password confirmation message$/ do
-#TODO#   page.should have_content "Password doesn't match confirmation"
-#TODO# end
+Then(/^I see a invalid forgot password email message$/) do
+  page.should have_selector ".alert", text: "Email Invalid: The email you specified is invalid. Please check the spelling, formatting and that it is an active address."
+end
 
-#TODO# Then /^I should see a mismatched password message$/ do
-#TODO#   page.should have_content "Password doesn't match confirmation"
-#TODO# end
+Then(/^I see a invalid forgot password pcvid message$/) do
+  page.should have_selector ".alert", text: "PCVID Invalid: Your request was not submitted because the PCVID was incorrect. Please resubmit your request in this format: PCVID, Supply short name, dose, qty, location."
+end
 
-#TODO# Then /^I should see an account edited message$/ do
-#TODO#   page.should have_content "You updated your account successfully."
-#TODO# end
+Then(/^I see a successful message$/) do
+  page.should have_selector ".alert", text: "Success! A temporary password has been sent to the email we have on file. Please check your e-mail and click on the link to complete the log in. (web experience)"
+end
 
-#TODO# Then /^I should see my name$/ do
-#TODO#   create_user
-#TODO#   page.should have_content @user[:name]
-#TODO# end
+Then(/^I see a pcv_id unrecognized message$/) do
+  page.should have_content "PCV ID unrecognized"
+end
+
+# E1 ERROR MSG
+Then /^I see an invalid email message$/ do
+  #FIXME:  (#114#: E1)
+  #page.should have_selector ".alert", text: "Email Invalid:
+  #    The email you specified is invalid. Please check the spelling,
+  #    formatting and that it is an active address.
+  page.should have_selector ".alert", text: "Invalid email or password."
+end
+
+# E2 ERROR MSG (unregistered)
+Then /^I see an unregistered email message$/ do
+  #FIXME: (#114#: E2)
+  #page.should have_selector ".alert", text: "The email you entered
+  #    is not on file. Please check the spelling and formatting
+  #    before re-entering the address.
+  page.should have_selector ".alert", text: "Invalid email or password."
+end
+
+# E2
+Then /^I see an unknown email message$/ do
+  #FIXME: (#114#: E2)
+  #page.should have_selector ".alert", text: "The email you entered
+  #    is not on file. Please check the spelling and formatting
+  #    before re-entering the address.
+  page.should have_selector ".alert", text: "Invalid email or password."
+end
+
+# K ERROR MSG
+Then(/^I see an invalid password message$/) do
+  #FIXME:  (#114#: K)
+  #page.should have_selector ".alert", text: "Invalid Password: the
+  #    Password you entered is not valid. Please re-enter your password
+  #    or contact your administrator via email for more help."
+  page.should have_selector ".alert", text: "Invalid email or password."
+end
+
+# K
+Then(/^I see an blank password message$/) do
+  #FIXME: (#114#: K)
+  #page.should have_selector ".alert", text: "Invalid Password: the
+  #    Password you entered is not valid. Please re-enter your password
+  #    or contact your administrator via email for more help."
+  page.should have_selector ".alert", text: "Invalid email or password."
+end
+#save_and_open_page

@@ -1,12 +1,18 @@
-%h1 Request Form
-%h3
-  %span= current_user.name
-  %small= current_user.pcv_id
+%h1= current_user.pcv? ? "Request Form" : "Place an Order"
 
 = form_for @order, html: {class: 'form--order'} do |f|
   = render partial: 'partials/errors', locals: {object: @order}
 
   .form__section
+    .input-group
+      - if current_user.pcv?
+        %span= current_user.name
+        %small= current_user.pcv_id
+        = f.hidden_field :user_id, value: current_user.id
+      - else
+        = f.select :user_id, [['Select Volunteer to request for', '']] + User.all.map { |u| [u.name, u.id] }
+      %hr
+
     .input-group
       .select.select--full
         = f.select :supply_id, [['Select Supply', '']] + Supply.choices
@@ -16,10 +22,10 @@
       = f.text_field :location, placeholder: 'Location', class: 'input input--full'
 
     .input-group
-      = f.text_field :quantity, placeholder: 'Quantity', class: 'input input--full'
+      = f.text_field :unit, placeholder: 'Units', class: 'input input--full'
 
     .input-group
-      = f.text_field :unit, placeholder: 'Units', class: 'input input--full'
+      = f.text_field :quantity, placeholder: 'Quantity', class: 'input input--full'
 
     .input-group
       = f.text_area :extra, placeholder: 'Special instructions area', rows: 3

@@ -1,19 +1,62 @@
 class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :supply
-  has_many :requests
+
+  has_one :response
 
   validates_presence_of :user,   message: "unrecognized"
   validates_presence_of :supply, message: "unrecognized"
 
-  scope :unfulfilled, -> { where(fulfilled_at: nil) }
+  validates_presence_of :location, message: "is missing"
+  validates_presence_of :unit, message: "is missing"
+  validates_presence_of :quantity, message: "is missing"
+
+  validates_numericality_of :quantity, only_integer: true, on: :create
+
+  scope :responded,   -> { includes(:response).references(:response
+    ).where("responses.id IS NOT NULL") }
+  scope :unresponded, -> { includes(:response).references(:response
+    ).where("responses.id IS NULL")     }
+
+  scope :past_due, -> { unresponded.where(["orders.created_at < ?",
+    3.business_days.ago]) }
+  scope :pending,  -> { unresponded.where(["orders.created_at >= ?",
+    3.business_days.ago]) }
+
+  def response_time
+    #FIXME: Absolute delta response time or remove weekends
+    response && ((response.created_at - created_at) / (60 * 60 * 24)).round(1)
+  end
+
+  def how_past_due
+    # How many days over 3 are we past due?
+    if response
+      past_due = (
+        (3.business_days.after(created_at) -
+          response.created_at) / (60 * 60 * 24)
+      ).round(1)
+      if (past_due < 3)
+        0
+      else
+        (past_due - 3).round(1)
+      end
+    end
+  end
+
+  def responded?
+    response.present?
+  end
+
+  def responded_at
+    response && response.created_at
+  end
 
   def fulfilled?
-    !fulfilled_at.nil?
+    fulfilled_at.present?
   end
 
   validates_uniqueness_of :supply_id, scope: :user_id,
-    conditions: -> { unfulfilled }
+    conditions: -> { unresponded }
 
   def self.human_attribute_name(attr, options={})
     {
@@ -31,7 +74,7 @@ class Order < ActiveRecord::Base
       phone:     data[:phone],
       email:     user.try(:email),
       supply_id: supply.try(:id),
-      dose:      "#{data[:dosage_value]}#{data[:dosage_units]}",
+      unit:      "#{data[:dosage_value]}#{data[:dosage_units]}",
       quantity:  data[:qty],
       location:  data[:loc] || user.try(:location)
     })
@@ -45,18 +88,8 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def send_instructions!
-    # FIX
-    to = self.phone || user.phone
-    SMSJob.enqueue(to, instructions) if to
-    MailerJob.enqueue :fulfillment, id
-  end
-
   def full_dosage
     "#{dose}#{unit}"
   end
-
-  # FIXME: store fulfillment action along with message
-  def action
-  end
 end
+

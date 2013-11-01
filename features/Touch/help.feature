@@ -1,84 +1,35 @@
+@touch
 Feature: Visit "Help" Web Page
   As a visitor to the website
   I want to see everything that I expect on the help page
   so I can know that the site is working
 
-TOUCHSTART
-  * PCV - Help (shows table of orders: "#/help")
-    * How to order personal medical supplies
-      * Send an SMS
-      * Fill Out a Web Form
+  Scenario Outline: Check stuff on User "Help" page
+    Given the default user exists
+    Given I am an "<role>"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
 
-  * PCMO - Help
-    * Icon, 3 tabs(Request Manager, Place a Request, Reports),
-      Gear, Current Month
-    * text
-
-  * Admin - Help
-    * Icon, 4 tabs(Admin Home, Request Manager, Place a Request,
-      Reports), Gear
-    * text (TBD)
-TOUCHEND
-
-  Scenario: Check stuff on PCV "Help" page (not logged in)
     When I go to the help page
-    And I am a "pcv"
+    And I am a "<role>"
     Then I should see std icon area items
+    Then I should see <tabtype> tab area items
 
-#TODO:    Then I should see std tab area items
-#TODO:    Then I should see NOT "Admin Home" inside "a"
-
-    Then I should see "How to order personal medical supplies" inside "h2"
-    Then I should see "How to place a request" inside "h2"
-    Then I should see "Send an SMS" inside "h3"
-    Then I should see "Fill Out a Web Form" inside "h3"
-    Then I should see "I received a confirmation that my request was received - now what happens?" inside "h2"
-    Then I should see "Pick Up" inside "h3"
-    Then I should see "Delivery" inside "h3"
-    Then I should see "Purchase" inside "h3"
-    Then I should see "I received an error - what do I do?" inside "h2"
-    Then I should see "Errors due to incorrect typing." inside "h3"
-    Then I should see "Duplicate Requests for Same Medication" inside "h3"
-    Then I should see "Network Connectivity" inside "h3"
-
-  Scenario: Check stuff on PCMO "Help" page (not logged in)
-    When I go to the help page
-    And I am a "pcmo"
-    Then I should see std icon area items
-
-#TODO:    Then I should see std tab area items
-#TODO:    Then I should see NOT "Admin Home" inside "a"
-
-    Then I should see "How to order personal medical supplies" inside "h2"
-    Then I should see "How to place a request" inside "h2"
-    Then I should see "Send an SMS" inside "h3"
-    Then I should see "Fill Out a Web Form" inside "h3"
-    Then I should see "I received a confirmation that my request was received - now what happens?" inside "h2"
-    Then I should see "Pick Up" inside "h3"
-    Then I should see "Delivery" inside "h3"
-    Then I should see "Purchase" inside "h3"
-    Then I should see "I received an error - what do I do?" inside "h2"
-    Then I should see "Errors due to incorrect typing." inside "h3"
-    Then I should see "Duplicate Requests for Same Medication" inside "h3"
-    Then I should see "Network Connectivity" inside "h3"
-
-  Scenario: Check stuff on Admin "Help" page (not logged)
-    When I go to the help page
-    And I am a "admin"
-    Then I should see std icon area items
-
-#TODO:    Then I should see std tab area items
-#TODO:    Then I should see "Admin Home" inside "a"
-
-    Then I should see "How to order personal medical supplies" inside "h2"
-    Then I should see "How to place a request" inside "h2"
-    Then I should see "Send an SMS" inside "h3"
-    Then I should see "Fill Out a Web Form" inside "h3"
-    Then I should see "I received a confirmation that my request was received - now what happens?" inside "h2"
-    Then I should see "Pick Up" inside "h3"
-    Then I should see "Delivery" inside "h3"
-    Then I should see "Purchase" inside "h3"
-    Then I should see "I received an error - what do I do?" inside "h2"
-    Then I should see "Errors due to incorrect typing." inside "h3"
-    Then I should see "Duplicate Requests for Same Medication" inside "h3"
-    Then I should see "Network Connectivity" inside "h3"
+    Then I should see header with text "How to order personal medical supplies"
+    Then I should see header with text "How to place a request"
+    Then I should see header with text "Send an SMS"
+    Then I should see header with text "Fill Out a Web Form"
+    Then I should see header with text "I received a confirmation that my request was received, now what happens?"
+    Then I should see header with text "Pick Up"
+    Then I should see header with text "Delivery"
+    Then I should see header with text "Purchase"
+    Then I should see header with text "I received an error what do I do?"
+    Then I should see header with text "Errors due to incorrect typing:"
+    Then I should see header with text "Duplicate Requests for Same Medication"
+    Then I should see header with text "Network Connectivity"
+    Examples:
+    | role  | tabtype |
+    | pcv   | none    |
+    | pcmo  | std     |
+    | admin | admin   |

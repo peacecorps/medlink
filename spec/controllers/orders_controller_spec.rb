@@ -1,77 +1,56 @@
 require 'spec_helper'
 
 describe OrdersController do
-  let (:current_user) { FactoryGirl.create(:user) }
-  before {
-    sign_in current_user
-  }
+  let(:current_user) { FactoryGirl.create(:user) }
+  before(:each) { sign_in current_user }
 
-  describe "GET 'new'" do
-    it 'displays a template' do
-      get 'new'
+  it { renders_successfully :index }
+  it { renders_successfully :new   }
+
+  # FIXME: this behavior is now properly part of the response controller
+  #context 'as a PCMO with an existing order' do
+    #before(:each) do
+      #@pcv   = FactoryGirl.create :user
+      #@order = FactoryGirl.create :order, user: @pcv
+
+      #current_user.update_attributes role: :pcmo, country_id: @pcv.country_id
+    #end
+
+    #it { renders_successfully :edit, id: @order.id }
+
+    #it 'allows pcmos to fulfull orders', :worker do
+      #put :update, id: @order.id, order: { email: 'test@example.com' }
+      #expect( response ).to redirect_to manage_orders_path
+      #expect( Order.find @order.id ).to be_responded
+    #end
+  #end
+
+  describe '#manage' do
+    it 'redirects basic users' do
+      get :manage
+      expect( response ).to be_redirection
+    end
+
+    it 'allows pcmos' do
+      current_user.update_attributes role: :pcmo
+      get :manage
       expect( response ).to be_success
     end
   end
 
   describe "POST 'create'" do
-    before(:each) { FactoryGirl.create(:supply, shortcode: 'CODE') }
     it "redirects on creation" do
-      post 'create', order: { 
-        user_id: current_user.id, supply_id: Supply.last.id }
+      supply = FactoryGirl.create :supply
+      post 'create', order: {
+        user_id: current_user.id, supply_id: supply.id,
+        location: 'Roswell', unit: '20', quantity: 20 }
       expect( response ).to be_redirection
     end
+
     it "renders on failure" do
-      FactoryGirl.create(:supply, shortcode: 'CODE')
-      order = {user_id: current_user, supply_id: 'QWERTY'}
-      post 'create', order: order
+      post 'create', order: {user_id: current_user.id, supply_id: 'QWERTY'}
       expect( response ).to be_success
     end
   end
-
-  describe "POST 'create' nested requests" do
-    before(:each) { FactoryGirl.create(:supply, shortcode: 'CODE') }
-    it "returns http success" do
-      order = { user_id: current_user.id,
-        supply_id: Supply.last.id, dose: '5', quantity: 5 }
-      post 'create', order: order
-
-      order = Order.last
-      expect( order.fulfilled_at ).to be_nil
-      expect( response ).to be_redirection
-    end
-  end
-
-  context 'with an existing order' do
-    before(:each) { @order = FactoryGirl.create :order,
-      user_id: current_user.id }
-
-    describe "GET 'edit'" do
-      it 'displays a template' do
-        get 'edit', id: @order.id
-        expect( response ).to be_success
-      end
-    end
-
-    describe "PUT 'update'", :worker do
-      it "redirects on success" do
-        put :update, id: @order.id, order: {
-          phone: '678-315-5999', email: 'test@example.com'}
-
-        order = Order.last
-        expect( order.fulfilled_at ).not_to be_nil
-        expect( response ).to be_redirection
-      end
-    end
-  end
-
-  describe "GET 'index'" do
-    before do
-      FactoryGirl.create(:order, user_id: current_user.id)
-    end
-    it "returns success with valid data" do
-      get 'index'
-      expect( response ).to be_success
-    end
-  end
-
 end
+

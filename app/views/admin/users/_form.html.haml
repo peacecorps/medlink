@@ -11,9 +11,9 @@
       = f.phone_field :phone, placeholder: 'Phone Number'
       = f.email_field :email, placeholder: 'Email'
     .col-right
-      / FIXME? Password?
+      / FIXME? Password? -- Need more words.
       = f.text_field :pcv_id, placeholder: 'PCV ID'
-      = f.select :role, User::Roles.invert , include_blank: 'Role'
+      = f.select :role, User::Roles.invert , include_blank: 'Assign Role'
       = f.select :pcmo_id, User.pcmos_by_country, include_blank: 'PCMO'
 
       .btn-group

@@ -1,24 +1,26 @@
-# FIXME: add devise messages
-# registration edit
-#   Successfully updated your profile.
-#   There was a problem with your profile.
-# registration create
-#   Welcome! Please sign in with your new account.
-#   There was a problem with your information.
-# session destroy
-#   You have been successfully signed out.
-# session new
-#   Invalid email or password.
-require 'ipaddr'
-
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  # before_action :check_ip_for_admins
+  before_filter :authenticate_user!
+  skip_before_filter :authenticate_user!, only: :help
+
+  rescue_from CanCan::AccessDenied do |exception|
+    # TODO: it'd be nice to redirect to the login page in case the user wants
+    #   to sign in with another (authorized) account. Devise redirects logged
+    #   in users away from that page, however, and clobbers the flash message
+    #   in the process.
+    redirect_to root_path, notice: 'You are not authorized to view that page'
+  end
 
   def root
-    authenticate_user!
-    start_page = current_user.try(:admin?) ? new_admin_user_path : orders_path
+    start_page = if current_user.admin?
+      new_admin_user_path
+    elsif current_user.pcmo?
+      manage_orders_path
+    else # PCV
+      orders_path
+    end
+
     redirect_to start_page
   end
 
@@ -28,20 +30,9 @@ class ApplicationController < ActionController::Base
 
   private # ----------
 
-  def ip_allowed?
-    request_ip  = IPAddr.new request.remote_ip
-    Rails.configuration.allowed_ips.any? do |addr|
-      IPAddr.new(addr).include? request_ip
-    end
-  end
-
-  def check_ip_for_admins
-    if current_user && current_user.admin?
-      if !ip_allowed?
-        sign_out current_user
-        redirect_to new_user_session_path,
-          notice: 'Admin users may only login from approved ip addresses'
-      end
-    end
+  # Redirects to the login path to allow the flash messages to
+  #    display for sign_out.
+  def after_sign_out_path_for(resource_or_scope)
+    new_user_session_path
   end
 end

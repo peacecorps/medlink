@@ -14,6 +14,9 @@ end
 
 require 'cucumber/rails'
 
+require 'sms_spec'
+require 'sms_spec/cucumber'
+
 # Capybara defaults to CSS3 selectors rather than XPath.
 # If you'd prefer to use XPath, just uncomment this line and adjust any
 # selectors in your step definitions to use the XPath syntax.
@@ -64,3 +67,6 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+# Capybara.default_driver = :selenium
+
+Zonebie.set_random_timezone
