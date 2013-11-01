@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '4.0.1.rc4'
+gem 'rails', '4.0.1'
 
 gem 'jquery-rails'
 gem 'bootstrap-daterangepicker-rails'
