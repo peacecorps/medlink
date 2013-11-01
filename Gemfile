@@ -19,13 +19,11 @@ gem 'business_time'
 
 gem 'ffi', '1.9.0'
 
-group :assets do
-  gem 'sass-rails'
-  gem "compass-rails", "~> 2.0.alpha.0"
-  gem 'coffee-rails'
-  gem 'haml'
-  gem 'uglifier'
-end
+gem 'sass-rails'
+gem "compass-rails", "~> 2.0.alpha.0"
+gem 'coffee-rails'
+gem 'haml'
+gem 'uglifier'
 
 group :development do
   gem 'sqlite3'
