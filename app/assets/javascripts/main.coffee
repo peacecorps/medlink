@@ -30,6 +30,19 @@ $ ->
       $("#user_pcmo_id").hide()
   ).change()
 
+  # -- PCMO country selector -----
+  $("#admin_country_select").change( ->
+    id = $(@).val()
+
+    $("tr.order").hide()
+    $("tr.order.c#{id}").show()
+
+    # Hide sections with no content
+    # TODO: this selector could be more performant
+    $(".section").hide()
+    $(".section:has(.c#{id})").show()
+  ).change()
+
   # -- To pick start and end dates -----
   $("input[name='duration']").daterangepicker
     format: "YYYY-MM-DD"

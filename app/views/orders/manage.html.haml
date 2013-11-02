@@ -1,33 +1,9 @@
-:javascript
-  function countrySelect() {
-
-    var selectedCountryId = $('#country_country_id').val();
-    var selectedCountryText = $('#country_country_id option:selected').text();
-    //alert(selectedCountryText);
-
-    //if (selectedCountry) {
-    //    $('#' + selectedCountry + '-select').show();
-    // }
-  }
 
 %h2 Request Manager
 
 - if current_user.admin?
-  = select(:country, :country_id, Country.all.collect { |country| [country.name.humanize, country.id] }, {:include_blank => "Select Country"}, {:onChange => "countrySelect();"})
+  = select(:country, :country_id, Country.with_orders.collect { |country| [country.name.humanize, country.id] }, {:include_blank => "Select Country"}, {"id" => "admin_country_select"})
   %hr
-  // %select#selection_1{:name => "selection_1", :onChange => "UpdateSelect();"}
 
-  = render partial: 'manage'
+= render partial: 'manage'
 
-- elsif current_user.pcmo?
-  %h3 Past Due Requests
-  %table(class="table.table--bordered.table--striped.table--linked" id="past-due-orders")
-    = render partial: 'table', locals: { orders: @orders.past_due, responded: false }
-
-  %h3 Pending Requests
-  %table(class="table.table--bordered.table--striped.table--linked" id="pending-orders")
-    = render partial: 'table', locals: { orders: @orders.pending, responded: false }
-
-  %h3 Response Tracker
-  %table(class="table.table--bordered.table--striped.table--linked" id="responded-orders")
-    = render partial: 'table', locals: { orders: @orders.responded, responded: true }

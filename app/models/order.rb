@@ -43,6 +43,11 @@ class Order < ActiveRecord::Base
     end
   end
 
+  def country_id
+    # FIXME: make this an actual column
+    user.country_id
+  end
+
   def responded?
     response.present?
   end
