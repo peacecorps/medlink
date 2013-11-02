@@ -5,7 +5,7 @@ class Order < ActiveRecord::Base
   has_one :response
 
   validates_presence_of :user,   message: "unrecognized"
-  validates_presence_of :supply, message: "unrecognized"
+  validates_presence_of :supply, message: "is missing"
 
   validates_presence_of :location, message: "is missing"
   validates_presence_of :unit, message: "is missing"
@@ -66,7 +66,7 @@ class Order < ActiveRecord::Base
   def self.human_attribute_name(attr, options={})
     {
       user:   "PCV ID",
-      supply: "shortcode"
+      supply: "Supply"
     }[attr] || super
   end
 

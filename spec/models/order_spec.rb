@@ -36,7 +36,7 @@ describe Order do
 
     it 'can display a validation message' do
       subject.supply = nil
-      expect( subject.confirmation_message ).to match /shortcode/i
+      expect( subject.confirmation_message ).to match /Supply is missing/i
     end
 
   end

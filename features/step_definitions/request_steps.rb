@@ -74,7 +74,7 @@ end
 
 # ERRORS
 Then(/^I see a invalid supply request message$/) do
-  page.should have_content "shortcode unrecognized"
+  page.should have_content "Supply is missing"
 end
 
 Then(/^I see a invalid quantity request message$/) do
