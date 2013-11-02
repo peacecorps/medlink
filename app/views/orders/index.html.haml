@@ -1,4 +1,10 @@
 %h2 Request History
+
+%select
+  - Country.all.each do |c| 
+    %option{:value => c.id}=c.name 
+
+
 %table#orders.table.table-bordered.table-striped
   %thead
     - if current_user.pcmo? || current_user.admin?
