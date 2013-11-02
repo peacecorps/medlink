@@ -27,12 +27,12 @@
       %td
         %span.cell--primary= order.location
       %td
-        %span= order.created_at.strftime '%-m/%-d/%y'
-        %small.cell--secondary= order.created_at.strftime '%H:%M'
+        %span= order.created_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
+        %small.cell--secondary= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
       - if responded
-        %td= order.responded_at.strftime '%-m/%-d/%y'
+        %td= order.responded_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
         - if order.fulfilled?
-          %td= order.fulfilled_at.strftime '%-m/%-d/%y'
+          %td= order.fulfilled_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
         - else
           %td
             %input.datepicker.input-small
