@@ -2,7 +2,7 @@
 %h2 Request Manager
 
 - if current_user.admin?
-  = select(:country, :country_id, Country.with_orders.collect { |country| [country.name.humanize, country.id] }, {:include_blank => "Select Country"}, {"id" => "admin_country_select"})
+  = select(:country, :country_id, Country.with_orders.collect { |country| [country.name.split.map(&:capitalize).join(' '), country.id] }, {:include_blank => "Select Country"}, {"id" => "admin_country_select"})
   %hr
 
 = render partial: 'manage'
