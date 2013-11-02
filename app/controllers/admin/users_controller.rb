@@ -37,19 +37,29 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    field_chgs = ""
-    user_params.each do |key,value|
-      if user_params[key] != @user[key]
-        if !user_params[key].empty?
-          field_chgs << "#{key}=[#{user_params[key]}]; "
+    # TODO: clean this up
+    # The edge case here is countries: db ids are ints, not the strings
+    # that we get as params, and we want to display country=name instead
+    # of country_id=id
+    field_chgs = []
+    user_params.each do |key,nval|
+      oval = @user[key]
+      if oval != nval && !nval.empty?
+        if key == "country_id"
+          next if oval.to_s == nval.to_s
+          nval = Country.find(nval).name if key == "country_id"
+          field_chgs << ["country", nval]
+        else
+          field_chgs << [key, nval]
         end
       end
     end
+    change_desc = field_chgs.map { |k,v| "#{k}=[#{v}]" }.join "; "
 
     if @user.update_attributes user_params
       redirect_to new_admin_user_path,
         notice: 'Success! You have made the following changes ' +
-          "to this user account: #{field_chgs}"
+          "to this user account: #{change_desc}"
     else
       render :edit
     end
