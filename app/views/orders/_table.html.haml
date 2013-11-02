@@ -15,7 +15,7 @@
 %tbody
   - orders.each do |order|
     - attrs = { "class" => "order c#{order.country_id}" }
-    - if responded
+    - unless responded
       - attrs["data-link"] = new_order_response_path(order)
     %tr{ attrs }
       %td= order.user.pcv_id
@@ -35,7 +35,7 @@
           %td= order.fulfilled_at.strftime '%-m/%-d/%y'
         - else
           %td
-            = date_select :order, :fulfilled_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
+            %input.datepicker.input-small
         %td
-          = date_select :order, :received_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
+          %input.datepicker.input-small
 

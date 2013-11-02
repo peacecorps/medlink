@@ -1,17 +1,14 @@
 %h2 Reports
 
-%h3 Click the report button to download a .csv file
+%p Click the report button to download a .csv file
 
-- if current_user.admin? || current_user.pcmo?
-  = link_to 'Supply Requests', supply_history_reports_path(format: :csv), class: "btn btn--primary"
-  %p
-  = link_to 'Fulfillment History', fulfillment_history_reports_path(format: :csv), class: "btn btn--primary"
-  %p
-  = link_to 'Request History', request_history_reports_path(format: :csv), class: "btn btn--primary"
-  %p
-- if current_user.admin?
-  = link_to 'Recently Added Users', recent_adds_reports_path(format: :csv), class: "btn btn--primary"
-  %p
-  = link_to 'Recently Edited Users', recent_edits_reports_path(format: :csv), class: "btn btn--primary"
-  %p
-  = link_to 'PCMO Response Times', pcmo_response_times_reports_path(format: :csv), class: "btn btn--primary"
+.row
+  .span4
+    %p= link_to 'Supply Requests', supply_history_reports_path(format: :csv), class: "btn btn--primary"
+    %p= link_to 'Fulfillment History', fulfillment_history_reports_path(format: :csv), class: "btn btn--primary"
+    %p= link_to 'Request History', request_history_reports_path(format: :csv), class: "btn btn--primary"
+  - if current_user.admin?
+    .span4
+      %p= link_to 'Recently Added Users', recent_adds_reports_path(format: :csv), class: "btn btn--primary"
+      %p= link_to 'Recently Edited Users', recent_edits_reports_path(format: :csv), class: "btn btn--primary"
+      %p= link_to 'PCMO Response Times', pcmo_response_times_reports_path(format: :csv), class: "btn btn--primary"

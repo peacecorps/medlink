@@ -33,17 +33,19 @@
 
   = form_for @response, url: order_response_path(@order, @response), html: {class: 'order__section'} do |f|
     %h4.order__method Fulfillment Method
-    .order__message
-      %ul.radio-group
-        %ul.list-column
+    .row
+      .span4
+        .order__message
           - DeliveryMethod.each do |method|
-            %li
+            %label.radio
               = f.radio_button :delivery_method, method.name, data: {message: method.text}
-              %label(for="order_delivery_method_#{method.name}")= method.title
+              = method.title
+      .span4
         Edit Default SMS
         .order__instructions
-          = f.text_area :instructions, size: "40x4", maxlength: 160
-        .order__characters "160 characters remaining"
-    .btn-group
-      %button.btn.btn--primary(type="submit") Send Response
+          = f.text_area :instructions, size: "40x4", maxlength: 160, class: 'input-xlarge'
+          .order__characters "160 characters remaining"
+    .form-actions
+      .btn-group
+        %button.btn.btn-primary(type="submit") Send Response
 

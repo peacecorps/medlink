@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require main
 //= require moment
+//= require bootstrap-datepicker
 //= require daterangepicker
 
