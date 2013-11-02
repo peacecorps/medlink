@@ -15,7 +15,7 @@
 %tbody
   - orders.each do |order|
     - attrs = { "class" => "order c#{order.country_id}" }
-    - if responded
+    - unless responded
       - attrs["data-link"] = new_order_response_path(order)
     %tr{ attrs }
       %td= order.user.pcv_id
