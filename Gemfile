@@ -14,13 +14,11 @@ gem 'cancan'
 
 gem 'sucker_punch'
 
-gem 'font-awesome-rails'
 gem 'business_time'
 
 gem 'ffi', '1.9.0'
 
 gem 'sass-rails'
-gem "compass-rails", "~> 2.0.alpha.0"
 gem 'coffee-rails'
 gem 'haml'
 gem 'uglifier'

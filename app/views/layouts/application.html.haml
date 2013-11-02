@@ -4,6 +4,12 @@
     %meta(charset="utf-8")
     %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+    %link{:href=>"//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css", :rel=>"stylesheet"}
+
+    = javascript_include_tag "application"
+    %script{:src=>"//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"}
+
     %title= content_for?(:title) ? yield(:title) : "PC Medlink"
     = csrf_meta_tags
     = stylesheet_link_tag "application", :media => "all"
@@ -11,23 +17,22 @@
       = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
 
   %body
-    .flash
-      - flash.each do |name, msg|
-        .flash__message.alert
-          = msg
-    .l-wrapper
-      %header.l-sidebar
-        .l-sidebar__inner
+    .container
+      .flash
+        - flash.each do |name, msg|
+          .flash__message.alert
+            = msg
+      .row
+        .span3
           = link_to image_tag("/logo.png", id: 'brand'), root_path
           %hgroup
             %h1 Peace Corps
             %h4 Medical Supplies
             - if current_user
               %span.badge= current_user.country.name.downcase
-      %div.l-main
-        %nav
-          = render 'partials/global_nav'
-        %section
-          = yield
+        .span9
+          %nav
+            = render 'partials/global_nav'
+          %section
+            = yield
 
-    = javascript_include_tag "application"

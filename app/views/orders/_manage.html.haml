@@ -1,14 +1,14 @@
 .section
   %h3 Past Due Requests
-  %table(class="table.table--bordered.table--striped.table--linked" id="past-due-orders")
+  %table#past-due-orders.table.table-bordered.table-striped
     = render partial: 'table', locals: { orders: @orders.past_due, responded: false }
 
 .section
   %h3 Pending Requests
-  %table(class="table.table--bordered.table--striped.table--linked" id="pending-orders")
+  %table#pending-orders.table.table-bordered.table-striped
     = render partial: 'table', locals: { orders: @orders.pending, responded: false }
 
 .section
   %h3 Response Tracker
-  %table(class="table.table--bordered.table--striped.table--linked" id="responded-orders")
+  %table#responded-orders.table.table-bordered.table-striped
     = render partial: 'table', locals: { orders: @orders.responded, responded: true }
