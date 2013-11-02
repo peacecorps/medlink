@@ -1,5 +1,5 @@
 %h2 Request History
-%table(class="table.table--bordered.table--striped.table--linked" id="orders")
+%table#orders.table.table-bordered.table-striped
   %thead
     - if current_user.pcmo? || current_user.admin?
       %form.form-horizontal

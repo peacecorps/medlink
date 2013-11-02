@@ -1,19 +1,23 @@
-- if current_user.try(:pcmo?) || current_user.try(:admin?)
-  %ul#global-nav
-    - if current_user.admin?
-      %li= link_to 'Admin Home', new_admin_user_path, class: 'btn'
-    %li= link_to 'Request Manager', manage_orders_path, class: 'btn'
-    %li= link_to 'Place a Request', new_order_path, class: 'btn'
-    %li= link_to 'Reports', reports_path, class: 'btn'
-
 - if current_user
-  #dropdown-nav
-    %a
-      %i.icon-cog
-    %ul.nav.nav--dropdown
-      - if current_user.pcv?
-        %li= link_to 'Request Supply', new_order_path
-      %li= link_to 'Request History', orders_path
-      %li= link_to 'Change Password', edit_user_registration_path
-      %li= link_to 'Help', help_path
-      %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
+  .navbar
+    .navbar-inner
+      - if current_user.admin? || current_user.pcmo?
+        %ul.nav
+          - if current_user.admin?
+            %li= link_to 'Admin Home', new_admin_user_path
+          %li= link_to 'Request Manager', manage_orders_path
+          %li= link_to 'Place a Request', new_order_path
+          %li= link_to 'Reports', reports_path
+          %li.divider-vertical
+      %ul.nav.pull-right
+        %li
+          %a(href="#" class="dropdown-toggle" data-toggle="dropdown")
+            %i.icon-cog
+          %ul.dropdown-menu
+            - if current_user.pcv?
+              %li= link_to 'Request Supply', new_order_path
+            %li= link_to 'Request History', orders_path
+            %li= link_to 'Change Password', edit_user_registration_path
+            %li= link_to 'Help', help_path
+            %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
+
