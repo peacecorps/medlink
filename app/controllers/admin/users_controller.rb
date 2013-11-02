@@ -73,7 +73,7 @@ class Admin::UsersController < AdminController
 
   def user_params
     params.require(:user).permit [:first_name, :last_name, :location,
-      :country_id, :phone, :email, :pcv_id, :role, :pcmo_id, :remember_me]
+      :country_id, :phone, :email, :pcv_id, :role, :pcmo_id, :remember_me, :time_zone]
   end
 
   def catch_no_record

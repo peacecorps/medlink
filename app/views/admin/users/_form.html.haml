@@ -10,6 +10,7 @@
       = f.select :country_id, Country.choices, {include_blank: 'Country'}, class: 'input-xlarge'
       = f.phone_field :phone, placeholder: 'Phone Number', class: 'input-xlarge'
       = f.email_field :email, placeholder: 'Email', class: 'input-xlarge'
+      = f.select :time_zone, ActiveSupport::TimeZone.all, {include_blank: 'Time Zone'}, class: 'input-xlarge'
     .span4
       / FIXME? Password? -- Need more words.
       = f.text_field :pcv_id, placeholder: 'PCV ID', class: 'input-xlarge'
