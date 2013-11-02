@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def index
-    @orders = current_user.accessible_orders
+    @orders = current_user.accessible_orders.order "created_at desc"
   end
 
   def manage
@@ -9,7 +9,6 @@ class OrdersController < ApplicationController
   end
 
   def new
-    # FIXME: need "Add Another Supply" functionality for PCVs
     @order = current_user.orders.new location: current_user.location
   end
 
