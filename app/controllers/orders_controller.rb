@@ -9,7 +9,6 @@ class OrdersController < ApplicationController
   end
 
   def new
-    # FIXME: need "Add Another Supply" functionality for PCVs
     @order = current_user.orders.new location: current_user.location
   end
 
