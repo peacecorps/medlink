@@ -47,5 +47,5 @@ Then /^I should see div with text "(.*?)"$/ do |the_text|
 end
 
 Then(/^I should see radiobutton "(.*?)"$/) do |rbutton|
-  find("li", :text => rbutton).visible?
+  page.should have_content rbutton
 end
