@@ -61,3 +61,5 @@ $ ->
       else
         $o.hide()
 
+  $(".datepicker").datepicker()
+

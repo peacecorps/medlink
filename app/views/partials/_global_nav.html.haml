@@ -12,7 +12,7 @@
       %ul.nav.pull-right
         %li
           %a(href="#" class="dropdown-toggle" data-toggle="dropdown")
-            %i.icon-cog
+            %i.fa.fa-cog
           %ul.dropdown-menu
             - if current_user.pcv?
               %li= link_to 'Request Supply', new_order_path

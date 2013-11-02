@@ -2,6 +2,6 @@
 = render partial: 'form', locals: {user: @user, action: :add}
 
 %h1 Edit Account
-= form_tag admin_users_path do
+= form_tag admin_users_path, class: 'form-search' do
   = select_tag :edit_user, grouped_options_for_select(@users), prompt: 'Select Volunteer to edit'
-  %button.btn.btn--primary(type="submit") Edit
+  %button.btn.btn-primary(type="submit") Edit

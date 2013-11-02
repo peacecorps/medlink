@@ -35,7 +35,7 @@
           %td= order.fulfilled_at.strftime '%-m/%-d/%y'
         - else
           %td
-            = date_select :order, :fulfilled_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
+            %input.datepicker.input-small
         %td
-          = date_select :order, :received_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
+          %input.datepicker.input-small
 

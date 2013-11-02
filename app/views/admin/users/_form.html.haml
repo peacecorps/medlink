@@ -3,19 +3,22 @@
   = render partial: 'partials/errors', locals: {object: user}
 
   .row
-    .col-left
-      = f.text_field :first_name, placeholder: 'First Name'
-      = f.text_field :last_name, placeholder: 'Last Name'
-      = f.text_field :location, placeholder: 'Address / location'
-      = f.select :country_id, Country.choices, include_blank: 'Country'
-      = f.phone_field :phone, placeholder: 'Phone Number'
-      = f.email_field :email, placeholder: 'Email'
-    .col-right
+    .span4
+      = f.text_field :first_name, placeholder: 'First Name', class: 'input-xlarge'
+      = f.text_field :last_name, placeholder: 'Last Name', class: 'input-xlarge'
+      = f.text_field :location, placeholder: 'Address / location', class: 'input-xlarge'
+      = f.select :country_id, Country.choices, {include_blank: 'Country'}, class: 'input-xlarge'
+      = f.phone_field :phone, placeholder: 'Phone Number', class: 'input-xlarge'
+      = f.email_field :email, placeholder: 'Email', class: 'input-xlarge'
+    .span4
       / FIXME? Password? -- Need more words.
-      = f.text_field :pcv_id, placeholder: 'PCV ID'
-      = f.select :role, User::Roles.invert , include_blank: 'Assign Role'
-      = f.select :pcmo_id, User.pcmos_by_country, include_blank: 'PCMO'
+      = f.text_field :pcv_id, placeholder: 'PCV ID', class: 'input-xlarge'
+      = f.select :role, User::Roles.invert , {include_blank: 'Assign Role'}, class: 'input-xlarge'
+      = f.select :pcmo_id, User.pcmos_by_country, {include_blank: 'PCMO'}, class: 'input-xlarge'
 
-      .btn-group
-        %button.btn.btn--primary(type="submit")
-          = action.capitalize
+
+  .form-actions
+    .btn-group
+      %button.btn.btn-primary(type="submit")
+        = action.capitalize
+

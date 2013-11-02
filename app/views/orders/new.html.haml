@@ -6,8 +6,9 @@
   .form__section
     .input-group
       - if current_user.pcv?
-        %span= current_user.name
-        %small= current_user.pcv_id
+        %h2
+          = current_user.name
+          %small= current_user.pcv_id
         = f.hidden_field :user_id, value: current_user.id
       - else
         = f.select :user_id, [['Select Volunteer to request for', '']] + User.all.map { |u| [u.name, u.id] }
@@ -30,5 +31,6 @@
     .input-group
       = f.text_area :extra, placeholder: 'Special instructions area', rows: 3
 
-    .btn-group
-      %button.btn.btn--primary(type="submit") Submit
+    .form-actions
+      .btn-group
+        %button.btn.btn-primary(type="submit") Submit
