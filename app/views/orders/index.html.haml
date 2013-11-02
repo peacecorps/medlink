@@ -1,6 +1,6 @@
 %h2 Request History
 
-%select
+%select#admin_country_select
   %option="Select Country"
   - Country.all.each do |c| 
     %option{:value => c.id}=c.name 
