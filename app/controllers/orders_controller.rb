@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   def index
-    @orders = current_user.accessible_orders
+    @orders = current_user.accessible_orders.order "created_at desc"
   end
 
   def manage

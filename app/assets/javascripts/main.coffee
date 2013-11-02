@@ -44,9 +44,20 @@ $ ->
   ).change()
 
   # -- To pick start and end dates -----
-  $("input[name='duration']").daterangepicker
-    format: "YYYY-MM-DD"
-    startDate: "2013-01-01"
-    endDate: "2013-12-31"
+  $("#duration").daterangepicker
+    format: "MM/DD/YY"
+    startDate: "9/01/13"
+    endDate: "12/31/13"
   , (start, end) ->
-    alert "A date range was chosen: " + start.format("YYYY-MM-DD") + " to " + end.format("YYYY-MM-DD")
+    # FIXME: make ajax request instead of sending all of the rows
+    s = start.format "YYYYMMDD"
+    e = end.format   "YYYYMMDD"
+
+    $(".order").each (n,o) ->
+      $o = $ o
+      date = $o.data("date")
+      if s <= date && date <= e
+        $o.show()
+      else
+        $o.hide()
+
