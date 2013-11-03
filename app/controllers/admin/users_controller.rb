@@ -70,7 +70,26 @@ class Admin::UsersController < AdminController
 
     file = csv_io.read
 
-    redirect_to root_path, :notice => "File uploaded!"
+    error_csv = ""
+
+    CSV.parse(file,:headers => true) do |row|
+      user = User.new(row.to_hash)
+      user.password = user.password_confirmation = SecureRandom.hex
+
+      # Save error messages
+      if !user.save
+        error_csv << row.push( user.errors.full_messages.to_sentence).to_s
+      end
+    end
+
+    # If any error message
+    if error_csv!=""
+      send_data error_csv, :type => 'text/csv', :filename => 'invalid_users.csv'      
+      flash[:notice] = "CSV has invalid entries!"
+    else
+      flash[:notice] =  "Successully uploaded users information!"
+    end
+
   end
 
 
