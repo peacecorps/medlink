@@ -2,7 +2,7 @@ When(/^I select a "(.*?)" request$/) do |request|
   all("#" + request + "-orders tbody tr")[0].click()
 end
 
-Then(/^I should be able to assign one of four actions: "(.*?)"$/) do |action|
+Then(/^I should be able to assign one action: "(.*?)"$/) do |action|
   choose("response_delivery_method_" + action.split[0].downcase)
 end
 

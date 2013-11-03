@@ -62,6 +62,7 @@ Feature: Visit Response Web Pages
     Then I should see radiobutton "Pickup"
     Then I should see radiobutton "Purchase & Reimburse"
     Then I should see radiobutton "Special Instructions"
+    Then I should see radiobutton "Denial"
 
     Then I should see div with text "Edit Default SMS"
     Then I should see div with text "characters remaining"

@@ -14,9 +14,7 @@ Feature: Visit "Reports" Web Page
     Then I should see std icon area items
     Then I should see std tab area items
 
-    Then I should see link "Supply Requests"
-    Then I should see link "Fulfillment History"
-    Then I should see link "Request History"
+    Then I should see link "Order History"
 
   Scenario: Check stuff on Admin Reports pages
     Given I exist as a user
@@ -28,9 +26,5 @@ Feature: Visit "Reports" Web Page
     Then I should see std icon area items
     Then I should see admin tab area items
 
-    Then I should see link "Supply Requests"
-    Then I should see link "Fulfillment History"
-    Then I should see link "Request History"
-    Then I should see link "Recently Added Users"
-    Then I should see link "Recently Edited Users"
-    Then I should see link "PCMO Response Times"
+    Then I should see link "Order History"
+    Then I should see link "Users"
