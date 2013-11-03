@@ -12,7 +12,7 @@ Feature: Visit "Three Tables" Web Page
     And I sign in with valid credentials
     When I go to the request_manager page
     Then I should see std icon area items
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
     Then I should see std tab area items
 
     Then I should see header with text "Request Manager"
@@ -41,7 +41,7 @@ Feature: Visit "Three Tables" Web Page
     And I sign in with valid credentials
     When I go to the request_manager page
     Then I should see std icon area items
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
     Then I should see std tab area items
     Then I should see admin tab area items
 

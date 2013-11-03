@@ -10,7 +10,7 @@ Feature: Visit "Admin Home" Web Page
     And I am not logged in
     And I sign in with valid credentials
     And I go to the start page
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
     Then I should see std icon area items
     Then I should see admin tab area items
 
@@ -38,7 +38,7 @@ Feature: Visit "Admin Home" Web Page
     And I am not logged in
     And I sign in with valid credentials
     And I go to the edit user page
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
     Then I should see std icon area items
     Then I should see admin tab area items
 
@@ -51,4 +51,4 @@ Feature: Visit "Admin Home" Web Page
     Then I should see field "Email"
     Then I should see field "PCV ID"
     Then I should see dropdownmenu "Assign Role"
-    Then I should see the button "Edit"
+    Then I should see the button "Save"

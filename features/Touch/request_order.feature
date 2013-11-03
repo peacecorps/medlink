@@ -12,7 +12,7 @@ Feature: Visit "Request Order" Web Page
     And I sign in with valid credentials
     When I go to the new_order page
     Then I should see std icon area items
-    Then I should see std gear area items
+    Then I should see pcv gear area items
 
     Then I should see header with text "Request Form"
     Then I should see dropdownmenu "Select Supply"
@@ -30,7 +30,7 @@ Feature: Visit "Request Order" Web Page
     And I sign in with valid credentials
     When I go to the new_order page
     Then I should see std icon area items
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
 
     Then I should see header with text "Place an Order"
     Then I should see dropdownmenu "Select Volunteer to request for"
@@ -49,7 +49,7 @@ Feature: Visit "Request Order" Web Page
     And I sign in with valid credentials
     When I go to the new_order page
     Then I should see std icon area items
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
     Then I should see admin tab area items
 
     Then I should see header with text "Place an Order"

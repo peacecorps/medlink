@@ -5,5 +5,18 @@
   = select(:country, :country_id, Country.with_orders.collect { |country| [country.name.split.map(&:capitalize).join(' '), country.id] }, {:include_blank => "Select Country"}, {"id" => "admin_country_select"})
   %hr
 
-= render partial: 'manage'
+.section
+  %h3 Past Due Requests
+  %table#past-due-orders.table.table-bordered.js-striped.table-hover
+    = render partial: 'table', locals: { orders: @orders.past_due, responded: false }
+
+.section
+  %h3 Pending Requests
+  %table#pending-orders.table.table-bordered.js-striped.table-hover
+    = render partial: 'table', locals: { orders: @orders.pending, responded: false }
+
+.section
+  %h3 Response Tracker
+  %table#responded-orders.table.table-bordered.js-striped.table-hover
+    = render partial: 'table', locals: { orders: @orders.responded, responded: true }
 

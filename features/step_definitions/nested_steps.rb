@@ -6,7 +6,15 @@ Then /I should see std icon area items/ do
   }
 end
 
-Then /I should see std gear area items/ do
+Then /I should see non-pcv gear area items/ do
+  steps %{
+    Then I should see link "Change Password"
+    Then I should see link "Help"
+    Then I should see link "Sign Out"
+  }
+end
+
+Then(/^I should see pcv gear area items$/) do
   steps %{
     Then I should see link "Request History"
     Then I should see link "Change Password"

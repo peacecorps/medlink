@@ -32,15 +32,26 @@ $ ->
 
   # -- PCMO country selector -----
   $("#admin_country_select").change( ->
-    id = $(@).val()
+    selected = $(@).val()
 
-    $("tr.order").hide()
-    $("tr.order.c#{id}").show()
+    $(".section").each (i,section) ->
+      $section = $ section
 
-    # Hide sections with no content
-    # TODO: this selector could be more performant
-    $(".section").hide()
-    $(".section:has(.c#{id})").show()
+      n = 0
+      $section.hide()
+      $section.find("tr.order").each (j,order) ->
+        $order = $ order
+
+        if $order.hasClass "c#{selected}"
+          $section.show()
+          n = 1 - n
+          if n
+            $order.addClass("striped").removeClass("unstriped")
+          else
+            $order.removeClass("striped").addClass("unstriped")
+          $order.show()
+        else
+          $order.hide()
   ).change()
 
   # -- To pick start and end dates -----

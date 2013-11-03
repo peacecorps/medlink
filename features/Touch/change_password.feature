@@ -11,7 +11,7 @@ Feature: Visit "Change Password" Web Page
     And I sign in with valid credentials
     When I go to the change_password page
     Then I should see std icon area items
-    Then I should see std gear area items
+    Then I should see pcv gear area items
 
     Then I should see header with text "Change Password"
     Then I should see field "Current Password"
@@ -26,7 +26,7 @@ Feature: Visit "Change Password" Web Page
     And I sign in with valid credentials
     When I go to the change_password page
     Then I should see std icon area items
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
     Then I should see std tab area items
 
     Then I should see header with text "Change Password"
@@ -42,7 +42,7 @@ Feature: Visit "Change Password" Web Page
     And I sign in with valid credentials
     When I go to the change_password page
     Then I should see std icon area items
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
     Then I should see admin tab area items
 
     Then I should see header with text "Change Password"
