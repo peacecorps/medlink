@@ -54,12 +54,15 @@ class Admin::UsersController < AdminController
         end
       end
     end
-    change_desc = field_chgs.map { |k,v| "#{k}=[#{v}]" }.join "; "
 
     if @user.update_attributes user_params
-      redirect_to new_admin_user_path,
-        notice: 'Success! You have made the following changes ' +
-          "to this user account: #{change_desc}"
+      _flash = if field_changes.any?
+        change_desc = field_chgs.map { |k,v| "#{k}=[#{v}]" }.join "; "
+        notice: "Success! You have made the following changes to this user account: #{change_desc}"
+      else
+        notice: "No changes made"
+      end
+      redirect_to new_admin_user_path, _flash
     else
       render :edit
     end
