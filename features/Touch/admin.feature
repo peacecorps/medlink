@@ -51,4 +51,4 @@ Feature: Visit "Admin Home" Web Page
     Then I should see field "Email"
     Then I should see field "PCV ID"
     Then I should see dropdownmenu "Assign Role"
-    Then I should see the button "Edit"
+    Then I should see the button "Save"

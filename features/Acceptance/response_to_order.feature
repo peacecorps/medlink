@@ -70,7 +70,7 @@ Feature: Response_to_order Feature
     Then I should be able to assign one of four actions: "Special Instructions"
     Then I should be able to assign a special instruction
     When I save my response
-    Then I should see the response date and PCMO id "2" on the request
+    Then I should see the response date and PCMO id "3" on the request
 
 #......................................................................
   @wip

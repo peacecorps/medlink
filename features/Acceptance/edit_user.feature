@@ -25,13 +25,13 @@ Feature: Edit User
     And  I choose a "Peace Corps Volunteer" role
     Then I should see the PCMO select box
     When I fill out the edit user form
-    And  I click "Edit"
+    And  I click "Save"
 
 #......................................................................
   Scenario Outline: Edit User validate errors
     When I fill out the edit user form
     And  I change <field> to <value>
-    And  I click "Edit"
+    And  I click "Save"
     Then I should see a <message> error message
     Examples:
       | field           | value   | message  |
