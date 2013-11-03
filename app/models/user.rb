@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   validates_presence_of :country, :location, :phone, :first_name,
     :last_name, :pcv_id, :role
   validates :pcv_id, uniqueness: true
+  validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map {|t| t.name}}
 
   Roles = {
     pcv:   'Peace Corps Volunteer',
