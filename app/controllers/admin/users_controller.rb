@@ -1,5 +1,5 @@
 class Admin::UsersController < AdminController
-  before_action :set_user, except: [:new, :create]
+  before_action :set_user, except: [:new, :create, :uploadCSV]
   around_filter :catch_no_record
 
   def new
@@ -64,6 +64,15 @@ class Admin::UsersController < AdminController
       render :edit
     end
   end
+
+  def uploadCSV
+    csv_io = params[:csv]
+
+    file = csv_io.read
+
+    redirect_to root_path, :notice => "File uploaded!"
+  end
+
 
   private # ----------
 
