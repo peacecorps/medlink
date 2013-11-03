@@ -2,9 +2,7 @@
 = render partial: 'form', locals: {user: @user, action: :add}
 
 %h1 Add Users From CSV
-= form_tag({:action => "uploadCSV"},:multipart => true) do 
-  = file_field_tag 'csv', :accept => 'text/csv'
-  = submit_tag 'Upload CSV'
+= render partial: 'uploadcsv'
 
 
 %h1 Edit Account
