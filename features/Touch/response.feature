@@ -33,7 +33,7 @@ Feature: Visit Response Web Pages
   Scenario: Check stuff on PCMO Response page
     Given I am logged in as the pcmo of Quirm
     And I go to the response page
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
     Then I should see std icon area items
 
     Then I should see header with text "Order From:"
@@ -52,7 +52,7 @@ Feature: Visit Response Web Pages
     Given I am logged in as the pcmo of Quirm
     And I am a "admin"
     And I go to the response page
-    Then I should see std gear area items
+    Then I should see non-pcv gear area items
     Then I should see std icon area items
     Then I should see admin tab area items
 
