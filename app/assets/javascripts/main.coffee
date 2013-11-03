@@ -31,10 +31,8 @@ $ ->
   ).change()
 
   # -- PCMO country selector -----
-  $("#admin_country_select").change( ->
-    selected = $(@).val()
-
-    $(".section").each (i,section) ->
+  filter_sections = (country) ->
+    $(".section").each (i, section) ->
       $section = $ section
 
       n = 0
@@ -42,7 +40,7 @@ $ ->
       $section.find("tr.order").each (j,order) ->
         $order = $ order
 
-        if $order.hasClass "c#{selected}"
+        if $order.hasClass "c#{country}"
           $section.show()
           n = 1 - n
           if n
@@ -52,7 +50,11 @@ $ ->
           $order.show()
         else
           $order.hide()
-  ).change()
+
+  $("#admin_country_select").change(-> filter_sections $(@).val()).change()
+
+  if id = $("#pcmo_country_id").val()
+    filter_sections id
 
   # -- To pick start and end dates -----
   $("#duration").daterangepicker
