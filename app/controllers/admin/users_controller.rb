@@ -1,5 +1,5 @@
 class Admin::UsersController < AdminController
-  before_action :set_user, except: [:new, :create]
+  before_action :set_user, except: [:new, :create, :uploadCSV]
   around_filter :catch_no_record
 
   def new
@@ -67,6 +67,34 @@ class Admin::UsersController < AdminController
       render :edit
     end
   end
+
+  def uploadCSV
+    csv_io = params[:csv]
+
+    file = csv_io.read
+
+    error_csv = ""
+
+    CSV.parse(file,:headers => true) do |row|
+      user = User.new(row.to_hash)
+      user.password = user.password_confirmation = SecureRandom.hex
+
+      # Save error messages
+      if !user.save
+        error_csv << row.push( user.errors.full_messages.to_sentence).to_s
+      end
+    end
+
+    # If any error message
+    if error_csv!=""
+      send_data error_csv, :type => 'text/csv', :filename => 'invalid_users.csv'      
+      flash[:notice] = "CSV has invalid entries!"
+    else
+      flash[:notice] =  "Successully uploaded users information!"
+    end
+
+  end
+
 
   private # ----------
 
