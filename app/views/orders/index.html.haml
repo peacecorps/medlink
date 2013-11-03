@@ -2,11 +2,10 @@
 
 %select#admin_country_select
   %option="Select Country"
-  - Country.all.each do |c| 
-    %option{:value => c.id}=c.name 
+  - Country.all.each do |c|
+    %option{:value => c.id}=c.name
 
-
-%table#orders.table.table-bordered.table-striped
+%table#orders.table.table-bordered.table-striped.table-hover
   %thead
     - if current_user.pcmo? || current_user.admin?
       %form.form-horizontal

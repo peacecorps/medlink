@@ -4,8 +4,8 @@
     %th First Name
     %th Last Name
     %th Supply
-    %th Unit
     %th Quantity
+    %th Unit
     %th Location
     %th Request
     - if responded
@@ -16,14 +16,15 @@
   - orders.each do |order|
     - attrs = { "class" => "order c#{order.country_id}" }
     - unless responded
+      - attrs["class"] += " link"
       - attrs["data-link"] = new_order_response_path(order)
     %tr{ attrs }
       %td= order.user.pcv_id
       %td= order.user.first_name
       %td= order.user.last_name
       %td= order.supply
-      %td= order.unit
       %td= order.quantity
+      %td= order.unit
       %td
         %span.cell--primary= order.location
       %td
