@@ -1,9 +1,13 @@
-%h1 Your Order Has Been Fulfilled
+%h1= @subject
 
 %p Your order of:
 
 %ul
   %li= "#{@order.quantity} #{@order.supply.name}"
 
-%p has successfully been filled. Please follow the attached instructions:
+- if @response.denied?
+  %p has been denied. Please see the attached response:
+- else
+  %p has successfully been fulfilled. Please follow the attached instructions:
+
 %p= @response.instructions

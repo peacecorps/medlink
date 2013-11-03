@@ -2,8 +2,7 @@ Medlink::Application.routes.draw do
   devise_for :users, :controllers => { :passwords => "passwords" }
 
   resources :reports, only: [:index] do
-    [:request_history, :fulfillment_history, :supply_history,
-     :recent_adds, :recent_edits, :pcmo_response_times].each do |r|
+    [:order_history, :users, :pcmo_response_times].each do |r|
       get r, on: :collection
     end
   end

@@ -1,9 +1,14 @@
-Your Order Has Been Fufilled
+#{@subject}
 ==============================================
 
 Your order of:
 
 <%= "#{@order.quantity} #{@order.supply.name}; \n" %>
 
-has successfully been filled. Please follow the attached instructions:
+<%- if @response.denied? %>
+has been denied. Please see the attached response:
+<%- else %>
+has successfully been fulfilled. Please follow the attached instructions:
+<%- end %>
+
 <%= @response.instructions %>

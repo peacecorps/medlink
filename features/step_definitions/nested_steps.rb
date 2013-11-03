@@ -27,13 +27,15 @@ Then /I should see std tab area items/ do
   steps %{
     Then I should see tab "Request Manager"
     Then I should see tab "Place a Request"
-    Then I should see tab "Reports"
+    Then I should see tab "Download Orders"
   }
 end
 
 Then /I should see admin tab area items/ do
   steps %{
-    Then I should see std tab area items
+    Then I should see tab "Request Manager"
+    Then I should see tab "Place a Request"
+    Then I should see tab "Reports"
     Then I should see link "Admin Home"
   }
 end

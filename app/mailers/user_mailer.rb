@@ -8,7 +8,13 @@ class UserMailer < ActionMailer::Base
   def fulfillment id
     @response = Response.find id
     @order = @response.order
+
     email = @order.email || @order.user.email
-    mail to: email, subject: "Your Order Has Been Fufilled"
+    @subject = if @response.denied?
+      "Your Order Has Been Denied"
+    else
+      "Your Order Has Been Fulfilled"
+    end
+    mail to: email, subject: @subject
   end
 end

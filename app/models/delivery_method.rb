@@ -1,4 +1,6 @@
 class DeliveryMethod
+  Denial = :denial
+
   attr_accessor :name, :title, :text
 
   def initialize name, text, title=nil
@@ -26,10 +28,9 @@ class DeliveryMethod
         'Please purchase elsewhere and allow us to reimburse you.',
         'Purchase & Reimburse'
       # R4
-      yield new :special, '[enter special istructions] ' +
-        , 'Special Instructions'
-      # R5 
-      yield new :denial, 'We sorry but we are unable to fufill your request. [enter reason] '
+      yield new :special, '[enter special istructions] ', 'Special Instructions'
+      # R5
+      yield new Denial, 'We sorry but we are unable to fufill your request. [enter reason] '
     end
   end
 end

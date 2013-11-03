@@ -1,6 +1,0 @@
-- require 'csv'
-
-= CSV.generate do |csv|
-  - csv << ["Order ID", "Placed", "Fulfilled", "Item", "Amount", "Unit", "Location", "Supply Name"]
-  - @orders.each do |order|
-    - csv << [order.id, order.created_at, order.fulfilled_at, order.supply, order.quantity, order.unit, order.location, order.supply_name]
