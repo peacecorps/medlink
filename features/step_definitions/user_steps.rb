@@ -226,7 +226,7 @@ Then (/^I should be signed in as "(.*?)"$/) do |role|
   elsif role == "pcmo"
     expect(current_url).to eq("http://www.example.com/orders/manage")
   else # PCV
-    expect(current_url).to eq("http://www.example.com/orders")
+    expect(current_url).to eq("http://www.example.com/orders/new")
   end
 end
 
