@@ -52,6 +52,7 @@ Special thanks to the consulting Peace Corp members, without whom none of this w
 * Jeffrey Rhodes
 * Danel Trisi
 * Kevin Sun
+* Chenheli Hua
 
 Additional thanks to the [RHoK](http://www.rhok.org/) team for their outstanding work getting this project off the ground:
 * John Craft
