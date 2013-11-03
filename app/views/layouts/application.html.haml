@@ -30,7 +30,7 @@
             %h1 Peace Corps
             %h4 Medical Supplies
             - if current_user
-              %span.badge= current_user.country.name.downcase
+              %span.badge= current_user.country.name
         .span9
           %nav
             = render 'partials/global_nav'
