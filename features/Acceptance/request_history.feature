@@ -11,7 +11,7 @@ Feature: Visit "Request History" Web Page
     And I am not logged in
     And I sign in with valid credentials
     And I go to the request history page
-    Then I should see std gear area items
+    Then I should see pcv gear area items
     Then I should see std icon area items
 
     Then I should see column "Supply"
