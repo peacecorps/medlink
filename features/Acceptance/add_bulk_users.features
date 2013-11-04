@@ -20,16 +20,16 @@ Feature: Add Bulk Users
     Then I should see the button "Upload CSV"
     Then I should see browse button "csv"
 
-#TODO: Fill in this scenario.
   Scenario: Succcesfully selecting a file and uploading some good and some bad data
+    When I uploaded a csv file with some good and some bad data
+    Then I should download a invalid_users.csv with bad data and error messages
 
-#TODO: Fill in this this scenario.
-  Scenario: Succcesfully selecting a file and uploading all bad data
+  Scenario: Successfully selecting a file and uploading all good data
+    When I uploaded a csv file with all good data
+    Then I should not download anything
 
 # RAINY DAY TESTS
   Scenario: Click on "Upload CSV" before selecting a file
     Then I should see the add user form
     When I click "Upload CSV"
-#FIXME: Currently can not handle nil filename.
-
-#TODO: Any other RAINY DAY TESTS you can think of?
+    Then I should go back to the add user page
