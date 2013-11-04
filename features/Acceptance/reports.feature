@@ -20,18 +20,11 @@ Feature: Reports
     Then I stay on reports page
 
     Examples:
-      | user  | report                |
+      | user  | report        |
+      | pcmo  | Order History |
 
-      | pcmo  | Supply Requests       |
-      | pcmo  | Fulfillment History   |
-      | pcmo  | Request History       |
-
-      | admin | Supply Requests       |
-      | admin | Fulfillment History   |
-      | admin | Request History       |
-      | admin | Recently Added Users  |
-      | admin | Recently Edited Users |
-      | admin | PCMO Response Times   |
+      | admin | Order History |
+      | admin | Users         |
 
 # TODO: Invalid Outputs? (Answer: GIGO)
 
