@@ -21,7 +21,7 @@ Feature: Edit User
 #......................................................................
   Scenario: successfully editng a user
     When I choose a "Peace Corps Medical Officer" role
-    When I choose the country "Chad"
+    When I choose the user country "Chad"
     And  I choose a "Peace Corps Volunteer" role
     Then I should see the PCMO select box
     When I fill out the edit user form

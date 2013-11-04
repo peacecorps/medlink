@@ -12,11 +12,11 @@ Then(/^I should not see the PCMO select box$/) do
   !find_field('user_pcmo_id').visible?
 end
 
-When(/^I choose the country "(.*?)"$/) do |name|
+When(/^I choose the user country "(.*?)"$/) do |name|
   select name, from: 'user_country_id'
 end
 
-When(/^I unselect the country$/) do
+When(/^I unselect the user country$/) do
   select 'Country', from: 'user_country_id'
 end
 
