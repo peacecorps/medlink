@@ -54,8 +54,8 @@ Feature: Response_to_order Feature
     Then I should be able to assign one action: "Delivery"
     Then I should be able to assign one action: "Pickup"
     Then I should be able to assign one action: "Purchase & Reimburse"
-    Then I should be able to assign one action: "Special Instructions"
     Then I should be able to assign one action: "Denial"
+    Then I should be able to assign one action: "Special Instructions"
     Then I should be able to assign a special instruction
     When I save my response
     Then I should see the response date and PCMO id "1" on the request
@@ -68,6 +68,7 @@ Feature: Response_to_order Feature
     Then I should be able to assign one action: "Delivery"
     Then I should be able to assign one action: "Pickup"
     Then I should be able to assign one action: "Purchase & Reimburse"
+    Then I should be able to assign one action: "Denial"
     Then I should be able to assign one action: "Special Instructions"
     Then I should be able to assign a special instruction
     When I save my response
@@ -97,35 +98,63 @@ Feature: Response_to_order Feature
 # empty, just-chars, just-digits, special-chars+blanks
 
   @javascript
-  Scenario: Accept empty "Special Instructions" textbox
+  Scenario Outline: Accept empty "Special Instructions" textbox
     When I select a "past-due" request
-    Then I should be able to assign one action: "Delivery"
+    Then I should be able to assign one action: "<action>"
     Then I should be able to assign a special instruction of 0 characters
     When I save my response
     Then I should see the success error message
+    Examples:
+    | action               |
+    | Delivery             |
+    | Pickup               |
+    | Purchase & Reimburse |
+    | Denial               |
+    | Special Instructions |
 
   @javascript
-  Scenario: Accept "Special Instructions" textbox with 1 character
+  Scenario Outline: Accept "Special Instructions" textbox with 1 character
     When I select a "past-due" request
-    Then I should be able to assign one action: "Delivery"
+    Then I should be able to assign one action: "<action>"
     Then I should be able to assign a special instruction of 1 characters
     When I save my response
     Then I should see the success error message
+    Examples:
+    | action               |
+    | Delivery             |
+    | Pickup               |
+    | Purchase & Reimburse |
+    | Denial               |
+    | Special Instructions |
 
   @javascript
-  Scenario: Accept "Special Instructions" textbox with ([0-9], " ", special chars).
+  Scenario Outline: Accept "Special Instructions" textbox with ([0-9], " ", special chars).
     When I select a "past-due" request
-    Then I should be able to assign one action: "Delivery"
+    Then I should be able to assign one action: "<action>"
     Then I should be able to assign "abcdefghijklmnop 0123456789 !@#$%^&*()_+-={}|:;'<,>.?/~`" to special instruction
     When I save my response
     Then I should see the success error message
+    Examples:
+    | action               |
+    | Delivery             |
+    | Pickup               |
+    | Purchase & Reimburse |
+    | Denial               |
+    | Special Instructions |
 
+  # NOTE: "Purchase & Reimburse" has no [] by default.
   @javascript
-  Scenario: Check for fogetting to replace the "[word]" in default messages.
+  Scenario Outline: Check for fogetting to replace the "[word]" in default messages.
     When I select a "past-due" request
-    Then I should be able to assign one action: "Delivery"
+    Then I should be able to assign one action: "<action>"
     When I save my response
     Then I should see the replace_placeholder error message
+    Examples:
+    | action               |
+    | Delivery             |
+    | Pickup               |
+    | Special Instructions |
+    | Denial               |
 
 ######################################################################
 # DESIGN DOC TAGS:

@@ -59,6 +59,10 @@ Then(/^I should see a "(.*?)" confirmation$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
+Then(/^I should see a no_change confirmation$/) do
+  page.should have_selector ".alert", text: 'No changes made'
+end
+
 When(/^I change (\w+) to (\w*)$/) do |field, value|
   if field == "user_country_id"
     select  value, from: field

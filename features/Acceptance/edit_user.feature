@@ -28,6 +28,11 @@ Feature: Edit User
     And  I click "Save"
 
 #......................................................................
+  Scenario: successfully editng a user but change you mind and not edit
+    And  I click "Save"
+    Then I should see a no_change confirmation
+
+#......................................................................
   Scenario Outline: Edit User validate errors
     When I fill out the edit user form
     And  I change <field> to <value>
