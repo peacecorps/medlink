@@ -71,28 +71,33 @@ class Admin::UsersController < AdminController
   def uploadCSV
     csv_io = params[:csv]
 
-    file = csv_io.read
+    # Redirect back for empty csv file
+    if csv_io == nil
+      redirect_to new_admin_user_path, :notice => "Please choose a csv file first."
+    else
 
-    error_csv = ""
+      file = csv_io.read
 
-    CSV.parse(file,:headers => true) do |row|
-      user = User.new(row.to_hash)
-      user.password = user.password_confirmation = SecureRandom.hex
+      error_csv = ""
 
-      # Save error messages
-      if !user.save
-        error_csv << row.push( user.errors.full_messages.to_sentence).to_s
+      CSV.parse(file,:headers => true) do |row|
+        user = User.new(row.to_hash)
+        user.password = user.password_confirmation = SecureRandom.hex
+        
+        # Save error messages
+        if !user.save
+          error_csv << row.push( user.errors.full_messages.to_sentence).to_s
+        end
+      end
+      
+      # If any error message
+      if error_csv!=""
+        send_data error_csv, :type => 'text/csv', :filename => 'invalid_users.csv'      
+        flash[:notice] = "CSV has invalid entries!"
+      else
+        flash[:notice] =  "Successully uploaded users information!"
       end
     end
-
-    # If any error message
-    if error_csv!=""
-      send_data error_csv, :type => 'text/csv', :filename => 'invalid_users.csv'      
-      flash[:notice] = "CSV has invalid entries!"
-    else
-      flash[:notice] =  "Successully uploaded users information!"
-    end
-
   end
 
 
