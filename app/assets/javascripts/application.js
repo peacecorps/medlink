@@ -16,4 +16,5 @@
 //= require moment
 //= require bootstrap-datepicker
 //= require daterangepicker
+//= require jquery-placeholder
 
