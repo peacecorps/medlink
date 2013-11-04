@@ -11,7 +11,6 @@
             %li= link_to 'Download Orders', order_history_reports_path(format: :csv)
           - else current_user.admin?
             %li= link_to 'Reports', reports_path
-          %li.divider-vertical
       %ul.nav.pull-right
         %li
           %a(href="#" class="dropdown-toggle" data-toggle="dropdown")
