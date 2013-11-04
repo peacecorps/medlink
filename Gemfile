@@ -8,6 +8,7 @@ gem 'jquery-rails'
 gem 'bootstrap-daterangepicker-rails'
 gem 'haml-rails'
 gem 'twilio-ruby'
+gem 'jquery-placeholder-rails'
 
 gem 'devise'
 gem 'cancan'

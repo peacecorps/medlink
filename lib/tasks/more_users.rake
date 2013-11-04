@@ -1,9 +1,8 @@
 namespace :more_users do
 
-  desc "Creates more users from your git config (password optional)"
+  desc "Creates more users"
   task :create, [:password] => :environment do |_, args|
 
-    raise 'Please install and configure git' unless system 'which git >/dev/null'
     #.................................................................
     email = rand(1000).to_s + 'pcv@hotmail.com'
     names = 'Mr. PCV'
@@ -22,6 +21,7 @@ namespace :more_users do
     user.role = 'pcv'
     user.location = 'PCVille'
     user.phone = '404-555-1213'
+    user.time_zone = "Alaska"
     user.save!
 
     #.................................................................
@@ -42,6 +42,7 @@ namespace :more_users do
     user.role = 'pcmo'
     user.location = 'PCMOville'
     user.phone = '404-555-1214'
+    user.time_zone = "Alaska"
     user.save!
 
     #.................................................................
@@ -63,6 +64,7 @@ namespace :more_users do
     user.role = 'pcv'
     user.location = 'OldPCVille'
     user.phone = '404-555-1215'
+    user.time_zone = "Alaska"
     user.save!
     user.created_at = user.created_at - 4.days.ago
 
@@ -84,6 +86,7 @@ namespace :more_users do
     user.role = 'pcmo'
     user.location = 'OldPCMOville'
     user.phone = '404-555-1215'
+    user.time_zone = "Alaska"
     user.save!
     user.created_at = user.created_at - 4.days.ago
   end
