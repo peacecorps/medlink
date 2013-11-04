@@ -22,6 +22,7 @@ namespace :admin do
     user.role = 'admin'
     user.location = 'Buckhead'
     user.phone = '404-555-1212'
+    user.time_zone = "Alaska"
     user.save!
   end
 
