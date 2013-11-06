@@ -110,4 +110,8 @@ end
 Then(/^I should see a required edit volunteer error message$/) do
   page.should have_selector ".alert", text: 'Please select a volunteer to edit.'
 end
+
+Then(/^I should see a choose csv file first error message$/) do
+  page.should have_selector ".alert", text: 'Please choose a csv file first.'
+end
 #save_and_open_page
