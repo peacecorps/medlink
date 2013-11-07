@@ -1,12 +1,18 @@
 When(/^I upload a csv file with all valid data for (\d+) new users$/) do |count|
-  pending "Debug FIXME below"
-  #FIXME: attach_file(:csv_file, File.join(RAILS_ROOT, 'features', 'upload-files', 'users_csv_ok.csv'))
+  attach_file(:csv, File.join(Rails.root, 'features',
+    'upload-files', 'users_csv_all_good.csv'))
   click_button "Upload CSV"
 end
 
 When(/^I upload a csv file with some good and some bad user data$/) do
-  pending "Debug FIXME below"
-  #FIXME: attach_file(:csv_file, File.join(RAILS_ROOT, 'features', 'upload-files', 'users_csv_bad.csv'))
+  attach_file(:csv, File.join(Rails.root, 'features',
+    'upload-files', 'users_csv_some_bad.csv'))
+  click_button "Upload CSV"
+end
+
+When(/^I upload a csv file with all bad user data$/) do
+  attach_file(:csv, File.join(Rails.root, 'features',
+    'upload-files', 'users_csv_all_bad.csv'))
   click_button "Upload CSV"
 end
 

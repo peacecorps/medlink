@@ -20,15 +20,22 @@ Feature: Add Bulk Users
     Then I should see browse button "csv"
 
 @wip
-  Scenario: SUNNY: Successfully selecting a file and uploading all good data
+  Scenario: GOOD: Successfully selecting a file and uploading all good data
     When I upload a csv file with all valid data for 3 new users
     Then I should not download anything
     Then the number of users should change to 3
     And I should be sent to the add user page
 
 @wip
-  Scenario: Succcesfully selecting a file and uploading some good and some bad data
+  Scenario: SOME: Succcesfully selecting a file and uploading some good and some bad data
     When I upload a csv file with some good and some bad user data
+    Then I should download a invalid_users.csv with bad data and error messages
+    Then the number of users should change to 999999
+    And I should be sent to the add user page
+
+@wip
+  Scenario: NONE: Succcesfully selecting a file and uploading all bad data
+    When I upload a csv file with all bad user data
     Then I should download a invalid_users.csv with bad data and error messages
     Then the number of users should not change
     And I should be sent to the add user page
