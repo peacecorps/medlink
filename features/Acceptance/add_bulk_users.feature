@@ -19,6 +19,10 @@ Feature: Add Bulk Users
     Then I should see the button "Upload CSV"
     Then I should see browse button "csv"
 
+  Scenario: Handle Empty File
+
+  Scenario: Handle file without header (1st) line
+
 @wip
   Scenario: GOOD: Successfully selecting a file and uploading all good data
     When I upload a csv file with all valid data for 3 new users
