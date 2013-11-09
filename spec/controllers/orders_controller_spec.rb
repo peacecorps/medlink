@@ -7,24 +7,6 @@ describe OrdersController do
   it { renders_successfully :index }
   it { renders_successfully :new   }
 
-  # FIXME: this behavior is now properly part of the response controller
-  #context 'as a PCMO with an existing order' do
-    #before(:each) do
-      #@pcv   = FactoryGirl.create :user
-      #@order = FactoryGirl.create :order, user: @pcv
-
-      #current_user.update_attributes role: :pcmo, country_id: @pcv.country_id
-    #end
-
-    #it { renders_successfully :edit, id: @order.id }
-
-    #it 'allows pcmos to fulfull orders', :worker do
-      #put :update, id: @order.id, order: { email: 'test@example.com' }
-      #expect( response ).to redirect_to manage_orders_path
-      #expect( Order.find @order.id ).to be_responded
-    #end
-  #end
-
   describe '#manage' do
     it 'redirects basic users' do
       get :manage
