@@ -75,27 +75,33 @@ class Admin::UsersController < AdminController
     if csv_io == nil
       redirect_to new_admin_user_path, :notice => "Please choose a csv file first."
     else
-
-      file = csv_io.read
-
-      error_csv = ""
-
-      CSV.parse(file,:headers => true) do |row|
-        user = User.new(row.to_hash)
-        user.password = user.password_confirmation = SecureRandom.hex
-        
-        # Save error messages
-        if !user.save
-          error_csv << row.push( user.errors.full_messages.to_sentence).to_s
-        end
-      end
-      
-      # If any error message
-      if error_csv!=""
-        send_data error_csv, :type => 'text/csv', :filename => 'invalid_users.csv'      
-        flash[:notice] = "CSV has invalid entries!"
+      if csv_io.size == 0
+        redirect_to new_admin_user_path, :notice => "csv file is empty. Please check it."
       else
-        flash[:notice] =  "Successully uploaded users information!"
+        file = csv_io.read
+        if file.split("\n")[0].split(',')[0] != "email"
+          redirect_to new_admin_user_path, :notice => "csv file missing header. Please check."
+        else
+          error_csv = ""
+
+          CSV.parse(file,:headers => true) do |row|
+            user = User.new(row.to_hash)
+            user.password = user.password_confirmation = SecureRandom.hex
+        
+            # Save error messages
+            if !user.save
+              error_csv << row.push( user.errors.full_messages.to_sentence).to_s
+            end
+          end
+      
+          # If any error message
+          if error_csv!=""
+            send_data error_csv, :type => 'text/csv', :filename => 'invalid_users.csv'      
+            flash[:notice] = "CSV has invalid entries!"
+          else
+            flash[:notice] =  "Successully uploaded users information!"
+          end
+        end
       end
     end
   end

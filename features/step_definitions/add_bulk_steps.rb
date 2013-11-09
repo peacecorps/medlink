@@ -19,11 +19,13 @@ end
 When(/^I upload a csv file with empty file$/) do
   attach_file(:csv, File.join(Rails.root, 'features',
     'upload-files', 'empty.csv'))
+  click_button "Upload CSV"
 end
 
 When(/^I upload a csv file with missing header$/) do
   attach_file(:csv, File.join(Rails.root, 'features',
     'upload-files', 'missing1stLine.csv'))
+  click_button "Upload CSV"
 end
 
 Then(/^I should see browse button "(.*?)"$/) do |name|
