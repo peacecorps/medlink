@@ -6,7 +6,7 @@ end
 
 desc "Generates random order data"
 task :generate => :environment do
-  countries = ["UNITED STATES", "SENEGAL"].map { |name| Country.where(name: name).first! }
+  countries = ["United States", "Senegal"].map { |name| Country.where(name: name).first! }
   supplies  = Supply.all
   orders    = 0
 
@@ -47,7 +47,8 @@ task :generate => :environment do
         email:      email,
         location:   "#{name}'s location",
         phone:      random_digits(10),
-        pcv_id:     random_digits(5)
+        pcv_id:     random_digits(5),
+        time_zone:  "Alaska"
       )
       u.password = u.password_confirmation = "password"
       u.save!
