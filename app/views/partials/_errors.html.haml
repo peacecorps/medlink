@@ -1,7 +1,6 @@
 - if object.errors.any?
   #error_explanation
     #{pluralize(object.errors.count, "error")} prohibited this #{object.class.name.downcase} from being submitted:
-
-  %ul
-    - object.errors.full_messages.each do |msg|
-      %li= msg
+    %ul
+      - object.errors.full_messages.each do |msg|
+        %li= msg
