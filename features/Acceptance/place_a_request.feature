@@ -46,7 +46,10 @@ Feature: Place a Request
 #......................................................................
 #ERRORS
 # NOTE: Assuming "Special Instructions Area" is optional field.
-# NOTE: Unclear how location, qty, and units are bad.
+# NOTE: #190, #189, #170: Unclear how location, qty, and units are bad.
+#TODO: #190: Scenario Outline: User does not give a location (AL: Appears to have a default value)
+#TODO: #190: Scenario: User gives a bad location value. (AL: not validation)
+#TODO: #189/#170: Scenario: User gives a bad units value. - H (invalid unit)(AL: not validation)
 
 #......................................................................
   Scenario Outline: User does not give a Quantity - I (invalid qty)
@@ -100,7 +103,3 @@ Feature: Place a Request
       | pcv   | Request Form    |
       | admin | Place a Request |
       | pcmo  | Place a Request |
-
-#TODO: Scenario Outline: User does not give a location (AL: Appears to have a default value)
-#TODO: Scenario: User gives a bad location value. (AL: not validation)
-#TODO: Scenario: User gives a bad units value. - H (invalid unit) (AL: not validation)
