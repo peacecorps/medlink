@@ -44,6 +44,14 @@ and point your Twilio request URL at the address it specifies (http://something.
 
 If you would like to see the **#TODO's/#FIXME's/etc,** then run "./bin/chk" or "./bin/chk more" bash scripts from the top project directory.
 
+#### BUGS
+
+**If you get a problem with the software?**
+
+Please create an email describing the steps to reproduce the software
+problem and email it to [support mailing list](support@pcmedlink.org).
+You will receive an acknowledgement and initial assessment without 24 hours.
+
 ## Contributors
 
 Special thanks to the consulting Peace Corp members, without whom none of this would be possible:

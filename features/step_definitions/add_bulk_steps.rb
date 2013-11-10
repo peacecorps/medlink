@@ -41,7 +41,6 @@ Then(/^I should sent to the add user page$/) do
 end
 
 Then(/^I should download an error file with bad data and error messages$/) do
-#FIXME: Problem with suffix if filename is already there.
   File.exist?('/tmp/invalid_users.csv') and File.exist?('/tmp/invalid_users-[0-9].csv')
 end
 
@@ -50,9 +49,9 @@ Then(/^I should not download anything$/) do
 end
 
 Then(/^the number of users should change to (\d+)$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+  pending # FIXME: Implement "the number of users should change" step
 end
 
 Then(/^the number of users should not change$/) do
-  pending # express the regexp above with the code you wish you had
+  pending # FIXME: Implement "number of users should not change"
 end
