@@ -26,8 +26,6 @@ Feature: Reports
       | admin | Order History |
       | admin | Users         |
 
-# TODO: Invalid Outputs? (Answer: GIGO)
-
 # FYI: PCV does not have the report page or any of the 6 reports.
 # FYI: pg.13 (PCMO: 3 reports: Supply Requests, Fulfillment History,
 #    Request History, ERRORS?)

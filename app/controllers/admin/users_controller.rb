@@ -37,10 +37,9 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    # TODO: clean this up
-    # The edge case here is countries: db ids are ints, not the strings
-    # that we get as params, and we want to display country=name instead
-    # of country_id=id
+    # TODO: Clean this up: The edge case here is countries: db ids are
+    #    ints, not the strings that we get as params, and we want to
+    #    display country=name instead of country_id=id
     field_chgs = []
     user_params.each do |key,nval|
       oval = @user[key]
