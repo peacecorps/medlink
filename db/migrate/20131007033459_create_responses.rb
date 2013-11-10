@@ -10,7 +10,7 @@ class CreateResponses < ActiveRecord::Migration
 
     remove_column :orders, :delivery_method, :string
     remove_column :orders, :instructions,    :string
-    remove_column :orders, :responed_at,     :datetime
+    remove_column :orders, :responded_at,    :datetime
     add_column    :orders, :response_id,     :integer
   end
 end
