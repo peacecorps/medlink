@@ -1,28 +1,33 @@
 When(/^I upload a csv file with all valid data for (\d+) new users$/) do |count|
+  $USER_COUNT = User.count # ; puts "BEFORE COUNT=[" + $USER_COUNT.to_s + "]"
   attach_file(:csv, File.join(Rails.root, 'features',
     'upload-files', 'users_csv_all_good.csv'))
   click_button "Upload CSV"
 end
 
 When(/^I upload a csv file with some good and some bad user data$/) do
+  $USER_COUNT = User.count # ; puts "BEFORE COUNT=[" + $USER_COUNT.to_s + "]"
   attach_file(:csv, File.join(Rails.root, 'features',
     'upload-files', 'users_csv_some_bad.csv'))
   click_button "Upload CSV"
 end
 
 When(/^I upload a csv file with all bad user data$/) do
+  $USER_COUNT = User.count # ; puts "BEFORE COUNT=[" + $USER_COUNT.to_s + "]"
   attach_file(:csv, File.join(Rails.root, 'features',
     'upload-files', 'users_csv_all_bad.csv'))
   click_button "Upload CSV"
 end
 
 When(/^I upload a csv file with empty file$/) do
+  $USER_COUNT = User.count # ; puts "BEFORE COUNT=[" + $USER_COUNT.to_s + "]"
   attach_file(:csv, File.join(Rails.root, 'features',
     'upload-files', 'empty.csv'))
   click_button "Upload CSV"
 end
 
 When(/^I upload a csv file with missing header$/) do
+  $USER_COUNT = User.count # ; puts "BEFORE COUNT=[" + $USER_COUNT.to_s + "]"
   attach_file(:csv, File.join(Rails.root, 'features',
     'upload-files', 'missing1stLine.csv'))
   click_button "Upload CSV"
@@ -41,7 +46,6 @@ Then(/^I should sent to the add user page$/) do
 end
 
 Then(/^I should download an error file with bad data and error messages$/) do
-#FIXME: Problem with suffix if filename is already there.
   File.exist?('/tmp/invalid_users.csv') and File.exist?('/tmp/invalid_users-[0-9].csv')
 end
 
@@ -49,10 +53,13 @@ Then(/^I should not download anything$/) do
   !File.exist?('/tmp/invalid_users.csv') or !File.exist?('/tmp/invalid_users-[0-9].csv')
 end
 
-Then(/^the number of users should change to (\d+)$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+Then(/^the number of users should change to (\d+)$/) do |count|
+  User.count.should == count.to_i
+  # puts "BEFORE_COUNT=[" + $USER_COUNT.to_s + "]"
+  # puts "AFTER_COUNT=[" + User.count.to_s + "]"
 end
 
 Then(/^the number of users should not change$/) do
-  pending # express the regexp above with the code you wish you had
+  $USER_COUNT.should == User.count.to_i # NOT CHANGE
+  # pending # FIXME: Implement "number of users should not change"
 end
