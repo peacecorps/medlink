@@ -30,7 +30,7 @@ class DeliveryMethod
       # R4
       yield new :special, '[enter special instructions] ', 'Special Instructions'
       # R5
-      yield new Denial, 'We sorry but we are unable to fulfill your request: [enter reason] '
+      yield new Denial, 'We are sorry but we are unable to fulfill your request: [enter reason] '
     end
   end
 end
