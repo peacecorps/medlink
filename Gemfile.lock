@@ -196,7 +196,7 @@ GEM
       websocket (~> 1.0.4)
     show_me_the_cookies (2.1.0)
       capybara (~> 2.0)
-    simplecov (0.8.0)
+    simplecov (0.8.1)
       docile (~> 1.1.0)
       lockfile (>= 2.1.0)
       multi_json
