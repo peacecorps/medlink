@@ -1,3 +1,5 @@
+:javascript
+  $('text_field, phone_field, email_field').placeholder();
 - url = action == :edit ? admin_user_path(user) : admin_users_path
 = form_for user, url: url, id: 'user-form' do |f|
   = render partial: 'partials/errors', locals: {object: user}
