@@ -20,3 +20,8 @@ notifications:
       - jamesdabbs@gmail.com
     on_success: change
     on_failure: always
+
+after_success:
+  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  - heroku plugins:install https://github.com/ddollar/heroku-anvil
+  - heroku build -r pcmedlink-sandbox -b https://github.com/heroku/heroku-buildpack-ruby.git
