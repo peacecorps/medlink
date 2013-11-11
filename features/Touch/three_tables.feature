@@ -1,5 +1,4 @@
-#@touch
-@wip
+@touch
 Feature: Visit "Three Tables" Web Page
   As a visitor to the website
   I want to see everything that I expect on the three_tables pages
@@ -43,7 +42,7 @@ Feature: Visit "Three Tables" Web Page
     When I go to the request_manager page
     Then I should see std icon area items
     Then I should see non-pcv gear area items
-    Then I should see std tab area items
+    Then I should see std icon area items
     Then I should see admin tab area items
 
     Then I should see header with text "Request Manager"

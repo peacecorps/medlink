@@ -36,7 +36,7 @@ Then(/^I should have (\d+) past due orders to process$/) do |expected_orders|
 end
 
 Then(/^I should have (\d+) response tracker orders$/) do |expected_orders|
-  pending_orders_in_table = page.all('table#responded-orders tr').count - 1
+  pending_orders_in_table = [page.all('table#responded-orders tr').count - 1, 0].max
   pending_orders_in_table.should == expected_orders.to_i
 end
 
