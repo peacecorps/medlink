@@ -1,27 +1,25 @@
 language: ruby
-
 rvm:
-  - 2.0.0
-
+- 2.0.0
 script:
-  - RAILS_ENV=test COVERAGE=true bundle exec rake --trace db:migrate spec
-  - RAILS_ENV=test COVERAGE=true bundle exec cucumber
-
+- RAILS_ENV=test COVERAGE=true bundle exec rake --trace db:migrate spec
+- RAILS_ENV=test COVERAGE=true bundle exec cucumber
 branches:
   only:
-    - master
-    - production
-
+  - master
+  - production
 notifications:
   email:
     recipients:
-      - gmacie@hotmail.com
-      - jasnow@hotmail.com
-      - jamesdabbs@gmail.com
+    - gmacie@hotmail.com
+    - jasnow@hotmail.com
+    - jamesdabbs@gmail.com
     on_success: change
     on_failure: always
-
 after_success:
-  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-  - heroku plugins:install https://github.com/ddollar/heroku-anvil
-  - heroku build -r pcmedlink-sandbox -b https://github.com/heroku/heroku-buildpack-ruby.git
+- wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+- heroku plugins:install https://github.com/ddollar/heroku-anvil
+- heroku build -r pcmedlink-sandbox -b https://github.com/heroku/heroku-buildpack-ruby.git
+env:
+  global:
+    secure: VRuwF7UURbV590PUazKNyu4s2ePaEaadbkAmCp6mXrlOTumg9rau+L1S8iATIg1b4R3ogm3Mr72swx2nKkOWuYmhsnvpDUgRx+doAdHCNB38/jK26KT7jazf6XdzyazRxnISut8EaALOEL3hsFXK4jWrY+Me9jO69Jv7TzJK8SQ=
