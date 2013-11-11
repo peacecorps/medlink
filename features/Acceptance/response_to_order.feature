@@ -73,12 +73,7 @@ Feature: Response_to_order Feature
     When I save my response
     Then I should see the response date and PCMO id "2" on the request
 
-#......................................................................
-  @wip
-  Scenario: Duplicate request #TODO
-    Given I select a request that another PCMO has responded to
-    Then I should see a message that the request has been handled
-    Then I should see the other PCMO's id on the request
+# FYI: Scenario: Duplicate request -- You cannot click on already responded orders.
 
 ######################################################################
 # ERRORS
@@ -162,4 +157,3 @@ Feature: Response_to_order Feature
 
 #TODO -- B (missing date), C (missing location) (p.8)
 #TODO -- M1 (EMAIL TEXT) (p.9)
-
