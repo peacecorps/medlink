@@ -31,6 +31,7 @@ A few components require a little extra setup to run:
 
 #### Cucumber (Acceptance Tests)
  * To run the **cucumber** tests, just go to the top project directory and type **cucumber**.
+ * To run the **cucumber javascript** tests, just go to the top project directory and type **cucumber -p javascript**. These tests must be run with the GUI; the other cucumber tests do not have this requirement.
 
 #### Twilio (SMS integration)
 
