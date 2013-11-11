@@ -16,10 +16,16 @@ notifications:
     - jamesdabbs@gmail.com
     on_success: change
     on_failure: always
-after_success:
-- wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-- heroku plugins:install https://github.com/ddollar/heroku-anvil
-- heroku build -r pcmedlink-sandbox -b https://github.com/heroku/heroku-buildpack-ruby.git
 env:
   global:
     secure: VRuwF7UURbV590PUazKNyu4s2ePaEaadbkAmCp6mXrlOTumg9rau+L1S8iATIg1b4R3ogm3Mr72swx2nKkOWuYmhsnvpDUgRx+doAdHCNB38/jK26KT7jazf6XdzyazRxnISut8EaALOEL3hsFXK4jWrY+Me9jO69Jv7TzJK8SQ=
+after_success:
+  - wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  - git remote add heroku git@heroku.com:pcmedlink-sandbox.git
+  - echo "Host heroku.com" >> ~/.ssh/config
+  - echo "   StrictHostKeyChecking no" >> ~/.ssh/config
+  - echo "   CheckHostIP no" >> ~/.ssh/config
+  - echo "   UserKnownHostsFile=/dev/null" >> ~/.ssh/config
+  - heroku keys:clear
+  - yes | heroku keys:add
+  - yes | git push heroku master
