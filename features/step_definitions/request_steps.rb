@@ -162,4 +162,9 @@ end
 When(/^I unselect the country$/) do
   select 'Country', from: 'admin_country_select'
 end
+
+Then(/^I see (\d+) lines in the table$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
 #save_and_open_page
