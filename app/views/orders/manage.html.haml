@@ -6,18 +6,18 @@
   %hr
 - else
   = hidden_field_tag :pcmo_country_id, current_user.country_id
-
 .section
+  %br
   %h3 Past Due Requests
   %table#past-due-orders.table.table-bordered.js-striped-red.table-hover
     = render partial: 'table', locals: { orders: @orders.past_due, responded: false }
-
 .section
+  %br
   %h3 Pending Requests
   %table#pending-orders.table.table-bordered.js-striped-yellow.table-hover
     = render partial: 'table', locals: { orders: @orders.pending, responded: false }
-
 .section
+  %br
   %h3 Response Tracker
   %table#responded-orders.table.table-bordered.js-striped.table-hover
     = render partial: 'table', locals: { orders: @orders.responded, responded: true }
