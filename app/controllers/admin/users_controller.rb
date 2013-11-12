@@ -82,14 +82,30 @@ class Admin::UsersController < AdminController
           redirect_to new_admin_user_path, :notice => "csv file missing header. Please check."
         else
           error_csv = ""
-
+          
           CSV.parse(file,:headers => true) do |row|
-            user = User.new(row.to_hash)
-            user.password = user.password_confirmation = SecureRandom.hex
-        
-            # Save error messages
-            if !user.save
-              error_csv << row.push( user.errors.full_messages.to_sentence).to_s
+            # If overwrite option is checked
+            if params[:overwrite] == '1'
+              user = User.where(:pcv_id => row.to_hash["pcv_id"]).first
+              if user == nil
+                user = User.new(row.to_hash)
+                user.password = user.password_confirmation = SecureRandom.hex
+                # Save error messages
+                if !user.save
+                  error_csv << row.push(user.errors.full_messages.to_sentence).to_s
+                end
+              else
+                if !user.update_attributes(row.to_hash)
+                  error_csv << row.push(user.errors.full_messages.to_sentence).to_s
+                end
+              end
+            else
+              user = User.new(row.to_hash)
+              user.password = user.password_confirmation = SecureRandom.hex
+              # Save error messages
+              if !user.save
+                error_csv << row.push(user.errors.full_messages.to_sentence).to_s
+              end
             end
           end
       
@@ -99,6 +115,7 @@ class Admin::UsersController < AdminController
             flash[:notice] = "CSV has invalid entries!"
           else
             flash[:notice] =  "Successully uploaded users information!"
+            redirect_to new_admin_user_path()
           end
         end
       end
