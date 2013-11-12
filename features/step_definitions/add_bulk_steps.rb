@@ -33,6 +33,14 @@ When(/^I upload a csv file with missing header$/) do
   click_button "Upload CSV"
 end
 
+When(/^I check on "(.*?)"$/) do |chkbox|
+  check(chkbox)
+end
+
+When(/^I uncheck on "(.*?)"$/) do |chkbox|
+  uncheck(chkbox)
+end
+
 Then(/^I should see browse button "(.*?)"$/) do |name|
   find_field(name).visible?
 end
