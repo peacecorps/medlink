@@ -23,28 +23,67 @@ Feature: Add Bulk Users
     Then I should see browse button "csv"
 
   # Assuming 3 initial users and adding 4 more.
-  Scenario: GOOD: Successfully selecting a file and uploading all good data
+@wip
+  Scenario: GOOD: Successfully selecting a file with OVERWRITE and uploading all good data
+    When I check on "overwrite"
     When I upload a csv file with all valid data for 4 new users
     Then I should not download anything
-    #FIXME: Then the number of users should change to 7
+    Then the number of users should change to 7
+    And I should go back to the add user upload page
+
+  # Assuming 3 initial users and adding 4 more.
+@wip
+  Scenario: GOOD: Successfully selecting a file with NO OVERWRITE and uploading all good data
+    When I uncheck on "overwrite"
+    When I upload a csv file with all valid data for 4 new users
+    Then I should not download anything
+    Then the number of users should change to 7
     And I should go back to the add user upload page
 
   # Assuming 3 initial users and adding 5 more.
-  Scenario: SOME: Succcesfully selecting a file and uploading some good and some bad data
+@wip
+  Scenario: SOME: Succcesfully selecting a file with OVERWRITE and uploading some good and some bad data
+    When I check on "overwrite"
     When I upload a csv file with some good and some bad user data
     Then I should download an error file with bad data and error messages
-    #FIXME: Then the number of users should change to 8
+    Then the number of users should change to 8
+    And I should go back to the add user upload page
+
+  # Assuming 3 initial users and adding 5 more.
+@wip
+  Scenario: SOME: Succcesfully selecting a file with NO OVERWRITE and uploading some good and some bad data
+    When I uncheck on "overwrite"
+    When I upload a csv file with some good and some bad user data
+    Then I should download an error file with bad data and error messages
+    Then the number of users should change to 8
     And I should go back to the add user upload page
 
   # Handling duplicate users.
-  Scenario: GOOD: Successfully handle the same user multiple times.
+@wip
+  Scenario: GOOD: Successfully handle the same user multiple times (both OVERWRITE).
+    When I check on "overwrite"
     When I upload a csv file with all valid data for 4 new users
     Then I should not download anything
     And I should go back to the add user upload page
 
-    #FIXME: When I upload a csv file with all valid data for 4 new users
+    When I upload a csv file with all valid data for 4 new users
+    When I check on "overwrite"
     Then I should not download anything
-    #FIXME: Then the number of users should change to 7
+    Then the number of users should change to 7
+    And I should go back to the add user upload page
+
+  # Handling duplicate users.
+@wip
+  Scenario: GOOD: Successfully handle the same user multiple times. (both NO OVERWRITE)
+    When I uncheck on "overwrite"
+    When I upload a csv file with all valid data for 4 new users
+    Then I should not download anything
+    And I should go back to the add user upload page
+
+    When I upload a csv file with all valid data for 4 new users
+    When I uncheck on "overwrite"
+    Then I should not download anything
+    Then the number of users should change to 7
     And I should go back to the add user upload page
 
 ######################################################################
