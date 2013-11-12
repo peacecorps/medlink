@@ -14,6 +14,7 @@ notifications:
     - gmacie@hotmail.com
     - jasnow@hotmail.com
     - jamesdabbs@gmail.com
+    - chuachenh@grinnell.edu
     on_success: change
     on_failure: always
 env:
