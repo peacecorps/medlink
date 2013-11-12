@@ -14,7 +14,7 @@ describe OrdersController do
     end
 
     it 'allows pcmos' do
-      current_user.update_attributes role: :pcmo
+      current_user.update_attributes role: "pcmo"
       get :manage
       expect( response ).to be_success
     end
