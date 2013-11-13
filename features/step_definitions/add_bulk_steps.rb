@@ -1,7 +1,7 @@
-When(/^I upload a csv file with all valid data for (\d+) new users$/) do |count|
+When(/^I upload a csv file "(.*?)" with (.*?) valid data$/) do |filename, some_all|
   $USER_COUNT = User.count # ; puts "BEFORE COUNT=[" + $USER_COUNT.to_s + "]"
   attach_file(:csv, File.join(Rails.root, 'features',
-    'upload-files', 'users_csv_all_good.csv'))
+    'upload-files', filename))
   click_button "Upload CSV"
 end
 
@@ -57,7 +57,7 @@ Then(/^I should download an error file with bad data and error messages$/) do
   File.exist?('/tmp/invalid_users.csv') and File.exist?('/tmp/invalid_users-[0-9].csv')
 end
 
-Then(/^I should not download anything$/) do
+Then(/^I should not download anything invalid$/) do
   !File.exist?('/tmp/invalid_users.csv') or !File.exist?('/tmp/invalid_users-[0-9].csv')
 end
 
@@ -71,3 +71,4 @@ Then(/^the number of users should not change$/) do
   $USER_COUNT.should == User.count.to_i # NOT CHANGE
   # pending # FIXME: Implement "number of users should not change"
 end
+#save_and_open_page

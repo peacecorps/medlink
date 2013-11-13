@@ -22,71 +22,90 @@ Feature: Add Bulk Users
     Then I should see the button "Upload CSV"
     Then I should see browse button "csv"
 
-  # Assuming 3 initial users and adding 4 more.
-@wip
-  Scenario: GOOD: Successfully selecting a file with OVERWRITE and uploading all good data
+#----------------------------------------------------------------------
+# GOOD + OVERWRITE
+
+  # Assuming 3 initial users and adding 1 PCV user
+  Scenario: GOOD: Successfully selecting a file with OVERWRITE and uploading 1 good PCV user
     When I check on "overwrite"
-    When I upload a csv file with all valid data for 4 new users
-    Then I should not download anything
-    Then the number of users should change to 7
-    And I should go back to the add user upload page
+    When I upload a csv file "users_csv_1_good_pcv.csv" with all valid data
+    Then I should not download anything invalid
+    Then the number of users should change to 4
+    And I should sent to the add user page
 
-  # Assuming 3 initial users and adding 4 more.
-@wip
-  Scenario: GOOD: Successfully selecting a file with NO OVERWRITE and uploading all good data
-    When I uncheck on "overwrite"
-    When I upload a csv file with all valid data for 4 new users
-    Then I should not download anything
-    Then the number of users should change to 7
-    And I should go back to the add user upload page
-
-  # Assuming 3 initial users and adding 5 more.
-@wip
-  Scenario: SOME: Succcesfully selecting a file with OVERWRITE and uploading some good and some bad data
+  # Assuming 3 initial users and adding 1 PCMO user
+  Scenario: GOOD: Successfully selecting a file with OVERWRITE and uploading 1 good PCMO user
     When I check on "overwrite"
-    When I upload a csv file with some good and some bad user data
-    Then I should download an error file with bad data and error messages
-    Then the number of users should change to 8
-    And I should go back to the add user upload page
+    When I upload a csv file "users_csv_1_good_pcmo.csv" with all valid data
+    Then I should not download anything invalid
+    Then the number of users should change to 4
+    And I should sent to the add user page
 
-  # Assuming 3 initial users and adding 5 more.
-@wip
-  Scenario: SOME: Succcesfully selecting a file with NO OVERWRITE and uploading some good and some bad data
+  # Assuming 3 initial users and adding 1 ADMIN user
+  Scenario: GOOD: Successfully selecting a file with OVERWRITE and uploading 1 good ADMIN user
+    When I check on "overwrite"
+    When I upload a csv file "users_csv_1_good_admin.csv" with all valid data
+    Then I should not download anything invalid
+    Then the number of users should change to 4
+    And I should sent to the add user page
+
+#----------------------------------------------------------------------
+# GOOD + NO OVERWRITE
+
+  # Assuming 3 initial users and adding 1 PCV user
+  Scenario: GOOD: Successfully selecting a file with OVERWRITE and uploading 1 good PCV user
     When I uncheck on "overwrite"
-    When I upload a csv file with some good and some bad user data
-    Then I should download an error file with bad data and error messages
-    Then the number of users should change to 8
-    And I should go back to the add user upload page
+    When I upload a csv file "users_csv_1_good_pcv.csv" with all valid data
+    Then I should not download anything invalid
+    Then the number of users should change to 4
+    And I should sent to the add user page
+
+  # Assuming 3 initial users and adding 1 PCMO user
+  Scenario: GOOD: Successfully selecting a file with OVERWRITE and uploading 1 good PCMO user
+    When I uncheck on "overwrite"
+    When I upload a csv file "users_csv_1_good_pcmo.csv" with all valid data
+    Then I should not download anything invalid
+    Then the number of users should change to 4
+    And I should sent to the add user page
+
+  # Assuming 3 initial users and adding 1 ADMIN user
+  Scenario: GOOD: Successfully selecting a file with OVERWRITE and uploading 1 good ADMIN user
+    When I uncheck on "overwrite"
+    When I upload a csv file "users_csv_1_good_admin.csv" with all valid data
+    Then I should not download anything invalid
+    Then the number of users should change to 4
+    And I should sent to the add user page
+
+#----------------------------------------------------------------------
+# GOOD + OVERWRITE + DUPLICATE
 
   # Handling duplicate users.
-@wip
   Scenario: GOOD: Successfully handle the same user multiple times (both OVERWRITE).
     When I check on "overwrite"
-    When I upload a csv file with all valid data for 4 new users
-    Then I should not download anything
-    And I should go back to the add user upload page
+    When I upload a csv file "users_csv_1_good_pcmo.csv" with all valid data
+    Then I should not download anything invalid
+    And I should sent to the add user page
 
-    When I upload a csv file with all valid data for 4 new users
     When I check on "overwrite"
-    Then I should not download anything
-    Then the number of users should change to 7
-    And I should go back to the add user upload page
+    When I upload a csv file "users_csv_1_good_pcmo.csv" with all valid data
+    Then I should not download anything invalid
+    Then the number of users should change to 4
+    And I should sent to the add user page
 
   # Handling duplicate users.
-@wip
   Scenario: GOOD: Successfully handle the same user multiple times. (both NO OVERWRITE)
     When I uncheck on "overwrite"
-    When I upload a csv file with all valid data for 4 new users
-    Then I should not download anything
-    And I should go back to the add user upload page
+    When I upload a csv file "users_csv_1_good_pcmo.csv" with all valid data
+    Then I should not download anything invalid
+    And I should sent to the add user page
 
-    When I upload a csv file with all valid data for 4 new users
     When I uncheck on "overwrite"
-    Then I should not download anything
-    Then the number of users should change to 7
+    When I upload a csv file "users_csv_1_good_pcmo.csv" with all valid data
+    Then I should not download anything invalid
+    Then the number of users should change to 4
     And I should go back to the add user upload page
 
-######################################################################
+#----------------------------------------------------------------------
 #RAINY
 
   Scenario: Handle Empty File

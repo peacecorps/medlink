@@ -1,8 +1,0 @@
-email,country_id,location,phone,first_name,last_name,pcv_id,time_zone
-6546@123.com,36,DC,123-456-7890,BlankEmail,Good,"""00000""",Alaska
-324@123.com,36,Chicago,123-345-4534,Name,Good,"""00435""",Alaska
-good@good.com,36,NY,345-347-1236,Minster,Good,"""92840""",Alaska
-johnny@hotmail.com,36,Roswell,404-939-0122,Johnny,West,"""897344""",Alaska
-henry@outlook.com, 1, Sandy Spring, 404-939-0122, Henry, West, 897345, Alaska
-, missing-email
-missing-pw@gmail.com,
