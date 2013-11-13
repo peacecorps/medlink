@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
   #validates_presence_of :unit, message: "is missing"
   #validates_presence_of :quantity, message: "is missing"
 
-  validates_numericality_of :quantity, only_integer: true, on: :create
+  validates_numericality_of :quantity, only_integer: true, on: :create, :if => :quantity
 
   scope :responded,   -> { includes(:response).references(:response
     ).where("responses.id IS NOT NULL") }
