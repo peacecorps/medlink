@@ -10,8 +10,8 @@
     %th Request
     - if responded
       %th Response
-      %th Fulfilled
-      %th Received
+      / %th Fulfilled
+      / %th Received
 %tbody
   - orders.each do |order|
     - attrs = { "class" => "order c#{order.country_id}" }
@@ -32,11 +32,12 @@
         %small.cell--secondary= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
       - if responded
         %td= order.responded_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
-        - if order.fulfilled?
-          %td= order.fulfilled_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
-        - else
+        /
+          - if order.fulfilled?
+            %td= order.fulfilled_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
+          - else
+            %td
+              %input.datepicker.input-small
           %td
             %input.datepicker.input-small
-        %td
-          %input.datepicker.input-small
 
