@@ -10,6 +10,8 @@
     %th Request
     - if responded
       %th Response
+      %th Delivery Method
+      %th Response Instructions
       / %th Fulfilled
       / %th Received
 %tbody
@@ -32,6 +34,8 @@
         %small.cell--secondary= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
       - if responded
         %td= order.responded_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
+        %td= order.response.delivery_method.humanize
+        %td= order.response.instructions
         /
           - if order.fulfilled?
             %td= order.fulfilled_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
