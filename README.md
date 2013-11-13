@@ -27,13 +27,19 @@ $ rake spec
 
 If it's green, you should be good to go.
 
-A few components require a little extra setup to run:
-
 #### Cucumber (Acceptance Tests)
  * To run the **cucumber** tests, just go to the top project directory and type **cucumber**.
  * To run the **cucumber javascript** tests, just go to the top project directory and type **cucumber -p javascript**. These tests must be run with the GUI; the other cucumber tests do not have this requirement.
 
+If you want to run both specs and cucumber tests with
+
+```bash
+$ rake
+```
+
 #### Twilio (SMS integration)
+
+A few components require a little extra setup to run:
 
 You'll need to sign up for Twilio and set the TWILIO_ACCOUNT_SID, TWILIO_AUTH and TWILIO_PHONE_NUMBER environment variables. If you'd like to receive SMS messages to your local machine, you can set up [localtunnel](http://progrium.com/localtunnel/) and run
 

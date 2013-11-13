@@ -2,8 +2,7 @@ language: ruby
 rvm:
 - 2.0.0
 script:
-- RAILS_ENV=test COVERAGE=true bundle exec rake --trace db:migrate spec
-- RAILS_ENV=test COVERAGE=true bundle exec cucumber
+- RAILS_ENV=test COVERAGE=true bundle exec rake --trace db:migrate spec cucumber
 branches:
   only:
   - master
