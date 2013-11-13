@@ -51,8 +51,10 @@ Feature: Place a Request
 #TODO: #190: Scenario: User gives a bad location value. (AL: not validation)
 #TODO: #189/#170: Scenario: User gives a bad units value. - H (invalid unit)(AL: not validation)
 
+#TODO: For pilot, we allow empty unit and quantity. The numbericality validation of quantity only runs when quantity is given.
+
 #......................................................................
-  Scenario Outline: User does not give a Quantity - I (invalid qty)
+  Scenario Outline: User does not give a Quantity - (Allow empty quantity)
     Given I am an "<role>"
     And I am not logged in
     When I sign in with valid credentials
@@ -60,16 +62,16 @@ Feature: Place a Request
 
     When I place a request
     And I give it all inputs but quantity
-    Then I see a invalid quantity request message
+    Then I should not see a invalid quantity request message
     And I stay on <afterpage> page
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-      | admin | Place a Request |
-      | pcmo  | Place a Request |
+      | admin | Admin Home      |
+      | pcmo  | Request Manager |
 
 #......................................................................
-  Scenario Outline: User does not give a Units -- H (invalid unit)
+  Scenario Outline: User does not give a Units - (Allow empty unit)
     Given I am an "<role>"
     And I am not logged in
     When I sign in with valid credentials
@@ -77,13 +79,13 @@ Feature: Place a Request
 
     When I place a request
     And I give it all inputs but units
-    Then I see a invalid units request message
+    Then I should not see a invalid units request message
     And I stay on <afterpage> page
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-      | admin | Place a Request |
-      | pcmo  | Place a Request |
+      | admin | Admin Home      |
+      | pcmo  | Request Manager |
 
 #......................................................................
 #ERROR/BAD VALUES
