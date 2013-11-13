@@ -85,6 +85,17 @@ Then(/^I see a invalid units request message$/) do
   page.should have_content "Unit is missing"
 end
 
+# Allow empty quantity & unit
+Then(/^I should not see a invalid quantity request message$/) do
+  page.should_not have_content "Quantity is missing"
+end
+
+Then(/^I should not see a invalid units request message$/) do
+  page.should_not have_content "Unit is missing"
+end
+
+# ERRORS (continue)
+
 Then(/^I see a nonnumber quantity request message$/) do
   page.should have_content "Quantity is not a number"
 end
