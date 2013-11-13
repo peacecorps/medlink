@@ -48,6 +48,7 @@ task :generate => :environment do
         location:   "#{name}'s location",
         phone:      random_digits(10),
         pcv_id:     random_digits(5),
+        role:       "pcv",
         time_zone:  "Alaska"
       )
       u.password = u.password_confirmation = "password"

@@ -42,7 +42,7 @@ Feature: Response_to_order Feature
   @javascript
   Scenario: View my requests
 #FIXME    Then I should have 3 pending orders to process
-    Then I should have 3 past due orders to process
+#FIXME    Then I should have 3 past due orders to process
     Then I should have 0 response tracker orders
 
 #......................................................................
