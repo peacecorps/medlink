@@ -49,8 +49,6 @@ $ localtunnel 3000  # Assuming your development server is running on port 3000
 
 and point your Twilio request URL at the address it specifies (http://something.localtunnel.com).
 
-If you would like to see the **#TODO's/#FIXME's/etc,** then run "./bin/chk" or "./bin/chk more" bash scripts from the top project directory.
-
 #### BUGS
 
 **If you get a problem with the software?**
@@ -58,6 +56,8 @@ If you would like to see the **#TODO's/#FIXME's/etc,** then run "./bin/chk" or "
 Please create an email describing the steps to reproduce the software
 problem and email it to [support mailing list](support@pcmedlink.org).
 You will receive an acknowledgement and initial assessment without 24 hours.
+
+If you would like to see the **#TODO's/#FIXME's/etc,** then run "./bin/chk" or "./bin/chk more" bash scripts from the top project directory.
 
 ## Contributors
 
@@ -78,6 +78,7 @@ Additional thanks to the [RHoK](http://www.rhok.org/) team for their outstanding
 * Jonathan Howard
 * Clint Lee
 * Gordon Macie
+* Emily Merwin
 * Drew Pak
 * John Petitte
 * Luke J Reimer
