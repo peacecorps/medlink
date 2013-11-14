@@ -8,11 +8,11 @@ class User < ActiveRecord::Base
   belongs_to :country
   has_many :orders
   validates_presence_of :country, :location, :phone, :first_name,
-    :last_name, :pcv_id, :role
+    :last_name, :role
+  validates_presence_of :pcv_id, :if => :pcv?
   validates :role, inclusion: {in: ["pcv", "pcmo", "admin"]}
-  validates :pcv_id, uniqueness: true
+  validates :pcv_id, uniqueness: true, :if => :pcv?
   validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map {|t| t.name}}
-
 
   Roles = {
     pcv:   'Peace Corps Volunteer',
@@ -75,4 +75,9 @@ class User < ActiveRecord::Base
   def to_s
     "#{name} (#{pcv_id})"
   end
+
+  def pcv?
+    self.role == "pcv"
+  end
+
 end
