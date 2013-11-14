@@ -27,6 +27,10 @@ $ rake spec
 
 If it's green, you should be good to go.
 
+Then create a pull request and we will review it and merge it into the repo.
+We also use [Travis](https://travis-ci.org/atlrug-rhok/medlink) for Continuous
+Integration and [Relishapp](https://relishapp.com) to host Cucumber specs.
+
 #### Cucumber (Acceptance Tests)
  * To run the **cucumber** tests, just go to the top project directory and type **cucumber**.
  * To run the **cucumber javascript** tests, just go to the top project directory and type **cucumber -p javascript**. These tests must be run with the GUI; the other cucumber tests do not have this requirement.
