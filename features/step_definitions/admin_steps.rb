@@ -60,7 +60,8 @@ Then(/^I should see a "(.*?)" confirmation$/) do |arg1|
 end
 
 Then(/^I should see a no_change confirmation$/) do
-  page.should have_selector ".alert", text: 'No changes made'
+  #AL: page.should have_selector ".modal-body", text: 'No changes made'
+  page.should have_content 'No changes made'
 end
 
 When(/^I change (\w+) to (\w*)$/) do |field, value|
@@ -108,10 +109,12 @@ When(/^I choose a "(.*?)" edit user$/) do |name|
 end
 
 Then(/^I should see a required edit volunteer error message$/) do
-  page.should have_selector ".alert", text: 'Please select a volunteer to edit.'
+  #AL: page.should have_selector ".modal-body", text: 'Please select a volunteer to edit.'
+  page.should have_content 'Please select a volunteer to edit.'
 end
 
 Then(/^I should see a choose csv file first error message$/) do
-  page.should have_selector ".alert", text: 'Please choose a csv file first.'
+  #AL: page.should have_selector ".modal-body", text: 'Please choose a csv file first.'
+  page.should have_content 'Please choose a csv file first.'
 end
 #save_and_open_page

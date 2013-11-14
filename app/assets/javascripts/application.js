@@ -41,4 +41,7 @@ $(document).ready(function(){
     // Run checkWidth on load and when resizing
     checkWidth();
     $(window).resize(checkWidth);
+
+	//confirmation dialog
+	$('.modal').modal();
 });

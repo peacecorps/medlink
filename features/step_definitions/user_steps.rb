@@ -235,7 +235,7 @@ Then /^I should be signed in$/ do
 end
 
 Then /^I see a successful sign in message$/ do
-  page.should have_selector ".alert", text: "Signed in successfully."
+  page.should have_content "Signed in successfully."
 end
 
 Then /^I should be signed out$/ do
@@ -247,7 +247,7 @@ Then /^I should see a signed out message$/ do
 end
 
 Then /^I see an invalid login message$/ do
-  page.should have_selector ".alert", text: "Invalid email or password."
+  page.should have_content "Invalid email or password."
 end
 
 Then /^I should see an account edited message$/ do
@@ -271,15 +271,15 @@ Then(/^I should see a too short password message$/) do
 end
 
 Then(/^I see a invalid forgot password email message$/) do
-  page.should have_selector ".alert", text: "Email Invalid: The email you specified is invalid. Please check the spelling, formatting and that it is an active address."
+  page.should have_content "Email Invalid: The email you specified is invalid. Please check the spelling, formatting and that it is an active address."
 end
 
 Then(/^I see a invalid forgot password pcvid message$/) do
-  page.should have_selector ".alert", text: "PCVID Invalid: Your request was not submitted because the PCVID was incorrect. Please resubmit your request in this format: PCVID, Supply short name, dose, qty, location."
+  page.should have_content "PCVID Invalid: Your request was not submitted because the PCVID was incorrect. Please resubmit your request in this format: PCVID, Supply short name, dose, qty, location."
 end
 
 Then(/^I see a successful message$/) do
-  page.should have_selector ".alert", text: "Success! A temporary password has been sent to the email we have on file. Please check your e-mail and click on the link to complete the log in. (web experience)"
+  page.should have_content "Success! A temporary password has been sent to the email we have on file. Please check your e-mail and click on the link to complete the log in. (web experience)"
 end
 
 Then(/^I see a pcv_id unrecognized message$/) do
@@ -289,45 +289,45 @@ end
 # E1 ERROR MSG
 Then /^I see an invalid email message$/ do
   #FIXME:  (#114#: E1)
-  #page.should have_selector ".alert", text: "Email Invalid:
+  #page.should have_content "Email Invalid:
   #    The email you specified is invalid. Please check the spelling,
   #    formatting and that it is an active address.
-  page.should have_selector ".alert", text: "Invalid email or password."
+  page.should have_content "Invalid email or password."
 end
 
 # E2 ERROR MSG (unregistered)
 Then /^I see an unregistered email message$/ do
   #FIXME: (#114#: E2)
-  #page.should have_selector ".alert", text: "The email you entered
+  #page.should have_content "The email you entered
   #    is not on file. Please check the spelling and formatting
   #    before re-entering the address.
-  page.should have_selector ".alert", text: "Invalid email or password."
+  page.should have_content "Invalid email or password."
 end
 
 # E2
 Then /^I see an unknown email message$/ do
   #FIXME: (#114#: E2)
-  #page.should have_selector ".alert", text: "The email you entered
+  #page.should have_content "The email you entered
   #    is not on file. Please check the spelling and formatting
   #    before re-entering the address.
-  page.should have_selector ".alert", text: "Invalid email or password."
+  page.should have_content "Invalid email or password."
 end
 
 # K ERROR MSG
 Then(/^I see an invalid password message$/) do
   #FIXME:  (#114#: K)
-  #page.should have_selector ".alert", text: "Invalid Password: the
+  #page.should have_content "Invalid Password: the
   #    Password you entered is not valid. Please re-enter your password
   #    or contact your administrator via email for more help."
-  page.should have_selector ".alert", text: "Invalid email or password."
+  page.should have_content "Invalid email or password."
 end
 
 # K
 Then(/^I see an blank password message$/) do
   #FIXME: (#114#: K)
-  #page.should have_selector ".alert", text: "Invalid Password: the
+  #page.should have_content "Invalid Password: the
   #    Password you entered is not valid. Please re-enter your password
   #    or contact your administrator via email for more help."
-  page.should have_selector ".alert", text: "Invalid email or password."
+  page.should have_content "Invalid email or password."
 end
 #save_and_open_page

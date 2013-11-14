@@ -69,7 +69,7 @@ end
 
 #P9 (SUCCESS)
 Then(/^I see a successful request message$/) do
-  page.should have_selector ".alert", text: /Success! The Order you placed on behalf of .* has been sent./
+  page.should have_content /Success! The Order you placed on behalf of .* has been sent./
 end
 
 # ERRORS
