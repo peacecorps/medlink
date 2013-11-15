@@ -11,7 +11,7 @@ task :generate => :environment do
   orders    = 0
 
   generate_random_order = -> (pcv, date, fulfilled) do
-    o = Order.create!(
+    o = Order.new(
       user: pcv,
       created_at: date,
       supply: supplies.sample,
@@ -19,7 +19,7 @@ task :generate => :environment do
       unit: "u",
       quantity: (1..5).to_a.sample
     )
-    orders += 1
+    orders += 1 if o.save
 
     if fulfilled
       delay = (1..5).to_a.sample
@@ -49,7 +49,7 @@ task :generate => :environment do
         phone:      random_digits(10),
         pcv_id:     random_digits(5),
         role:       "pcv",
-        time_zone:  "Alaska"
+        time_zone:  ActiveSupport::TimeZone.all.sample.name
       )
       u.password = u.password_confirmation = "password"
       u.save!
