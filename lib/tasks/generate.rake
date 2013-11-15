@@ -16,7 +16,7 @@ task :generate => :environment do
       created_at: date,
       supply: supplies.sample,
       location: pcv.location,
-      unit: "u",
+      dose: "u",
       quantity: (1..5).to_a.sample
     )
     orders += 1 if o.save

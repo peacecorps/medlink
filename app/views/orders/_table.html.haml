@@ -5,7 +5,7 @@
     %th Last Name
     %th Supply
     %th Quantity
-    %th Unit
+    %th Dose
     %th Location
     %th Request
     - if responded
@@ -26,7 +26,7 @@
       %td= order.user.last_name
       %td= order.supply
       %td= order.quantity
-      %td= order.unit
+      %td= order.dose
       %td
         %span.cell--primary= order.location
       %td

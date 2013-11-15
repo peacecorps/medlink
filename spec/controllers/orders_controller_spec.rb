@@ -25,7 +25,7 @@ describe OrdersController do
       supply = FactoryGirl.create :supply
       post 'create', order: {
         user_id: current_user.id, supply_id: supply.id,
-        location: 'Roswell', unit: '20', quantity: 20 }
+        location: 'Roswell', dose: 'msg', quantity: 20 }
       expect( response ).to be_redirection
     end
 

@@ -3,7 +3,7 @@
   %thead
     %tr
       %th Supply
-      %th Unit
+      %th Dose
       %th Quantity
       %th Requested
       %th Response
@@ -11,7 +11,7 @@
     - @orders.each do |order|
       %tr{ "class" => "order c#{order.country_id}", "data-date" => order.created_at.in_time_zone(order.user.time_zone).strftime("%Y%m%d") }
         %td= order.supply
-        %td= order.unit
+        %td= order.dose
         %td= order.quantity
         %td
           %span= order.created_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'

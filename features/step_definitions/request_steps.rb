@@ -8,7 +8,7 @@ end
 
 When(/^I give it all inputs but "(.*?)"$/) do |field|
   fill_in "Location", :with => "loc but arg"
-  fill_in "Units",    :with => "mg"
+  fill_in "Dose",    :with => "mg"
   fill_in "Quantity", :with => "1"
   fill_in "Special instructions area",  :with => "S/I/A but"
   case field
@@ -20,7 +20,7 @@ end
 
 When(/^I give it all inputs but location$/) do
   # FYI: Do nothing for "Locaton"
-  fill_in "Units",    :with => "mg"
+  fill_in "Dose",    :with => "mg"
   fill_in "Quantity", :with => "1"
   fill_in "Special instructions area",  :with => "S/I/A location"
   select_supply
@@ -29,25 +29,25 @@ end
 
 When(/^I give it all inputs but quantity$/) do
   fill_in "Location", :with => "loc but quantity"
-  fill_in "Units",    :with => "mg"
+  fill_in "Dose",    :with => "mg"
   # FYI: Do nothing for "Quantity"
   fill_in "Special instructions area",  :with => "S/I/A qty"
   select_supply
   click_button "Submit"
 end
 
-When(/^I give it all inputs but units$/) do
-  fill_in "Location", :with => "loc but units"
-  # FYI: Do nothing for "Units"
+When(/^I give it all inputs but dose$/) do
+  fill_in "Location", :with => "loc but dose"
+  # FYI: Do nothing for "Dose"
   fill_in "Quantity", :with => "1"
-  fill_in "Special instructions area",  :with => "S/I/A but units"
+  fill_in "Special instructions area",  :with => "S/I/A but dose"
   select_supply
   click_button "Submit"
 end
 
 When(/^I give it all the valid inputs$/) do
   fill_in "Location", :with => "loc valid inputs"
-  fill_in "Units",    :with => "mg"
+  fill_in "Dose",    :with => "mg"
   fill_in "Quantity", :with => "1"
   fill_in "Special instructions area", :with => "S/I/A valid"
   select_supply
@@ -56,7 +56,7 @@ end
 
 When(/^I give it all inputs with non\-number "(.*?)"$/) do |field|
   fill_in "Location", :with => "loc valid inputs"
-  fill_in "Units",    :with => "mg"
+  fill_in "Dose",    :with => "mg"
   if (field == "Quantity")
     fill_in "Quantity", :with => "BADVALUE" #WRONG
   else
@@ -81,17 +81,17 @@ Then(/^I see a invalid quantity request message$/) do
   page.should have_content "Quantity is missing"
 end
 
-Then(/^I see a invalid units request message$/) do
-  page.should have_content "Unit is missing"
+Then(/^I see a invalid dose request message$/) do
+  page.should have_content "Dose is missing"
 end
 
-# Allow empty quantity & unit
+# Allow empty quantity & dose
 Then(/^I should not see a invalid quantity request message$/) do
   page.should_not have_content "Quantity is missing"
 end
 
-Then(/^I should not see a invalid units request message$/) do
-  page.should_not have_content "Unit is missing"
+Then(/^I should not see a invalid dose request message$/) do
+  page.should_not have_content "Dose is missing"
 end
 
 # ERRORS (continue)

@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
 
   def create_params
     params.require(:order).permit [:extra, :supply_id, :location,
-                                   :unit, :quantity, :user_id]
+                                   :dose, :quantity, :user_id]
   end
 end
 

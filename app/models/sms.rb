@@ -24,7 +24,7 @@ class SMS
       data[:pcvid], data[:shortcode] = parse_list.shift 2
       parse_list.each do |item|
         if match = item.match(/([0-9]+)\s*([a-zA-z]+)/) #dosage info
-          data[:dosage_value], data[:dosage_units] = match.captures
+          data[:dosage_value], data[:dosage_dose] = match.captures
         elsif match = item.match(/[0-9]+\b/) #qty
           data[:qty] = match[0]
         elsif match = item.match(/[a-zA-z]+\b/) #loc
