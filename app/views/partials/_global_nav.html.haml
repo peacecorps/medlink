@@ -7,9 +7,7 @@
             %li= link_to 'Admin Home', new_admin_user_path
           %li= link_to 'Request Manager', manage_orders_path
           %li= link_to 'Place a Request', new_order_path
-          - if current_user.pcmo?
-            %li= link_to 'Download Orders', order_history_reports_path(format: :csv)
-          - else current_user.admin?
+          - if current_user.pcmo? || current_user.admin?
             %li= link_to 'Reports', reports_path
       %ul.nav.pull-right
         %li
