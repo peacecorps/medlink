@@ -1,6 +1,9 @@
 %h1 Reports
 
-%p Click the report button to download a .csv file
+- if current_user.pcv?
+  %p Click the report button to download a .csv file
+- else
+  %p When you click the link below you will be downloading a .csv file that will contain all the data from the launch of the pilot to the present day.
 
 - if current_user.admin?
   %p= link_to 'Order History', order_history_reports_path(format: :csv), class: "btn btn-primary"
