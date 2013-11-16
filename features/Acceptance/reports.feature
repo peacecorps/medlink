@@ -21,7 +21,7 @@ Feature: Reports
 
     Examples:
       | user  | report        |
-      | pcmo  | Order History |
+      | pcmo  | Download      |
 
       | admin | Order History |
       | admin | Users         |
