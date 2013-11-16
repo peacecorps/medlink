@@ -35,9 +35,10 @@ class User < ActiveRecord::Base
   def pcvs
     case role.to_sym
     when :admin
-      User.all.pcvs
+      User.all
     when :pcmo
-      country.users.pcvs
+      pcvs_shared = country.users.pcvs
+      pcvs_shared << self
     else
       raise "No PCVs for #{role}"
     end
