@@ -49,12 +49,12 @@ Feature: Place a Request for Someone else
     Then I see a successful sign in message
 
     When I place a request
-    Then I see "<country>" in the "order_location" input
+    Then I see "<role>"'s country in the "order_location" input
 
     When I place a request for "<someone_else>"
     And I give it all the valid inputs
     Then I see a successful request message
     And I stay on <afterpage> page
     Examples:
-      | role  | afterpage       | someone_else |  country |
-      | pcmo  | Request Manager | joe Doe      |  China   |
+      | role  | afterpage       | someone_else |
+      | pcmo  | Request Manager | joe Doe      |
