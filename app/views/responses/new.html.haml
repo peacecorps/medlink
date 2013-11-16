@@ -33,17 +33,17 @@
   = form_for @response, url: order_response_path(@order, @response), html: {class: 'order__section'} do |f|
     %h4.order__method Fulfillment Method
     .row
-      .span4
+      .col-md-4
         .order__message
           - DeliveryMethod.each do |method|
             %label.radio
               = f.radio_button :delivery_method, method.name, data: {message: method.text}
               = method.title
-      .span4
-        Edit Default SMS
+      .col-md-8
+        Edit Default SMS --
+        %span.order__characters "160 characters remaining"
         .order__instructions
           = f.text_area :instructions, size: "40x4", maxlength: 160, class: 'input-xlarge'
-          .order__characters "160 characters remaining"
     .form-actions
       .btn-group
         %button.btn.btn-primary(type="submit") Send Response

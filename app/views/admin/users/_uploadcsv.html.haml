@@ -1,7 +1,6 @@
 = form_tag({:action => "uploadCSV"},:multipart => true) do
   = file_field_tag 'csv', :accept => 'text/csv'
-  %br
   = check_box_tag 'overwrite', 1
   Overwrite Existing Users For Duplicate Entries
   %br
-  = submit_tag 'Upload CSV'
+  = submit_tag 'Upload CSV', class: 'btn btn-primary'
