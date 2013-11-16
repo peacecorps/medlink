@@ -14,7 +14,7 @@ class Order < ActiveRecord::Base
   validates_numericality_of :quantity, only_integer: true, on: :create, :if => :quantity
 
   scope :responded,   -> { includes(:response).references(:response
-    ).where("responses.id IS NOT NULL") }
+    ).where("responses.id IS NOT NULL").order("responses.id DESC") }
   scope :unresponded, -> { includes(:response).references(:response
     ).where("responses.id IS NULL")     }
 

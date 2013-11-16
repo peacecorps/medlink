@@ -33,7 +33,7 @@ Integration and [Relishapp](https://relishapp.com) to host Cucumber specs.
 
 #### Cucumber (Acceptance Tests)
  * To run the **cucumber** tests, just go to the top project directory and type **cucumber**.
- * To run the **cucumber javascript** tests, just go to the top project directory and type **cucumber -p javascript**. These tests must be run with the GUI; the other cucumber tests do not have this requirement.
+ * To run the **cucumber javascript** tests, just go to the top project directory and type **cucumber -p javascript**. These tests must be run with the GUI; the other cucumber tests do not have this requirement. If you on a Mac, please this article to [install chromebrowser](http://collectiveidea.com/blog/archives/2011/09/27/use-chrome-with-cucumber-capybara).
 
 If you want to run both specs and cucumber tests with
 
