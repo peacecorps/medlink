@@ -40,3 +40,21 @@ Feature: Place a Request for Someone else
       | role  |
       | admin |
       | pcmo  |
+
+#......................................................................
+  Scenario Outline: Sunny: PCMO location default matches their own
+    Given I am an "<role>"
+    And I am not logged in
+    When I sign in with valid credentials
+    Then I see a successful sign in message
+
+    When I place a request
+    Then I see "<role>"'s country in the "order_location" input
+
+    When I place a request for "<someone_else>"
+    And I give it all the valid inputs
+    Then I see a successful request message
+    And I stay on <afterpage> page
+    Examples:
+      | role  | afterpage       | someone_else |
+      | pcmo  | Request Manager | joe Doe      |

@@ -129,6 +129,11 @@ When(/^I place a request for "(.*?)"$/) do |name|
   select name, from: "order_user_id"
 end
 
+Then(/^I see "(.*?)"'s country in the "(.*?)" input$/) do |role, input_id|
+  @user = User.find_by_role(role)
+  find_field(input_id).value.should == @user.country.name
+end
+
 When(/^I unselect volunteer$/) do
   select 'Select Volunteer to request for', from: 'order[user_id]'
 end
@@ -153,7 +158,7 @@ Then(/^I see no lines in the request_tracker table$/) do
 end
 
 Then(/^I see (\d+) lines in the pending table$/) do |expected_lines|
-  history_orders_in_table = 
+  history_orders_in_table =
   history_orders_in_table.should == expected_lines.to_i
 end
 
