@@ -18,6 +18,7 @@ Feature: Request For
     Given I am logged in as the pcmo of Alabama
     When I go to the new_order page
     Then I should see a pcmo dropdown containing only "alice"
+    And I should not see a pcmo dropdown containing "bob"
 
     When I place an order for "alice"
     Then I should see an order for "alice" in the queue
