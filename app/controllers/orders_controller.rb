@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
 
   def new
     @order = current_user.orders.new location: current_user.location
+    @country = current_user.country.name if current_user.pcmo?
   end
 
   def create
