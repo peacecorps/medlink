@@ -1,9 +1,9 @@
-%h2 Reports
+%h1 Reports
 
 %p Click the report button to download a .csv file
 
 - if current_user.admin?
-  %p= link_to 'Order History', order_history_reports_path(format: :csv), class: "btn"
-  %p= link_to 'Users', users_reports_path(format: :csv), class: "btn"
+  %p= link_to 'Order History', order_history_reports_path(format: :csv), class: "btn btn-primary"
+  %p= link_to 'Users', users_reports_path(format: :csv), class: "btn btn-primary"
 - if current_user.pcmo?
-  %p= link_to 'Download', order_history_reports_path(format: :csv), class: "btn"
+  %p= link_to 'Download', order_history_reports_path(format: :csv), class: "btn btn-primary"
