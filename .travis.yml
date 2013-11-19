@@ -3,6 +3,7 @@ rvm:
 - 2.0.0
 script:
 - RAILS_ENV=test COVERAGE=true bundle exec rake --trace db:migrate spec cucumber
+- RAILS_ENV=test COVERAGE=true bundle exec cucumber -p javascript
 branches:
   only:
   - master
@@ -29,3 +30,6 @@ after_success:
   - heroku keys:clear
   - yes | heroku keys:add
   - yes | git push heroku master
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
