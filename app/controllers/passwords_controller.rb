@@ -16,6 +16,7 @@ class PasswordsController < Devise::PasswordsController
     self.resource = resource_class.send_reset_password_instructions(
       resource_params)
     if successfully_sent?(resource)
+      # P3
       flash[:notice] = "Success! A temporary password has been sent " +
         "to the email we have on file. Please check your e-mail and " +
         "click on the link to complete the log in. (web experience)"

@@ -56,6 +56,7 @@ class Admin::UsersController < AdminController
 
     if @user.update_attributes user_params
       _flash = if field_chgs.any?
+        # P8
         change_desc = field_chgs.map { |k,v| "#{k}=[#{v}]" }.join "; "
         { notice: "Success! You have made the following changes to this user account: #{change_desc}" }
       else

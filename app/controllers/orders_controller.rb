@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
         orders_path
       end
 
-      # Tag P6
+      # Tag P9
       redirect_to next_page,
         notice: "Success! The Order you placed on behalf of " +
           "#{@order.user.name} has been sent."
