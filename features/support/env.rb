@@ -74,5 +74,5 @@ Zonebie.set_random_timezone
 ######################################################################
 # Tell Capybara about Chrome.
 Capybara.register_driver :javascript do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  Capybara::Selenium::Driver.new(app, :browser => :firefox)
 end
