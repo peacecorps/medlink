@@ -69,43 +69,43 @@ end
 
 #P9 (SUCCESS)
 Then(/^I see a successful request message$/) do
-  page.should have_content /Success! The Order you placed on behalf of .* has been sent./
+  pos_ack_msg "Success! The Order you placed on behalf of"
 end
 
 # ERRORS
 Then(/^I see a invalid supply request message$/) do
-  page.should have_content "Supply is missing"
+  err_msg "Supply is missing"
 end
 
 Then(/^I see a invalid quantity request message$/) do
-  page.should have_content "Quantity is missing"
+  err_msg "Quantity is missing"
 end
 
 Then(/^I see a invalid dose request message$/) do
-  page.should have_content "Dose is missing"
+  err_msg "Dose is missing"
 end
 
 # Allow empty quantity & dose
 Then(/^I should not see a invalid quantity request message$/) do
-  page.should_not have_content "Quantity is missing"
+  no_err_msg "Quantity is missing"
 end
 
 Then(/^I should not see a invalid dose request message$/) do
-  page.should_not have_content "Dose is missing"
+  no_err_msg "Dose is missing"
 end
 
 # ERRORS (continue)
 
 Then(/^I see a nonnumber quantity request message$/) do
-  page.should have_content "Quantity is not a number"
+  err_msg "Quantity is not a number"
 end
 
 Then(/^I see an invalid "(.*?)" request message$/) do |field|
-  page.should have_content "#{field} is missing"
+  err_msg "#{field} is missing"
 end
 
 Then(/^I see a nonnumber "(.*?)" request message$/) do |field|
-  page.should have_content "#{field} is not a number"
+  err_msg "#{field} is not a number"
 end
 
 Then(/^I stay on Request Form page$/) do

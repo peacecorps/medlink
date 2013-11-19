@@ -30,14 +30,11 @@ When(/^I go to the (\w) page$/) do |page|
 end
 
 Then(/^I should be asked to authenticate with the right credentials$/) do
-
   # Ask for credential, unable to distinguish between pcmo and admin due to redirection
-  page.should have_content 'You must be an'
-
+  err_msg 'You must be an'
 end
 
 Then(/^I should not be asked to authenticate with the right credentials$/) do
-
   # Shouldn't ask for credential
-  page.should have_no_content 'You must be an'
+  no_err_msg 'You must be an'
 end

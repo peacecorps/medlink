@@ -61,7 +61,7 @@ end
 
 Then(/^I should see a no_change confirmation$/) do
   #AL: page.should have_selector ".modal-body", text: 'No changes made'
-  page.should have_content 'No changes made'
+  pos_ack_msg 'No changes made'
 end
 
 When(/^I change (\w+) to (\w*)$/) do |field, value|
@@ -77,13 +77,13 @@ end
 Then(/^I should see a (\w+) error message$/) do |type|
   #WAS: expect( page ).to have_css(".error", text: type)
   if type == "required"
-    expect( page ).to have_content("can't be blank")
-    expect( page ).to have_content("prohibited this user from being submitted:")
+    err_msg "can't be blank"
+    err_msg "prohibited this user from being submitted:"
   elsif type == "invalid"
-    expect( page ).to have_content("is invalid")
-    expect( page ).to have_content("prohibited this user from being submitted:")
+    err_msg "is invalid"
+    err_msg "prohibited this user from being submitted:"
   elsif type == "unique"
-    expect( page ).to have_content("has already been taken")
+    err_msg "has already been taken"
   else
     fail
   end
@@ -110,11 +110,11 @@ end
 
 Then(/^I should see a required edit volunteer error message$/) do
   #AL: page.should have_selector ".modal-body", text: 'Please select a volunteer to edit.'
-  page.should have_content 'Please select a volunteer to edit.'
+  err_msg 'Please select a volunteer to edit.'
 end
 
 Then(/^I should see a choose csv file first error message$/) do
   #AL: page.should have_selector ".modal-body", text: 'Please choose a csv file first.'
-  page.should have_content 'Please choose a csv file first.'
+  err_msg 'Please choose a csv file first.'
 end
 #save_and_open_page
