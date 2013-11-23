@@ -203,7 +203,7 @@ GEM
     slop (3.4.7)
     sms-spec (0.1.7)
       rspec
-    sprockets (2.10.0)
+    sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
