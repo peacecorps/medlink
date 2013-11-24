@@ -1,7 +1,7 @@
 Then /I should see std icon area items/ do
   steps %{
     Then I should see the image "brand"
-    Then I should see header with text "Peace Corps"
+    Then I should see header with text "PC Medlink"
     Then I should see header with text "Medical Supplies"
   }
 end
