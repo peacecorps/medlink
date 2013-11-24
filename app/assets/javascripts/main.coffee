@@ -56,3 +56,6 @@ $ ->
   if id = $("#pcmo_country_id").val()
     filter_sections id
 
+  # -- Activate jQuery placeholder ----
+  $('input, textarea').placeholder()
+
