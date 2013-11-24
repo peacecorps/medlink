@@ -21,13 +21,8 @@
     .container
       .flash
         - flash.each do |name, msg|
-          .flash__message.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Confirmation", role: "dialog"}
-            .modal-content
-              .modal-body
-                %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
-                =msg
-              .modal-footer
-                %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close
+          .flash__message.alert
+            = msg
       .row
         .col-md-4
           = link_to image_tag("/logo.png", id: 'brand'), root_path
