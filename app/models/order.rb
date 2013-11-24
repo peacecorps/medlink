@@ -8,8 +8,8 @@ class Order < ActiveRecord::Base
   validates_presence_of :supply, message: "is missing"
 
   validates_presence_of :location, message: "is missing"
-  #validates_presence_of :dose, message: "is missing"
-  #validates_presence_of :quantity, message: "is missing"
+  validates_presence_of :dose, message: "is missing"
+  validates_presence_of :quantity, message: "is missing"
 
   validates_numericality_of :quantity, only_integer: true, on: :create, :if => :quantity
 

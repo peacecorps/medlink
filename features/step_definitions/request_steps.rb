@@ -11,10 +11,6 @@ When(/^I give it all inputs but "(.*?)"$/) do |field|
   fill_in "Dose",    :with => "mg"
   fill_in "Quantity", :with => "1"
   fill_in "Special instructions area",  :with => "S/I/A but"
-  case field
-  when "Select Supply"
-    # Do nothing for "Select Supply"
-  end
   click_button "Submit"
 end
 

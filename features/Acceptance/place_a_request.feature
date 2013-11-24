@@ -51,10 +51,8 @@ Feature: Place a Request
 #TODO: #190: Scenario: User gives a bad location value. (AL: not validation)
 #TODO: #189/#170: Scenario: User gives a bad dose value. - H (invalid dose)(AL: not validation)
 
-#TODO: For pilot, we allow empty dose and quantity. The numbericality validation of quantity only runs when quantity is given.
-
 #......................................................................
-  Scenario Outline: User does not give a Quantity - (Allow empty quantity)
+  Scenario Outline: User does not give a Quantity - I (invalid quantity)
     Given I am an "<role>"
     And I am not logged in
     When I sign in with valid credentials
@@ -62,16 +60,16 @@ Feature: Place a Request
 
     When I place a request
     And I give it all inputs but quantity
-    Then I should not see a invalid quantity request message
+    Then I see a invalid quantity request message
     And I stay on <afterpage> page
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-      | admin | Admin Home      |
-      | pcmo  | Request Manager |
+      | admin | Place a Request |
+      | pcmo  | Place a Request |
 
 #......................................................................
-  Scenario Outline: User does not give a dose - (Allow empty dose)
+  Scenario Outline: User does not give a dose
     Given I am an "<role>"
     And I am not logged in
     When I sign in with valid credentials
@@ -79,13 +77,13 @@ Feature: Place a Request
 
     When I place a request
     And I give it all inputs but dose
-    Then I should not see a invalid dose request message
+    Then I see a invalid dose request message
     And I stay on <afterpage> page
     Examples:
       | role  | afterpage       |
       | pcv   | Request Form    |
-      | admin | Admin Home      |
-      | pcmo  | Request Manager |
+      | admin | Place a Request |
+      | pcmo  | Place a Request |
 
 #......................................................................
 #ERROR/BAD VALUES
