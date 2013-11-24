@@ -56,23 +56,3 @@ $ ->
   if id = $("#pcmo_country_id").val()
     filter_sections id
 
-  # -- To pick start and end dates -----
-  $("#duration").daterangepicker
-    format: "MM/DD/YY"
-    startDate: "9/01/13"
-    endDate: "12/31/13"
-  , (start, end) ->
-    # FIXME: make ajax request instead of sending all of the rows
-    s = start.format "YYYYMMDD"
-    e = end.format   "YYYYMMDD"
-
-    $(".order").each (n,o) ->
-      $o = $ o
-      date = $o.data("date")
-      if s <= date && date <= e
-        $o.show()
-      else
-        $o.hide()
-
-  $(".datepicker").datepicker()
-
