@@ -58,7 +58,7 @@ class Admin::UsersController < AdminController
       _flash = if field_chgs.any?
         # P8
         change_desc = field_chgs.map { |k,v| "#{k}=[#{v}]" }.join "; "
-        { notice: "Success! You have made the following changes to this user account: #{change_desc}" }
+        { success: "Success! You have made the following changes to this user account: #{change_desc}" }
       else
         { notice: "No changes made" }
       end
@@ -73,14 +73,14 @@ class Admin::UsersController < AdminController
 
     # Redirect back for empty csv file
     if csv_io == nil
-      redirect_to new_admin_user_path, :notice => "Please choose a csv file first."
+      redirect_to new_admin_user_path, :flash => { :error  => "Please choose a csv file first." }
     else
       if csv_io.size == 0
-        redirect_to new_admin_user_path, :notice => "csv file is empty. Please check it."
+        redirect_to new_admin_user_path, :flash => { :error  => "csv file is empty. Please check it." }
       else
         file = csv_io.read
         if file.split("\n")[0].split(',')[0] != "email"
-          redirect_to new_admin_user_path, :notice => "csv file missing header. Please check."
+          redirect_to new_admin_user_path, :flash => { :error  => "csv file missing header. Please check." }
         else
           error_csv = ""
           
@@ -113,9 +113,9 @@ class Admin::UsersController < AdminController
           # If any error message
           if error_csv!=""
             send_data error_csv, :type => 'text/csv', :filename => 'invalid_users.csv'      
-            flash[:notice] = "CSV has invalid entries!"
+            flash[:error] = "CSV has invalid entries!"
           else
-            flash[:notice] =  "Successully uploaded users information!"
+            flash[:success] =  "Successully uploaded users information!"
             redirect_to new_admin_user_path()
           end
         end

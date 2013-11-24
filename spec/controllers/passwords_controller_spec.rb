@@ -19,7 +19,7 @@ describe PasswordsController do
 
     it "with invalid email/pcvid combo" do
       post :create, :user => { "email" => @user.email, "pcv_id" => "123" }
-      flash[:notice].should_not be_nil
+      flash[:error].should_not be_nil
       expect( response ).to be_redirection
     end
   end
