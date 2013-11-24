@@ -263,7 +263,6 @@ DEPENDENCIES
   devise
   email_spec
   factory_girl_rails
-  ffi
   haml
   haml-rails
   jquery-placeholder-rails

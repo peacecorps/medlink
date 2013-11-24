@@ -17,8 +17,6 @@ gem 'sucker_punch'
 
 gem 'business_time'
 
-gem 'ffi'
-
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'haml'
