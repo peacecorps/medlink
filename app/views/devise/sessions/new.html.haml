@@ -8,9 +8,9 @@
       = f.email_field :email, placeholder: 'email@email.com', class: 'input--full', autofocus: true
     .input-group
       = f.password_field :password, placeholder: 'Password', class: 'input--full'
-    .input-group
+    .input-group.checkbox
       = f.check_box :remember_me
       = f.label :remember_me
     .btn-group
-      %button.btn.btn--primary(type="submit") Sign in
-    = link_to 'Forgot Password', new_user_password_path, class: 'btn'
+      %button.btn.btn-primary(type="submit") Sign in
+    = link_to 'Forgot Password', new_user_password_path, class: 'btn btn-primary'

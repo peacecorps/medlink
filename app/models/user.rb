@@ -7,18 +7,19 @@ class User < ActiveRecord::Base
 
   belongs_to :country
   has_many :orders
-  validates_presence_of :country, :location, :phone, :first_name,
-    :last_name, :role
-  validates_presence_of :pcv_id, :if => :pcv?
-  validates :role, inclusion: {in: ["pcv", "pcmo", "admin"]}
-  validates :pcv_id, uniqueness: true, :if => :pcv?
-  validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map {|t| t.name}}
 
   Roles = {
     pcv:   'Peace Corps Volunteer',
     pcmo:  'Peace Corps Medical Officer',
     admin: 'Admin'
   }
+
+  validates_presence_of :country, :location, :phone, :first_name,
+    :last_name, :role
+  validates_presence_of :pcv_id, :if => :pcv?
+  validates :role, inclusion: {in: Roles.keys.map(&:to_s)}
+  validates :pcv_id, uniqueness: true, :if => :pcv?
+  validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map {|t| t.name}}
 
   Roles.each do |type, _|
     define_method :"#{type}?" do
@@ -77,8 +78,5 @@ class User < ActiveRecord::Base
     "#{name} (#{pcv_id})"
   end
 
-  def pcv?
-    self.role == "pcv"
-  end
-
 end
+
