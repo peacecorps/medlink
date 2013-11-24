@@ -28,17 +28,20 @@
                 =msg
               .modal-footer
                 %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close
+
       .row
-        .col-md-4
-          = link_to image_tag("/logo.png", id: 'brand'), root_path
-          %hgroup
-            %h1 Peace Corps
-            %h4 Medical Supplies
-            - if current_user
-              %span.badge= current_user.country.name
-        .col-md-8
-          %nav
-            = render 'partials/global_nav'
-          %section
-            = yield
+        = link_to image_tag("/logo_50.gif", id: 'brand'), root_path
+        %hgroup.inline
+          %h1.inline Peace Corps
+          %h4.inline Medical Supplies
+          - if current_user
+            %span.badge= current_user.country.name
+        %br
+        %br
+
+      .row
+        %nav
+          = render 'partials/global_nav'
+        %section
+          = yield
 
