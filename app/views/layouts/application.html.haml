@@ -19,10 +19,6 @@
 
   %body
     .container
-      .flash
-        - flash.each do |name, msg|
-          .flash__message.alert
-            = msg
       .row
         .col-md-4
           = link_to image_tag("/logo.png", id: 'brand'), root_path
@@ -34,6 +30,19 @@
         .col-md-8
           %nav
             = render 'partials/global_nav'
+            .flash
+              - flash.each do |name, msg|
+                - tmp = name.to_s
+                - if tmp == "alert" || tmp == "error"
+                  - tmp = "danger"
+                - elsif tmp == "notice"
+                  - tmp = "success"
+                - if tmp != "success" && tmp != "danger"
+                  .flash__message.alert.alert-info
+                    = msg 
+                - else
+                  .flash__message.alert{"class" => " alert-" + tmp}
+                    = msg
           %section
             = yield
 
