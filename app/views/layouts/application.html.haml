@@ -19,16 +19,6 @@
 
   %body
     .container
-      .flash
-        - flash.each do |name, msg|
-          .flash__message.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "Confirmation", role: "dialog"}
-            .modal-content
-              .modal-body
-                %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
-                =msg
-              .modal-footer
-                %button.btn.btn-default{"data-dismiss" => "modal", type: "button"} Close
-
       .row
         = link_to image_tag("/logo_50.gif", id: 'brand'), root_path
         %hgroup.inline
@@ -42,6 +32,19 @@
       .row
         %nav
           = render 'partials/global_nav'
+          .flash
+            - flash.each do |name, msg|
+              - tmp = name.to_s
+              - if tmp == "alert" || tmp == "error"
+                - tmp = "danger"
+              - elsif tmp == "notice"
+                - tmp = "success"
+              - if tmp != "success" && tmp != "danger"
+                .flash__message.alert.alert-info
+                  = msg 
+              - else
+                .flash__message.alert{"class" => " alert-" + tmp}
+                  = msg
         %section
           = yield
 

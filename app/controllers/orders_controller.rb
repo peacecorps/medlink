@@ -36,8 +36,8 @@ class OrdersController < ApplicationController
 
       # Tag P9
       redirect_to next_page,
-        notice: "Success! The Order you placed on behalf of " +
-          "#{@order.user.name} has been sent."
+        :flash => { :success => "Success! The Order you placed on behalf of " +
+          "#{@order.user.name} has been sent." }
     else
       render :new
     end
