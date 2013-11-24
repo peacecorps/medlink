@@ -11,26 +11,23 @@
           %small= current_user.pcv_id
         = f.hidden_field :user_id, value: current_user.id
       - else
-        = f.select :user_id, [['Select Volunteer to request for', '']] + current_user.pcvs.map { |u| [u.name, u.id] }
+        = f.select(:user_id, [['Select Volunteer to request for', '']] + current_user.pcvs.map { |u| [u.name, u.id] }, {}, class: 'form-control input-sm')
       %hr
 
-    .input-group
-      .select.select--full
-        = f.select :supply_id, [['Select Supply', '']] + Supply.choices
-        %i.icon-caret-down.select__arrow
+    .row
+      .col-md-4
+        .select.select--full
+          = f.select(:supply_id, [['Select Supply', '']] + Supply.choices, {}, class: 'form-control input-sm')
+          %i.icon-caret-down.select__arrow
 
-    .input-group
-      = f.text_field :location, placeholder: 'Location', class: 'input input--full'
+        = f.text_field :location, placeholder: 'Location', class: 'form-control input-sm'
 
-    .input-group
-      = f.text_field :quantity, placeholder: 'Quantity', class: 'input input--full'
+        = f.text_field :quantity, placeholder: 'Quantity', class: 'form-control input-sm'
 
-    .input-group
-      = f.text_field :dose, placeholder: 'Dose', class: 'input input--full'
+        = f.text_field :dose, placeholder: 'Dose', class: 'form-control input-sm'
 
-    .input-group
-      = f.text_area :extra, placeholder: 'Special instructions area', rows: 3
+        = f.text_area :extra, placeholder: 'Special instructions area', rows: 3, class: 'form-control input-sm'
 
-    .form-actions
-      .btn-group
-        %button.btn.btn-primary(type="submit") Submit
+        .form-actions
+          .btn-group
+            %button.btn.btn-primary(type="submit") Submit
