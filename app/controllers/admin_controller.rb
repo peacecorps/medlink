@@ -3,7 +3,7 @@ class AdminController < ApplicationController
 
   def verify_access
     unless current_user.try :admin?
-      redirect_to root_url, notice: 'You must be an admin to view that page'
+      redirect_to root_url, :flash => { :error => 'You must be an admin to view that page' }
     end
   end
 end
