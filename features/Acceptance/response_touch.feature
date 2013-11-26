@@ -35,7 +35,6 @@ Feature: Visit Response Web Pages
     Then I should see non-pcv gear area items
     Then I should see std icon area items
 
-    Then I should see header with text "Order From:"
     Then I should see header with text "Fulfillment Method"
     Then I should see radiobutton "Delivery"
     Then I should see radiobutton "Pickup"
@@ -55,7 +54,6 @@ Feature: Visit Response Web Pages
     Then I should see std icon area items
     Then I should see admin tab area items
 
-    Then I should see header with text "Order From:"
     Then I should see header with text "Fulfillment Method"
     Then I should see radiobutton "Delivery"
     Then I should see radiobutton "Pickup"

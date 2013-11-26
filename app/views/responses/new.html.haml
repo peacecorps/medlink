@@ -9,11 +9,6 @@
 .order
   .order__section
     %hgroup
-      %h3
-        %span
-          Order From:
-          = @order.user.name
-        %small.pcv-id= @order.user.pcv_id
       %div
         %em= "#{@order.location}, #{@order.user.country.name}"
     %table.table
