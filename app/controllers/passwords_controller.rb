@@ -8,8 +8,7 @@ class PasswordsController < Devise::PasswordsController
       redirect_to new_user_password_path and return
     elsif user.pcv_id != params[:user][:pcv_id]
       flash[:error] = "PCVID Invalid: Your request was not submitted " +
-        "because the PCVID was incorrect. Please resubmit your request " +
-        "in this format: PCVID, Supply short name, dose, qty, location."
+        "because of an incorrect or missing PCVID. Please correct and resubmit."
       redirect_to new_user_password_path and return
     end
 

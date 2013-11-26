@@ -275,7 +275,7 @@ Then(/^I see a invalid forgot password email message$/) do
 end
 
 Then(/^I see a invalid forgot password pcvid message$/) do
-  err_msg "PCVID Invalid: Your request was not submitted because the PCVID was incorrect. Please resubmit your request in this format: PCVID, Supply short name, dose, qty, location."
+  err_msg "PCVID Invalid: Your request was not submitted because of an incorrect or missing PCVID. Please correct and resubmit."
 end
 
 Then(/^I see a successful message$/) do
