@@ -83,13 +83,15 @@ Additional thanks to the [RHoK](http://www.rhok.org/) team for their outstanding
 * Clint Lee
 * Gordon Macie
 * Emily Merwin
+* Laura Moore
+* Chae O'Keefe
 * Drew Pak
+* Gerry Pass 
 * John Petitte
 * Luke J Reimer
 * Al Snow
 * Patrick Stoica
 * Jake Swanson
 * Nate Tate
-* Laura Moore
 
 We welcome other contributions - just open up an issue or a pull request.
