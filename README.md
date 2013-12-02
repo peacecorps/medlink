@@ -19,6 +19,12 @@ $ bundle
 $ rake db:setup
 ```
 
+*Optional* admin setup. Make sure git is [configured](https://help.github.com/articles/set-up-git) globally as this becomes your admin username. 
+
+```bash
+$ rake admin:create
+```
+
 and you should be off to the races. You can check your setup by running the specs with
 
 ```bash
