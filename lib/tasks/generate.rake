@@ -10,6 +10,8 @@ task :generate => :environment do
   supplies  = Supply.all
   orders    = 0
 
+  Order.all.select { |o| o.user.email =~ /peacecorps-demo.gov/ }.each &:destroy!
+
   generate_random_order = -> (pcv, date, fulfilled) do
     o = Order.new(
       user: pcv,
