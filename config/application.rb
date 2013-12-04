@@ -56,5 +56,7 @@ module Medlink
 
     # IPs whitelisted to log in as admins
     config.allowed_ips = ['127.0.0.1']
+
+    I18n.config.enforce_available_locales = false
   end
 end
