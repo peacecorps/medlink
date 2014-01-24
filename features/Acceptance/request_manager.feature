@@ -3,6 +3,43 @@ Feature: Request Manager
   A PCMO or Admin
   Should be able to manager the requests of replacement medical supplies
 
+  Background:
+    Given that "Quirm" is a country
+    Given that "Neverland" is a country
+    Given that "Mexico" is a country
+    Given that the following supplies exist:
+      | name      | shortcode |
+      | Froyo     | FRO       |
+      | Geckos    | GEC       |
+      | Bacon     | BAC       |
+      | Melons    | MEL       |
+      | Chocolate | CHO       |
+    And that the following pcvs exist:
+      | name      | pcv_id | country   |
+      | bill      | 1      | Quirm     |
+      | ted       | 2      | Quirm     |
+      | jennie    | 3      | Quirm     |
+      | john      | 9      | Quirm     |
+      | tink      | 4      | Neverland |
+      | sally     | 5      | Neverland |
+      | peter     | 7      | Neverland |
+      | john      | 6      | Mexico    |
+      | paul      | 8      | Mexico    |
+    And that the following orders have been made
+      | pcv | supply | quantity |
+      | 1   | BAC    | 10       |
+      | 1   | GEC    | 7        |
+      | 2   | BAC    | 9        |
+      | 2   | MEL    | 3        |
+      | 3   | BAC    | 11       |
+      | 3   | CHO    | 8        |
+      | 4   | GEC    | 56       |
+      | 5   | GEC    | 11       |
+      | 6   | MEL    | 22       |
+      | 7   | CHO    | 33       |
+      | 8   | FRO    | 44       |
+      | 9   | FRO    | 55       |
+
   Scenario Outline: Basic (non-Admin) Page Behavior
     Given the default user exists
     Given I am an "<role>"
@@ -23,10 +60,18 @@ Feature: Request Manager
     Then I see a successful sign in message
     When I go to the request_manager page
     Then I should see dropdownmenu "Select Country"
-#TODO (#95#): Select from "Select Country" dropdown menu for Admin.
-#TODO (#95#) Proof that you must select a country before all 3 tables appear.
-#TODO (#95#) Proof that you must filter the 3 tables by the country selection.
-#TODO (#95#) Proof that the 3 tables have more than just your PCV_ID.
+    When I choose the country "Select Country"
+
+    When I choose the country "Quirm"
+    Then I see lines in the past_due table
+    Then I see lines in the pending table
+    Then I see no lines in the request_tracker table
+
+    When I choose the country "Neverland"
+    Then I see lines in the past_due table
+    Then I see lines in the pending table
+    Then I see no lines in the request_tracker table
     Examples:
       | role  |
       | admin |
+

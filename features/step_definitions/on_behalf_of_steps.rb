@@ -15,6 +15,10 @@ Then(/^I should see a pcmo dropdown containing only "(.*?)"$/) do |text|
   page.should have_selector "select", text: text
 end
 
+And(/^I should not see a pcmo dropdown containing "(.*?)"$/) do |text|
+  page.should_not have_selector "select", text: text
+end
+
 Then(/^I should see a pcmo dropdown containing both "(.*?)" and "(.*?)"$/) do |first, second|
   page.should have_selector "select", text: first
   page.should have_selector "select", text: second

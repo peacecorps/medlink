@@ -6,20 +6,22 @@ end
 
 desc "Generates random order data"
 task :generate => :environment do
-  countries = ["UNITED STATES", "SENEGAL"].map { |name| Country.where(name: name).first! }
+  countries = ["United States", "Senegal"].map { |name| Country.where(name: name).first! }
   supplies  = Supply.all
   orders    = 0
 
+  Order.all.select { |o| o.user.email =~ /peacecorps-demo.gov/ }.each &:destroy!
+
   generate_random_order = -> (pcv, date, fulfilled) do
-    o = Order.create!(
+    o = Order.new(
       user: pcv,
       created_at: date,
       supply: supplies.sample,
       location: pcv.location,
-      unit: "u",
+      dose: "u",
       quantity: (1..5).to_a.sample
     )
-    orders += 1
+    orders += 1 if o.save
 
     if fulfilled
       delay = (1..5).to_a.sample
@@ -47,7 +49,9 @@ task :generate => :environment do
         email:      email,
         location:   "#{name}'s location",
         phone:      random_digits(10),
-        pcv_id:     random_digits(5)
+        pcv_id:     random_digits(5),
+        role:       "pcv",
+        time_zone:  ActiveSupport::TimeZone.all.sample.name
       )
       u.password = u.password_confirmation = "password"
       u.save!

@@ -21,17 +21,22 @@ Feature: Edit User
 #......................................................................
   Scenario: successfully editng a user
     When I choose a "Peace Corps Medical Officer" role
-    When I choose the country "Chad"
+    When I choose the user country "Chad"
     And  I choose a "Peace Corps Volunteer" role
     Then I should see the PCMO select box
     When I fill out the edit user form
-    And  I click "Edit"
+    And  I click "Save"
+
+#......................................................................
+  Scenario: successfully editng a user but change you mind and not edit
+    And  I click "Save"
+    Then I should see a no_change confirmation
 
 #......................................................................
   Scenario Outline: Edit User validate errors
     When I fill out the edit user form
     And  I change <field> to <value>
-    And  I click "Edit"
+    And  I click "Save"
     Then I should see a <message> error message
     Examples:
       | field           | value   | message  |

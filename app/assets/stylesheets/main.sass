@@ -1,36 +1,56 @@
-@import "compass/support"
-@import "compass/css3/box-sizing"
-@import "compass/typography/vertical_rhythm"
-@import "compass/css3/box-shadow"
-@import "compass/css3/transition"
-/*
- * Font Imports
- */
-
 @import url('http://fonts.googleapis.com/css?family=Lato:400,700')
 @import url('http://fonts.googleapis.com/css?family=Merriweather:400,400italic,700')
-@import font-awesome
 
 @import "variables"
 
-@import "generic/normalize"
-@import "generic/clearfix"
-@import "generic/animate"
-@import "generic/grid"
+@import "headings"
 
-@import "base/main"
-@import "base/headings"
-@import "base/tables"
-@import "base/links"
-@import "base/forms"
 
-@import "layout/wrapper"
-@import "layout/sidebar"
-@import "layout/main"
-@import "layout/devise"
-@import "layout/nav"
+body
+  margin-top: 40px
+  font-size: $base-font-size
+  line-height: $base-line-height
+  font-family: $base-font-family
 
-@import "objects/gear"
-@import "objects/badge"
-@import "objects/order"
-@import "objects/flash"
+.fa-cog
+  font-size: 20px
+
+.nav
+  font-family: $sans-serif
+
+.link
+  cursor: pointer
+
+// Hiding table rows in js doesn't work with bootstrap's default striping
+.js-striped
+  .striped
+    background-color: #f9f9f9
+  .unstriped
+    background: #fff
+
+.js-striped-red
+  .striped
+    background-color: red
+  .unstriped
+    background: red
+
+.js-striped-yellow
+  .striped
+    background-color: yellow
+  .unstriped
+    background: yellow
+
+.inline
+  display: inline
+
+.aligncenter
+  margin: 0 auto
+
+input
+  margin-bottom: 5px
+
+select
+  margin-bottom: 5px
+
+textarea
+  margin-bottom: 5px

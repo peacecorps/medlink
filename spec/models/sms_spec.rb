@@ -23,7 +23,7 @@ describe SMS do
       its( :qty )          { should eq '50' }
       its( :loc )          { should eq 'ACCRA' }
       its( :dosage_value ) { should eq '30' }
-      its( :dosage_units ) { should eq 'mg' }
+      its( :dosage_dose  ) { should eq 'mg' }
     end
 
     context "succeeds with comma delimiter" do
@@ -39,10 +39,10 @@ describe SMS do
       its( :qty )          { should eq '50' }
       its( :loc )          { should eq 'ACCRA' }
       its( :dosage_value ) { should eq '30' }
-      its( :dosage_units ) { should eq 'mg' }
+      its( :dosage_dose  ) { should eq 'mg' }
     end
 
-    context "succeeds with comma delim and dosage value/units are spaced" do
+    context "succeeds with comma delim and dosage value/dose are spaced" do
       data = {
           :From => '+15555555555',
           :Body => '111111,aceta,30 mg,50,ACCRA'
@@ -55,10 +55,10 @@ describe SMS do
       its( :qty )          { should eq '50' }
       its( :loc )          { should eq 'ACCRA' }
       its( :dosage_value ) { should eq '30' }
-      its( :dosage_units ) { should eq 'mg' }
+      its( :dosage_dose  ) { should eq 'mg' }
     end
 
-    context "succeeds w/ comma-space delim and dosage value/units are spaced" do
+    context "succeeds w/ comma-space delim and dosage value/dose are spaced" do
       data = {
           :From => '+15555555555',
           :Body => '111111, aceta, 30 mg, 50, ACCRA'
@@ -71,7 +71,7 @@ describe SMS do
       its( :qty )          { should eq '50' }
       its( :loc )          { should eq 'ACCRA' }
       its( :dosage_value ) { should eq '30' }
-      its( :dosage_units ) { should eq 'mg' }
+      its( :dosage_dose  ) { should eq 'mg' }
     end
 
     it "fails with single-space delimiter" do
@@ -134,13 +134,13 @@ describe SMS do
       subject { OpenStruct.new SMS.parse data }
 
       its( :to )   { should eq '+15555555555' }
-      its( :body ) { should eq 'meds, units, country' }
+      its( :body ) { should eq 'meds, dose, country' }
     end
 
-    context "can process list units", :list do
+    context "can process list dose", :list do
       data = {
           :From => '+15555555555',
-          :Body => 'list units'
+          :Body => 'list dose'
         }
       subject { OpenStruct.new SMS.parse data }
 

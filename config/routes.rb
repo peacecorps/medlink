@@ -1,9 +1,12 @@
 Medlink::Application.routes.draw do
-  devise_for :users, :controllers => { :passwords => "passwords" }
+  devise_for :users, :controllers => { :passwords => "passwords" }, :skip => [:registrations]
+  as :user do
+    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+    patch 'users/:id' => 'devise/registrations#update', :as => 'user_registration'
+  end
 
   resources :reports, only: [:index] do
-    [:request_history, :fulfillment_history, :supply_history,
-     :recent_adds, :recent_edits, :pcmo_response_times].each do |r|
+    [:order_history, :users, :pcmo_response_times].each do |r|
       get r, on: :collection
     end
   end
@@ -18,6 +21,7 @@ Medlink::Application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:new, :create, :edit, :update]
+    post 'users/uploadCSV' => 'users#uploadCSV'
   end
 
   get '/help' => 'application#help'

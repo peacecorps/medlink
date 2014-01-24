@@ -12,11 +12,11 @@ Then(/^I should not see the PCMO select box$/) do
   !find_field('user_pcmo_id').visible?
 end
 
-When(/^I choose the country "(.*?)"$/) do |name|
+When(/^I choose the user country "(.*?)"$/) do |name|
   select name, from: 'user_country_id'
 end
 
-When(/^I unselect the country$/) do
+When(/^I unselect the user country$/) do
   select 'Country', from: 'user_country_id'
 end
 
@@ -59,6 +59,11 @@ Then(/^I should see a "(.*?)" confirmation$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
+Then(/^I should see a no_change confirmation$/) do
+  #AL: page.should have_selector ".modal-body", text: 'No changes made'
+  pos_ack_msg 'No changes made'
+end
+
 When(/^I change (\w+) to (\w*)$/) do |field, value|
   if field == "user_country_id"
     select  value, from: field
@@ -72,13 +77,13 @@ end
 Then(/^I should see a (\w+) error message$/) do |type|
   #WAS: expect( page ).to have_css(".error", text: type)
   if type == "required"
-    expect( page ).to have_content("can't be blank")
-    expect( page ).to have_content("prohibited this user from being submitted:")
+    err_msg "can't be blank"
+    err_msg "prohibited this user from being submitted:"
   elsif type == "invalid"
-    expect( page ).to have_content("is invalid")
-    expect( page ).to have_content("prohibited this user from being submitted:")
+    err_msg "is invalid"
+    err_msg "prohibited this user from being submitted:"
   elsif type == "unique"
-    expect( page ).to have_content("has already been taken")
+    err_msg "has already been taken"
   else
     fail
   end
@@ -104,6 +109,12 @@ When(/^I choose a "(.*?)" edit user$/) do |name|
 end
 
 Then(/^I should see a required edit volunteer error message$/) do
-  page.should have_selector ".alert", text: 'Please select a volunteer to edit.'
+  #AL: page.should have_selector ".modal-body", text: 'Please select a volunteer to edit.'
+  err_msg 'Please select a volunteer to edit.'
+end
+
+Then(/^I should see a choose csv file first error message$/) do
+  #AL: page.should have_selector ".modal-body", text: 'Please choose a csv file first.'
+  err_msg 'Please choose a csv file first.'
 end
 #save_and_open_page

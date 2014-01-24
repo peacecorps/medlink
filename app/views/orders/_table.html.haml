@@ -4,38 +4,44 @@
     %th First Name
     %th Last Name
     %th Supply
-    %th Unit
     %th Quantity
+    %th Dose
     %th Location
     %th Request
     - if responded
       %th Response
-      %th Fulfilled
-      %th Received
+      %th Delivery Method
+      %th Response Instructions
+      / %th Fulfilled
+      / %th Received
 %tbody
   - orders.each do |order|
     - attrs = { "class" => "order c#{order.country_id}" }
-    - if responded
+    - unless responded
+      - attrs["class"] += " link"
       - attrs["data-link"] = new_order_response_path(order)
     %tr{ attrs }
       %td= order.user.pcv_id
       %td= order.user.first_name
       %td= order.user.last_name
       %td= order.supply
-      %td= order.unit
       %td= order.quantity
+      %td= order.dose
       %td
         %span.cell--primary= order.location
       %td
-        %span= order.created_at.strftime '%-m/%-d/%y'
-        %small.cell--secondary= order.created_at.strftime '%H:%M'
+        %span= order.created_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
+        %small.cell--secondary= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
       - if responded
-        %td= order.responded_at.strftime '%-m/%-d/%y'
-        - if order.fulfilled?
-          %td= order.fulfilled_at.strftime '%-m/%-d/%y'
-        - else
+        %td= order.responded_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
+        %td= order.response.delivery_method.humanize
+        %td= order.response.instructions
+        /
+          - if order.fulfilled?
+            %td= order.fulfilled_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
+          - else
+            %td
+              %input.datepicker.input-small
           %td
-            = date_select :order, :fulfilled_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
-        %td
-          = date_select :order, :received_at, :use_month_numbers => true, :date_separate => '/', order: [:day, :month, :year]
+            %input.datepicker.input-small
 

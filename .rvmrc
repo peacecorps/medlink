@@ -1,2 +1,2 @@
-rvm use 2.0.0-p247@medlink --create
+rvm use 2.1.0@medlink --create
 

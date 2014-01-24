@@ -226,7 +226,7 @@ Then (/^I should be signed in as "(.*?)"$/) do |role|
   elsif role == "pcmo"
     expect(current_url).to eq("http://www.example.com/orders/manage")
   else # PCV
-    expect(current_url).to eq("http://www.example.com/orders")
+    expect(current_url).to eq("http://www.example.com/orders/new")
   end
 end
 
@@ -235,7 +235,7 @@ Then /^I should be signed in$/ do
 end
 
 Then /^I see a successful sign in message$/ do
-  page.should have_selector ".alert", text: "Signed in successfully."
+  pos_ack_msg "Signed in successfully."
 end
 
 Then /^I should be signed out$/ do
@@ -243,91 +243,91 @@ Then /^I should be signed out$/ do
 end
 
 Then /^I should see a signed out message$/ do
-  page.should have_content "Signed out successfully."
+  pos_ack_msg "Signed out successfully."
 end
 
 Then /^I see an invalid login message$/ do
-  page.should have_selector ".alert", text: "Invalid email or password."
+  err_msg "Invalid email or password."
 end
 
 Then /^I should see an account edited message$/ do
-  page.should have_content "You updated your account successfully."
+  pos_ack_msg "You updated your account successfully."
 end
 
 Then(/^I should see an invalid current password message$/) do
-  page.should have_content "Current password is invalid"
+  err_msg "Current password is invalid"
 end
 
 Then(/^I should see an blank current password message$/) do
-  page.should have_content "Current password is invalid"
+  err_msg "Current password is invalid"
 end
 
 Then /^I should see a mismatched password message$/ do
-  page.should have_content "Password confirmation doesn't match Password"
+  err_msg "Password confirmation doesn't match Password"
 end
 
 Then(/^I should see a too short password message$/) do
-  page.should have_content "Password is too short (minimum is 8 characters)"
+  err_msg "Password is too short (minimum is 8 characters)"
 end
 
 Then(/^I see a invalid forgot password email message$/) do
-  page.should have_selector ".alert", text: "Email Invalid: The email you specified is invalid. Please check the spelling, formatting and that it is an active address."
+  err_msg "Email Invalid: The email you specified is invalid. Please check the spelling, formatting and that it is an active address."
 end
 
 Then(/^I see a invalid forgot password pcvid message$/) do
-  page.should have_selector ".alert", text: "PCVID Invalid: Your request was not submitted because the PCVID was incorrect. Please resubmit your request in this format: PCVID, Supply short name, dose, qty, location."
+  err_msg "PCVID Invalid: Your request was not submitted because of an incorrect or missing PCVID. Please correct and resubmit."
 end
 
 Then(/^I see a successful message$/) do
-  page.should have_selector ".alert", text: "Success! A temporary password has been sent to the email we have on file. Please check your e-mail and click on the link to complete the log in. (web experience)"
+  pos_ack_msg "Success! A temporary password has been sent to the email we have on file. Please check your e-mail and click on the link to complete the log in. (web experience)"
 end
 
 Then(/^I see a pcv_id unrecognized message$/) do
-  page.should have_content "PCV ID unrecognized"
+  err_msg "PCV ID unrecognized"
 end
 
 # E1 ERROR MSG
 Then /^I see an invalid email message$/ do
   #FIXME:  (#114#: E1)
-  #page.should have_selector ".alert", text: "Email Invalid:
+  #err_msg "Email Invalid:
   #    The email you specified is invalid. Please check the spelling,
   #    formatting and that it is an active address.
-  page.should have_selector ".alert", text: "Invalid email or password."
+  err_msg "Invalid email or password."
 end
 
 # E2 ERROR MSG (unregistered)
 Then /^I see an unregistered email message$/ do
   #FIXME: (#114#: E2)
-  #page.should have_selector ".alert", text: "The email you entered
+  #err_msg "The email you entered
   #    is not on file. Please check the spelling and formatting
   #    before re-entering the address.
-  page.should have_selector ".alert", text: "Invalid email or password."
+  err_msg "Invalid email or password."
 end
 
 # E2
 Then /^I see an unknown email message$/ do
   #FIXME: (#114#: E2)
-  #page.should have_selector ".alert", text: "The email you entered
+  #err_msg "The email you entered
   #    is not on file. Please check the spelling and formatting
   #    before re-entering the address.
-  page.should have_selector ".alert", text: "Invalid email or password."
+  err_msg "Invalid email or password."
 end
 
 # K ERROR MSG
 Then(/^I see an invalid password message$/) do
   #FIXME:  (#114#: K)
-  #page.should have_selector ".alert", text: "Invalid Password: the
+  #err_msg "Invalid Password: the
   #    Password you entered is not valid. Please re-enter your password
   #    or contact your administrator via email for more help."
-  page.should have_selector ".alert", text: "Invalid email or password."
+  err_msg "Invalid email or password."
 end
 
 # K
 Then(/^I see an blank password message$/) do
   #FIXME: (#114#: K)
-  #page.should have_selector ".alert", text: "Invalid Password: the
+  #err_msg "Invalid Password: the
   #    Password you entered is not valid. Please re-enter your password
   #    or contact your administrator via email for more help."
-  page.should have_selector ".alert", text: "Invalid email or password."
+  err_msg "Invalid email or password."
 end
 #save_and_open_page

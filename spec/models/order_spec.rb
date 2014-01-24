@@ -11,7 +11,7 @@ describe Order do
   context 'from text' do
 
     let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND',
-      phone: '555-123-4567', qty: 1, dosage_value: 11, dosage_units: 'mg' } }
+      phone: '555-123-4567', qty: 1, dosage_value: 11, dosage_dose: 'mg' } }
 
     subject { Order.create_from_text data }
 
@@ -36,7 +36,7 @@ describe Order do
 
     it 'can display a validation message' do
       subject.supply = nil
-      expect( subject.confirmation_message ).to match /shortcode/i
+      expect( subject.confirmation_message ).to match /Supply is missing/i
     end
 
   end
@@ -48,15 +48,14 @@ describe Order do
       email:     'custom@example.com',
       phone:     'N/A',
       supply_id: Supply.first.id,
-      dose:      10,
-      unit:      'mg',
+      quantity:  10,
+      dose:      'mg',
       location:  'Roswell',
-      quantity:  1
     } }
 
     it 'can print its full dosage' do
       order = FactoryGirl.create :order, data
-      expect( order.full_dosage ).to eq '10mg'
+      expect( order.full_dosage ).to eq 'mg'
     end
 
     it 'rejects duplicates' do

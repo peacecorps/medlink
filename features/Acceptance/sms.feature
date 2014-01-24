@@ -24,7 +24,7 @@ Feature: SMS
 #ERROR/BAD VALUES
 
 # NOTE: Assuming "Special Instructions Area" is optional field.
-# NOTE: Unclear how location, qty, and units are bad.
+# NOTE: Unclear how location, qty, and dose are bad.
 
 #......................................................................
 @wip

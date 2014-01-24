@@ -1,14 +1,16 @@
+:javascript
+  $('f.email_field, f.password_field').placeholder();
 = form_for resource, html: {class: 'form form-horizontal'}, as: resource_name, url: session_path(resource_name) do |f|
 
   %h3 Sign in
-  .form__section
-    .input-group
-      = f.email_field :email, placeholder: 'email@email.com', class: 'input--full', autofocus: true
-    .input-group
-      = f.password_field :password, placeholder: 'Password', class: 'input--full'
-    .input-group
-      = f.check_box :remember_me
-      = f.label :remember_me
-    .btn-group
-      %button.btn.btn--primary(type="submit") Sign in
-    = link_to 'Forgot Password', new_user_password_path, class: 'btn'
+  .row
+    .col-md-4
+      .form__section
+        = f.email_field :email, placeholder: 'email@email.com', class: 'form-control input-sm', autofocus: true
+        = f.password_field :password, placeholder: 'Password', class: 'form-control input-sm'
+        .input-group.checkbox
+          = f.check_box :remember_me
+          = f.label :remember_me
+        .btn-group
+          %button.btn.btn-primary(type="submit") Sign in
+        = link_to 'Forgot Password', new_user_password_path, class: 'btn btn-primary'

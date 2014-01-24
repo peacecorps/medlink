@@ -5,16 +5,16 @@ class Order < ActiveRecord::Base
   has_one :response
 
   validates_presence_of :user,   message: "unrecognized"
-  validates_presence_of :supply, message: "unrecognized"
+  validates_presence_of :supply, message: "is missing"
 
   validates_presence_of :location, message: "is missing"
-  validates_presence_of :unit, message: "is missing"
+  validates_presence_of :dose, message: "is missing"
   validates_presence_of :quantity, message: "is missing"
 
-  validates_numericality_of :quantity, only_integer: true, on: :create
+  validates_numericality_of :quantity, only_integer: true, on: :create, :if => :quantity
 
   scope :responded,   -> { includes(:response).references(:response
-    ).where("responses.id IS NOT NULL") }
+    ).where("responses.id IS NOT NULL").order("responses.id DESC") }
   scope :unresponded, -> { includes(:response).references(:response
     ).where("responses.id IS NULL")     }
 
@@ -66,7 +66,7 @@ class Order < ActiveRecord::Base
   def self.human_attribute_name(attr, options={})
     {
       user:   "PCV ID",
-      supply: "shortcode"
+      supply: "Supply"
     }[attr] || super
   end
 
@@ -79,7 +79,7 @@ class Order < ActiveRecord::Base
       phone:     data[:phone],
       email:     user.try(:email),
       supply_id: supply.try(:id),
-      unit:      "#{data[:dosage_value]}#{data[:dosage_units]}",
+      dose:      "#{data[:dosage_value]}#{data[:dosage_dose]}",
       quantity:  data[:qty],
       location:  data[:loc] || user.try(:location)
     })
@@ -94,7 +94,7 @@ class Order < ActiveRecord::Base
   end
 
   def full_dosage
-    "#{dose}#{unit}"
+    "#{dose}"
   end
 end
 

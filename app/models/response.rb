@@ -7,6 +7,10 @@ class Response < ActiveRecord::Base
     length: { maximum: 160 }
 #/\A[a-zA-Z0-9\.\/ ]*\z/,
 
+  def denied?
+    delivery_method == DeliveryMethod::Denial.to_s
+  end
+
   def send!
     to = order.phone || order.user.phone
     SMSJob.enqueue(to, instructions) if to

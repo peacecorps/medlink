@@ -31,33 +31,31 @@ $ ->
   ).change()
 
   # -- PCMO country selector -----
-  $("#admin_country_select").change( ->
-    id = $(@).val()
+  filter_sections = (country) ->
+    $(".section").each (i, section) ->
+      $section = $ section
 
-    $("tr.order").hide()
-    $("tr.order.c#{id}").show()
+      n = 0
+      $section.hide()
+      $section.find("tr.order").each (j,order) ->
+        $order = $ order
 
-    # Hide sections with no content
-    # TODO: this selector could be more performant
-    $(".section").hide()
-    $(".section:has(.c#{id})").show()
-  ).change()
+        if $order.hasClass "c#{country}"
+          $section.show()
+          n = 1 - n
+          if n
+            $order.addClass("striped").removeClass("unstriped")
+          else
+            $order.removeClass("striped").addClass("unstriped")
+          $order.show()
+        else
+          $order.hide()
 
-  # -- To pick start and end dates -----
-  $("#duration").daterangepicker
-    format: "MM/DD/YY"
-    startDate: "9/01/13"
-    endDate: "12/31/13"
-  , (start, end) ->
-    # FIXME: make ajax request instead of sending all of the rows
-    s = start.format "YYYYMMDD"
-    e = end.format   "YYYYMMDD"
+  $("#admin_country_select").change(-> filter_sections $(@).val()).change()
 
-    $(".order").each (n,o) ->
-      $o = $ o
-      date = $o.data("date")
-      if s <= date && date <= e
-        $o.show()
-      else
-        $o.hide()
+  if id = $("#pcmo_country_id").val()
+    filter_sections id
+
+  # -- Activate jQuery placeholder ----
+  $('input, textarea').placeholder()
 

@@ -1,4 +1,3 @@
-@wip
 Feature: "Request History" Web Page's Dropdown
   As a visitor to the website
   I want to filter the "Request History" table using the duration dropdown
@@ -39,6 +38,8 @@ Feature: "Request History" Web Page's Dropdown
       | 8   | FRO    | 44       |
     Given I exist as a user
 
+#TODO: 158 (Datepicker nitpicks)
+@wip
   Scenario Outline: Admin: Try out the other dropdown values
     And I am a "admin"
     And I am not logged in
@@ -55,6 +56,8 @@ Feature: "Request History" Web Page's Dropdown
     | 1 year         | 99    | 
     | Current Month  | 99    |
 
+#TODO: 158 (Datepicker nitpicks)
+@wip
   Scenario Outline: PCMO: Try out the other dropdown values
     And I am a "pcmo"
     And I am not logged in
@@ -71,6 +74,8 @@ Feature: "Request History" Web Page's Dropdown
     | 1 year         | 99    | 
     | Current Month  | 99    |
 
+#TODO: 158 (Datepicker nitpicks)
+@wip
   Scenario Outline: PCV: Try out the other dropdown values
     And I am a "pcv"
     And I am not logged in

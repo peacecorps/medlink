@@ -70,3 +70,9 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 # Capybara.default_driver = :selenium
 
 Zonebie.set_random_timezone
+
+######################################################################
+# Tell Capybara about Chrome.
+Capybara.register_driver :javascript do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :firefox)
+end

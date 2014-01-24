@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     #   to sign in with another (authorized) account. Devise redirects logged
     #   in users away from that page, however, and clobbers the flash message
     #   in the process.
-    redirect_to root_path, notice: 'You are not authorized to view that page'
+    redirect_to root_path, :flash => { :error => 'You are not authorized to view that page' }
   end
 
   def root
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     elsif current_user.pcmo?
       manage_orders_path
     else # PCV
-      orders_path
+      new_order_path
     end
 
     redirect_to start_page

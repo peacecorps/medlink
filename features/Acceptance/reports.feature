@@ -20,20 +20,11 @@ Feature: Reports
     Then I stay on reports page
 
     Examples:
-      | user  | report                |
+      | user  | report        |
+      | pcmo  | Download      |
 
-      | pcmo  | Supply Requests       |
-      | pcmo  | Fulfillment History   |
-      | pcmo  | Request History       |
-
-      | admin | Supply Requests       |
-      | admin | Fulfillment History   |
-      | admin | Request History       |
-      | admin | Recently Added Users  |
-      | admin | Recently Edited Users |
-      | admin | PCMO Response Times   |
-
-# TODO: Invalid Outputs? (Answer: GIGO)
+      | admin | Order History |
+      | admin | Users         |
 
 # FYI: PCV does not have the report page or any of the 6 reports.
 # FYI: pg.13 (PCMO: 3 reports: Supply Requests, Fulfillment History,

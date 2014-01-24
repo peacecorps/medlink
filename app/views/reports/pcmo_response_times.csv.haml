@@ -3,13 +3,13 @@
 = CSV.generate do |csv|
 
   - csv << ["User ID", "Order ID", "Placed", "Responded", "First name",
-    "Last name", "Email", "Phone", "Supply Type", "Amount", "Unit",
+    "Last name", "Email", "Phone", "Supply Type", "Amount", "Dose",
     "Location", "Country", "Response Days", "Day Past Due"]
 
   - @orders.each do |order|
     - csv << [order.user_id, order.id, order.created_at,
       order.responded_at,
       order.user.first_name, order.user.last_name, order.user.email,
-      order.user.phone, order.supply, order.quantity, order.unit,
+      order.user.phone, order.supply, order.quantity, order.dose,
       order.location, order.user.country.name,
       order.response_time, order.how_past_due]

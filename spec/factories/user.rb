@@ -4,6 +4,7 @@ FactoryGirl.define do
     password 'password'
     phone    '555-867-5309'
     role     'pcv'
+    time_zone 'Alaska'
     country { FactoryGirl.create(:country) }
     sequence(:first_name) { |n| "user#{n}"}
     sequence(:last_name)  { |n| "user#{n}last"}

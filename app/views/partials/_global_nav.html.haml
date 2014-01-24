@@ -1,19 +1,36 @@
-- if current_user.try(:pcmo?) || current_user.try(:admin?)
-  %ul#global-nav
-    - if current_user.admin?
-      %li= link_to 'Admin Home', new_admin_user_path, class: 'btn'
-    %li= link_to 'Request Manager', manage_orders_path, class: 'btn'
-    %li= link_to 'Place a Request', new_order_path, class: 'btn'
-    %li= link_to 'Reports', reports_path, class: 'btn'
-
 - if current_user
-  #dropdown-nav
-    %a
-      %i.icon-cog
-    %ul.nav.nav--dropdown
-      - if current_user.pcv?
-        %li= link_to 'Request Supply', new_order_path
-      %li= link_to 'Request History', orders_path
-      %li= link_to 'Change Password', edit_user_registration_path
-      %li= link_to 'Help', help_path
-      %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
+  %nav.navbar.navbar-default{role: "navigation"}
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+    / Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        - if current_user.admin?
+          %li= link_to 'Admin Home', new_admin_user_path
+        - if current_user.pcmo? || current_user.admin?
+          %li= link_to 'Request Manager', manage_orders_path
+        %li= link_to 'Place a Request', new_order_path
+        - if current_user.pcmo? || current_user.admin?
+          %li= link_to 'Reports', reports_path
+      %ul.nav.navbar-nav.navbar-right
+        %li.dropdown
+          %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+            %i.fa.fa-cog
+          %ul.dropdown-menu
+            / #FIXME -- Not sure why, but the links won't show when window is wide. Need to have these
+            / four dividers. These are set to display: none by default. --Gerry
+            %li.divider
+            %li.divider
+            %li.divider
+            %li.divider
+            - if current_user.pcv? || current_user.admin?
+              %li= link_to 'Request Supply', new_order_path
+              %li= link_to 'Request History', orders_path
+            %li= link_to 'Change Password', edit_user_registration_path
+            %li= link_to 'Help', help_path
+            %li= link_to 'Sign Out', destroy_user_session_path, method: :delete

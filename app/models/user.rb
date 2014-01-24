@@ -7,15 +7,19 @@ class User < ActiveRecord::Base
 
   belongs_to :country
   has_many :orders
-  validates_presence_of :country, :location, :phone, :first_name,
-    :last_name, :pcv_id, :role
-  validates :pcv_id, uniqueness: true
 
   Roles = {
     pcv:   'Peace Corps Volunteer',
     pcmo:  'Peace Corps Medical Officer',
     admin: 'Admin'
   }
+
+  validates_presence_of :country, :location, :phone, :first_name,
+    :last_name, :role
+  validates_presence_of :pcv_id, :if => :pcv?
+  validates :role, inclusion: {in: Roles.keys.map(&:to_s)}
+  validates :pcv_id, uniqueness: true, :if => :pcv?
+  validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map {|t| t.name}}
 
   Roles.each do |type, _|
     define_method :"#{type}?" do
@@ -32,9 +36,10 @@ class User < ActiveRecord::Base
   def pcvs
     case role.to_sym
     when :admin
-      User.all.pcvs
+      User.all
     when :pcmo
-      country.users.pcvs
+      pcvs_shared = country.users.pcvs
+      pcvs_shared << self
     else
       raise "No PCVs for #{role}"
     end
@@ -72,4 +77,6 @@ class User < ActiveRecord::Base
   def to_s
     "#{name} (#{pcv_id})"
   end
+
 end
+

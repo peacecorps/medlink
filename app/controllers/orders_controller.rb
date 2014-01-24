@@ -9,7 +9,8 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = current_user.orders.new location: current_user.location
+    @order = current_user.orders.new location: (current_user.pcv? ?
+                                                current_user.location : nil)
   end
 
   def create
@@ -33,10 +34,10 @@ class OrdersController < ApplicationController
         orders_path
       end
 
-      # Tag P6
+      # Tag P9
       redirect_to next_page,
-        notice: "Success! The Order you placed on behalf of " +
-          "#{@order.user.name} has been sent."
+        :flash => { :success => "Success! The Order you placed on behalf of " +
+          "#{@order.user.name} has been sent." }
     else
       render :new
     end
@@ -46,7 +47,7 @@ class OrdersController < ApplicationController
 
   def create_params
     params.require(:order).permit [:extra, :supply_id, :location,
-                                   :unit, :quantity, :user_id]
+                                   :dose, :quantity, :user_id]
   end
 end
 

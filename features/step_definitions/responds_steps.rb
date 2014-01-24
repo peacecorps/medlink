@@ -2,7 +2,7 @@ When(/^I select a "(.*?)" request$/) do |request|
   all("#" + request + "-orders tbody tr")[0].click()
 end
 
-Then(/^I should be able to assign one of four actions: "(.*?)"$/) do |action|
+Then(/^I should be able to assign one action: "(.*?)"$/) do |action|
   choose("response_delivery_method_" + action.split[0].downcase)
 end
 
@@ -36,24 +36,24 @@ Then(/^I should have (\d+) past due orders to process$/) do |expected_orders|
 end
 
 Then(/^I should have (\d+) response tracker orders$/) do |expected_orders|
-  pending_orders_in_table = page.all('table#responded-orders tr').count - 1
+  pending_orders_in_table = [page.all('table#responded-orders tr').count - 1, 0].max
   pending_orders_in_table.should == expected_orders.to_i
 end
 
 Then(/^I should see the missing_delivery_method error message$/) do
-  page.should have_content "Delivery method is missing"
+  err_msg "Delivery method is missing"
 end
 
 Then(/^I should see the exceeds_char_limit error message$/) do
-  page.should have_content "Instructions is too long (maximum is 160 characters)"
+  err_msg "Instructions is too long (maximum is 160 characters)"
 end
 
 Then(/^I should see the replace_placeholder error message$/) do
-  page.should have_content 'Instructions - Please replace the [placeholders] with values.'
+  err_msg 'Instructions - Please replace the [placeholders] with values.'
 end
 
 Then(/^I should see the success error message$/) do
-  page.should have_content "Success! Your response has been sent to"
+  pos_ack_msg "Success! Your response has been sent to"
 end
 
 Then(/^I should be able to assign "(.*?)" to special instruction$/) do |str|

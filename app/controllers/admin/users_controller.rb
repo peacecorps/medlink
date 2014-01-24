@@ -1,5 +1,5 @@
 class Admin::UsersController < AdminController
-  before_action :set_user, except: [:new, :create]
+  before_action :set_user, except: [:new, :create, :uploadCSV]
   around_filter :catch_no_record
 
   def new
@@ -37,23 +37,92 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    field_chgs = ""
-    user_params.each do |key,value|
-      if user_params[key] != @user[key]
-        if !user_params[key].empty?
-          field_chgs << "#{key}=[#{user_params[key]}]; "
+    # TODO: Clean this up: The edge case here is countries: db ids are
+    #    ints, not the strings that we get as params, and we want to
+    #    display country=name instead of country_id=id
+    field_chgs = []
+    user_params.each do |key,nval|
+      oval = @user[key]
+      if oval != nval && !nval.empty?
+        if key == "country_id"
+          next if oval.to_s == nval.to_s
+          nval = Country.find(nval).name if key == "country_id"
+          field_chgs << ["country", nval]
+        else
+          field_chgs << [key, nval]
         end
       end
     end
 
     if @user.update_attributes user_params
-      redirect_to new_admin_user_path,
-        notice: 'Success! You have made the following changes ' +
-          "to this user account: #{field_chgs}"
+      _flash = if field_chgs.any?
+        # P8
+        change_desc = field_chgs.map { |k,v| "#{k}=[#{v}]" }.join "; "
+        { success: "Success! You have made the following changes to this user account: #{change_desc}" }
+      else
+        { notice: "No changes made" }
+      end
+      redirect_to new_admin_user_path, _flash
     else
       render :edit
     end
   end
+
+  def uploadCSV
+    csv_io = params[:csv]
+
+    # Redirect back for empty csv file
+    if csv_io == nil
+      redirect_to new_admin_user_path, :flash => { :error  => "Please choose a csv file first." }
+    else
+      if csv_io.size == 0
+        redirect_to new_admin_user_path, :flash => { :error  => "csv file is empty. Please check it." }
+      else
+        file = csv_io.read
+        if file.split("\n")[0].split(',')[0] != "email"
+          redirect_to new_admin_user_path, :flash => { :error  => "csv file missing header. Please check." }
+        else
+          error_csv = ""
+          
+          CSV.parse(file,:headers => true) do |row|
+            # If overwrite option is checked
+            if params[:overwrite] == '1'
+              user = User.where(:pcv_id => row.to_hash["pcv_id"]).first
+              if user == nil
+                user = User.new(row.to_hash)
+                user.password = user.password_confirmation = SecureRandom.hex
+                # Save error messages
+                if !user.save
+                  error_csv << row.push(user.errors.full_messages.to_sentence).to_s
+                end
+              else
+                if !user.update_attributes(row.to_hash)
+                  error_csv << row.push(user.errors.full_messages.to_sentence).to_s
+                end
+              end
+            else
+              user = User.new(row.to_hash)
+              user.password = user.password_confirmation = SecureRandom.hex
+              # Save error messages
+              if !user.save
+                error_csv << row.push(user.errors.full_messages.to_sentence).to_s
+              end
+            end
+          end
+      
+          # If any error message
+          if error_csv!=""
+            send_data error_csv, :type => 'text/csv', :filename => 'invalid_users.csv'      
+            flash[:error] = "CSV has invalid entries!"
+          else
+            flash[:success] =  "Successully uploaded users information!"
+            redirect_to new_admin_user_path()
+          end
+        end
+      end
+    end
+  end
+
 
   private # ----------
 
@@ -63,7 +132,7 @@ class Admin::UsersController < AdminController
 
   def user_params
     params.require(:user).permit [:first_name, :last_name, :location,
-      :country_id, :phone, :email, :pcv_id, :role, :pcmo_id, :remember_me]
+      :country_id, :phone, :email, :pcv_id, :role, :pcmo_id, :remember_me, :time_zone]
   end
 
   def catch_no_record

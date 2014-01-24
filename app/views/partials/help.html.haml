@@ -13,20 +13,16 @@
 
 %h3 Send an SMS
 
-%p Just open up your text messaging application on your phone and enter in the following information in the following order. Then hit submit.
+%p Open up your text messaging application on your phone and send an sms with the following information in the following order.
 
 %ul
-  %li PCVID
-  %li Supply Short Name
-  %li Dose
-  %li Quantity
-  %li Your Location
+  %li "PCVID, Supply Short Code, Quantity, Dose, Your Location"
 
-%p If your request order is received without errors you will receive a confirmation that we received it and will receive information from your medical supply officer about your order within 24 hours.
+%p If your request order is received without errors, you will receive a confirmation that the system got it and will receive a message from your medical unit about your order within 3 business days.
 
 %h3 Fill Out a Web Form
 
-%p Just log on to #{link_to 'pcmedlink.org', root_path} to access the web form. Then fill out the form and hit submit. You will receive a confirmation message via email and sms that your order has been placed. within 3 business days you will receive a response from your medical supply officer about your order.
+%p Log on to #{link_to 'pcmedlink.org', root_path}. Fill out the form and hit submit. If your request order is received without errors, you will receive a confirmation that the system got it and a message from your medical unit about your order within 3 business days.
 
 .page-header
   %h2 I received a confirmation that my request was received, now what happens?
@@ -42,7 +38,7 @@
 %p Your PCMO will provide you a date range as to when your medication will be dropped off at your location.
 
 %h3 Purchase:
-%p If it is not possible for your peace corps medical officer to fulfill your request then he/she will recommend that you purchase your medication through an outside vendor. You will receive instructions on what is required in order for your purchase to be reimbursed.
+%p If it is not possible for your Peace Corps medical officer to fulfill your request then he/she will recommend that you purchase your medication through an outside vendor. You will receive instructions on what is required in order for your purchase to be reimbursed.
 
 .page-header
   %h2 I received an error what do I do?
@@ -60,3 +56,8 @@
 %h3 Network Connectivity:
 %p If you do not receive any confirmation of any kind within 24 hours of your initial request it may not have been received due to poor network connectivity. It is recommended that you resubmit your order.
 
+.page-header
+%h2 If you get a problem with the software?
+%p Please create an email describing the steps to reproduce the software problem and email it to
+%a{href: "mailto:support@pcmedlink.org"} support mailing list.
+You will receive an acknowledgement and initial assessment within 24 hours.

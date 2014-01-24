@@ -20,7 +20,7 @@ Feature: Add User
     When I choose a "Peace Corps Medical Officer" role
     Then I should not see the PCMO select box
 
-    When I choose the country "Chad"
+    When I choose the user country "Chad"
     And  I choose a "Peace Corps Volunteer" role
     Then I should see the PCMO select box
     #TODO (#97#): And  I should be able to select from PCMOs in "Chad"

@@ -4,6 +4,13 @@
     %meta(charset="utf-8")
     %meta(http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1")
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+    %link{:href=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css", :rel=>"stylesheet"}
+    %link{:href=>"//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css", :rel=>"stylesheet"}
+
+    = javascript_include_tag "application"
+    %script{:src=>"//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"}
+
     %title= content_for?(:title) ? yield(:title) : "PC Medlink"
     = csrf_meta_tags
     = stylesheet_link_tag "application", :media => "all"
@@ -11,23 +18,33 @@
       = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
 
   %body
-    .flash
-      - flash.each do |name, msg|
-        .flash__message.alert
-          = msg
-    .l-wrapper
-      %header.l-sidebar
-        .l-sidebar__inner
-          = link_to image_tag("/logo.png", id: 'brand'), root_path
-          %hgroup
-            %h1 Peace Corps
-            %h4 Medical Supplies
-            - if current_user
-              %span.badge= current_user.country.name.downcase
-      %div.l-main
+    .container
+      .row
+        = link_to image_tag("/logo_50.gif", id: 'brand'), root_path
+        %hgroup.inline
+          %h2.inline PC Medlink
+          %h4.inline Medical Supplies
+          - if current_user
+            %span.badge= current_user.country.name
+        %br
+        %br
+
+      .row
         %nav
           = render 'partials/global_nav'
+          .flash
+            - flash.each do |name, msg|
+              - tmp = name.to_s
+              - if tmp == "alert" || tmp == "error"
+                - tmp = "danger"
+              - elsif tmp == "notice"
+                - tmp = "success"
+              - if tmp != "success" && tmp != "danger"
+                .flash__message.alert.alert-info
+                  = msg 
+              - else
+                .flash__message.alert{"class" => " alert-" + tmp}
+                  = msg
         %section
           = yield
 
-    = javascript_include_tag "application"

@@ -1,26 +1,22 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.1.0'
 
-gem 'rails', '4.0.1'
+gem 'rails', '4.0.2'
 
 gem 'jquery-rails'
-gem 'bootstrap-daterangepicker-rails'
 gem 'haml-rails'
 gem 'twilio-ruby'
+gem 'jquery-placeholder-rails'
 
 gem 'devise'
 gem 'cancan'
 
 gem 'sucker_punch'
 
-gem 'font-awesome-rails'
 gem 'business_time'
 
-gem 'ffi', '1.9.0'
-
 gem 'sass-rails'
-gem "compass-rails", "~> 2.0.alpha.0"
 gem 'coffee-rails'
 gem 'haml'
 gem 'uglifier'

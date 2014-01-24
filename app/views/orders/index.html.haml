@@ -1,47 +1,20 @@
 %h2 Request History
-%table(class="table.table--bordered.table--striped.table--linked" id="orders")
+%table#orders.table.table-bordered.js-striped.table-hover
   %thead
-    - if current_user.pcmo? || current_user.admin?
-      %form.form-horizontal
-        %fieldset
-          .control-group
-            %label.control-label{:for => "duration"} Start and End dates:
-            %input#duration{:name => "duration", :type => "text"}/
     %tr
-      - if current_user.pcmo? || current_user.admin?
-        %th First Name
-        %th Last Name
-        %th PCVID
       %th Supply
-      %th Unit
+      %th Dose
       %th Quantity
-      - if current_user.pcmo? || current_user.admin?
-        %th Location
       %th Requested
       %th Response
-      - if current_user.pcmo? || current_user.admin?
-        %th Fulfilled
   %tbody
     - @orders.each do |order|
-      %tr.order{ "data-date" => order.created_at.strftime("%Y%m%d") }
-        - if current_user.pcmo? || current_user.admin?
-          %td= order.user.first_name
-          %td= order.user.last_name
-          %td= order.user.pcv_id
+      %tr{ "class" => "order c#{order.country_id}", "data-date" => order.created_at.in_time_zone(order.user.time_zone).strftime("%Y%m%d") }
         %td= order.supply
-        %td= order.unit
+        %td= order.dose
         %td= order.quantity
-        - if current_user.pcmo? || current_user.admin?
-          %td
-            %span.cell--primary= order.location
         %td
-          %span= order.created_at.strftime '%-m/%-d/%y'
-          %small.cell--secondary= order.created_at.strftime '%H:%M'
-        - if order.responded?
-          %td= order.responded_at.strftime '%-m/%-d/%y'
-        - else
-          %td EMPTY
-        - if order.fulfilled?
-          %td= order.fulfilled_at.strftime '%-m/%-d/%y'
-        - else
-          %td EMPTY
+          %span= order.created_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
+          %small.cell--secondary= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
+        %td= order.responded_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y' if order.responded_at
+
