@@ -35,13 +35,13 @@
           .flash
             - flash.each do |name, msg|
               - tmp = name.to_s
-              - if tmp == "alert" || tmp == "error"
+              - if tmp == "error"
                 - tmp = "danger"
               - elsif tmp == "notice"
                 - tmp = "success"
               - if tmp != "success" && tmp != "danger"
                 .flash__message.alert.alert-info
-                  = msg 
+                  = msg
               - else
                 .flash__message.alert{"class" => " alert-" + tmp}
                   = msg
