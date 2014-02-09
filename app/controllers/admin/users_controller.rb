@@ -11,7 +11,8 @@ class Admin::UsersController < AdminController
     # FIXME: This is a hack to accomodate the edit user
     #    selection being on the new user (/admin home) page
     if id = params[:edit_user]
-      redirect_to edit_admin_user_path(id) and return
+      user = User.find id
+      redirect_to edit_admin_user_path(user) and return
     end
 
     password = 'password' # Devise.friendly_token.first 8
@@ -132,7 +133,7 @@ class Admin::UsersController < AdminController
   end
 
   def users_by_country
-    User.includes(:country).all.group_by(&:country).map do |c,us|
+    User.includes(:country).to_a.group_by(&:country).map do |c,us|
       [c, us.map { |u| [u, u.id] }]
     end
   end
