@@ -75,7 +75,11 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    "#{name} (#{pcv_id})"
+    if pcv_id
+      "#{name} (#{pcv_id})"
+    else
+      "#{name} (#{role})"
+    end
   end
 
 end
