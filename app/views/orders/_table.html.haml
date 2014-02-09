@@ -15,7 +15,7 @@
       / %th Fulfilled
       / %th Received
 %tbody
-  - orders.each do |order|
+  - orders.sort_by(&:user_id).each do |order|
     - attrs = { "class" => "order c#{order.country_id}" }
     - unless responded
       - attrs["class"] += " link"
