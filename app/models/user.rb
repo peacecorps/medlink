@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :country
-  has_many :orders
+  has_many :orders, dependent: :destroy
 
   Roles = {
     pcv:   'Peace Corps Volunteer',
