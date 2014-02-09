@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   belongs_to :country
-  has_many :orders
+  has_many :orders, dependent: :destroy
 
   Roles = {
     pcv:   'Peace Corps Volunteer',
@@ -75,7 +75,11 @@ class User < ActiveRecord::Base
   end
 
   def to_s
-    "#{name} (#{pcv_id})"
+    if pcv_id
+      "#{name} (#{pcv_id})"
+    else
+      "#{name} (#{role})"
+    end
   end
 
 end

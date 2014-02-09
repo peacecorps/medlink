@@ -7,6 +7,10 @@ namespace :admin do
 
     email = `git config user.email`.strip
     names = `git config user.name`.strip.split ' '
+    if email.empty? || names.empty?
+      raise 'Please configure your git user name and email. See the README for more information'
+    end
+
     password = args[:password] || 'password'
     pcv_id = rand(1_000_000).to_s
 

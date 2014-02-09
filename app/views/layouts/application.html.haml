@@ -34,17 +34,8 @@
           = render 'partials/global_nav'
           .flash
             - flash.each do |name, msg|
-              - tmp = name.to_s
-              - if tmp == "error"
-                - tmp = "danger"
-              - elsif tmp == "notice"
-                - tmp = "success"
-              - if tmp != "success" && tmp != "danger"
-                .flash__message.alert.alert-info
-                  = msg
-              - else
-                .flash__message.alert{"class" => " alert-" + tmp}
-                  = msg
+              .flash__message.alert{"class" => " alert-#{translate_flash_class name}"}
+                = msg
         %section
           = yield
 

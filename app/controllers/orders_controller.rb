@@ -1,11 +1,16 @@
 class OrdersController < ApplicationController
   def index
-    @orders = current_user.accessible_orders.order "orders.created_at desc"
+    @orders = accessible_orders.order "orders.created_at desc"
   end
 
   def manage
     authorize! :manage, Order
-    @orders = current_user.accessible_orders
+    @orders = accessible_orders
+  end
+
+  def since
+    authorize! :manage, Order
+    render json: accessible_orders.where("orders.id > ?", params[:last]).count
   end
 
   def new
@@ -52,5 +57,8 @@ class OrdersController < ApplicationController
     params.require(:order).permit [:extra, :supply_id, :location,
                                    :dose, :quantity, :user_id]
   end
-end
 
+  def accessible_orders
+    current_user.accessible_orders.includes :user, :supply
+  end
+end
