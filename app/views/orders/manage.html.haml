@@ -1,3 +1,8 @@
+.alert.alert-warning#new-requests{ style: "display: none;" }
+  %h3#new-requests-header
+  %p
+    %a(href="") Refresh this page
+    to view new requests.
 
 %h1 Request Manager
 
@@ -22,3 +27,23 @@
   %table#responded-orders.table.table-bordered.js-striped.table-hover
     = render partial: 'table', locals: { orders: @orders.responded, responded: true }
 
+:javascript
+  var last_order = #{@orders.maximum :id};
+
+  var check = function() {
+    $.get("/orders/since", {"last": last_order}, function(data) {
+      if (data == 1) {
+        $("#new-requests-header").html("1 New Request");
+      } else {
+        $("#new-requests-header").html(data + " New Requests");
+      }
+
+      if (data > 0) {
+        $("#new-requests").show();
+      } else {
+        $("#new-requests").hide();
+      }
+    });
+  }
+
+  setInterval(check, 60 * 1000);

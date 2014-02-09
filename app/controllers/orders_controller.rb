@@ -8,6 +8,11 @@ class OrdersController < ApplicationController
     @orders = accessible_orders
   end
 
+  def since
+    authorize! :manage, Order
+    render json: accessible_orders.where("orders.id > ?", params[:last]).count
+  end
+
   def new
     @order = current_user.orders.new({
       quantity: 1,
