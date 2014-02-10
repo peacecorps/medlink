@@ -8,56 +8,19 @@ end
 
 When(/^I give it all inputs but "(.*?)"$/) do |field|
   fill_in "Location", :with => "loc but arg"
-  fill_in "Dose",    :with => "mg"
-  fill_in "Quantity", :with => "1"
   fill_in "Special instructions area",  :with => "S/I/A but"
   click_button "Submit"
 end
 
 When(/^I give it all inputs but location$/) do
   # FYI: Do nothing for "Locaton"
-  fill_in "Dose",    :with => "mg"
-  fill_in "Quantity", :with => "1"
   fill_in "Special instructions area",  :with => "S/I/A location"
-  select_supply
-  click_button "Submit"
-end
-
-When(/^I give it all inputs but quantity$/) do
-  fill_in "Location", :with => "loc but quantity"
-  fill_in "Dose",    :with => "mg"
-  # FYI: Do nothing for "Quantity"
-  fill_in "Special instructions area",  :with => "S/I/A qty"
-  select_supply
-  click_button "Submit"
-end
-
-When(/^I give it all inputs but dose$/) do
-  fill_in "Location", :with => "loc but dose"
-  # FYI: Do nothing for "Dose"
-  fill_in "Quantity", :with => "1"
-  fill_in "Special instructions area",  :with => "S/I/A but dose"
   select_supply
   click_button "Submit"
 end
 
 When(/^I give it all the valid inputs$/) do
   fill_in "Location", :with => "loc valid inputs"
-  fill_in "Dose",    :with => "mg"
-  fill_in "Quantity", :with => "1"
-  fill_in "Special instructions area", :with => "S/I/A valid"
-  select_supply
-  click_button "Submit"
-end
-
-When(/^I give it all inputs with non\-number "(.*?)"$/) do |field|
-  fill_in "Location", :with => "loc valid inputs"
-  fill_in "Dose",    :with => "mg"
-  if (field == "Quantity")
-    fill_in "Quantity", :with => "BADVALUE" #WRONG
-  else
-    fill_in "Quantity", :with => "1"
-  end
   fill_in "Special instructions area", :with => "S/I/A valid"
   select_supply
   click_button "Submit"
@@ -71,29 +34,6 @@ end
 # ERRORS
 Then(/^I see a invalid supply request message$/) do
   err_msg "Supply is missing"
-end
-
-Then(/^I see a invalid quantity request message$/) do
-  err_msg "Quantity is missing"
-end
-
-Then(/^I see a invalid dose request message$/) do
-  err_msg "Dose is missing"
-end
-
-# Allow empty quantity & dose
-Then(/^I should not see a invalid quantity request message$/) do
-  no_err_msg "Quantity is missing"
-end
-
-Then(/^I should not see a invalid dose request message$/) do
-  no_err_msg "Dose is missing"
-end
-
-# ERRORS (continue)
-
-Then(/^I see a nonnumber quantity request message$/) do
-  err_msg "Quantity is not a number"
 end
 
 Then(/^I see an invalid "(.*?)" request message$/) do |field|

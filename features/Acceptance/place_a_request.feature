@@ -42,22 +42,3 @@ Feature: Place a Request
       | pcv   | Request Form    |
       | admin | Place a Request |
       | pcmo  | Place a Request |
-
-#......................................................................
-#ERROR/BAD VALUES
-
-  Scenario Outline: User gives a bad Quantity value. - I (invalid/non-numbers qty)
-    Given I am an "<role>"
-    And I am not logged in
-    When I sign in with valid credentials
-    Then I see a successful sign in message
-
-    When I place a request
-    And I give it all inputs with non-number "Quantity"
-    Then I see a nonnumber quantity request message
-    And I stay on <afterpage> page
-    Examples:
-      | role  | afterpage       |
-      | pcv   | Request Form    |
-      | admin | Place a Request |
-      | pcmo  | Place a Request |

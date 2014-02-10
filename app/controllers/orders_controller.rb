@@ -15,8 +15,6 @@ class OrdersController < ApplicationController
 
   def new
     @order = current_user.orders.new({
-      quantity: 1,
-      dose:     "unit",
       location: (current_user.pcv? ? current_user.location : nil)
     })
   end
@@ -54,8 +52,7 @@ class OrdersController < ApplicationController
   private # -----
 
   def create_params
-    params.require(:order).permit [:extra, :supply_id, :location,
-                                   :dose, :quantity, :user_id]
+    params.require(:order).permit [:extra, :supply_id, :location, :user_id]
   end
 
   def accessible_orders

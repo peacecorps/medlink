@@ -15,8 +15,6 @@ Feature: Visit "Request History" Web Page
     Then I should see std icon area items
 
     Then I should see column "Supply"
-    Then I should see column "Dose"
-    Then I should see column "Quantity"
     Then I should see column "Requested"
     Then I should see column "Response"
 

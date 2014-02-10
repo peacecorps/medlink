@@ -1,9 +1,9 @@
 %h1= @subject
 
-%p Your order of:
+%p Your order for:
 
 %ul
-  %li= "#{@order.quantity} #{@order.supply.name}"
+  %li= "#{@order.supply.name}"
 
 - if @response.denied?
   %p has been denied. Please see the attached response:
