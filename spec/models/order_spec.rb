@@ -11,7 +11,7 @@ describe Order do
   context 'from text' do
 
     let(:data) { { pcvid: 'USR', loc: 'LOC', shortcode: 'BND',
-      phone: '555-123-4567', qty: 1, dosage_value: 11, dosage_dose: 'mg' } }
+      phone: '555-123-4567' } }
 
     subject { Order.create_from_text data }
 
@@ -48,15 +48,8 @@ describe Order do
       email:     'custom@example.com',
       phone:     'N/A',
       supply_id: Supply.first.id,
-      quantity:  10,
-      dose:      'mg',
       location:  'Roswell',
     } }
-
-    it 'can print its full dosage' do
-      order = FactoryGirl.create :order, data
-      expect( order.full_dosage ).to eq 'mg'
-    end
 
     it 'rejects duplicates' do
       # Sequences generate different Users if we don't do this:

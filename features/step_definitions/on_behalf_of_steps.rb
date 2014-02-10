@@ -2,8 +2,8 @@ When(/^I place an order for "(.*?)"$/) do |first_name|
   pcv_id = User.find_by_first_name(first_name).id
   steps %{
     And that the following orders have been made
-      | pcv       | supply | quantity |
-      | #{pcv_id} | GAUZE  | 10       |
+      | pcv       | supply |
+      | #{pcv_id} | GAUZE  |
   }
 end
 

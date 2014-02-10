@@ -3,16 +3,12 @@
   %thead
     %tr
       %th Supply
-      %th Dose
-      %th Quantity
       %th Requested
       %th Response
   %tbody
     - @orders.each do |order|
       %tr{ "class" => "order c#{order.country_id}", "data-date" => order.created_at.in_time_zone(order.user.time_zone).strftime("%Y%m%d") }
         %td= order.supply
-        %td= order.dose
-        %td= order.quantity
         %td
           %span= order.created_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
           %small.cell--secondary= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'

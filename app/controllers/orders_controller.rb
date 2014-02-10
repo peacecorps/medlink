@@ -1,16 +1,22 @@
 class OrdersController < ApplicationController
   def index
-    @orders = current_user.accessible_orders.order "orders.created_at desc"
+    @orders = accessible_orders.order "orders.created_at desc"
   end
 
   def manage
     authorize! :manage, Order
-    @orders = current_user.accessible_orders
+    @orders = accessible_orders
+  end
+
+  def since
+    authorize! :manage, Order
+    render json: accessible_orders.where("orders.id > ?", params[:last]).count
   end
 
   def new
-    @order = current_user.orders.new location: (current_user.pcv? ?
-                                                current_user.location : nil)
+    @order = current_user.orders.new({
+      location: (current_user.pcv? ? current_user.location : nil)
+    })
   end
 
   def create
@@ -46,8 +52,10 @@ class OrdersController < ApplicationController
   private # -----
 
   def create_params
-    params.require(:order).permit [:extra, :supply_id, :location,
-                                   :dose, :quantity, :user_id]
+    params.require(:order).permit [:extra, :supply_id, :location, :user_id]
+  end
+
+  def accessible_orders
+    current_user.accessible_orders.includes :user, :supply
   end
 end
-

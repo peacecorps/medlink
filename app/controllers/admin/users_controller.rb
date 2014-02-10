@@ -3,24 +3,21 @@ class Admin::UsersController < AdminController
   around_filter :catch_no_record
 
   def new
-    @users = User.all.group_by &:country
+    @users = users_by_country
     @user  = User.new
   end
 
   def create
-    if u = params[:edit_user]
-      # FIXME: This is a terrible hack to accomodate the edit user
-      #    selection being on the new user (/admin home) page, and
-      #    should be removed once we have a javascripty user
-      #    selection mechanism
-      id = u =~ /\((.*)\)/ && $1
-      user = User.where(pcv_id: id).first!
+    # FIXME: This is a hack to accomodate the edit user
+    #    selection being on the new user (/admin home) page
+    if id = params[:edit_user]
+      user = User.find id
       redirect_to edit_admin_user_path(user) and return
     end
 
     password = 'password' # Devise.friendly_token.first 8
 
-    @users = User.all.group_by &:country
+    @users = users_by_country
     @user = User.new user_params.merge(password: password)
 
     if @user.save
@@ -133,6 +130,12 @@ class Admin::UsersController < AdminController
   def user_params
     params.require(:user).permit [:first_name, :last_name, :location,
       :country_id, :phone, :email, :pcv_id, :role, :pcmo_id, :remember_me, :time_zone]
+  end
+
+  def users_by_country
+    User.includes(:country).to_a.group_by(&:country).map do |c,us|
+      [c, us.map { |u| [u, u.id] }]
+    end
   end
 
   def catch_no_record

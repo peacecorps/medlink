@@ -4,18 +4,14 @@
     %th First Name
     %th Last Name
     %th Supply
-    %th Quantity
-    %th Dose
     %th Location
     %th Request
     - if responded
       %th Response
       %th Delivery Method
       %th Response Instructions
-      / %th Fulfilled
-      / %th Received
 %tbody
-  - orders.each do |order|
+  - orders.sort_by(&:user_id).each do |order|
     - attrs = { "class" => "order c#{order.country_id}" }
     - unless responded
       - attrs["class"] += " link"
@@ -25,8 +21,6 @@
       %td= order.user.first_name
       %td= order.user.last_name
       %td= order.supply
-      %td= order.quantity
-      %td= order.dose
       %td
         %span.cell--primary= order.location
       %td

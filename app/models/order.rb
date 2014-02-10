@@ -8,10 +8,6 @@ class Order < ActiveRecord::Base
   validates_presence_of :supply, message: "is missing"
 
   validates_presence_of :location, message: "is missing"
-  validates_presence_of :dose, message: "is missing"
-  validates_presence_of :quantity, message: "is missing"
-
-  validates_numericality_of :quantity, only_integer: true, on: :create, :if => :quantity
 
   scope :responded,   -> { includes(:response).references(:response
     ).where("responses.id IS NOT NULL").order("responses.id DESC") }
@@ -79,8 +75,6 @@ class Order < ActiveRecord::Base
       phone:     data[:phone],
       email:     user.try(:email),
       supply_id: supply.try(:id),
-      dose:      "#{data[:dosage_value]}#{data[:dosage_dose]}",
-      quantity:  data[:qty],
       location:  data[:loc] || user.try(:location)
     })
   end
@@ -92,9 +86,4 @@ class Order < ActiveRecord::Base
       errors.full_messages.join ","
     end
   end
-
-  def full_dosage
-    "#{dose}"
-  end
 end
-

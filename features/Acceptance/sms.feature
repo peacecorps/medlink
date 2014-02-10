@@ -24,7 +24,7 @@ Feature: SMS
 #ERROR/BAD VALUES
 
 # NOTE: Assuming "Special Instructions Area" is optional field.
-# NOTE: Unclear how location, qty, and dose are bad.
+# NOTE: Unclear how location is bad.
 
 #......................................................................
 @wip
@@ -70,20 +70,6 @@ Feature: SMS
 
 #......................................................................
 @wip
-  Scenario Outline: User does not give a Dose value -- H (invalid dose)
-    Given I am an "<role>"
-    When I send a sms request
-
-    And I give it all inputs but "dose"
-    Then I see a invalid dose sms request message
-    Examples:
-      | role  |
-      | pcv   |
-      | pcmo  |
-      | admin |
-
-#......................................................................
-@wip
   Scenario Outline: User does not give a PCVID value -- F (bad pcvid)
     Given I am an "<role>"
     When I send a sms request
@@ -96,21 +82,7 @@ Feature: SMS
       | pcmo  |
       | admin |
 
-@wip
-  Scenario Outline: User gives a bad Quantity value - I (invalid/non-numbers qty)
-    Given I am an "<role>"
-    When I send a sms request
-
-    And I give it all sms inputs but "invalid Qty"
-    Then I see a nonnumber Qty sms request message
-    Examples:
-      | role  |
-      | pcv   |
-      | pcmo  |
-      | admin |
-
 #FIXME: Scenario: User gives a bad location value. (AL: not validation)
-#FIXME: Scenario: User gives a bad dose value. - H (invalid dose) (AL: not validation)
 
 #......................................................................
 #OTHER

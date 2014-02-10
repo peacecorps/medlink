@@ -46,7 +46,7 @@ When(/^I give it all the valid sms inputs$/) do
 
   msg = '123456, ASDF, 30mg, 50, Somewhere'
 puts msg
-  #FORMAT:  "PCVID, Supply short name, ,dose, qty, location."
+  #FORMAT:  "PCVID, Supply short name, , location."
   # FIXME: add_message Message.new :number => "5555555512", :body => msg
 end
 
@@ -73,12 +73,8 @@ When(/^I give it all sms inputs but "(.*?)"$/) do |field|
   msg = pcvid + ", " + shortcode + ", " + dosage + ", " + qty + ", " + loc
 puts msg
 
-  #FORMAT:  "PCVID, Supply short name, ,dose, qty, location."
+  #FORMAT:  "PCVID, Supply short name, , location."
   # FIXME: add_message Message.new :number => "5555555512", :body => msg
-end
-
-When(/^I send a sms request$/) do
-#FIXME  pending # express the regexp above with the code you wish you had
 end
 
 #P5
@@ -94,7 +90,7 @@ Then(/^I see a bad PCVID sms request message$/) do
   current_text_message.should have_body "#{onev} invalid: " +
     "Your request was not submitted because #{twov} was incorrect. " +
     "Please resubmit the request in this format: " +
-    "PCVID, Supply short name, ,dose, qty, location."
+    "PCVID, Supply short name, location."
 end
 
 #G
@@ -104,37 +100,7 @@ Then(/^I see a invalid supply sms request message$/) do
   current_text_message.should have_body "#{onev} invalid: " +
     "Your request was not submitted because #{twov} was incorrect. " +
     "Please resubmit the request in this format: " +
-    "PCVID, Supply short name, ,dose, qty, location."
-end
-
-#H
-Then(/^I see a invalid dose sms request message$/) do
-  onev = "Dose"
-  twov = "dose"
-  current_text_message.should have_body "#{onev} invalid: " +
-    "Your request was not submitted because #{twov} was incorrect. " +
-    "Please resubmit the request in this format: " +
-    "PCVID, Supply short name, ,dose, qty, location."
-end
-
-#I
-Then(/^I see a invalid Qty sms request message$/) do
-  onev = "Qty"
-  twov = "quantity"
-  current_text_message.should have_body "#{onev} invalid: " +
-    "Your request was not submitted because #{twov} was incorrect. " +
-    "Please resubmit the request in this format: " +
-    "PCVID, Supply short name, ,dose, qty, location."
-end
-
-#I
-Then(/^I see a nonnumber Qty sms request message$/) do
-  onev = "Qty"
-  twov = "quantity"
-  current_text_message.should have_body "#{onev} invalid: " +
-    "Your request was not submitted because #{twov} was incorrect. " +
-    "Please resubmit the request in this format: " +
-    "PCVID, Supply short name, ,dose, qty, location."
+    "PCVID, Supply short name, location."
 end
 
 #J
@@ -144,6 +110,5 @@ Then(/^I see a invalid Location sms request message$/) do
   current_text_message.should have_body "#{onev} invalid: " +
     "Your request was not submitted because #{twov} was incorrect. " +
     "Please resubmit the request in this format: " +
-    "PCVID, Supply short name, ,dose, qty, location."
+    "PCVID, Supply short name, qty, location."
 end
-

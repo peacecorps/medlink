@@ -1,9 +1,9 @@
 #{@subject}
 ==============================================
 
-Your order of:
+Your order for:
 
-<%= "#{@order.quantity} #{@order.supply.name}; \n" %>
+<%= "#{@order.supply.name}; \n" %>
 
 <%- if @response.denied? %>
 has been denied. Please see the attached response:

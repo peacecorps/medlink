@@ -22,12 +22,16 @@
 
         = f.text_field :location, placeholder: 'Location', class: 'form-control input-sm'
 
-        = f.text_field :quantity, placeholder: 'Quantity', class: 'form-control input-sm'
-
-        = f.text_field :dose, placeholder: 'Dose', class: 'form-control input-sm'
-
         = f.text_area :extra, placeholder: 'Special instructions area', rows: 3, class: 'form-control input-sm'
 
         .form-actions
           .btn-group
             %button.btn.btn-primary(type="submit") Submit
+
+:javascript
+  var locations = #{Hash[ User.all.map { |u| [u.id, u.location] } ].to_json}
+
+  $('#order_user_id').change(function() {
+    var val = $('#order_user_id').val()
+    $('#order_location').val( locations[val] );
+  });
