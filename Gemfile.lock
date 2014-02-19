@@ -75,6 +75,7 @@ GEM
       cucumber (>= 1.2.0)
       nokogiri (>= 1.5.0)
       rails (>= 3.0.0)
+    daemon_controller (1.1.8)
     database_cleaner (1.2.0)
     debug_inspector (0.0.2)
     devise (3.2.2)
@@ -114,7 +115,6 @@ GEM
     json (1.8.1)
     jwt (0.1.11)
       multi_json (>= 1.5)
-    kgio (2.9.1)
     launchy (2.4.2)
       addressable (~> 2.3)
     letter_opener (1.2.0)
@@ -132,6 +132,10 @@ GEM
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     orm_adapter (0.5.0)
+    passenger (4.0.37)
+      daemon_controller (>= 1.1.0)
+      rack
+      rake (>= 0.8.1)
     pg (0.17.1)
     polyglot (0.3.3)
     pry (0.9.12.6)
@@ -161,7 +165,6 @@ GEM
       activesupport (= 4.0.2)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
-    raindrops (0.12.0)
     rake (10.1.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
@@ -234,10 +237,6 @@ GEM
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    unicorn (4.8.2)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
     websocket (1.0.7)
@@ -267,6 +266,7 @@ DEPENDENCIES
   jquery-rails
   letter_opener
   newrelic_rpm
+  passenger
   pg
   pry
   quiet_assets
@@ -284,5 +284,4 @@ DEPENDENCIES
   table_print
   twilio-ruby
   uglifier
-  unicorn
   zonebie
