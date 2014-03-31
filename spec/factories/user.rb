@@ -11,6 +11,8 @@ FactoryGirl.define do
     sequence(:pcv_id)     { |n| n}
     sequence(:location)   { |n| "location#{n}"}
 
+    factory :pcv
+
     factory :admin do
       role 'admin'
     end

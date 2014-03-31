@@ -3,12 +3,9 @@ require 'spec_helper'
 describe User do
   subject { FactoryGirl.create :user, pcv_id: 'USR' }
 
-  it 'can be created' do
-    expect( subject ).to be_a_kind_of User
-  end
+  its(:pcv_id) { should eq 'USR' }
 
-  its(:name) { should match /user\d+ user\d+last/ }
-
+  # TODO: these are order specs. Extract.
   context "accessible_orders" do
     describe "for non-admin users" do
       subject { FactoryGirl.create(:user) }
@@ -48,6 +45,37 @@ describe User do
     end
   end
 
+  context 'admin relations' do
+    before :all do
+      # TODO: mix in factory girl methods
+      @us      = FactoryGirl.create :country, name: "USA"
+      @senegal = FactoryGirl.create :country, name: "Senegal"
+
+      @admin = FactoryGirl.create :admin, country: @us
+
+      @p = FactoryGirl.create :pcmo, country: @us
+      @q = FactoryGirl.create :pcmo, country: @us
+      @r = FactoryGirl.create :pcmo, country: @senegal
+
+      # TODO: validate pcmo for pcvs? Country match?
+      @a = FactoryGirl.create :pcv, country: @us, pcmo_id: @p.id
+      @b = FactoryGirl.create :pcv, country: @us, pcmo_id: @q.id
+      @c = FactoryGirl.create :pcv, country: @senegal, pcmo_id: @r.id
+    end
+    after(:all) { User.delete_all } # TODO: truncate
+
+    it 'can group pcmos by country' do
+      expect(User.pcmos_by_country).to eq({
+        @us      => [@p,@q],
+        @senegal => [@r]
+      })
+    end
+
+    it 'can determine pcvs for an admin'
+    it 'can determine pcvs for a pcmo'
+    it 'cannot determine pcvs for a pcv'
+  end
+
   context 'lookup' do
     before(:each) { FactoryGirl.create :user, pcv_id: 'USR' }
 
@@ -58,6 +86,8 @@ describe User do
     it 'retrieves lower case' do
       expect( User.lookup 'usr' ).to be_present
     end
+
+    it 'fails appropriately'
   end
 
   context 'can send reset instructions' do

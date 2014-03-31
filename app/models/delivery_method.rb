@@ -1,7 +1,5 @@
 class DeliveryMethod
-  Denial = :denial
-
-  attr_accessor :name, :title, :text
+  attr_reader :name, :title, :text
 
   def initialize name, text, title=nil
     @name, @text, @title = name, text, title
@@ -13,24 +11,27 @@ class DeliveryMethod
     name == other.name
   end
 
+  def to_s
+    name.to_s
+  end
+
+  Delivery = new :delivery,
+    'Your request is estimated to arrive at your location on [enter date here]'
+  Pickup = new :pickup,
+    'Your request will be available for pick up at [enter location here] after [enter date]'
+  Purchase = new :purchase,
+    'We do not have the requested item in stock. Please purchase elsewhere and allow us to
+     reimburse you.'.squish, 'Purchase & Reimburse'
+  Special = new :special, '[enter special instructions] ', 'Special Instructions'
+  Denial  = new :denial,
+    'We are sorry but we are unable to fulfill your request: [enter reason] '
+
   class << self
     include Enumerable
 
     def each
-      # R3
-      yield new :delivery, 'Your request is estimated to arrive at your ' +
-        'location on [enter date here]'
-      # R1
-      yield new :pickup, 'Your request will be available for pick up at ' +
-        '[enter location here] after [enter date]'
-      # R2
-      yield new :purchase, 'We do not have the requested item in stock. ' +
-        'Please purchase elsewhere and allow us to reimburse you.',
-        'Purchase & Reimburse'
-      # R4
-      yield new :special, '[enter special instructions] ', 'Special Instructions'
-      # R5
-      yield new Denial, 'We are sorry but we are unable to fulfill your request: [enter reason] '
+      # R3, R1, R2, R4, R5, resp.
+      [Delivery, Pickup, Purchase, Special, Denial].each { |m| yield m }
     end
   end
 end

@@ -22,10 +22,12 @@ class User < ActiveRecord::Base
   validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map {|t| t.name}}
 
   Roles.each do |type, _|
+    # define pcv?, pcmo?, admin? methods
     define_method :"#{type}?" do
       role.to_sym == type
     end
 
+    # define pcvs, pcmos, admins scopes
     scope type.to_s.pluralize, -> { where(role: type) }
   end
 
@@ -36,9 +38,12 @@ class User < ActiveRecord::Base
   def pcvs
     case role.to_sym
     when :admin
+      # FIXME: this clearly includes non-pcv users
+      # Should the implementation or name change?
       User.all
     when :pcmo
       pcvs_shared = country.users.pcvs
+      # TODO: resolve this name similarly
       pcvs_shared << self
     else
       raise "No PCVs for #{role}"

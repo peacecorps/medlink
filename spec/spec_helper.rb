@@ -11,6 +11,8 @@ if ENV["COVERAGE"]
   ]
   SimpleCov.start 'rails' do
     add_group "Jobs", "app/jobs"
+
+    add_filter ".bundle"
   end
 end
 
