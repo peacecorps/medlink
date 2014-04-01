@@ -16,6 +16,8 @@ gem 'sucker_punch'
 
 gem 'business_time'
 
+gem 'kaminari'
+
 # 2.12.0 is borked - https://github.com/sstephenson/sprockets/issues/537
 gem 'sprockets', '2.11.0'
 gem 'sass-rails'

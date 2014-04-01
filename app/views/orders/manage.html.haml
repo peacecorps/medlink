@@ -25,7 +25,7 @@
   %br
   %h3 Response Tracker
   %table#responded-orders.table.table-bordered.js-striped.table-hover
-    = render partial: 'table', locals: { orders: @orders.responded, responded: true }
+    = render partial: 'table', locals: { orders: @orders.responded.order("responses.id DESC"), responded: true }
 
 :javascript
   var last_order = #{@orders.maximum :id};

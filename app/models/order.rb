@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :location, message: "is missing"
 
   scope :responded,   -> { includes(:response).references(:response
-    ).where("responses.id IS NOT NULL").order("responses.id DESC") }
+    ).where("responses.id IS NOT NULL") }
   scope :unresponded, -> { includes(:response).references(:response
     ).where("responses.id IS NULL")     }
 

@@ -2,6 +2,11 @@ class ResponsesController < ApplicationController
   before_filter :initialize_response
 
   def new
+    @history = @order.user.orders.responded.
+      order("orders.created_at DESC").
+      includes(:supply).
+      page(params[:page]).
+      per 10
   end
 
   def create
