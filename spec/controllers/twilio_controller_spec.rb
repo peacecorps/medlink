@@ -13,11 +13,6 @@ describe TwilioController do
 
   describe "POST 'receive'" do
 
-    it 'routes lists' do
-      expect{ post :receive, From: number, Body: 'List supplies'
-        }.to raise_error /Not Implemented/
-    end
-
     # -- i18n codes -----
     {
       unparseable:            'This message should not parse as a valid order',

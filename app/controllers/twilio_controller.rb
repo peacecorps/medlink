@@ -3,23 +3,13 @@ require 'twilio-ruby'
 class TwilioController < ApplicationController
 
   def receive
-    Rails.logger.info( "Received SMS: #{params}" )
-
-    case params[:Body]
-    when /list/i
-      list
-    else
-      create_order
-    end
-
+    Rails.logger.info "Received SMS: #{params}"
+    raise "No message body received" unless params[:Body]
+    create_order
     head :no_content
   end
 
   private
-
-  def list
-    raise "Not Implemented"
-  end
 
   def create_order
     response = begin
