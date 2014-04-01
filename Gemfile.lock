@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:jamesdabbs/sms-spec.git
+  remote: https://github.com/jamesdabbs/sms-spec.git
   revision: cf75a749a13d49f14c4a3cf190c5345c91dc4845
   specs:
     sms-spec (0.1.8)

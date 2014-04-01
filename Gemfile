@@ -40,7 +40,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'email_spec'
   # PR issued; please use upstream once it's merged in
-  gem 'sms-spec', git: 'git@github.com:jamesdabbs/sms-spec.git'
+  gem 'sms-spec', git: 'https://github.com/jamesdabbs/sms-spec.git'
 
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
