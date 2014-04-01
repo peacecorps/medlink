@@ -21,6 +21,8 @@ gem 'coffee-rails'
 gem 'haml'
 gem 'uglifier'
 
+gem 'exceptiontrap'
+
 group :development do
   gem 'sqlite3'
   gem 'pry'
@@ -52,7 +54,6 @@ end
 
 group :production do
   gem 'passenger'
-  gem 'newrelic_rpm'
   gem 'pg'
   gem 'rails_12factor' # For asset compilation
 end

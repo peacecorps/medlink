@@ -1,0 +1,19 @@
+# Exceptiontrap Config File
+
+# If ENV['api-key'] is set, it will be used instead of the following api-key
+# This happens for example, if you use the exceptiontrap addon on heroku
+api-key: heroku
+ssl: true
+timeout: 5000
+enabledEnvironments:
+  - 'production'
+ignoreExceptions:
+  - 'ActiveRecord::RecordNotFound'
+  - 'ActionController::RoutingError'
+  - 'ActionController::InvalidAuthenticityToken'
+  - 'CGI::Session::CookieStore::TamperedWithCookie'
+  - 'ActionController::UnknownAction'
+filterParams:
+  - 'password'
+  - 'password_confirmation'
+  - 's3-key'
