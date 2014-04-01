@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.1.0'
 
-gem 'rails', '4.0.2'
+gem 'rails', '4.1.0.rc1'
 
 gem 'jquery-rails'
 gem 'haml-rails'
@@ -39,7 +39,8 @@ group :test do
   gem 'rake'
   gem 'factory_girl_rails'
   gem 'email_spec'
-  gem 'sms-spec'
+  # PR issued; please use upstream once it's merged in
+  gem 'sms-spec', git: 'git@github.com:jamesdabbs/sms-spec.git'
 
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
