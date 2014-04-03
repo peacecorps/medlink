@@ -3,6 +3,8 @@ class PhoneNumber < ActiveRecord::Base
 
   before_save { |rec| rec.condensed = PhoneNumber.condense rec.display }
 
+  validates :condensed, uniqueness: { scope: :user_id }
+
   def self.condense number
     number.gsub /\D+/, ''
   end
