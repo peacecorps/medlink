@@ -88,8 +88,9 @@ class Admin::UsersController < AdminController
   end
 
   def user_params
-    params.require(:user).permit [:first_name, :last_name, :location,
-      :country_id, :phone, :email, :pcv_id, :role, :pcmo_id, :remember_me, :time_zone]
+    params.require(:user).permit(:first_name, :last_name, :location,
+      :country_id, :email, :pcv_id, :role, :pcmo_id, :remember_me, :time_zone,
+      phone_numbers_attributes: [:id, :display, :_destroy])
   end
 
   def users_by_country

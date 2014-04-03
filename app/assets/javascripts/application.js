@@ -14,8 +14,11 @@
 //= require jquery_ujs
 //= require main
 //= require jquery-placeholder
+//= require jquery_nested_form
 
 $(document).ready(function(){
+    // Shim placeholders
+    $('text_field, phone_field, email_field').placeholder();
 
     // Copy admin menu into gear
     var list = $("ul[class=nav]").html();
