@@ -7,8 +7,6 @@ class Order < ActiveRecord::Base
   validates_presence_of :user,   message: "unrecognized"
   validates_presence_of :supply, message: "is missing"
 
-  validates_presence_of :location, message: "is missing"
-
   scope :responded,   -> { includes(:response).references(:response
     ).where("responses.id IS NOT NULL") }
   scope :unresponded, -> { includes(:response).references(:response

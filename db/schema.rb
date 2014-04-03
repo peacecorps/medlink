@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20140403154914) do
     t.integer  "user_id"
     t.integer  "supply_id"
     t.integer  "message_id"
-    t.string   "phone"
     t.text     "instructions"
     t.string   "entered_by"
     t.datetime "created_at"

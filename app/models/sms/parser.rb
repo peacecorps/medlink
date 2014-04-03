@@ -1,9 +1,11 @@
 class SMS
   class Parser
+    class Error < StandardError ;; end
+
     attr_reader :pcv_id, :shortcodes, :instructions
 
     def initialize text
-      @text = text
+      @text = text || ""
     end
 
     def run!
@@ -15,6 +17,8 @@ class SMS
       end
 
       @shortcodes = toks
+    rescue => e
+      raise Error, "Failed to parse '#{@text}' - #{e}"
     end
   end
 end

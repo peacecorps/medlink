@@ -31,3 +31,11 @@ Medlink::Application.configure do
 
   config.eager_load = false
 end
+
+# Stub out the Twilio Client
+%w(ACCOUNT_SID AUTH PHONE_NUMBER).each { |k| ENV["TWILIO_#{k}"] ||= "*****" }
+class Twilio::REST::ListResource
+  def create msg
+    Rails.logger.info "Should send SMS: #{msg}"
+  end
+end
