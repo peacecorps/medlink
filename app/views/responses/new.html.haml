@@ -55,6 +55,7 @@
     %tr
       %th Date
       %th Supply
+      %th
   - @history.each do |o|
     %tr
       - if @last_date.to_i == o.created_at.to_i
@@ -62,3 +63,9 @@
       - else
         %td= @last_date = o.created_at
       %td= o.supply
+      %td
+        - if o.response.denied?
+          %i.glyphicon.glyphicon-remove
+        - else
+          %i.glyphicon.glyphicon-ok
+        = o.response.instructions
