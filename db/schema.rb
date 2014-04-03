@@ -11,29 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140209222506) do
+ActiveRecord::Schema.define(version: 20140403154914) do
 
   create_table "countries", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "code"
+    t.string "name"
+    t.string "code"
   end
 
   add_index "countries", ["code"], name: "index_countries_on_code"
 
+  create_table "messages", force: true do |t|
+    t.string   "number"
+    t.string   "text"
+    t.integer  "direction"
+    t.datetime "created_at"
+  end
+
   create_table "orders", force: true do |t|
     t.integer  "user_id"
-    t.string   "phone"
-    t.string   "email"
-    t.text     "extra"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.date     "fulfilled_at"
-    t.date     "received_at"
     t.integer  "supply_id"
-    t.string   "location"
+    t.integer  "message_id"
+    t.string   "phone"
+    t.text     "instructions"
     t.string   "entered_by"
+    t.datetime "created_at"
+  end
+
+  create_table "phone_numbers", force: true do |t|
+    t.integer  "user_id"
+    t.string   "display"
+    t.string   "condensed"
+    t.datetime "created_at"
   end
 
   create_table "responses", force: true do |t|
@@ -41,14 +49,11 @@ ActiveRecord::Schema.define(version: 20140209222506) do
     t.string   "delivery_method"
     t.string   "instructions"
     t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "supplies", force: true do |t|
-    t.string   "shortcode"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "shortcode"
+    t.string "name"
   end
 
   add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode"
@@ -66,7 +71,6 @@ ActiveRecord::Schema.define(version: 20140209222506) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "phone"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "pcv_id"

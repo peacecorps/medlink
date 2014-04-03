@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   belongs_to :country
   has_many :orders, dependent: :destroy
+  has_many :phone_numbers, dependent: :destroy
 
   Roles = {
     pcv:   'Peace Corps Volunteer',
@@ -14,8 +15,7 @@ class User < ActiveRecord::Base
     admin: 'Admin'
   }
 
-  validates_presence_of :country, :location, :phone, :first_name,
-    :last_name, :role
+  validates_presence_of :country, :location, :first_name, :last_name, :role
   validates_presence_of :pcv_id, :if => :pcv?
   validates :role, inclusion: {in: Roles.keys.map(&:to_s)}
   validates :pcv_id, uniqueness: true, :if => :pcv?
@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
 
     # define pcvs, pcmos, admins scopes
     scope type.to_s.pluralize, -> { where(role: type) }
+  end
+
+  def self.find_by_phone_number number
+    PhoneNumber.lookup(number).user
   end
 
   def self.pcmos_by_country

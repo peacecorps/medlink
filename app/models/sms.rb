@@ -1,56 +1,46 @@
-class SMS
+class SMS < ActiveRecord::Base
+  self.table_name = "messages"
 
-  class ParseError < StandardError ; ; end
+  enum direction: [ :incoming, :outgoing ]
 
-  attr_accessor :phone, :message
-
-  def initialize phone, message
-    @phone   = phone
-    @message = message
-  end
-
-  def self.configured?
-    %w{ ACCOUNT_SID AUTH PHONE_NUMBER }.all? do |key|
-      ENV["TWILIO_#{key}"].present?
+  def user
+    @_user ||= if parsed.pcv_id
+      User.find_by_pcv_id parsed.pcv_id
+    else
+      User.find_by_phone_number number
     end
   end
 
-  def self.parse params
-    body = params[:Body]
-    data = { phone: params[:From] }
-
-    if body
-      parse_list = params[:Body].split(/,\s*/)
-      data[:pcvid], data[:shortcode], data[:loc] = *parse_list
+  def supplies
+    @_supplies ||= begin
+      found  = Supply.where shortcode: parsed.shortcodes
+      missed = found.map(&:shortcode) - parsed.shortcodes
+      raise "Could not find Supplies: #{missed}" if missed.any?
+      found
     end
-
-    raise ParseError.new unless data[:pcvid] && data[:shortcode]
-    data
   end
 
-  def deliver
-    return unless SMS.configured? || defined?(SmsSpec)
-    # In the test env, this client should be monkey-patched by sms-spec
-    client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'],
-                                      ENV['TWILIO_AUTH'])
-    client.account.sms.messages.create(
-      from: ENV['TWILIO_PHONE_NUMBER'],
-      to:   phone,
-      body: message
-    )
-  end
-
-  def self.friendly message
-    translation = case message
-    when /unrecognized pcvid/i
-      "order.unrecognized_pcvid"
-    when /unrecognized shortcode/i
-      "order.unrecognized_shortcode"
-    when /supply has already been taken/i
-      "order.duplicate_order"
+  def create_orders
+    supplies.each do |supply|
+      Order.create!(
+        user_id:      user.id,
+        supply_id:    supply.id,
+        message_id:   id,
+        phone:        number,
+        instructions: parsed.instructions,
+        entered_by:   user.id
+      )
     end
-
-    I18n.t!(translation).squish
   end
 
+  def send_confirmation orders
+    body = raise "NotImplemented: define confirmation message"
+    Response.new(number, body).send!
+  end
+
+  private
+
+  def parsed
+    @_parsed ||= Parser.new(text).tap &:run!
+  end
 end

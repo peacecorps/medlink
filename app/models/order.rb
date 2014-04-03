@@ -66,19 +66,6 @@ class Order < ActiveRecord::Base
     }[attr] || super
   end
 
-  def self.create_from_text data
-    user   = User.lookup   data[:pcvid]
-    supply = Supply.lookup data[:shortcode]
-
-    create!({
-      user_id:   user.try(:id),
-      phone:     data[:phone],
-      email:     user.try(:email),
-      supply_id: supply.try(:id),
-      location:  data[:loc] || user.try(:location)
-    })
-  end
-
   def confirmation_message
     if self.valid?
       I18n.t "order.confirmation"

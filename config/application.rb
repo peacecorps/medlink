@@ -58,5 +58,7 @@ module Medlink
     config.allowed_ips = ['127.0.0.1']
 
     I18n.config.enforce_available_locales = false
+
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

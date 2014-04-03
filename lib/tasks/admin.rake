@@ -25,9 +25,10 @@ namespace :admin do
     user.country = Country.first || raise("Please generate a country to admin")
     user.role = 'admin'
     user.location = 'Buckhead'
-    user.phone = '404-555-1212'
     user.time_zone = "Alaska"
     user.save!
+
+    user.phone_numbers.create! display: '404-555-1212'
   end
 
 end
