@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
   validates :pcv_id, uniqueness: true, :if => :pcv?
   validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map {|t| t.name}}
 
+  def self.find_by_pcv_id str
+    where(['lower(pcv_id) = ?', str.downcase]).first!
+  end
+
   def self.find_by_phone_number number
     PhoneNumber.lookup(number).user
   end
@@ -60,11 +64,6 @@ class User < ActiveRecord::Base
     else
       responses
     end
-  end
-
-  def self.lookup str
-    where(['lower(pcv_id) = ?', str.downcase]).first ||
-    raise("Unrecognized PCVID")
   end
 
   def send_reset_password_instructions opts={}

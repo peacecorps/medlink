@@ -1,6 +1,5 @@
 class Admin::UsersController < AdminController
   before_action :set_user, except: [:new, :create, :uploadCSV]
-  around_filter :catch_no_record
 
   def new
     @users = users_by_country
@@ -21,9 +20,8 @@ class Admin::UsersController < AdminController
     @user = User.new user_params.merge(password: password)
 
     if @user.save
-      # Tag P7 below
       redirect_to new_admin_user_path,
-        notice: 'Success! You have added a new user to PC Medlink'
+        notice: Medlink.translate("flash.user_added")
       # FIXME: email password to the user
     else
       render :new
@@ -53,11 +51,10 @@ class Admin::UsersController < AdminController
 
     if @user.update_attributes user_params
       _flash = if field_chgs.any?
-        # P8
         change_desc = field_chgs.map { |k,v| "#{k}=[#{v}]" }.join "; "
-        { success: "Success! You have made the following changes to this user account: #{change_desc}" }
+        { success: Medlink.translate("flash.changes", chages: change_desc) }
       else
-        { notice: "No changes made" }
+        { notice: Medlink.translate("flash.no_changes") }
       end
       redirect_to new_admin_user_path, _flash
     else
@@ -71,11 +68,10 @@ class Admin::UsersController < AdminController
 
     if upload.errors.present?
       send_data upload.errors, type: 'text/csv', filename: 'invalid_users.csv'
-      flash[:error] = "CSV has invalid entries!"
+      flash[:error] = Medlink.translate "flash.invalid_csv"
     else
       n = upload.added.count
-      flash[:success] = "Successully uploaded information for
-        #{ActionController::Base.helpers.pluralize n, 'user'}!".squish
+      flash[:success] = Medlink.translate "flash.valid_csv", users: upload.added.count
       redirect_to new_admin_user_path
     end
 
@@ -100,12 +96,4 @@ class Admin::UsersController < AdminController
       [c, us.map { |u| [u, u.id] }]
     end
   end
-
-  def catch_no_record
-    yield
-  rescue ActiveRecord::RecordNotFound
-    redirect_to new_admin_user_path,
-      :flash => { :error => "Please select a volunteer to edit." }
-  end
 end
-

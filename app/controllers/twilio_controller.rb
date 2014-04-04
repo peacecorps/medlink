@@ -5,8 +5,8 @@ class TwilioController < ApplicationController
     sms = SMS.create number: params[:From], text: params[:Body], direction: :incoming
     orders = sms.create_orders
     sms.send_confirmation orders
-  rescue => e
-    SMS.deliver params[:From], SMS.friendly(e.message)
+  rescue SMS::FriendlyError => e
+    SMS.deliver params[:From], e.message
   ensure
     head :no_content
   end

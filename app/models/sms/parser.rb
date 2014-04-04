@@ -1,7 +1,5 @@
 class SMS
   class Parser
-    class Error < StandardError ;; end
-
     attr_reader :pcv_id, :shortcodes, :instructions
 
     def initialize text
@@ -18,7 +16,7 @@ class SMS
 
       @shortcodes = toks
     rescue => e
-      raise Error, "Failed to parse '#{@text}' - #{e}"
+      raise FriendlyError, "sms.unparseable"
     end
   end
 end

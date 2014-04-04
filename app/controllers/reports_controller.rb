@@ -21,7 +21,7 @@ class ReportsController < ApplicationController
 
   def verify_access
     unless current_user.admin? || current_user.pcmo?
-      redirect_to root_url, :flash => { :error => 'You must be an admin or pcmo to view that page' }
+      redirect_to root_url, flash: { error: Medlink.translate("flash.auth.pcmo") }
     end
   end
 

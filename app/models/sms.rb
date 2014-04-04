@@ -1,6 +1,16 @@
 class SMS < ActiveRecord::Base
   MAX_LENGTH = 160
 
+  # Errors raised in the sms logic may need to be displayed to the
+  #   user via text. Messages wrapped in this class are assumed to
+  #   be presentable.
+  class FriendlyError
+    def initialize key, subs={}
+      msg = Medlink.translate key, subs
+      super msg
+    end
+  end
+
   self.table_name = "messages"
 
   enum direction: [ :incoming, :outgoing ]
@@ -28,7 +38,7 @@ class SMS < ActiveRecord::Base
       User.find_by_phone_number number
     end
   rescue ActiveRecord::RecordNotFound => e
-    raise "Could not find user"
+    raise FriendlyError.new "sms.unrecognized_user"
   end
 
   def supplies
@@ -36,8 +46,9 @@ class SMS < ActiveRecord::Base
       codes  = parsed.shortcodes.map &:upcase
       found  = Supply.where shortcode: codes
       missed = codes - found.map(&:shortcode)
-      raise "Unrecognized shortcodes: #{missed.join ', '}" if missed.any?
-      found
+      if missed.any?
+        raise FriendlyError.new "sms.unrecognized_shortcodes", codes: missed.join(', ')
+      end
     end
   end
 
@@ -49,7 +60,7 @@ class SMS < ActiveRecord::Base
         request_text: parsed.instructions,
         entered_by:   user.id
       )
-   end
+    end
   end
 
   def send_confirmation orders
@@ -59,25 +70,6 @@ class SMS < ActiveRecord::Base
       body = "Request received: #{names.first} & #{names.length - 1} other items"
     end
     SMS.deliver number, body
-  end
-
-  def self.friendly message
-    translation = case message
-    when /could not find user/i
-      "order.unrecognized_user"
-    when /unrecognized pcvid/i
-      "order.unrecognized_pcvid"
-    when /unrecognized shortcode/i
-      "order.unrecognized_shortcode"
-    when /supply has already been taken/i
-      "order.duplicate_order"
-    when /failed to parse/i
-      "order.parse_error"
-    else
-      raise NotImplementedError, "Can't translate '#{message}'"
-    end
-
-    I18n.t!(translation).squish
   end
 
   private

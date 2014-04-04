@@ -15,8 +15,6 @@ Medlink::Application.routes.draw do
     get :manage, on: :collection
   end
 
-  resources :supplies, only: [:index]
-
   resources :users, only: [] do
     resources :responses, only: [:new, :create, :show] do
       post :archive

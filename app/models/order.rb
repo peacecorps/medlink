@@ -3,8 +3,8 @@ class Order < ActiveRecord::Base
   belongs_to :supply
   belongs_to :response
 
-  validates_presence_of :user,   message: "unrecognized"
-  validates_presence_of :supply, message: "is missing"
+  validates_presence_of :user
+  validates_presence_of :supply
 
   scope :with_responses, -> { includes(:response).where("response_id IS NOT NULL") }
   scope :without_responses, -> { where("response_id IS NULL") }
