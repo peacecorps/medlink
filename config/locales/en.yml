@@ -5,6 +5,7 @@ en:
   order:
     confirmation: "Your request has been received. Fulfillment details will follow within 24 hrs via email and text message."
     unparseable: "Your request was not submitted. Please resubmit your request in this Format: PCVID, Supply short name, location."
+    unrecognized_user: "Could not find user account. Please start your message with '@your-pcv-id' or text from a recognized phone."
     unrecognized_pcvid: "PCVID Invalid: Your request was not submitted because the PCVID was incorrect. Please resubmit your request in this format: PCVID, Supply short name, location."
     unrecognized_shortcode: "Supply short name invalid: Your request was not submitted because supply name was incorrect. Please resubmit the request in this format: PCVID, Supply short name, location."
     invalid_location: "Location invalid: Your request was not submitted because location was incorrect. Please resubmit the request in this format: PCVID, Supply short name, location."

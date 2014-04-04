@@ -23,6 +23,8 @@ class SMS < ActiveRecord::Base
     else
       User.find_by_phone_number number
     end
+  rescue ActiveRecord::RecordNotFound => e
+    raise "Could not find user"
   end
 
   def supplies
@@ -57,6 +59,8 @@ class SMS < ActiveRecord::Base
 
   def self.friendly message
     translation = case message
+    when /could not find user/i
+      "order.unrecognized_user"
     when /unrecognized pcvid/i
       "order.unrecognized_pcvid"
     when /unrecognized shortcode/i
