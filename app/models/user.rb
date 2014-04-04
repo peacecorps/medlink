@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   validates_presence_of :country, :location, :first_name, :last_name, :role
   validates_presence_of :pcv_id, :if => :pcv?
   validates :pcv_id, uniqueness: true, :if => :pcv?
-  validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map {|t| t.name}}
+  validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map(&:name) }
 
   def self.find_by_pcv_id str
     where(['lower(pcv_id) = ?', str.downcase]).first!

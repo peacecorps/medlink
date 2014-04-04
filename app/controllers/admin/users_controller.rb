@@ -52,7 +52,7 @@ class Admin::UsersController < AdminController
     if @user.update_attributes user_params
       _flash = if field_chgs.any?
         change_desc = field_chgs.map { |k,v| "#{k}=[#{v}]" }.join "; "
-        { success: Medlink.translate("flash.changes", chages: change_desc) }
+        { success: Medlink.translate("flash.changes", changes: change_desc) }
       else
         { notice: Medlink.translate("flash.no_changes") }
       end
