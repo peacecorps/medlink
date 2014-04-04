@@ -28,6 +28,9 @@ class ResponsesController < ApplicationController
   end
 
   def show
+    @response = Response.find params[:id]
+    @user     = @response.user
+    authorize! :response, @user
   end
 
   private # -----

@@ -1,0 +1,38 @@
+.order-back
+  = link_to manage_orders_path do
+    = icon "chevron-left"
+    %span Back to Response Tracker
+
+.order
+  %h1= @user.name
+  %p
+    = icon "globe"
+    = "#{@user.location}, #{@user.country}"
+    &nbsp;
+    = icon "phone-alt"
+    = @user.primary_phone ? @user.primary_phone.display : '-'
+
+  %table.table.table-hover
+    %thead
+      %tr
+        %th
+        %th
+        - DeliveryMethod.each do |method|
+          %th= method.title
+        %th Comments
+    %tbody
+      - @response.orders.group_by { |o| o.created_at.strftime '%-m/%-d/%y' }.each do |ts, os|
+        - os.each_with_index do |order,i|
+          %tr
+            - if i.zero?
+              %td.ts{rowspan: os.length}= ts
+            %td= order.supply
+            - DeliveryMethod.each do |method|
+              %td
+                - if order.delivery_method == method.to_s
+                  = icon :ok
+            %td= order.response_text
+
+  - if @response.extra_text
+    .well
+      = @response.extra_text
