@@ -52,6 +52,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def visible_responses
+    if admin?
+      Response.all
+    elsif pcmo?
+      Response.includes(:user).where users: {country_id: country_id}
+    else
+      responses
+    end
+  end
+
   def self.lookup str
     where(['lower(pcv_id) = ?', str.downcase]).first ||
     raise("Unrecognized PCVID")

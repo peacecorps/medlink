@@ -15,7 +15,7 @@
     = icon "phone-alt"
     = @user.primary_phone ? @user.primary_phone.display : '-'
 
-  = form_for @response, url: user_response_path(@user, @response), html: {class: 'order__section'} do |f|
+  = form_for @response, url: user_responses_path(@user, @response), html: {class: 'order__section'} do |f|
     %table.table.table-hover
       %thead
         %tr

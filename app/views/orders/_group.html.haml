@@ -1,0 +1,6 @@
+- orders.group_by { |o| o.created_at.to_i }.each do |_, os|
+  %dl
+    %dt
+      %span= os.first.created_at.in_time_zone(user.time_zone).strftime '%-m/%-d/%y'
+      %small.cell--secondary= os.first.created_at.in_time_zone(user.time_zone).strftime '%H:%M'
+    %dd= os.map { |o| o.supply.name }.join ', '

@@ -1,5 +1,5 @@
 class ResponsesController < ApplicationController
-  before_filter :initialize_response
+  before_filter :initialize_response, except: [:show]
 
   def new
     @orders = @user.orders.without_responses.
@@ -25,6 +25,9 @@ class ResponsesController < ApplicationController
     else
       render :new
     end
+  end
+
+  def show
   end
 
   private # -----

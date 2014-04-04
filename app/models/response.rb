@@ -2,6 +2,7 @@ class Response < ActiveRecord::Base
   belongs_to :user
   belongs_to :message
 
+  # TODO: validate that user & all orders are from the same country?
   has_many :orders
 
   def sms_instructions
