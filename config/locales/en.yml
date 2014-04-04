@@ -1,6 +1,7 @@
 en:
   flash:
     response_sent: "Success! Your response has been sent to {user}. This request will now appear in the response tracker awaiting fulfillment."
+    order_placed_for: "Success! The order you placed on behalf of {username} has been sent."
 
   order:
     confirmation: "Your request has been received. Fulfillment details will follow within 24 hrs via email and text message."

@@ -33,4 +33,3 @@ class DeliveryMethod
     end
   end
 end
-

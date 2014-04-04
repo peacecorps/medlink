@@ -8,11 +8,6 @@ class OrdersController < ApplicationController
     @orders = accessible_orders
   end
 
-  def since
-    authorize! :respond, User
-    render json: accessible_orders.where("orders.id > ?", params[:last]).count
-  end
-
   def new
     @order = current_user.orders.new({
       location: (current_user.pcv? ? current_user.location : nil)
@@ -31,19 +26,17 @@ class OrdersController < ApplicationController
     end
 
     if @order.save
-      next_page = case current_user.role.to_sym
-      when :admin
+      next_page = if current_user.admin?
         new_admin_user_path
-      when :pcmo
+      elsif current_user.pcmo?
         manage_orders_path
       else
         orders_path
       end
 
-      # Tag P9
-      redirect_to next_page,
-        :flash => { :success => "Success! The Order you placed on behalf of " +
-          "#{@order.user.name} has been sent." }
+      redirect_to next_page, flash: {
+        success: Medlink.translate(
+          "flash.order_placed_for", username: @order.user.name) }
     else
       render :new
     end

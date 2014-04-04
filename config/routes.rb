@@ -12,9 +12,7 @@ Medlink::Application.routes.draw do
   end
 
   resources :orders, only: [:index, :new, :create] do
-    [:manage, :since].each do |r|
-      get r, on: :collection
-    end
+    get :manage, on: :collection
   end
 
   resources :supplies, only: [:index]
