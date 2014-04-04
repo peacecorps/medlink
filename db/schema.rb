@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20140403154914) do
     t.string   "last_name"
     t.string   "pcv_id"
     t.integer  "country_id"
-    t.string   "role",                   default: "user"
+    t.integer  "role"
     t.string   "location"
     t.integer  "pcmo_id"
     t.string   "time_zone"

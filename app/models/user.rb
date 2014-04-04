@@ -1,9 +1,8 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  enum role: [ :pcv, :pcmo, :admin ]
 
   belongs_to :country
   has_many :orders, dependent: :destroy
@@ -11,44 +10,26 @@ class User < ActiveRecord::Base
   has_many :phone_numbers, dependent: :destroy
   accepts_nested_attributes_for :phone_numbers, allow_destroy: true
 
-  Roles = {
-    pcv:   'Peace Corps Volunteer',
-    pcmo:  'Peace Corps Medical Officer',
-    admin: 'Admin'
-  }
-
   validates_presence_of :country, :location, :first_name, :last_name, :role
   validates_presence_of :pcv_id, :if => :pcv?
-  validates :role, inclusion: {in: Roles.keys.map(&:to_s)}
   validates :pcv_id, uniqueness: true, :if => :pcv?
   validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map {|t| t.name}}
-
-  Roles.each do |type, _|
-    # define pcv?, pcmo?, admin? methods
-    define_method :"#{type}?" do
-      role && role.to_sym == type
-    end
-
-    # define pcvs, pcmos, admins scopes
-    scope type.to_s.pluralize, -> { where(role: type) }
-  end
 
   def self.find_by_phone_number number
     PhoneNumber.lookup(number).user
   end
 
   def self.pcmos_by_country
-    pcmos.includes(:country).group_by &:country
+    pcmo.includes(:country).group_by &:country
   end
 
   def pcvs
-    case role.to_sym
-    when :admin
+    if admin?
       # FIXME: this clearly includes non-pcv users
       # Should the implementation or name change?
       User.all
-    when :pcmo
-      pcvs_shared = country.users.pcvs
+    elsif pcmo?
+      pcvs_shared = country.users.pcv
       # TODO: resolve this name similarly
       pcvs_shared << self
     else
@@ -58,10 +39,9 @@ class User < ActiveRecord::Base
 
   # FIXME: denormalize on country
   def accessible_orders
-    case role.to_sym
-    when :admin
+    if admin?
       Order.all
-    when :pcmo
+    elsif pcmo?
       Order.includes(:user).where users: {country_id: country_id}
     else
       orders
@@ -94,4 +74,3 @@ class User < ActiveRecord::Base
   end
 
 end
-

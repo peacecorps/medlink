@@ -19,7 +19,7 @@
     .col-md-4.col-md-offset-1
       / FIXME? Password? -- Need more words.
       = f.text_field :pcv_id, placeholder: 'PCV ID', class: 'form-control input-sm'
-      = f.select :role, User::Roles.invert , {include_blank: 'Assign Role'}, class: 'form-control input-sm'
+      = f.select :role, User.roles , {include_blank: 'Assign Role'}, class: 'form-control input-sm'
       = f.select :pcmo_id, User.pcmos_by_country, {include_blank: 'PCMO'}, class: 'form-control input-sm'
       .form-actions
         .btn-group
