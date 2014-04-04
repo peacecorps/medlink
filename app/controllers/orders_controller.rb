@@ -10,9 +10,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = current_user.orders.new({
-      location: (current_user.pcv? ? current_user.location : nil)
-    })
+    @order = current_user.orders.new
   end
 
   def create

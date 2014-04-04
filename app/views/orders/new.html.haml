@@ -20,9 +20,7 @@
           = f.select(:supply_id, [['Select Supply', '']] + Supply.choices, {}, class: 'form-control input-sm')
           %i.icon-caret-down.select__arrow
 
-        = f.text_field :location, placeholder: 'Location', class: 'form-control input-sm'
-
-        = f.text_area :extra, placeholder: 'Special instructions area', rows: 3, class: 'form-control input-sm'
+        = f.text_area :request_text, placeholder: 'Special instructions area', rows: 3, class: 'form-control input-sm'
 
         .form-actions
           .btn-group
