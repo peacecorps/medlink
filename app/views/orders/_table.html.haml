@@ -3,39 +3,25 @@
     %th PCVID
     %th First Name
     %th Last Name
-    %th Supply
-    %th Location
-    %th Request
+    %th Requests
     - if responded
       %th Response
       %th Delivery Method
       %th Response Instructions
 %tbody
-  - orders.sort_by(&:user_id).each do |order|
-    - attrs = { "class" => "order c#{order.country_id}" }
+  - orders.group_by(&:user).each do |user, os|
+    - attrs = { "class" => "order c#{user.country_id}" }
     - unless responded
       - attrs["class"] += " link"
-      - attrs["data-link"] = new_order_response_path(order)
+      /- attrs["data-link"] = new_order_response_path(order)
     %tr{ attrs }
-      %td= order.user.pcv_id
-      %td= order.user.first_name
-      %td= order.user.last_name
-      %td= order.supply
+      %td= user.pcv_id
+      %td= user.first_name
+      %td= user.last_name
       %td
-        %span.cell--primary= order.location
-      %td
-        %span= order.created_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
-        %small.cell--secondary= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
-      - if responded
-        %td= order.responded_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
-        %td= order.response.delivery_method.humanize
-        %td= order.response.instructions
-        /
-          - if order.fulfilled?
-            %td= order.fulfilled_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
-          - else
-            %td
-              %input.datepicker.input-small
-          %td
-            %input.datepicker.input-small
-
+        - os.group_by { |o| o.created_at.to_i }.each do |_, _os|
+          %dl
+            %dt
+              %span= _os.first.created_at.in_time_zone(user.time_zone).strftime '%-m/%-d/%y'
+              %small.cell--secondary= _os.first.created_at.in_time_zone(user.time_zone).strftime '%H:%M'
+            %dd= _os.map { |o| o.supply.name }.join ', '

@@ -14,12 +14,12 @@
 .section
   %br
   %h3 Past Due Requests
-  %table#past-due-orders.table.table-bordered.js-striped-red.table-hover
+  %table#past-due-orders.table.table-bordered.js-striped.table-hover
     = render partial: 'table', locals: { orders: @orders.past_due, responded: false }
 .section
   %br
   %h3 Pending Requests
-  %table#pending-orders.table.table-bordered.js-striped-yellow.table-hover
+  %table#pending-orders.table.table-bordered.js-striped.table-hover
     = render partial: 'table', locals: { orders: @orders.pending, responded: false }
 .section
   %br
