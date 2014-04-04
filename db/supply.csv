@@ -1,35 +1,34 @@
-"Acetaminophen","ACETA"
-"Adhesive tape","ADHTP"
-"Antacid tablets","ANTTB"
-"Anti-diarrheal pills","ADIAP"
-"Bandage scissors","BANSC"
-"Bandages","BANDG"
-"Benadryl","BENYL"
-"Birth control","BIRCT"
-"Bismuth Tablets","BISTB"
-"Butterfly closures","BUTCL"
-"Caladryl cream","CALCR"
-"Calcium","CALUM"
-"Condoms","CNDMS"
-"Dental floss","DNTFL"
-"Elastic bandage","ELSBN"
-"Exam gloves","EXMGL"
-"Eye drops","EYEDP"
-"Gauze","GAUZE"
-"Hipacleanse","HIPCL"
-"Hydrocortisone cream","HYDCR"
-"Ibuprofen","IBPRF"
-"Insect repellant","INSRP"
-"Iodine water purification tablets","IWPTB"
-"Lip balm","LIPBM"
-"Nasal decongestant","NASDC"
-"Oral Rehydration Salts","ORHDS"
-"Pre-natal vitamins","PRNVT"
-"Rapid malaria kit","RPMLK"
-"Sunscreen","SUNSC"
-"Tampons","TAMPN"
-"Thermometer","THERM"
-"Throat lozenges","THRLZ"
-"Triple Antibiotic Ointment","TPABO"
-"Tweezers","TWEZR"
-"Water filter candle","WTFLC"
+Ace Bandage,ABAND
+Acetaminophen,ACETA
+Adhesive Tape,ADHTP
+Antacid Tabs,ANTTB
+Antibiotic (Oral),ANTIB
+Antibiotic Ointment,ANBON
+Antidiarrhea Med (Loperamid),ADIAP
+Antifungal Skin Cream,ANFSK
+Band-Aids,BNDAD
+Bismuth Subsalicylate,BISUB
+Calamine Lotion,CALML
+Coartem,COART
+Condoms,CNDMS
+Cough Drops,CHDRP
+Decongestant tablets,DECON
+Dental Floss,DTLFL
+Diphenhydramine,DPHDM
+Eye Drops,EDROP
+Gauze Pad (Large),GAUZL
+Gauze Pad (Small),GAUZS
+Hibiclens,HBCLN
+Hydrocortisone Cream,HYDCR
+Hydrogen Peroxide,HYDPR
+Ibuprofen,IBPRF
+Insect Repellant (Liquid),INSRL
+Insect Repellant (Stick),INSRS
+Lip Balm,LIPBM
+Malaria Rapid Diagnostic Test,RPMLK
+Mif Kit,MIFKT
+Multivitamins,MLVTM
+Oral Rehydration Salts,ORHDS
+Sore Throat Lozenges,SRTLZ
+Sunscreen,SUNSC
+Thermometer,THERM
