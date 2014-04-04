@@ -19,6 +19,10 @@ class User < ActiveRecord::Base
     PhoneNumber.lookup(number).user
   end
 
+  def primary_phone
+    @_primary_phone ||= phone_numbers.first
+  end
+
   def self.pcmos_by_country
     pcmo.includes(:country).group_by &:country
   end

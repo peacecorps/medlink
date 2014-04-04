@@ -15,11 +15,13 @@ Medlink::Application.routes.draw do
     [:manage, :since].each do |r|
       get r, on: :collection
     end
-
-    resource :response, only: [:new, :create]
   end
 
   resources :supplies, only: [:index]
+
+  resources :users, only: [] do
+    resource :response, only: [:new, :create]
+  end
 
   namespace :admin do
     resources :users, only: [:new, :create, :edit, :update]

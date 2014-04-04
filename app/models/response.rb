@@ -1,20 +1,21 @@
 class Response < ActiveRecord::Base
-  belongs_to :order
+  belongs_to :user
+  belongs_to :message
 
-  validates_presence_of :delivery_method, message: "is missing"
-  validates :instructions, format: { :with => /\A[^\[\]]*\z/,
-    :message => "- Please replace the [placeholders] with values." },
-    length: { maximum: 160 }
-#/\A[a-zA-Z0-9\.\/ ]*\z/,
+  has_many :orders
 
-  def denied?
-    delivery_method == DeliveryMethod::Denial.to_s
+  def sms_instructions
+    base = Medlink.translate "base_sms_response"
+    long = "#{base} #{extra_text}"
+    if long.length > SMS::MAX_LENGTH
+      "#{base} #{Medlink.translate 'sms_see_email'}"
+    else
+      long
+    end
   end
 
   def send!
-    to = order.phone || order.user.phone
-    SMSJob.enqueue(to, instructions) if to
+    ResponseSMSJob.enqueue id
     MailerJob.enqueue :fulfillment, id
   end
 end
-

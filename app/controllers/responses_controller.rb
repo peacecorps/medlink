@@ -2,7 +2,10 @@ class ResponsesController < ApplicationController
   before_filter :initialize_response
 
   def new
-    @history = @order.user.orders.responded.
+    @orders = @user.orders.without_responses.
+      order("orders.created_at DESC").
+      includes(:supply)
+    @history = @user.orders.with_responses.
       order("orders.created_at DESC").
       includes(:supply).
       page(params[:page]).
@@ -10,14 +13,15 @@ class ResponsesController < ApplicationController
   end
 
   def create
-    @response.update_attributes response_params
-    if @response.save
+    if @response.update_attributes response_params
+      orders = params[:orders].select { |_,data| data.include? "delivery_method" }
+      Order.find(orders.keys).each do |o|
+        data = orders[o.id.to_s].merge response_id: @response.id
+        o.update_attributes data.permit :delivery_method, :response_text, :response_id
+      end
       @response.send!
-      # Tag P6
-      redirect_to manage_orders_path, :flash => { :success => "Success! Your response " +
-        "has been sent to #{@order.user.name} #{@order.user.pcv_id}. " +
-        "This request will now appear in the response tracker awaiting " +
-        "fullment." }
+      redirect_to manage_orders_path, flash:
+        { success: Medlink.translate("flash.response_sent", user: @user.to_s) }
     else
       render :new
     end
@@ -26,13 +30,12 @@ class ResponsesController < ApplicationController
   private # -----
 
   def initialize_response
-    @order = current_user.accessible_orders.find params[:order_id]
-    authorize! :manage, @order
-    @response = Response.new order: @order
+    @user = User.find params[:user_id]
+    authorize! :respond, @user
+    @response = Response.new user: @user
   end
 
   def response_params
-    params.require(:response).permit [:delivery_method, :instructions]
+    params.require(:response).permit :extra_text
   end
 end
-

@@ -22,7 +22,6 @@ class DeliveryMethod
   Purchase = new :purchase,
     'We do not have the requested item in stock. Please purchase elsewhere and allow us to
      reimburse you.'.squish, 'Purchase & Reimburse'
-  Special = new :special, '[enter special instructions] ', 'Special Instructions'
   Denial  = new :denial,
     'We are sorry but we are unable to fulfill your request: [enter reason] '
 
@@ -30,8 +29,7 @@ class DeliveryMethod
     include Enumerable
 
     def each
-      # R3, R1, R2, R4, R5, resp.
-      [Delivery, Pickup, Purchase, Special, Denial].each { |m| yield m }
+      [Delivery, Pickup, Purchase, Denial].each { |m| yield m }
     end
   end
 end

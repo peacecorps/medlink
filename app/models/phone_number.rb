@@ -12,4 +12,8 @@ class PhoneNumber < ActiveRecord::Base
   def self.lookup number
     where(condensed: condense(number)).first!
   end
+
+  def display
+    self[:display] # Some sort of unfortunate name collision necessitates this
+  end
 end

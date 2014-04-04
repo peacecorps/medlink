@@ -1,42 +1,45 @@
 .order-back
   = link_to manage_orders_path do
-    %i.icon-caret-left
+    = icon "chevron-left"
     %span Back to all Orders
 
   %p
   = render partial: 'partials/errors', locals: {object: @response}
 
 .order
-  .order__section
-    %hgroup
-      %div
-        %em= "#{@order.location}, #{@order.user.country.name}"
-    %table.table
-      %tbody
-        %tr
-          %td= @order.user.first_name
-          %td= @order.user.last_name
-          %td= @order.user.pcv_id
-          %td= @order.supply
-          %td= @order.user.location
-          %td= @order.user.country
-          %td= @order.created_at.strftime '%-m/%-d/%y'
-    .order__extra= @order.extra
+  %h1= @user.name
+  %p
+    = icon "globe"
+    = "#{@user.location}, #{@user.country}"
+    &nbsp;
+    = icon "phone-alt"
+    = @user.primary_phone ? @user.primary_phone.display : '-'
 
-  = form_for @response, url: order_response_path(@order, @response), html: {class: 'order__section'} do |f|
-    %h4.order__method Fulfillment Method
-    .row
-      .col-md-4
-        .order__message
+  = form_for @response, url: user_response_path(@user, @response), html: {class: 'order__section'} do |f|
+    %table.table.table-hover
+      %thead
+        %tr
+          %th
+          %th
           - DeliveryMethod.each do |method|
-            %label.radio
-              = f.radio_button :delivery_method, method.name, data: {message: method.text}
-              = method.title
-      .col-md-8
-        Edit Default SMS --
-        %span.order__characters "160 characters remaining"
-        .order__instructions
-          = f.text_area :instructions, size: "40x4", maxlength: 160, class: 'input-xlarge'
+            %th= method.title
+          %th Comments
+      %tbody
+        - @orders.group_by { |o| o.created_at.strftime '%-m/%-d/%y' }.each do |ts, os|
+          - os.each_with_index do |order,i|
+            %tr
+              - if i.zero?
+                %td.ts{rowspan: os.length}= ts
+              %td= order.supply
+              - DeliveryMethod.each do |method|
+                %td
+                  = radio_button_tag "orders[#{order.id}][delivery_method]", method.name
+              %td= text_field_tag "orders[#{order.id}][response_text]"
+
+    %span.order__characters "160 characters remaining"
+    .order__instructions
+      = f.text_area :extra_text, size: "40x4", maxlength: 160, class: 'input-xlarge', placeholder: "Extra information (e.g. delivery date, pickup instructions)"
+
     .form-actions
       .btn-group
         %button.btn.btn-primary(type="submit") Send Response
@@ -47,7 +50,7 @@
   Past Orders
   %small
     for
-    = @order.user.first_name
+    = @user.first_name
 = render partial: "partials/pager", locals: { anchor: "order-history", pager: @history }
 
 %table.table.table-striped.table-hover

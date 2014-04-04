@@ -1,20 +1,17 @@
 class Order < ActiveRecord::Base
   belongs_to :user
   belongs_to :supply
-
-  has_one :response
+  belongs_to :response
 
   validates_presence_of :user,   message: "unrecognized"
   validates_presence_of :supply, message: "is missing"
 
-  scope :responded,   -> { includes(:response).references(:response
-    ).where("responses.id IS NOT NULL") }
-  scope :unresponded, -> { includes(:response).references(:response
-    ).where("responses.id IS NULL")     }
+  scope :with_responses, -> { includes(:response).where("response_id IS NOT NULL") }
+  scope :without_responses, -> { where("response_id IS NULL") }
 
-  scope :past_due, -> { unresponded.where(["orders.created_at < ?",
+  scope :past_due, -> { without_responses.where(["orders.created_at < ?",
     3.business_days.ago]) }
-  scope :pending,  -> { unresponded.where(["orders.created_at >= ?",
+  scope :pending,  -> { without_responses.where(["orders.created_at >= ?",
     3.business_days.ago]) }
 
   def response_time
@@ -53,9 +50,6 @@ class Order < ActiveRecord::Base
   def fulfilled?
     fulfilled_at.present?
   end
-
-  validates_uniqueness_of :supply_id, scope: :user_id,
-    conditions: -> { unresponded }
 
   def self.human_attribute_name(attr, options={})
     {

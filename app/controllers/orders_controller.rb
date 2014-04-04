@@ -4,12 +4,12 @@ class OrdersController < ApplicationController
   end
 
   def manage
-    authorize! :manage, Order
+    authorize! :respond, User
     @orders = accessible_orders
   end
 
   def since
-    authorize! :manage, Order
+    authorize! :respond, User
     render json: accessible_orders.where("orders.id > ?", params[:last]).count
   end
 

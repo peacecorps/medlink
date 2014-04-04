@@ -1,4 +1,6 @@
 class SMS < ActiveRecord::Base
+  MAX_LENGTH = 160
+
   self.table_name = "messages"
 
   enum direction: [ :incoming, :outgoing ]
@@ -6,7 +8,7 @@ class SMS < ActiveRecord::Base
   has_many :orders, foreign_key: :message_id
 
   def self.deliver number, text
-    SMS.create number: number, text: text, direction: :outgoing
+    sms = SMS.create number: number, text: text, direction: :outgoing
 
     sid, auth = %w(ACCOUNT_SID AUTH).map { |k| ENV.fetch "TWILIO_#{k}" }
     client = Twilio::REST::Client.new sid, auth
@@ -15,6 +17,8 @@ class SMS < ActiveRecord::Base
       to:   number,
       body: text
     )
+
+    sms
   end
 
   def user
@@ -42,7 +46,7 @@ class SMS < ActiveRecord::Base
       orders.create!(
         user_id:      user.id,
         supply_id:    supply.id,
-        instructions: parsed.instructions,
+        request_text: parsed.instructions,
         entered_by:   user.id
       )
    end
@@ -51,7 +55,7 @@ class SMS < ActiveRecord::Base
   def send_confirmation orders
     names = supplies.map { |s| "#{s.name} (#{s.shortcode})" }
     body = "Request received: #{names.join ', '}"
-    if body.length > 160
+    if body.length > MAX_LENGTH
       body = "Request received: #{names.first} & #{names.length - 1} other items"
     end
     SMS.deliver number, body

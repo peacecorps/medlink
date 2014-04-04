@@ -31,8 +31,11 @@ ActiveRecord::Schema.define(version: 20140403154914) do
     t.integer  "user_id"
     t.integer  "supply_id"
     t.integer  "message_id"
-    t.text     "instructions"
+    t.text     "request_text"
     t.string   "entered_by"
+    t.integer  "response_id"
+    t.string   "delivery_method"
+    t.string   "response_text"
     t.datetime "created_at"
   end
 
@@ -44,9 +47,9 @@ ActiveRecord::Schema.define(version: 20140403154914) do
   end
 
   create_table "responses", force: true do |t|
-    t.integer  "order_id"
-    t.string   "delivery_method"
-    t.string   "instructions"
+    t.integer  "user_id"
+    t.integer  "message_id"
+    t.string   "extra_text"
     t.datetime "created_at"
   end
 

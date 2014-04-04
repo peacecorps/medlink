@@ -1,7 +1,7 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
+  flash:
+    response_sent: "Success! Your response has been sent to {user}. This request will now appear in the response tracker awaiting fulfillment."
+
   order:
     confirmation: "Your request has been received. Fulfillment details will follow within 24 hrs via email and text message."
     unparseable: "Your request was not submitted. Please resubmit your request in this Format: PCVID, Supply short name, location."

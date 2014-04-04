@@ -3,21 +3,19 @@
     %th PCVID
     %th First Name
     %th Last Name
+    %th Location
     %th Requests
-    - if responded
-      %th Response
-      %th Delivery Method
-      %th Response Instructions
 %tbody
   - orders.group_by(&:user).each do |user, os|
     - attrs = { "class" => "order c#{user.country_id}" }
     - unless responded
       - attrs["class"] += " link"
-      /- attrs["data-link"] = new_order_response_path(order)
+      - attrs["data-link"] = new_user_response_path user
     %tr{ attrs }
       %td= user.pcv_id
       %td= user.first_name
       %td= user.last_name
+      %td= user.location
       %td
         - os.group_by { |o| o.created_at.to_i }.each do |_, _os|
           %dl
