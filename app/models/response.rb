@@ -5,6 +5,12 @@ class Response < ActiveRecord::Base
   # TODO: validate that user & all orders are from the same country?
   has_many :orders
 
+  default_scope { where(archived_at: nil) }
+
+  def archive!
+    update_attributes archived_at: Time.now
+  end
+
   def sms_instructions
     base = Medlink.translate "base_sms_response"
     long = "#{base} #{extra_text}"

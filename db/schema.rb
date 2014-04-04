@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140403154914) do
     t.integer  "message_id"
     t.string   "extra_text"
     t.datetime "created_at"
+    t.datetime "archived_at"
   end
 
   create_table "supplies", force: true do |t|

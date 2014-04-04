@@ -13,5 +13,6 @@
       %td= r.user.location
       %td= render partial: "group", locals: { user: r.user, orders: r.orders }
       %td
-        %button.btn.btn-default
-          = icon :save
+        = form_tag user_response_archive_path(r.user, r) do
+          %button.btn.btn-default
+            = icon :save

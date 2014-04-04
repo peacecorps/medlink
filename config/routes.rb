@@ -18,7 +18,9 @@ Medlink::Application.routes.draw do
   resources :supplies, only: [:index]
 
   resources :users, only: [] do
-    resources :responses, only: [:new, :create, :show]
+    resources :responses, only: [:new, :create, :show] do
+      post :archive
+    end
   end
 
   namespace :admin do

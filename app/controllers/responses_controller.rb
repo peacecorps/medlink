@@ -1,5 +1,6 @@
 class ResponsesController < ApplicationController
-  before_filter :initialize_response, except: [:show]
+  before_filter :initialize_response, only: [:new, :create]
+  before_filter :find_response, only: [:show, :archive]
 
   def new
     @orders = @user.orders.without_responses.
@@ -28,9 +29,12 @@ class ResponsesController < ApplicationController
   end
 
   def show
-    @response = Response.find params[:id]
-    @user     = @response.user
-    authorize! :response, @user
+  end
+
+  def archive
+    @response.archive!
+    redirect_to manage_orders_path, flash:
+      { success: Medlink.translate("flash.response_archived") }
   end
 
   private # -----
@@ -39,6 +43,13 @@ class ResponsesController < ApplicationController
     @user = User.find params[:user_id]
     authorize! :respond, @user
     @response = Response.new user: @user
+  end
+
+  def find_response
+    id = params[:response_id] || params[:id]
+    @response = Response.find id
+    @user     = @response.user
+    authorize! :respond, @user
   end
 
   def response_params
