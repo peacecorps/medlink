@@ -30,7 +30,7 @@ class User
           if user.respond_to? "#{k}="
             user.send "#{k}=", v
           elsif k.start_with? "phone"
-            phones << v
+            phones << v if v.present?
           else
             raise NotImplementedError, "Don't know how to set user##{k}"
           end

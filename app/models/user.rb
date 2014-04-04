@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   Roles.each do |type, _|
     # define pcv?, pcmo?, admin? methods
     define_method :"#{type}?" do
-      role.to_sym == type
+      role && role.to_sym == type
     end
 
     # define pcvs, pcmos, admins scopes
