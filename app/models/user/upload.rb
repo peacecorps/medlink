@@ -1,11 +1,11 @@
 class User
   class Upload
-    attr_reader :errors
+    attr_reader :errors, :added
 
     def initialize io, overwrite: false
       raise ArgumentError, "Please provide a CSV file" unless io
       raise ArgumentError, "CSV file is empty" if io.size.zero?
-      @io, @errors, @overwrite = io, "", overwrite
+      @io, @errors, @overwrite, @added = io, "", overwrite, []
     end
 
     def run!
@@ -32,7 +32,7 @@ class User
           elsif k.start_with? "phone"
             phones << v if v.present?
           else
-            raise NotImplementedError, "Don't know how to set user##{k}"
+            raise NotImplementedError, "Unrecognized header: #{k}"
           end
         end
 
@@ -40,6 +40,7 @@ class User
           phones.each do |number|
             PhoneNumber.where(user_id: user.id, display: number).first_or_create!
           end
+          @added << user
         else
           @errors << row.push(user.errors.full_messages.to_sentence).to_s
         end

@@ -73,7 +73,9 @@ class Admin::UsersController < AdminController
       send_data upload.errors, type: 'text/csv', filename: 'invalid_users.csv'
       flash[:error] = "CSV has invalid entries!"
     else
-      flash[:success] =  "Successully uploaded users information!"
+      n = upload.added.count
+      flash[:success] = "Successully uploaded information for
+        #{ActionController::Base.helpers.pluralize n, 'user'}!".squish
       redirect_to new_admin_user_path
     end
 
