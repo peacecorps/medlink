@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 20140403154914) do
     t.string   "entered_by"
     t.integer  "response_id"
     t.string   "delivery_method"
-    t.string   "response_text"
     t.datetime "created_at"
   end
 

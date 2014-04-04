@@ -19,7 +19,6 @@
         %th
         - DeliveryMethod.each do |method|
           %th= method.title
-        %th Comments
     %tbody
       - @response.orders.group_by { |o| o.created_at.strftime '%-m/%-d/%y' }.each do |ts, os|
         - os.each_with_index do |order,i|
@@ -31,7 +30,6 @@
               %td
                 - if order.delivery_method == method.to_s
                   = icon :ok
-            %td= order.response_text
 
   - if @response.extra_text
     .well

@@ -17,7 +17,7 @@ class ResponsesController < ApplicationController
       orders = params[:orders].select { |_,data| data.include? "delivery_method" }
       Order.find(orders.keys).each do |o|
         data = orders[o.id.to_s].merge response_id: @response.id
-        o.update_attributes data.permit :delivery_method, :response_text, :response_id
+        o.update_attributes data.permit :delivery_method, :response_id
       end
       @response.send!
       redirect_to manage_orders_path, flash:
