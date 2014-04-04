@@ -67,8 +67,8 @@
         %td= @last_date = o.created_at
       %td= o.supply
       %td
-        - if o.response.denied?
-          %i.glyphicon.glyphicon-remove
+        - if o.denied?
+          = icon :remove
         - else
-          %i.glyphicon.glyphicon-ok
-        = o.response.instructions
+          = icon :ok
+        = o.response_text

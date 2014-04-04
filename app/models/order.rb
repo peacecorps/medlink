@@ -47,6 +47,10 @@ class Order < ActiveRecord::Base
     response && response.created_at
   end
 
+  def denied?
+    delivery_method == DeliveryMethod::Denial
+  end
+
   def fulfilled?
     fulfilled_at.present?
   end

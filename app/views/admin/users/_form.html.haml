@@ -12,10 +12,10 @@
       = f.select :time_zone, ActiveSupport::TimeZone.all.map {|t| [t,t.name]}, {include_blank: 'Time Zone'}, class: 'form-control input-sm'
       = f.fields_for :phone_numbers do |number_form|
         = number_form.link_to_remove class: "btn btn-danger" do
-          %i.glyphicon.glyphicon-remove
+          = icon :remove
         = number_form.text_field :display, placeholder: 'Phone number', class: 'form-control input-sm'
       = f.link_to_add :phone_numbers, class: "btn btn-success" do
-        %i.glyphicon.glyphicon-plus
+        = icon :plus
     .col-md-4.col-md-offset-1
       / FIXME? Password? -- Need more words.
       = f.text_field :pcv_id, placeholder: 'PCV ID', class: 'form-control input-sm'
