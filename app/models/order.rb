@@ -1,10 +1,13 @@
 class Order < ActiveRecord::Base
+  belongs_to :country
   belongs_to :user
   belongs_to :supply
   belongs_to :response
 
   validates_presence_of :user
   validates_presence_of :supply
+
+  serialize :delivery_method, DeliveryMethod
 
   scope :with_responses, -> { includes(:response).where("response_id IS NOT NULL") }
   scope :without_responses, -> { where("response_id IS NULL") }
@@ -34,13 +37,8 @@ class Order < ActiveRecord::Base
     end
   end
 
-  def country_id
-    # FIXME: make this an actual column
-    user.country_id
-  end
-
   def responded?
-    response.present?
+    response_id.present?
   end
 
   def responded_at
@@ -49,24 +47,5 @@ class Order < ActiveRecord::Base
 
   def denied?
     delivery_method == DeliveryMethod::Denial
-  end
-
-  def fulfilled?
-    fulfilled_at.present?
-  end
-
-  def self.human_attribute_name(attr, options={})
-    {
-      user:   "PCV ID",
-      supply: "Supply"
-    }[attr] || super
-  end
-
-  def confirmation_message
-    if self.valid?
-      I18n.t "order.confirmation"
-    else
-      errors.full_messages.join ","
-    end
   end
 end

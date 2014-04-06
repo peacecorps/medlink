@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   def manage
     authorize! :respond, User
     @orders = accessible_orders
-    @responses = visible_responses
+    @responses = accessible_responses
   end
 
   def new
@@ -48,10 +48,10 @@ class OrdersController < ApplicationController
   end
 
   def accessible_orders
-    current_user.accessible_orders.includes :user, :supply
+    current_user.accessible(Order).includes :user, :supply
   end
 
-  def visible_responses
-    current_user.visible_responses
+  def accessible_responses
+    current_user.accessible(Response)
   end
 end

@@ -31,47 +31,19 @@ class User < ActiveRecord::Base
     pcmo.includes(:country).group_by &:country
   end
 
-  def pcvs
+  # TODO: should this be a default scope? Can those inspect current_user?
+  def accessible model
     if admin?
-      # FIXME: this clearly includes non-pcv users
-      # Should the implementation or name change?
-      User.all
+      model.all
     elsif pcmo?
-      pcvs_shared = country.users.pcv
-      # TODO: resolve this name similarly
-      pcvs_shared << self
+      model.where(country_id: country_id)
     else
-      raise "No PCVs for #{role}"
-    end
-  end
-
-  # FIXME: denormalize on country
-  def accessible_orders
-    if admin?
-      Order.all
-    elsif pcmo?
-      Order.includes(:user).where users: {country_id: country_id}
-    else
-      orders
-    end
-  end
-
-  def visible_responses
-    if admin?
-      Response.all
-    elsif pcmo?
-      Response.includes(:user).where users: {country_id: country_id}
-    else
-      responses
+      model.where(user_id: id)
     end
   end
 
   def send_reset_password_instructions opts={}
-    if opts[:async] == false
-      super()
-    else
-      MailerJob.enqueue :forgotten_password, id
-    end
+    MailerJob.enqueue :forgotten_password, id
   end
 
   def name

@@ -1,6 +1,15 @@
 class DeliveryMethod
   attr_reader :name, :title, :text
 
+  def self.load str
+    return str if str.is_a? self
+    find { |m| m.name == str }
+  end
+
+  def dump
+    name
+  end
+
   def initialize name, text, title=nil
     @name, @text, @title = name, text, title
     @title ||= @name.capitalize
@@ -9,10 +18,6 @@ class DeliveryMethod
 
   def eq other
     name == other.name
-  end
-
-  def to_s
-    name.to_s
   end
 
   Delivery = new :delivery,

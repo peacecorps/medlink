@@ -1,4 +1,5 @@
 class Response < ActiveRecord::Base
+  belongs_to :country
   belongs_to :user
   belongs_to :message
 

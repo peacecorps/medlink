@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20140403154914) do
   end
 
   create_table "orders", force: true do |t|
+    t.integer  "country_id"
     t.integer  "user_id"
     t.integer  "supply_id"
     t.integer  "message_id"
@@ -46,6 +47,7 @@ ActiveRecord::Schema.define(version: 20140403154914) do
   end
 
   create_table "responses", force: true do |t|
+    t.integer  "country_id"
     t.integer  "user_id"
     t.integer  "message_id"
     t.string   "extra_text"
