@@ -1,32 +1,25 @@
 require 'spec_helper'
 
 describe Supply do
-  subject { FactoryGirl.create :supply, name: 'Supply item',
-    shortcode: 'SPPLY' }
-
-  it 'can be printed' do
-    expect( subject.to_s ).to eq 'Supply item'
+  before :each do
+    FactoryGirl.create :supply, name: 'Item', shortcode: 'ITEM'
   end
 
   it 'knows its choices' do
-    malformed = Supply.choices.find { |choice| choice.length != 2 }
-    expect( malformed ).to be nil
+    expect( Supply.choices ).to eq [['Item', Supply.last.id]]
   end
 
-  context 'lookup' do
-    before(:each) { FactoryGirl.create :supply, name: 'Lookup',
-      shortcode: 'LOOK' }
-
-    it 'retrieves upper case' do
-      expect( Supply.lookup 'LOOK' ).to be_present
+  context 'can query' do
+    it 'upcase' do
+      expect( Supply.find_by_shortcode 'ITEM' ).to be_a Supply
     end
 
-    it 'retrieves lower case' do
-      expect( Supply.lookup 'look' ).to be_present
+    it 'downcase' do
+      expect( Supply.find_by_shortcode 'item' ).to be_a Supply
     end
 
-    it 'retieves by name' do
-      expect( Supply.lookup 'lookup' ).to be_present
+    it 'failure' do
+      expect{ Supply.find_by_shortcode 'nope' }.to raise_error ActiveRecord::RecordNotFound
     end
   end
 end

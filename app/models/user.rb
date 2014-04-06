@@ -77,13 +77,4 @@ class User < ActiveRecord::Base
   def name
     "#{first_name} #{last_name}".strip
   end
-
-  def to_s
-    if pcv_id
-      "#{name} (#{pcv_id})"
-    else
-      "#{name} (#{role})"
-    end
-  end
-
 end

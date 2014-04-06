@@ -15,9 +15,9 @@ d@example.com,,,Error,Person,,,,,
     @upload = User::Upload.new StringIO.new(csv)
     @upload.run!
   end
-  after(:all) { [User, PhoneNumber].each &:delete_all }
+  after(:all) { [Country, User, PhoneNumber].each &:delete_all }
 
-  it "created phone numbers", :focus do
+  it "created phone numbers" do
     a,b,c = %w(a b c).map { |n| User.where(email: "#{n}@example.com").first! }
     expect( a ).to have(1).phone_numbers
     expect( b ).to have(2).phone_numbers
