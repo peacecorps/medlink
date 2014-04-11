@@ -11,7 +11,7 @@ describe User do
       subject { FactoryGirl.create(:user) }
       before do
         @unowned_orders = FactoryGirl.create_list(:order, 10)
-        @orders = FactoryGirl.create_list(:order, 10
+        @orders = FactoryGirl.create_list(:order, 10,
           user_id: subject.id)
       end
       it 'should only show their own orders' do
@@ -61,7 +61,6 @@ describe User do
       @b = FactoryGirl.create :pcv, country: @us, pcmo_id: @q.id
       @c = FactoryGirl.create :pcv, country: @senegal, pcmo_id: @r.id
     end
-    after(:all) { User.delete_all } # TODO: truncate
 
     it 'can group pcmos by country' do
       expect(User.pcmos_by_country).to eq({

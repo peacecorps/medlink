@@ -4,7 +4,7 @@ class SMS < ActiveRecord::Base
   # Errors raised in the sms logic may need to be displayed to the
   #   user via text. Messages wrapped in this class are assumed to
   #   be presentable.
-  class FriendlyError
+  class FriendlyError < StandardError
     def initialize key, subs={}
       msg = Medlink.translate key, subs
       super msg
@@ -42,23 +42,17 @@ class SMS < ActiveRecord::Base
   end
 
   def supplies
-    @_supplies ||= begin
-      codes  = parsed.shortcodes.map &:upcase
-      found  = Supply.where shortcode: codes
-      missed = codes - found.map(&:shortcode)
-      if missed.any?
-        raise FriendlyError.new "sms.unrecognized_shortcodes", codes: missed.join(', ')
-      end
-    end
+    @_supplies ||= Supply.find_by_shortcodes parsed.shortcodes
   end
 
   def create_orders
     supplies.each do |supply|
       orders.create!(
-        user_id:      user.id,
-        supply_id:    supply.id,
-        request_text: parsed.instructions,
-        entered_by:   user.id
+        user_id:         user.id,
+        supply_id:       supply.id,
+        request_text:    parsed.instructions,
+        entered_by:      user.id,
+        delivery_method: DeliveryMethod::Undelivered
       )
     end
   end

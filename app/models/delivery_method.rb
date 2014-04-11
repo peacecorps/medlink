@@ -20,6 +20,7 @@ class DeliveryMethod
     name == other.name
   end
 
+  Undelivered = new '', 'This order is still pending processing'
   Delivery = new :delivery,
     'Your request is estimated to arrive at your location on [enter date here]'
   Pickup = new :pickup,
