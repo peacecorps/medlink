@@ -13,6 +13,7 @@ en:
 
     auth:
       admin: "You must be an admin to view that page"
+      pcmo: "You must be an admin or PCMO to view that page"
       general: "You are not authorized to view that page"
       email_invalid: "Email Invalid: The email you specified is invalid. Please check the spelling, formatting and that it is an active address."
       pcv_id_invalid: "PCVID Invalid: Your request was not submitted because of an incorrect or missing PCVID. Please correct and resubmit."

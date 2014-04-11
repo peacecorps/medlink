@@ -7,6 +7,8 @@ class Order < ActiveRecord::Base
   validates_presence_of :user
   validates_presence_of :supply
 
+  before_save { self.country = user.country }
+
   serialize :delivery_method, DeliveryMethod
 
   scope :with_responses, -> { includes(:response).where("response_id IS NOT NULL") }

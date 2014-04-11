@@ -44,7 +44,7 @@ class OrdersController < ApplicationController
   private # -----
 
   def create_params
-    params.require(:order).permit [:extra, :supply_id, :location, :user_id]
+    params.require(:order).permit [:extra, :supply_id, :user_id]
   end
 
   def accessible_orders

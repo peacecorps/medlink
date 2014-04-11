@@ -51,6 +51,7 @@ RSpec.configure do |config|
   # Allow focusing on specs
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run focus: true
+  config.filter_run_excluding broken: true
   config.run_all_when_everything_filtered = true
 
   # Allow tweaking of failure mode

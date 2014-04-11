@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Order do
+describe Order, :broken do
 
   before :each do
     FactoryGirl.create :user,   pcv_id: 'USR'

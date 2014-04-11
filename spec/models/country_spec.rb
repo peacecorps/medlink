@@ -5,11 +5,6 @@ describe Country do
     4.times { FactoryGirl.create(:country) }
   end
 
-  it 'should have a to_s method that provides the country name' do
-    afghanistan = FactoryGirl.create(:country, name: "Afghanistan")
-    expect(afghanistan.to_s).to eq(afghanistan.name)
-  end
-
   it 'should list choices mapped by name and id for all countries' do
     aus = FactoryGirl.create(:country, name: "Australia")
     test_choices = Country.choices

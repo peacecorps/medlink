@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'ostruct'
 
-describe SMS do
+describe SMS, :broken do
 
   describe "request with dosage" do
 

@@ -4,8 +4,7 @@ class Country < ActiveRecord::Base
   has_many :responses
 
   def self.with_orders
-    # TODO: unique in DB
-    find Order.pluck(:country_id).uniq
+    find Order.uniq.pluck(:country_id)
   end
 
   def self.choices
