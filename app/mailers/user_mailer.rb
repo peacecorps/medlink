@@ -2,7 +2,7 @@ class UserMailer < ActionMailer::Base
   default from: "support@pcmedlink.org"
 
   def forgotten_password id
-    User.find(id).send_reset_password_instructions async: false
+    User.find(id).send_reset_password_instructions true
   end
 
   def fulfillment id

@@ -16,7 +16,7 @@ describe User do
       end
       it 'should only show their own orders' do
         owned_ids = @orders.map(&:id).uniq.sort
-        expect( subject.accessible_orders.map(&:id).uniq.sort
+        expect( subject.accessible(Order).map(&:id).uniq.sort
           ).to eq owned_ids
       end
 
@@ -38,7 +38,7 @@ describe User do
       it 'should show orders for the admins whole country' do
         combined_ids = @orders1.map(&:id) + @orders2.map(&:id)
         combined_ids.sort! and combined_ids.uniq!
-        expect( subject.accessible_orders.map(&:id).uniq.sort
+        expect( subject.accessible(Order).map(&:id).uniq.sort
           ).to eq combined_ids
       end
     end
@@ -78,11 +78,11 @@ describe User do
     before(:each) { FactoryGirl.create :user, pcv_id: 'USR' }
 
     it 'retrieves upper case' do
-      expect( User.lookup 'USR' ).to be_present
+      expect( User.find_by_pcv_id 'USR' ).to be_present
     end
 
     it 'retrieves lower case' do
-      expect( User.lookup 'usr' ).to be_present
+      expect( User.find_by_pcv_id 'usr' ).to be_present
     end
 
     it 'fails appropriately'
@@ -95,13 +95,6 @@ describe User do
       MailerJob.should_receive(:enqueue).with(:forgotten_password,
         subject.id).and_call_original
       subject.send_reset_password_instructions
-      expect( ActionMailer::Base ).to have_exactly(1).deliveries
-    end
-
-    it 'syncronously' do
-      MailerJob.should_not_receive(:enqueue).with(:forgotten_password,
-        subject.id)
-      subject.send_reset_password_instructions async: false
       expect( ActionMailer::Base ).to have_exactly(1).deliveries
     end
   end

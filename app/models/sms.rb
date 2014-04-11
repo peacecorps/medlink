@@ -51,8 +51,7 @@ class SMS < ActiveRecord::Base
         user_id:         user.id,
         supply_id:       supply.id,
         request_text:    parsed.instructions,
-        entered_by:      user.id,
-        delivery_method: DeliveryMethod::Undelivered
+        entered_by:      user.id
       )
     end
   end
