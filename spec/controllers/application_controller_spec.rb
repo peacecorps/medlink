@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ApplicationController do
+describe ApplicationController, :broken do
   describe "GET /" do
     it 'redirects to orders' do
       get 'root'

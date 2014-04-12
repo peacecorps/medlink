@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe ReportsController do
-  
+describe ReportsController, :broken do
+
   let (:current_user) { FactoryGirl.create(:user) }
   before {
     sign_in current_user

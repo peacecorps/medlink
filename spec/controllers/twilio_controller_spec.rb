@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TwilioController do
+describe TwilioController, :broken do
   include SmsSpec::Helpers
 
   before :each do

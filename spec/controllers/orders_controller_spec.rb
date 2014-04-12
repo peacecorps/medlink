@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-describe OrdersController do
+describe OrdersController, :broken do
   let(:current_user) { FactoryGirl.create(:user) }
-  before(:each) { sign_in current_user }
+  before(:each) { login current_user }
 
-  it { renders_successfully :index }
+  it "can show a user their orders" do
+    visit orders_path
+    binding.pry
+  end
+
   it { renders_successfully :new   }
 
   describe '#manage' do
@@ -32,6 +36,11 @@ describe OrdersController do
     it "renders on failure" do
       post 'create', order: {user_id: current_user.id, supply_id: 'QWERTY'}
       expect( response ).to be_success
+    end
+
+    it "rejects orders without a user" do
+      post 'create', order: { supply_id: 'QWERTY' }
+      expect( response ).to render_template :new
     end
   end
 end
