@@ -2,10 +2,10 @@ class User
   class Upload
     attr_reader :errors, :added
 
-    def initialize io, overwrite: false
+    def initialize country, io, overwrite: false
       raise ArgumentError, "Please provide a CSV file" unless io
       raise ArgumentError, "CSV file is empty" if io.size.zero?
-      @io, @errors, @overwrite, @added = io, "", overwrite, []
+      @country, @io, @errors, @overwrite, @added = country, io, "", overwrite, []
     end
 
     def run!
@@ -20,6 +20,8 @@ class User
 
         user   = User.where(pcv_id: pcv_id).first if @overwrite
         user ||= User.new pcv_id: pcv_id
+
+        user.country = @country
 
         unless user.password
           user.password = user.password_confirmation = SecureRandom.hex
