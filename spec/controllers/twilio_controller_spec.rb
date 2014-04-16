@@ -1,12 +1,10 @@
 require 'spec_helper'
 
 describe TwilioController do
-  include SmsSpec::Helpers
-
   before :each do
-    %w(Sup wit dat).each { |n| FactoryGirl.create :supply, name: n, shortcode: n }
-    @user = FactoryGirl.create :user, pcv_id: 'asdf'
-    FactoryGirl.create :phone_number, user: @user
+    %w(Sup wit dat).each { |n| create :supply, name: n, shortcode: n }
+    @user = create :user, pcv_id: 'asdf'
+    create :phone_number, user: @user
   end
 
   it "can create multiple orders from an incoming text" do

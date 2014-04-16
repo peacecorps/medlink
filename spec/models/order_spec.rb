@@ -3,9 +3,9 @@ require 'spec_helper'
 describe Order, :broken do
 
   before :each do
-    FactoryGirl.create :user,   pcv_id: 'USR'
-    FactoryGirl.create :supply, shortcode: 'BND', name: 'Bandages'
-    FactoryGirl.create :supply, shortcode: 'SND', name: 'Second thing'
+    create :user,   pcv_id: 'USR'
+    create :supply, shortcode: 'BND', name: 'Bandages'
+    create :supply, shortcode: 'SND', name: 'Second thing'
   end
 
   context 'from text' do

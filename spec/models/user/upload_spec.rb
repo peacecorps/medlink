@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User::Upload do
   before :all do
     # TODO: should the upload take country as an argument?
-    country = FactoryGirl.create :country
+    country = create :country
     csv = <<-EOS
 email,phone,phone2,first_name,last_name,pcv_id,country_id,role,location,time_zone
 a@example.com,1111111,,A,Person,123,#{country.id},pcv,A Place,UTC

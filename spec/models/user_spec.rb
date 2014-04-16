@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 describe User do
-  subject { FactoryGirl.create :user, pcv_id: 'USR' }
+  subject { create :user, pcv_id: 'USR' }
 
   its(:pcv_id) { should eq 'USR' }
 
   # TODO: these are order specs. Extract.
   context "accessible_orders" do
     describe "for non-admin users" do
-      subject { FactoryGirl.create(:user) }
+      subject { create(:user) }
       before do
-        @unowned_orders = FactoryGirl.create_list(:order, 10)
-        @orders = FactoryGirl.create_list(:order, 10,
+        @unowned_orders = create_list(:order, 10)
+        @orders = create_list(:order, 10,
           user_id: subject.id)
       end
       it 'should only show their own orders' do
@@ -22,17 +22,17 @@ describe User do
 
     end
     describe "for admin users" do
-      subject { FactoryGirl.create(:admin) }
+      subject { create(:admin) }
       let (:managed_user1) {
-        FactoryGirl.create(:user, country_id: subject.country_id)
+        create(:user, country_id: subject.country_id)
       }
       let (:managed_user2) {
-        FactoryGirl.create(:user, country_id: subject.country_id)
+        create(:user, country_id: subject.country_id)
       }
       before do
-        @orders1 = FactoryGirl.create_list(:order, 10,
+        @orders1 = create_list(:order, 10,
           user_id: managed_user1.id)
-        @orders2 = FactoryGirl.create_list(:order, 10,
+        @orders2 = create_list(:order, 10,
           user_id: managed_user2.id)
       end
       it 'should show orders for the admins whole country' do
@@ -47,19 +47,19 @@ describe User do
   context 'admin relations' do
     before :all do
       # TODO: mix in factory girl methods
-      @us      = FactoryGirl.create :country, name: "USA"
-      @senegal = FactoryGirl.create :country, name: "Senegal"
+      @us      = create :country, name: "USA"
+      @senegal = create :country, name: "Senegal"
 
-      @admin = FactoryGirl.create :admin, country: @us
+      @admin = create :admin, country: @us
 
-      @p = FactoryGirl.create :pcmo, country: @us
-      @q = FactoryGirl.create :pcmo, country: @us
-      @r = FactoryGirl.create :pcmo, country: @senegal
+      @p = create :pcmo, country: @us
+      @q = create :pcmo, country: @us
+      @r = create :pcmo, country: @senegal
 
       # TODO: validate pcmo for pcvs? Country match?
-      @a = FactoryGirl.create :pcv, country: @us, pcmo_id: @p.id
-      @b = FactoryGirl.create :pcv, country: @us, pcmo_id: @q.id
-      @c = FactoryGirl.create :pcv, country: @senegal, pcmo_id: @r.id
+      @a = create :pcv, country: @us, pcmo_id: @p.id
+      @b = create :pcv, country: @us, pcmo_id: @q.id
+      @c = create :pcv, country: @senegal, pcmo_id: @r.id
     end
 
     it 'can group pcmos by country' do
@@ -75,7 +75,7 @@ describe User do
   end
 
   context 'lookup' do
-    before(:each) { FactoryGirl.create :user, pcv_id: 'USR' }
+    before(:each) { create :user, pcv_id: 'USR' }
 
     it 'retrieves upper case' do
       expect( User.find_by_pcv_id 'USR' ).to be_present

@@ -2,25 +2,25 @@ require 'spec_helper'
 
 describe Country do
   before :each do
-    4.times { FactoryGirl.create(:country) }
+    4.times { create(:country) }
   end
 
   it 'should list choices mapped by name and id for all countries' do
-    aus = FactoryGirl.create(:country, name: "Australia")
+    aus = create(:country, name: "Australia")
     test_choices = Country.choices
     expect(test_choices.count).to eq(Country.count)
     expect(test_choices.last).to eq [aus.name, aus.id]
   end
 
   it "should have a with_orders method that only returns countries with orders" do
-    usa = FactoryGirl.create(:country, name: "America")
-    brazil = FactoryGirl.create(:country, name: "Brazil")
-    american_user = FactoryGirl.create(:user, country: usa)
-    brazilian_user = FactoryGirl.create(:user, country: brazil)
-    american_order = FactoryGirl.create(:order, user: american_user)
+    usa = create(:country, name: "America")
+    brazil = create(:country, name: "Brazil")
+    american_user = create(:user, country: usa)
+    brazilian_user = create(:user, country: brazil)
+    american_order = create(:order, user: american_user)
     expect(Country.with_orders).to include(usa)
     expect(Country.with_orders).to_not include(brazil)
-    brazilian_order = FactoryGirl.create(:order, user: brazilian_user)
+    brazilian_order = create(:order, user: brazilian_user)
     expect(Country.with_orders).to include(brazil)
     expect(Country.with_orders.count).to eq(2)
   end

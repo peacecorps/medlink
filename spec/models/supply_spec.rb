@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Supply do
   before :each do
-    FactoryGirl.create :supply, name: 'Item', shortcode: 'ITEM'
+    create :supply, name: 'Item', shortcode: 'ITEM'
   end
 
   it 'knows its choices' do

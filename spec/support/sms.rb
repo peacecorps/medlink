@@ -5,3 +5,7 @@ SmsSpec.driver = :"twilio-ruby"
 %w(ACCOUNT_SID AUTH PHONE_NUMBER).each do |k|
   ENV["TWILIO_#{k}"] ||= "xxxxxx"
 end
+
+RSpec.configure do |config|
+  config.include SmsSpec::Helpers
+end
