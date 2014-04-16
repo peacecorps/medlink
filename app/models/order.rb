@@ -48,8 +48,9 @@ class Order < ActiveRecord::Base
     response && response.created_at
   end
 
-  def delivery_method= name
-    self[:delivery_method] = DeliveryMethod.find { |m| m.name.to_s == name }
+  def delivery_method= method
+    method = DeliveryMethod.find { |m| m.name.to_s == method } unless method.is_a? DeliveryMethod
+    super method
   end
 
   def denied?
