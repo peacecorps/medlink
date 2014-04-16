@@ -7,6 +7,10 @@ def login user
   click_on "Sign in"
 end
 
+def logout
+  click_on "Sign Out"
+end
+
 RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
   config.include Capybara::DSL
