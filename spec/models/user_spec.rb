@@ -98,4 +98,13 @@ describe User do
       expect( ActionMailer::Base ).to have_exactly(1).deliveries
     end
   end
+
+  it "raises when authorizing a user without a role" do
+    expect do
+      Ability.new(subject).can? :create, Order
+    end.not_to raise_error
+    expect do
+      Ability.new(User.new).can? :create, Order
+    end.to raise_error /unknown role/i
+  end
 end
