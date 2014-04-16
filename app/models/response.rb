@@ -1,10 +1,11 @@
 class Response < ActiveRecord::Base
-  belongs_to :country
   belongs_to :user
   belongs_to :message
 
-  # TODO: validate that user & all orders are from the same country?
   has_many :orders
+
+  belongs_to :country
+  before_save { self.country = user.country }
 
   default_scope { where(archived_at: nil) }
 

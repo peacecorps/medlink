@@ -22,7 +22,7 @@ class ResponsesController < ApplicationController
       end
       @response.send!
       redirect_to manage_orders_path, flash:
-        { success: Medlink.translate("flash.response_sent", user: @user.to_s) }
+        { success: Medlink.translate("flash.response_sent", user: @user.name) }
     else
       render :new
     end

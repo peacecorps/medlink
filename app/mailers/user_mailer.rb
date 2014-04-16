@@ -7,6 +7,7 @@ class UserMailer < ActionMailer::Base
 
   def fulfillment id
     @response = Response.find id
+    return # FIXME: implement the rest of this
     @order = @response.order
 
     email = @order.email || @order.user.email

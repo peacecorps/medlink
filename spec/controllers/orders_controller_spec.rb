@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# TODO: port, fix, or remove :broken tagged specs
 describe OrdersController, :broken do
   let(:current_user) { FactoryGirl.create(:user) }
   before(:each) { login current_user }

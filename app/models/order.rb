@@ -1,5 +1,4 @@
 class Order < ActiveRecord::Base
-  belongs_to :country
   belongs_to :user
   belongs_to :supply
   belongs_to :response
@@ -7,6 +6,7 @@ class Order < ActiveRecord::Base
   validates_presence_of :user
   validates_presence_of :supply
 
+  belongs_to :country
   before_save { self.country = user.country }
 
   serialize :delivery_method, DeliveryMethod
@@ -46,6 +46,10 @@ class Order < ActiveRecord::Base
 
   def responded_at
     response && response.created_at
+  end
+
+  def delivery_method= name
+    self[:delivery_method] = DeliveryMethod.find { |m| m.name.to_s == name }
   end
 
   def denied?

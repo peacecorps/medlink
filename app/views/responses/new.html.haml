@@ -10,7 +10,7 @@
   %h1= @user.name
   %p
     = icon "globe"
-    = "#{@user.location}, #{@user.country}"
+    = "#{@user.location}, #{@user.country.name}"
     &nbsp;
     = icon "phone-alt"
     = @user.primary_phone ? @user.primary_phone.display : '-'
@@ -29,7 +29,7 @@
             %tr
               - if i.zero?
                 %td.ts{rowspan: os.length}= ts
-              %td= order.supply
+              %td= order.supply.name
               - DeliveryMethod.each do |method|
                 %td
                   = radio_button_tag "orders[#{order.id}][delivery_method]", method.name
