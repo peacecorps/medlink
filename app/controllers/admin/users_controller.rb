@@ -63,12 +63,13 @@ class Admin::UsersController < AdminController
   end
 
   def uploadCSV
-    upload = User::Upload.new params[:csv], overwrite: params[:overwrite] == '1'
+    country = Country.find params[:country_id]
+    upload  = User::Upload.new country, params[:csv], overwrite: params[:overwrite].present?
     upload.run!
 
     if upload.errors.present?
+      # TODO: notify of errors somehow (we can't flash, since we're not rendering a page)
       send_data upload.errors, type: 'text/csv', filename: 'invalid_users.csv'
-      flash[:error] = Medlink.translate "flash.invalid_csv"
     else
       n = upload.added.count
       flash[:success] = Medlink.translate "flash.valid_csv", users: upload.added.count
