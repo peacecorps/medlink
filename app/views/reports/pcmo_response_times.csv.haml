@@ -1,3 +1,4 @@
+/ TODO: extract specable CSV object. What about the date helper?
 - require 'csv'
 
 = CSV.generate do |csv|
@@ -7,9 +8,10 @@
     "Location", "Country", "Response Days", "Day Past Due"]
 
   - @orders.each do |order|
+    - late = distance_of_time_in_words order.how_past_due if order.how_past_due
     - csv << [order.user_id, order.id, order.created_at,
       order.responded_at,
       order.user.first_name, order.user.last_name, order.user.email,
-      order.user.phone, order.supply,
-      order.location, order.user.country.name,
-      order.response_time, order.how_past_due]
+      order.user.primary_phone.try(:display), order.supply,
+      order.user.location, order.user.country.name,
+      order.response_time, late]

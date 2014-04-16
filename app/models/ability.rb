@@ -9,6 +9,7 @@ class Ability
 
     elsif user.pcmo?
       can :respond, User, country_id: user.country_id
+      can :report, Order
 
     elsif user.admin?
       can :manage, User

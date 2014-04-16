@@ -1,28 +1,20 @@
 class ReportsController < ApplicationController
-
-  before_action :verify_access
-
   def index
+    authorize! :report, Order
   end
 
   def order_history
-    @orders = current_user.accessible_orders
+    authorize! :report, Order
+    @orders = current_user.accessible Order
   end
 
   def users
+    authorize! :report, User
     @users = User.all
   end
 
-  def pcmo_response_history
-    @users = User.all
+  def pcmo_response_times
+    authorize! :report, User
+    @orders = current_user.accessible Order
   end
-
-  private
-
-  def verify_access
-    unless current_user.admin? || current_user.pcmo?
-      redirect_to root_url, flash: { error: Medlink.translate("flash.auth.pcmo") }
-    end
-  end
-
 end

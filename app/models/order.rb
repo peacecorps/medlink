@@ -23,6 +23,15 @@ class Order < ActiveRecord::Base
   scope :past_due, -> { without_responses.where ["orders.created_at < ?", due_cutoff]  }
   scope :pending,  -> { without_responses.where ["orders.created_at >= ?", due_cutoff] }
 
+  def due_at
+    created_at.at_end_of_month + 3.days
+  end
+
+  def how_past_due
+    finish = responded_at || Time.now
+    finish - due_at if finish > due_at
+  end
+
   def response_time
     #FIXME: Absolute delta response time or remove weekends
     response && ((response.created_at - created_at) / (60 * 60 * 24)).round(1)
