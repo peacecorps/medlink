@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe User::Upload do
+  upload = ->(csv) { User::Upload.new(StringIO.new csv).run!  }
+
   before :all do
     # TODO: should the upload take country as an argument?
     country = create :country
@@ -12,8 +14,7 @@ c@example.com,,,C,Person,789,#{country.id},pcv,C Place,UTC
 d@example.com,,,Error,Person,,,,,
     EOS
 
-    @upload = User::Upload.new StringIO.new(csv)
-    @upload.run!
+    upload.(csv)
   end
   after(:all) { [Country, User, PhoneNumber].each &:delete_all }
 
@@ -22,5 +23,17 @@ d@example.com,,,Error,Person,,,,,
     expect( a ).to have(1).phone_numbers
     expect( b ).to have(2).phone_numbers
     expect( c ).to have(0).phone_numbers
+  end
+
+  it "rejects CSVs without a header row" do
+    expect do
+      upload.("a@example.com,111,,A,Person")
+    end.to raise_error /missing header/i
+  end
+
+  it "rejects CSVs with bad headers" do
+    expect do
+      upload.("email,not_a_field\na@example.com,nope")
+    end.to raise_error /unrecognized header/i
   end
 end
