@@ -36,12 +36,12 @@ group :development do
 end
 
 group :test do
+  gem 'rspec-rails'
   gem 'capybara'
   gem 'rake'
   gem 'factory_girl_rails'
   gem 'email_spec'
   gem 'sms-spec'
-  gem 'curb'
   gem 'database_cleaner'
   gem 'zonebie'
 end
