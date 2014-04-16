@@ -34,4 +34,8 @@ describe SMS::Parser do
     expect( p.shortcodes ).to eq %w(a b c)
     expect( p.instructions ).to eq "Lost my phone, sorry\n:/"
   end
+
+  it "raises a friendly error on failure" do
+    expect { parse "" }.to raise_friendly_error /parse/i
+  end
 end

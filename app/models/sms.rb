@@ -9,6 +9,8 @@ class SMS < ActiveRecord::Base
       msg = Medlink.translate key, subs
       super msg
     end
+
+    def friendly?; true; end
   end
 
   self.table_name = "messages"
@@ -45,7 +47,7 @@ class SMS < ActiveRecord::Base
     @_supplies ||= Supply.find_by_shortcodes parsed.shortcodes
   end
 
-  def create_orders
+  def create_orders!
     supplies.each do |supply|
       orders.create!(
         user_id:         user.id,
@@ -56,13 +58,18 @@ class SMS < ActiveRecord::Base
     end
   end
 
-  def send_confirmation orders
+  def confirmation_message
     names = supplies.map { |s| "#{s.name} (#{s.shortcode})" }
     body = "Request received: #{names.join ', '}"
     if body.length > MAX_LENGTH
-      body = "Request received: #{names.first} & #{names.length - 1} other items"
+      "Request received: #{names.first} & #{names.length - 1} other items"
+    else
+      body
     end
-    SMS.deliver number, body
+  end
+
+  def send_confirmation!
+    SMS.deliver number, confirmation_message
   end
 
   private
