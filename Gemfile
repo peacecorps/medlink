@@ -18,27 +18,26 @@ gem 'kaminari'
 
 gem 'nested_form'
 
-# 2.12.0 is borked - https://github.com/sstephenson/sprockets/issues/537
-gem 'sprockets', '2.11.0'
-gem 'sass-rails'
-gem 'coffee-rails'
-gem 'haml'
-gem 'uglifier'
+group :assets do
+  # 2.12.0 is borked - https://github.com/sstephenson/sprockets/issues/537
+  gem 'sprockets', '2.11.0'
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
 
-gem 'exceptiontrap'
-
-group :development do
-  gem 'sqlite3'
-  gem 'pry'
+group :development, :test do
   gem 'letter_opener'
-  gem 'simplecov'
-  gem 'coveralls', require: false
+  gem 'pry'
+  gem 'sqlite3'
 end
 
 group :test do
+  gem 'coveralls', require: false
+  gem 'simplecov'
+
   gem 'rspec-rails'
   gem 'capybara'
-  gem 'rake'
   gem 'factory_girl_rails'
   gem 'email_spec'
   gem 'sms-spec'
@@ -47,6 +46,7 @@ group :test do
 end
 
 group :production do
+  gem 'exceptiontrap'
   gem 'passenger'
   gem 'pg'
   gem 'rails_12factor' # For asset compilation

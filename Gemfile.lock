@@ -227,7 +227,6 @@ DEPENDENCIES
   email_spec
   exceptiontrap
   factory_girl_rails
-  haml
   haml-rails
   jquery-placeholder-rails
   jquery-rails
@@ -239,7 +238,6 @@ DEPENDENCIES
   pry
   rails (= 4.1.0.rc1)
   rails_12factor
-  rake
   rspec-rails
   sass-rails
   simplecov
