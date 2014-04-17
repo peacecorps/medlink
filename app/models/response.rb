@@ -14,7 +14,7 @@ class Response < ActiveRecord::Base
   end
 
   def sms_instructions
-    base = Medlink.translate "base_sms_response"
+    base = "TODO: implement base_message"
     long = "#{base} #{extra_text}"
     if long.length > SMS::MAX_LENGTH
       "#{base} #{Medlink.translate 'sms_see_email'}"

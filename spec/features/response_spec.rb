@@ -4,6 +4,7 @@ describe ResponsesController do
   before :each do
     @country = create :country
     @user = create :user, country: @country
+    create :phone_number, user: @user
     4.times { create :order, user: @user }
 
     @pcmo = create :pcmo, country: @country
@@ -11,6 +12,8 @@ describe ResponsesController do
   end
 
   it "can bulk process orders", :worker do
+    ActionMailer::Base.deliveries.clear
+
     visit new_user_response_path(@user)
     # TODO: these specifications are brittle ...
     choose :orders_4_delivery_method_delivery
@@ -19,8 +22,12 @@ describe ResponsesController do
     click_on "Send Response"
 
     expect( page.find(".flash").text ).to match /response.*sent.*#{@user.name}/i
-    pending "sent an email"
-    pending "sent a text (... if ordered through text?)"
+
+    sms = SMS.outgoing.last
+    expect( sms.number ).to eq @user.primary_phone.display
+
+    mail = ActionMailer::Base.deliveries.last
+    expect( mail.to ).to eq [@user.email]
   end
 
   it "can archive responses" do

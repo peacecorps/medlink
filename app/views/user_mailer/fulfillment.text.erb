@@ -3,12 +3,14 @@
 
 Your order for:
 
-<%= "#{@order.supply.name}; \n" %>
+<%- @response.orders.each do |order| %>
+  <%= "#{order.supply.name}; \n" %>
+<%- end %>
 
-<%- if @response.denied? %>
+<%- if @response.orders.any? &:denied? %>
 has been denied. Please see the attached response:
 <%- else %>
 has successfully been fulfilled. Please follow the attached instructions:
 <%- end %>
 
-<%= @response.instructions %>
+<%= @response.extra_text %>

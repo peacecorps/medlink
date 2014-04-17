@@ -39,7 +39,6 @@ group :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'factory_girl_rails'
-  gem 'email_spec'
   gem 'sms-spec'
   gem 'database_cleaner'
   gem 'zonebie'

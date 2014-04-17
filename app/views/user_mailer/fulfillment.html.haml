@@ -3,11 +3,12 @@
 %p Your order for:
 
 %ul
-  %li= "#{@order.supply.name}"
+  - @response.orders.each do |order|
+    %li= "#{order.supply.name}"
 
-- if @response.denied?
+- if @response.orders.any? &:denied?
   %p has been denied. Please see the attached response:
 - else
   %p has successfully been fulfilled. Please follow the attached instructions:
 
-%p= @response.instructions
+%p= @response.extra_text
