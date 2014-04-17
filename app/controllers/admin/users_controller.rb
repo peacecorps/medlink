@@ -1,5 +1,5 @@
 class Admin::UsersController < AdminController
-  before_action :set_user, except: [:new, :create, :uploadCSV]
+  before_action :set_user, except: [:new, :create, :upload_csv]
 
   def new
     @users = users_by_country
@@ -46,7 +46,7 @@ class Admin::UsersController < AdminController
     end
   end
 
-  def uploadCSV
+  def upload_csv
     upload = run_upload!
     if upload.errors.present?
       # TODO: notify of errors somehow (we can't flash, since we're not rendering a page)

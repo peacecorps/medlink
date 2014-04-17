@@ -1,4 +1,4 @@
-= form_tag({:action => "uploadCSV"},:multipart => true) do
+= form_tag({:action => :upload_csv},:multipart => true) do
   = file_field_tag 'csv', :accept => 'text/csv'
   = select_tag 'country_id', options_for_select(Country.choices), include_blank: true
   = check_box_tag 'overwrite', 1
