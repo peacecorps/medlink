@@ -47,15 +47,11 @@ class Admin::UsersController < AdminController
   end
 
   def uploadCSV
-    country = Country.find params[:country_id]
-    upload  = User::Upload.new country, params[:csv], overwrite: params[:overwrite].present?
-    upload.run!
-
+    upload = run_upload!
     if upload.errors.present?
       # TODO: notify of errors somehow (we can't flash, since we're not rendering a page)
       send_data upload.errors, type: 'text/csv', filename: 'invalid_users.csv'
     else
-      n = upload.added.count
       flash[:success] = Medlink.translate "flash.valid_csv", users: upload.added.count
       redirect_to new_admin_user_path
     end
@@ -80,5 +76,11 @@ class Admin::UsersController < AdminController
     User.includes(:country).to_a.group_by(&:country).map do |c,us|
       [c.name, us.map { |u| [u.name, u.id] }]
     end
+  end
+
+  def run_upload!
+    country = Country.find params[:country_id]
+    upload  = User::Upload.new country, params[:csv], overwrite: params[:overwrite].present?
+    upload.tap &:run!
   end
 end
