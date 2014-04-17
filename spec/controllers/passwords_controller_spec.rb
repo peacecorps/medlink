@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe PasswordsController, :broken do
-  #render_views
+describe PasswordsController do
+  render_views
 
   before(:each) do
     request.env['devise.mapping'] = Devise.mappings[:user]
@@ -14,7 +14,7 @@ describe PasswordsController, :broken do
       post :create, :user => { "email" => @user.email,
         "pcv_id" => @user.pcv_id }
       expect(User.find(@user.id).reset_password_token).to_not eq(old_token)
-      expect( response ).to redirect_to new_user_session_url
+      expect( response ).to redirect_to new_user_session_path
     end
 
     it "with invalid email/pcvid combo" do

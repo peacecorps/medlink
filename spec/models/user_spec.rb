@@ -46,7 +46,6 @@ describe User do
 
   context 'admin relations' do
     before :all do
-      # TODO: mix in factory girl methods
       @us      = create :country, name: "USA"
       @senegal = create :country, name: "Senegal"
 
@@ -68,10 +67,6 @@ describe User do
         @senegal => [@r]
       })
     end
-
-    it 'can determine pcvs for an admin'
-    it 'can determine pcvs for a pcmo'
-    it 'cannot determine pcvs for a pcv'
   end
 
   context 'lookup' do
@@ -84,8 +79,6 @@ describe User do
     it 'retrieves lower case' do
       expect( User.find_by_pcv_id 'usr' ).to be_present
     end
-
-    it 'fails appropriately'
   end
 
   context 'can send reset instructions' do
