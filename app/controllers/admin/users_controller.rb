@@ -32,31 +32,15 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    # TODO: Clean this up: The edge case here is countries: db ids are
-    #    ints, not the strings that we get as params, and we want to
-    #    display country=name instead of country_id=id
-    field_chgs = []
-    user_params.each do |key,nval|
-      oval = @user[key]
-      if oval != nval && !nval.empty?
-        if key == "country_id"
-          next if oval.to_s == nval.to_s
-          nval = Country.find(nval).name if key == "country_id"
-          field_chgs << ["country", nval]
-        else
-          field_chgs << [key, nval]
-        end
-      end
-    end
-
+    _attrs = @user.attributes
     if @user.update_attributes user_params
-      _flash = if field_chgs.any?
-        change_desc = field_chgs.map { |k,v| "#{k}=[#{v}]" }.join "; "
-        { success: Medlink.translate("flash.changes", changes: change_desc) }
+      diff = User::Change.new _attrs, @user
+      _flash = if diff.changed?
+        { success: Medlink.translate("flash.changes", changes: diff.summary) }
       else
         { notice: Medlink.translate("flash.no_changes") }
       end
-      redirect_to new_admin_user_path, _flash
+      redirect_to new_admin_user_path, flash: _flash
     else
       render :edit
     end
@@ -94,7 +78,7 @@ class Admin::UsersController < AdminController
 
   def users_by_country
     User.includes(:country).to_a.group_by(&:country).map do |c,us|
-      [c, us.map { |u| [u, u.id] }]
+      [c.name, us.map { |u| [u.name, u.id] }]
     end
   end
 end
