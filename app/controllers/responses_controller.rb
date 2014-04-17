@@ -14,18 +14,15 @@ class ResponsesController < ApplicationController
   end
 
   def create
-    if @response.update_attributes response_params
-      orders = params[:orders].select { |_,data| data.include? "delivery_method" }
-      Order.find(orders.keys).each do |o|
-        data = orders[o.id.to_s].merge response_id: @response.id
-        o.update_attributes data.permit :delivery_method, :response_id
-      end
-      @response.send!
-      redirect_to manage_orders_path, flash:
-        { success: Medlink.translate("flash.response_sent", user: @user.name) }
-    else
-      render :new
+    @response.update_attributes(response_params) || raise("Failed to update response")
+    orders = params[:orders].select { |_,data| data.include? "delivery_method" }
+    Order.find(orders.keys).each do |o|
+      data = orders[o.id.to_s].merge response_id: @response.id
+      o.update_attributes data.permit :delivery_method, :response_id
     end
+    @response.send!
+    redirect_to manage_orders_path, flash:
+      { success: Medlink.translate("flash.response_sent", user: @user.name) }
   end
 
   def show
