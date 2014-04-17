@@ -8,7 +8,12 @@ describe ReportsController do
     @user = create :user, country: c
 
     create :order, user: @user, created_at: 2.months.ago
-    create :order # creates a new user and country
+
+    response = create :response, user: @user
+    create :order,
+      created_at:      3.days.ago,
+      response:        response,
+      delivery_method: DeliveryMethod::Purchase
 
     @pcmo = create :pcmo, country: c
     @admin = create :admin

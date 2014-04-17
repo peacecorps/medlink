@@ -6,5 +6,5 @@
     - user = order.user
     - fields = [order.created_at, user.pcv_id, user.first_name, user.last_name, user.email, user.primary_phone.try(:display), order.supply, user.location]
     - if response = order.response
-      - fields += [response.created_at, response.delivery_method, response.instructions, order.fulfilled_at, order.received_at]
+      - fields += [response.created_at, order.delivery_method, response.extra_text, nil, nil]
     - csv << fields
