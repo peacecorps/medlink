@@ -3,11 +3,12 @@ class DeliveryMethod
 
   def self.load str
     return str if str.is_a? self
-    find { |m| m.name == str }
+    return unless str
+    find { |m| m.name.to_s == str.to_s }
   end
 
-  def dump
-    name
+  def self.dump method
+    method.name if method
   end
 
   def initialize *args
