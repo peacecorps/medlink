@@ -1,26 +1,20 @@
-<div class="l-wrapper">
+<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :class => 'form-devise', :method => :post }) do |f| %>
+  <h2>Forgot Password</h2>
 
-  <div class="l-main">
-    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :class => 'form-devise', :method => :post }) do |f| %>
-      <h2>Forgot Password</h2>
+  <%= devise_error_messages! %>
 
-      <%= devise_error_messages! %>
+  <h3>Please enter in your email address and PCVID that we have on file.  You will receive an email with instructions to help you reset your password.</h3>
 
-      <h3>Please enter in your email address and PCVID that we have on file.  You will receive an email with instructions to help you reset your password.</h3>
+  <div class="form__section">
+    <div class="input-group">
+      <%= f.email_field :email, :autofocus => true, :placeholder => 'email@email.com', :class => 'input--full', :type => :text %>
+    </div>
 
-      <div class="form__section">
-        <div class="input-group">
-          <%= f.email_field :email, :autofocus => true, :placeholder => 'email@email.com', :class => 'input--full', :type => :text %>
-        </div>
+    <div class="input-group">
+      <%= f.text_field :pcv_id, :placeholder => 'PCV ID', :class => 'input--full', :type => :text %>
+    </div>
 
-        <div class="input-group">
-          <%= f.text_field :pcv_id, :placeholder => 'PCV ID', :class => 'input--full', :type => :text %>
-        </div>
-
-        <%= link_to "Cancel", new_user_session_path, :class => 'btn btn--primary' %>
-        <%= f.submit "Submit", :class => 'btn btn--primary' %>
-      </div>
-    <% end %>
-
+    <%= link_to "Cancel", new_user_session_path, :class => 'btn btn--primary' %>
+    <%= f.submit "Submit", :class => 'btn btn--primary' %>
   </div>
-</div>
+<% end %>
