@@ -13,7 +13,4 @@
 %h1 Edit Account
 .row
   .col-md-offset-1
-    = form_tag admin_users_path, class: 'form-search' do
-      = select_tag :edit_user, grouped_options_for_select(@users), prompt: 'Select Volunteer to edit', class: 'input-sm', style: 'border-color:lightGray'
-      %br
-      %button.btn.btn-primary(type="submit") Edit
+    = render partial: "edit_widget", locals: { users: @users, selected: nil }

@@ -59,6 +59,7 @@ class SMS < ActiveRecord::Base
   end
 
   def confirmation_message
+    # TODO: use I18n file
     names = supplies.map { |s| "#{s.name} (#{s.shortcode})" }
     body = "Request received: #{names.join ', '}"
     if body.length > MAX_LENGTH

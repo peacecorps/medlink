@@ -29,6 +29,7 @@ class Admin::UsersController < AdminController
   end
 
   def edit
+    @users = users_by_country
   end
 
   def update
