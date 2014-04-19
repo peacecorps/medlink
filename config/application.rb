@@ -61,13 +61,4 @@ module Medlink
 
     config.autoload_paths += %W(#{config.root}/lib)
   end
-
-  def self.translate key, vars={}
-    t = I18n.t! key
-    vars.each { |k,v| t.gsub! "{#{k}}", v.to_s }
-    if t =~ /{\w+}/
-      raise "Untranslated field in template: #{t}"
-    end
-    t
-  end
 end

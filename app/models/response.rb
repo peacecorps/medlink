@@ -17,7 +17,7 @@ class Response < ActiveRecord::Base
     base = "TODO: implement base_message"
     long = "#{base} #{extra_text}"
     if long.length > SMS::MAX_LENGTH
-      "#{base} #{Medlink.translate 'sms_see_email'}"
+      "#{base} #{I18n.t! 'sms_see_email'}"
     else
       long
     end

@@ -34,8 +34,7 @@ class OrdersController < ApplicationController
       end
 
       redirect_to next_page, flash: {
-        success: Medlink.translate(
-          "flash.order_placed_for", username: @order.user.name) }
+        success: I18n.t!("flash.order_placed_for", username: @order.user.name) }
     else
       render :new
     end

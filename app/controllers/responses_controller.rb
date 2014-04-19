@@ -22,7 +22,7 @@ class ResponsesController < ApplicationController
     end
     @response.send!
     redirect_to manage_orders_path, flash:
-      { success: Medlink.translate("flash.response_sent", user: @user.name) }
+      { success: I18n.t!("flash.response_sent", user: @user.name) }
   end
 
   def show
@@ -31,7 +31,7 @@ class ResponsesController < ApplicationController
   def archive
     @response.archive!
     redirect_to manage_orders_path, flash:
-      { success: Medlink.translate("flash.response_archived") }
+      { success: I18n.t!("flash.response_archived") }
   end
 
   private # -----

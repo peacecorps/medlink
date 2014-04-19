@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     #   to sign in with another (authorized) account. Devise redirects logged
     #   in users away from that page, however, and clobbers the flash message
     #   in the process.
-    redirect_to root_path, flash: { error: Medlink.translate("flash.auth.general") }
+    redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
   end
 
   def root

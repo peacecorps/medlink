@@ -6,7 +6,7 @@ class SMS < ActiveRecord::Base
   #   be presentable.
   class FriendlyError < StandardError
     def initialize key, subs={}
-      msg = Medlink.translate key, subs
+      msg = I18n.t! key, subs
       super msg
     end
 

@@ -21,7 +21,7 @@ class Admin::UsersController < AdminController
 
     if @user.save
       redirect_to new_admin_user_path,
-        notice: Medlink.translate("flash.user_added")
+        notice: I18n.t!("flash.user_added")
       # FIXME: email password to the user
     else
       render :new
@@ -36,9 +36,9 @@ class Admin::UsersController < AdminController
     if @user.update_attributes user_params
       diff = User::Change.new _attrs, @user
       _flash = if diff.changed?
-        { success: Medlink.translate("flash.changes", changes: diff.summary) }
+        { success: I18n.t!("flash.changes", changes: diff.summary) }
       else
-        { notice: Medlink.translate("flash.no_changes") }
+        { notice: I18n.t!("flash.no_changes") }
       end
       redirect_to new_admin_user_path, flash: _flash
     else
@@ -52,7 +52,7 @@ class Admin::UsersController < AdminController
       # TODO: notify of errors somehow (we can't flash, since we're not rendering a page)
       send_data upload.errors, type: 'text/csv', filename: 'invalid_users.csv'
     else
-      flash[:success] = Medlink.translate "flash.valid_csv", users: upload.added.count
+      flash[:success] = I18n.t! "flash.valid_csv", users: upload.added.count
       redirect_to new_admin_user_path
     end
 
