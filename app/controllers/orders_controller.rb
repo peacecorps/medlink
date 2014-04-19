@@ -14,14 +14,10 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new create_params.merge entered_by: current_user
+    @order = Order.new create_params.merge entered_by: current_user.id
 
     if @order.user_id
       authorize! :create, @order
-    else
-      # Not enough info to authorize; redisplay with validation errors
-      @order.valid?
-      render :new and return
     end
 
     if @order.save

@@ -9,7 +9,9 @@ class Ability
 
     elsif user.pcmo?
       can :respond, User, country_id: user.country_id
-      can :report, Order
+      can :manage, Order do |order|
+        order.user.country_id == user.country_id
+      end
 
     elsif user.admin?
       can :manage, User

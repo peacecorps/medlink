@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20140403154914) do
     t.integer  "supply_id"
     t.integer  "message_id"
     t.text     "request_text"
-    t.string   "entered_by"
+    t.integer  "entered_by"
     t.integer  "response_id"
     t.string   "delivery_method"
     t.datetime "created_at"
