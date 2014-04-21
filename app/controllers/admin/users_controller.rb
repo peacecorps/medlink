@@ -43,6 +43,7 @@ class Admin::UsersController < AdminController
       end
       redirect_to new_admin_user_path, flash: _flash
     else
+      @users = users_by_country
       render :edit
     end
   end
