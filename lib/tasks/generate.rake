@@ -1,88 +1,59 @@
-def random_digits count
-  s = ""
-  count.times { s += ("1".."9").to_a.sample }
-  s
-end
+require 'factory_girl_rails'
 
-desc "Generates random order data"
-task :generate => :environment do
-  countries = ["United States", "Senegal"].map { |name| Country.where(name: name).first! }
-  supplies  = Supply.all
-  orders    = 0
+class Generator
+  include FactoryGirl::Syntax::Methods
 
-  Order.all.select { |o| o.user.email =~ /peacecorps-demo.gov/ }.each &:destroy!
+  USERS_PER_COUNTRY  = 2..4
+  ORDERS_PER_USER    = 1..5
+  SUPPLIES_PER_ORDER = 1..4
 
-  generate_random_order = -> (pcv, date, fulfilled) do
-    o = Order.new(
-      user: pcv,
-      created_at: date,
-      supply: supplies.sample,
-      location: pcv.location,
-    )
-    orders += 1 if o.save
-
-    if fulfilled
-      delay = (1..5).to_a.sample
-      rdate = [date + delay.days, Date.today].min
-      Response.create!(
-        order_id: o.id,
-        created_at: rdate,
-        delivery_method: DeliveryMethod.to_a.sample.name,
-        instructions: "Instructions should go here"
-      )
-    end
+  def initialize *countries
+    @countries = countries.map { |name| Country.find_by_name name }
   end
 
-  User.all.select { |u| u.email =~ /peacecorps-demo.gov/ }.each &:destroy!
-
-  # Make sure each country has at least 3 PCVs and grab them
-  pcvs = []
-  countries.each do |country|
-    %w{ Alice Bob Charlie }.each do |name|
-      email = "#{name}#{country.id}@peacecorps-demo.gov"
-      u = User.new(
-        first_name: name,
-        last_name:  country.name,
-        country_id: country.id,
-        email:      email,
-        location:   "#{name}'s location",
-        phone:      random_digits(10),
-        pcv_id:     random_digits(5),
-        role:       "pcv",
-        time_zone:  ActiveSupport::TimeZone.all.sample.name
-      )
-      u.password = u.password_confirmation = "password"
-      u.save!
-
-      pcvs << u
-    end
+  def clear_existing!
+    users.each &:destroy!
   end
 
-  # Generate random fulfilled orders for the last 2 months
-  odds = (1..7).to_a
-  1.upto 60 do |n|
-    pcvs.each do |pcv|
-      if odds.sample == 1
-        generate_random_order.call pcv, n.days.ago, true
+  def create_users!
+    @countries.each do |c|
+      USERS_PER_COUNTRY.to_a.sample.times do
+        create :user, country: c
       end
     end
   end
 
-  # Generate random recent unfulfilled orders
-  countries.each do |c|
-    locals = pcvs.select { |u| u.country == c }
-    2.times do
-      n = (3..14).to_a.sample
-      pcv = locals.sample
-      generate_random_order.call pcv, n.days.ago, false
-    end
-    4.times do
-      n = (1..3).to_a.sample
-      pcv = locals.sample
-      generate_random_order.call pcv, n.days.ago, false
+  def create_orders!
+    users.each do |user|
+      ORDERS_PER_USER.to_a.sample.times do
+        created_at   = (1..40).to_a.sample.days.ago
+        supply_count = SUPPLIES_PER_ORDER.to_a.sample
+        supplies.sample(supply_count).each do |supply|
+          create :order, user: user, supply: supply, created_at: created_at
+        end
+      end
     end
   end
 
-  puts "Done ... created #{orders} orders"
+  def supplies
+    @_supplies ||= Supply.all
+  end
+
+  def users
+    User.where(country: @countries).select { |u| u.email =~ /example.com/ }
+  end
+
+  def orders
+    Order.where user: users
+  end
 end
 
+desc "Generates random order data"
+task :generate => :environment do
+  g = Generator.new "United States", "Senegal"
+  g.clear_existing!
+  g.create_users!
+  g.create_orders!
+
+  puts "Done ... created #{g.orders.count} orders"
+end
