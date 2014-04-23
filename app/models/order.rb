@@ -5,7 +5,7 @@ class Order < ActiveRecord::Base
   belongs_to :request
   belongs_to :response
 
-  validates_presence_of :supply
+  validates_presence_of :supply, :request
 
   serialize :delivery_method, DeliveryMethod
 

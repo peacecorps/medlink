@@ -8,7 +8,10 @@ class RequestsController < ApplicationController
   def create
     @request = Request.new create_params
     @request.entered_by = current_user.id
-    @request.orders.each { |o| o.user = @request.user }
+    @request.orders.each do |o|
+      o.request = @request
+      o.user    = @request.user
+    end
 
     if @request.user_id
       authorize! :create, @request
