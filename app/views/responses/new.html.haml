@@ -1,3 +1,13 @@
+= content_for :onload do
+  :javascript
+    $(function() {
+      $('.delivery-method').click(function() {
+        var val = $(this).data("method");
+        $('#new_response :radio[value='+ val +']').prop('checked', true);
+      });
+    })
+
+
 .order-back
   = link_to manage_orders_path do
     = icon "chevron-left"
@@ -15,14 +25,14 @@
     = icon "phone-alt"
     = @user.primary_phone ? @user.primary_phone.display : '-'
 
-  = form_for @response, url: user_responses_path(@user, @response), html: {class: 'order__section'} do |f|
+  = form_for @response, url: user_responses_path(@user, @response) do |f|
     %table.table.table-hover
       %thead
         %tr
           %th
           %th
           - DeliveryMethod.each do |method|
-            %th= method.title
+            %th.delivery-method{ "data-method" => method.name }= method.title
       %tbody
         - @orders.group_by { |o| o.created_at.strftime '%-m/%-d/%y' }.each do |ts, os|
           - os.each_with_index do |order,i|
