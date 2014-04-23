@@ -20,7 +20,7 @@ describe SMS do
     user = create :user
     n.times { create :supply }
 
-    m = SMS.new text: "@#{user.pcv_id} #{Supply.last(n).map(&:shortcode).join ' '}"
+    m = SMS.new text: "@#{user.pcv_id} #{Supply.last(n).map(&:shortcode).join ' '}", created_at: Time.now
     expect( m.confirmation_message.length ).to be < 160
     expect( m.confirmation_message ).to match /#{n - 1} other/
   end

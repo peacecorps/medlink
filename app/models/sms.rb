@@ -1,23 +1,11 @@
 class SMS < ActiveRecord::Base
   MAX_LENGTH = 160
 
-  # Errors raised in the sms logic may need to be displayed to the
-  #   user via text. Messages wrapped in this class are assumed to
-  #   be presentable.
-  class FriendlyError < StandardError
-    def initialize key, subs={}
-      msg = I18n.t! key, subs
-      super msg
-    end
-
-    def friendly?; true; end
-  end
-
   self.table_name = "messages"
 
   enum direction: [ :incoming, :outgoing ]
 
-  has_many :requests, foreign_key: :message_id
+  has_one :request, foreign_key: :message_id
 
   def self.deliver number, text
     sms = SMS.create number: number, text: text, direction: :outgoing
@@ -43,12 +31,19 @@ class SMS < ActiveRecord::Base
     raise FriendlyError.new "sms.unrecognized_user"
   end
 
-  def supplies
-    @_supplies ||= Supply.find_by_shortcodes parsed.shortcodes
+  def check_duplicates! span
+    dup = SMS.incoming.where(text: text).reject { |m| m.id == id }.last
+    if dup && dup.created_at >=span.ago
+      raise FriendlyError.new "sms.duplicate_order", {
+        supplies: supplies.map(&:name),
+        due_date: Request.due_date(dup.request.created_at)
+      }, condense: :supply
+    end
   end
 
   def create_orders!
-    request = requests.create!(
+    request = Request.create!(
+      message_id: id,
       user:       user,
       text:       parsed.instructions,
       entered_by: user.id
@@ -62,14 +57,10 @@ class SMS < ActiveRecord::Base
   end
 
   def confirmation_message
-    # TODO: use I18n file
-    names = supplies.map { |s| "#{s.name} (#{s.shortcode})" }
-    body = "Request received: #{names.join ', '}"
-    if body.length > MAX_LENGTH
-      "Request received: #{names.first} & #{names.length - 1} other items"
-    else
-      body
-    end
+    Condenser.new("sms.confirmation", :supply,
+      supplies: supply_names,
+      due_date: Request.due_date(created_at)
+    ).message
   end
 
   def send_confirmation!
@@ -80,5 +71,13 @@ class SMS < ActiveRecord::Base
 
   def parsed
     @_parsed ||= Parser.new(text).tap &:run!
+  end
+
+  def supplies
+    @_supplies ||= Supply.find_by_shortcodes parsed.shortcodes
+  end
+
+  def supply_names
+    @_supply_names ||= supplies.map { |s| "#{s.name} (#{s.shortcode})" }
   end
 end

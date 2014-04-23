@@ -16,7 +16,7 @@ describe TwilioController do
 
     expect( SMS.incoming.last.text ).to eq body
     expect( @user.orders.map { |o| o.supply.name } ).to eq %w(Sup wit)
-    expect( SMS.outgoing.last.text ).to match /Request received/
+    expect( SMS.outgoing.last.text ).to match /request.*received/i
   end
 
   it "responds with error messages when something is wrong" do
@@ -29,5 +29,16 @@ describe TwilioController do
     expect( SMS.incoming.last.text ).to eq body
     expect( Order.count ).to be 0
     expect( SMS.outgoing.last.text ).to match /Unrecognized supply/
+  end
+
+  it "rejects duplicate messages" do
+    2.times do
+      post :receive,
+        From: @user.primary_phone.number,
+        Body: "Sup"
+    end
+
+    expect( Order.count ).to eq 1
+    expect( SMS.outgoing.last.text ).to match /already received/
   end
 end

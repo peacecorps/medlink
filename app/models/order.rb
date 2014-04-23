@@ -13,12 +13,12 @@ class Order < ActiveRecord::Base
   scope :without_responses, -> { where("response_id IS NULL") }
 
   def self.due_cutoff
-    now = Time.now
+    now    = Time.now
     oldest = now.at_beginning_of_month
     now.day < 3 ? oldest - 1.month : oldest
   end
 
-  scope :past_due, -> { without_responses.where ["orders.created_at < ?", due_cutoff]  }
+  scope :past_due, -> { without_responses.where ["orders.created_at  < ?", due_cutoff] }
   scope :pending,  -> { without_responses.where ["orders.created_at >= ?", due_cutoff] }
 
   include ActionView::Helpers::DateHelper

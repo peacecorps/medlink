@@ -21,6 +21,5 @@ en:
     unrecognized_user: "Sorry! Can't find user account. Start your message with '@your-pcvid' or text from a recognized number. Contact med unit to add a new number to your account"
     unrecognized_shortcodes: "Unrecognized supply short codes: %{codes}. Resubmit your request in the format: Supply Short Code, Supply Short Code - Special Instructions"
     unparseable: "Could not parse message. Resubmit your request in the format: Supply Short Code, Supply Short Code - Special Instructions"
-    base_confirmation_single: "Thanks! Your request for %{SUPPLY NAME 1} and %{# OF ADDITIONAL ITEMS} more items has been received. You can expect a response shortly after %{DATE for first of the next month}."
-    base_confirmation_multiple: "Thanks! Your request for %{SUPPLY NAME 1} has been received. You can expect a response shortly after %{DATE for first of the next month}."
-    duplicate_order: "Oops! We have already received your request for %{SUPPLY NAME 1} and %{# OF ADDITIONAL ITEMS} more items. A response will follow shortly after %{DATE for first of the next month}."
+    confirmation: "Thanks! Your request for %{supplies} has been received. You can expect a response shortly after %{due_date}."
+    duplicate_order: "Oops! We have already received your request for %{supplies}. A response will follow shortly after %{due_date}."

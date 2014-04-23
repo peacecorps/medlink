@@ -17,7 +17,8 @@ class Supply < ActiveRecord::Base
     found = where shortcode: upcodes
     missed = upcodes - found.map(&:shortcode)
     if missed.any?
-      raise SMS::FriendlyError.new "sms.unrecognized_shortcodes", codes: missed.join(', ')
+      raise SMS::FriendlyError.new "sms.unrecognized_shortcodes",
+        { codes: missed }, condense: :code
     end
     found
   end
