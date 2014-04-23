@@ -23,7 +23,7 @@
     = "#{@user.location}, #{@user.country.name}"
     &nbsp;
     = icon "phone-alt"
-    = @user.primary_phone ? @user.primary_phone.display : '-'
+    = @user.primary_phone ? @user.primary_phone.number : '-'
 
   = form_for @response, url: user_responses_path(@user, @response) do |f|
     %table.table.table-hover

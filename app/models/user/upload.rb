@@ -40,7 +40,7 @@ class User
 
         if user.save
           phones.each do |number|
-            PhoneNumber.where(user_id: user.id, display: number).first_or_create!
+            Phone.where(user_id: user.id, number: number).first_or_create!
           end
           @added << user
         else

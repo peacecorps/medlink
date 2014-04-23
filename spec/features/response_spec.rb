@@ -4,7 +4,7 @@ describe ResponsesController do
   before :each do
     @country = create :country
     @user = create :user, country: @country
-    create :phone_number, user: @user
+    create :phone, user: @user
     4.times { create :order, user: @user }
 
     @pcmo = create :pcmo, country: @country
@@ -24,7 +24,7 @@ describe ResponsesController do
     expect( page.find(".flash").text ).to match /response.*sent.*#{@user.name}/i
 
     sms = SMS.outgoing.last
-    expect( sms.number ).to eq @user.primary_phone.display
+    expect( sms.number ).to eq @user.primary_phone.number
 
     mail = ActionMailer::Base.deliveries.last
     expect( mail.to ).to eq [@user.email]

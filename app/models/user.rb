@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
   belongs_to :country
   has_many :orders, dependent: :destroy
 
-  has_many :phone_numbers, dependent: :destroy
-  accepts_nested_attributes_for :phone_numbers, allow_destroy: true
+  has_many :phones, dependent: :destroy
+  accepts_nested_attributes_for :phones, allow_destroy: true
 
   validates_presence_of :country, :location, :first_name, :last_name, :role
   validates_presence_of :pcv_id, :if => :pcv?
@@ -20,11 +20,11 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_phone_number number
-    PhoneNumber.lookup(number).user
+    Phone.lookup(number).user
   end
 
   def primary_phone
-    @_primary_phone ||= phone_numbers.first
+    @_primary_phone ||= phones.first
   end
 
   def self.pcmos_by_country

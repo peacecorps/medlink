@@ -4,14 +4,14 @@ describe TwilioController do
   before :each do
     %w(Sup wit dat).each { |n| create :supply, name: n, shortcode: n }
     @user = create :user, pcv_id: 'asdf'
-    create :phone_number, user: @user
+    create :phone, user: @user
   end
 
   it "can create multiple orders from an incoming text" do
     body = "Sup wit - Please"
 
     post :receive,
-      From: @user.primary_phone.display,
+      From: @user.primary_phone.number,
       Body: body
 
     expect( SMS.incoming.last.text ).to eq body
@@ -23,7 +23,7 @@ describe TwilioController do
     body = "Bro - do you even liftM?"
 
     post :receive,
-      From: @user.primary_phone.display,
+      From: @user.primary_phone.number,
       Body: body
 
     expect( SMS.incoming.last.text ).to eq body

@@ -10,7 +10,7 @@
     = "#{@user.location}, #{@user.country}"
     &nbsp;
     = icon "phone-alt"
-    = @user.primary_phone ? @user.primary_phone.display : '-'
+    = @user.primary_phone ? @user.primary_phone.number : '-'
 
   %table.table.table-hover
     %thead

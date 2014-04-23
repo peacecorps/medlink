@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20140403154914) do
     t.datetime "created_at"
   end
 
-  create_table "phone_numbers", force: true do |t|
+  create_table "phones", force: true do |t|
     t.integer  "user_id"
-    t.string   "display"
+    t.string   "number"
     t.string   "condensed"
     t.datetime "created_at"
   end
