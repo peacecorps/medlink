@@ -30,6 +30,9 @@ group :development, :test do
   gem 'letter_opener'
   gem 'pry'
   gem 'sqlite3'
+
+  gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :test do

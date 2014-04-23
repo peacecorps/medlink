@@ -173,6 +173,9 @@ GEM
     slop (3.5.0)
     sms-spec (0.1.9)
       rspec (~> 2.11)
+    spring (1.1.2)
+    spring-commands-rspec (1.0.2)
+      spring (>= 0.9.1)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -238,6 +241,8 @@ DEPENDENCIES
   sass-rails
   simplecov
   sms-spec
+  spring
+  spring-commands-rspec
   sprockets (= 2.11.0)
   sqlite3
   sucker_punch
