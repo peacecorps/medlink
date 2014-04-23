@@ -1,24 +1,27 @@
 %h1 Request Manager
 
 - if current_user.admin?
-  = select(:country, :country_id, Country.with_orders.collect { |country| [country.name, country.id] }, {:include_blank => "Select Country"}, {"id" => "admin_country_select", class: 'input-sm', style: 'border-color:lightGray'})
+  = select(:country, :country_id,
+    Country.with_orders.collect { |country| [country.name, country.id] },
+    {include_blank: "Select Country"},
+    {id: "admin_country_select", class: 'input-sm', style: 'border-color:lightGray'})
   %hr
 - else
   = hidden_field_tag :pcmo_country_id, current_user.country_id
 
-.section#past-due-requests
+.order-table#past-due-requests
   %br
   %h3 Past Due Requests
   %table#past-due-orders.table.table-bordered.js-striped.table-hover
     = render partial: 'request_table', locals: { orders: @orders.past_due }
 
-.section#pending-requests
+.order-table#pending-requests
   %br
   %h3 Pending Requests
   %table#pending-orders.table.table-bordered.js-striped.table-hover
     = render partial: 'request_table', locals: { orders: @orders.pending }
 
-.section#response-tracker
+.order-table#response-tracker
   %br
   %h3 Response Tracker
   %table#responded-orders.table.table-bordered.js-striped.table-hover
