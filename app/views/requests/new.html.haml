@@ -1,7 +1,7 @@
 %h1= current_user.pcv? ? "Request Form" : "Place an Order"
 
-= form_for @order, html: {class: 'form--order'} do |f|
-  = render partial: 'partials/errors', locals: {object: @order}
+= nested_form_for @request, html: {class: 'form--order'} do |f|
+  = render partial: 'partials/errors', locals: { object: @request }
 
   .form__section
     .input-group
@@ -17,10 +17,13 @@
     .row
       .col-md-4
         .select.select--full
-          = f.select(:supply_id, [['Select Supply', '']] + Supply.choices, {}, class: 'form-control input-sm')
+          = f.fields_for :orders do |order_form|
+            = order_form.select(:supply_id, [['Select Supply', '']] + Supply.choices, {}, class: 'form-control input-sm')
+          = f.link_to_add :orders, class: "btn btn-success" do
+            = icon :plus
           %i.icon-caret-down.select__arrow
 
-        = f.text_area :request_text, placeholder: 'Special instructions area', rows: 3, class: 'form-control input-sm'
+        = f.text_area :text, placeholder: 'Special instructions area', rows: 3, class: 'form-control input-sm'
 
         .form-actions
           .btn-group

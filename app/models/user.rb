@@ -5,7 +5,10 @@ class User < ActiveRecord::Base
   enum role: [ :pcv, :pcmo, :admin ]
 
   belongs_to :country
-  has_many :orders, dependent: :destroy
+
+  %i( requests orders responses ).each do |name|
+    has_many name, dependent: :destroy
+  end
 
   has_many :phones, dependent: :destroy
   accepts_nested_attributes_for :phones, allow_destroy: true

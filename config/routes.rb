@@ -11,9 +11,11 @@ Medlink::Application.routes.draw do
     end
   end
 
-  resources :orders, only: [:index, :new, :create] do
+  resources :orders, only: [:index] do
     get :manage, on: :collection
   end
+
+  resources :requests, only: [:new, :create]
 
   resources :users, only: [] do
     resources :responses, only: [:new, :create, :show] do

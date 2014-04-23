@@ -17,8 +17,8 @@ class ApplicationController < ActionController::Base
       new_admin_user_path
     elsif current_user.pcmo?
       manage_orders_path
-    else # PCV
-      new_order_path
+    else
+      new_request_path
     end
 
     redirect_to start_page

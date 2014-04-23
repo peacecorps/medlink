@@ -1,11 +1,9 @@
 class Response < ActiveRecord::Base
-  belongs_to :user
+  include Concerns::UserScope
+
   belongs_to :message
 
   has_many :orders
-
-  belongs_to :country
-  before_save { self.country = user.country }
 
   default_scope { where(archived_at: nil) }
 

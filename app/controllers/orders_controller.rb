@@ -1,49 +1,18 @@
 class OrdersController < ApplicationController
   def index
-    @orders = accessible_orders.order "orders.created_at desc"
+    @orders = accessible_orders.order created_at: :desc
   end
 
   def manage
     authorize! :respond, User
-    @orders = accessible_orders
+    @orders    = accessible_orders
     @responses = accessible_responses
   end
 
-  def new
-    @order = current_user.orders.new
-  end
-
-  def create
-    @order = Order.new create_params.merge entered_by: current_user.id
-
-    if @order.user_id
-      authorize! :create, @order
-    end
-
-    if @order.save
-      next_page = if current_user.admin?
-        new_admin_user_path
-      elsif current_user.pcmo?
-        manage_orders_path
-      else
-        orders_path
-      end
-
-      redirect_to next_page, flash: {
-        success: I18n.t!("flash.order_placed_for", username: @order.user.name) }
-    else
-      render :new
-    end
-  end
-
-  private # -----
-
-  def create_params
-    params.require(:order).permit [:extra, :supply_id, :user_id]
-  end
+  private
 
   def accessible_orders
-    current_user.accessible(Order).includes :user, :supply
+    current_user.accessible(Order).includes :user, :supply, :request
   end
 
   def accessible_responses

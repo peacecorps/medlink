@@ -14,7 +14,7 @@
           %li= link_to 'Admin Home', new_admin_user_path
         - if current_user.pcmo? || current_user.admin?
           %li= link_to 'Request Manager', manage_orders_path
-        %li= link_to 'Place a Request', new_order_path
+        %li= link_to 'Place a Request', new_request_path
         - if current_user.pcmo? || current_user.admin?
           %li= link_to 'Reports', reports_path
       %ul.nav.navbar-nav.navbar-right
@@ -29,7 +29,7 @@
             %li.divider
             %li.divider
             - if current_user.pcv? || current_user.admin?
-              %li= link_to 'Request Supply', new_order_path
+              %li= link_to 'Request Supply', new_request_path
               %li= link_to 'Request History', orders_path
             %li= link_to 'Change Password', edit_user_registration_path
             %li= link_to 'Help', help_path

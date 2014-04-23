@@ -5,13 +5,13 @@ describe "A PCV placing an order" do
     @supply = create :supply
     @user = create :user
     login @user
-    visit new_order_path
+    visit new_request_path
   end
 
   describe "after being placed" do
     before :each do
-      select @supply.name, from: :order_supply_id
-      fill_in :order_request_text, with: "Request instructions"
+      select @supply.name, from: :request_orders_attributes_0_supply_id
+      fill_in :request_text, with: "Request instructions"
       click_on "Submit"
     end
 
@@ -42,13 +42,13 @@ describe "A PCV placing an order" do
     login pcmo
     click_on "Place a Request"
 
-    select @user.name, from: :order_user_id
-    select @supply.name, from: :order_supply_id
+    select @user.name, from: :request_user_id
+    select @supply.name, from: :request_orders_attributes_0_supply_id
     click_on "Submit"
 
     o = Order.last
     expect( o.user_id ).to eq @user.id
-    expect( o.entered_by ).to eq pcmo.id
+    expect( o.request.entered_by ).to eq pcmo.id
     expect( current_path ).to eq manage_orders_path
   end
 
@@ -58,13 +58,13 @@ describe "A PCV placing an order" do
     login admin
     click_on "Place a Request"
 
-    select @user.name, from: :order_user_id
-    select @supply.name, from: :order_supply_id
+    select @user.name, from: :request_user_id
+    select @supply.name, from: :request_orders_attributes_0_supply_id
     click_on "Submit"
 
     o = Order.last
     expect( o.user_id ).to eq @user.id
-    expect( o.entered_by ).to eq admin.id
+    expect( o.request.entered_by ).to eq admin.id
     expect( current_path ).to eq new_admin_user_path
   end
 end

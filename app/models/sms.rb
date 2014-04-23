@@ -17,7 +17,7 @@ class SMS < ActiveRecord::Base
 
   enum direction: [ :incoming, :outgoing ]
 
-  has_many :orders, foreign_key: :message_id
+  has_many :requests, foreign_key: :message_id
 
   def self.deliver number, text
     sms = SMS.create number: number, text: text, direction: :outgoing
@@ -48,12 +48,15 @@ class SMS < ActiveRecord::Base
   end
 
   def create_orders!
+    request = requests.create!(
+      user:       user,
+      text:       parsed.instructions,
+      entered_by: user.id
+    )
     supplies.each do |supply|
-      orders.create!(
-        user_id:         user.id,
-        supply_id:       supply.id,
-        request_text:    parsed.instructions,
-        entered_by:      user.id
+      request.orders.create!(
+        user:      user,
+        supply_id: supply.id,
       )
     end
   end

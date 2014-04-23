@@ -14,8 +14,8 @@
         = phone_form.link_to_remove class: "btn btn-danger" do
           = icon :remove
         = phone_form.text_field :number, placeholder: 'Phone number', class: 'form-control input-sm'
-      /= f.link_to_add :phones, class: "btn btn-success" do
-      /  = icon :plus
+      = f.link_to_add :phones, class: "btn btn-success" do
+        = icon :plus
     .col-md-4.col-md-offset-1
       / FIXME? Password? -- Need more words.
       = f.text_field :pcv_id, placeholder: 'PCV ID', class: 'form-control input-sm'

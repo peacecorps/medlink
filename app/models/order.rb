@@ -1,13 +1,11 @@
 class Order < ActiveRecord::Base
-  belongs_to :user
+  include Concerns::UserScope
+
   belongs_to :supply
+  belongs_to :request
   belongs_to :response
 
-  validates_presence_of :user
   validates_presence_of :supply
-
-  belongs_to :country
-  before_save { self.country = user.country }
 
   serialize :delivery_method, DeliveryMethod
 

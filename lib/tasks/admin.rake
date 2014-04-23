@@ -28,7 +28,7 @@ namespace :admin do
     user.time_zone = "Alaska"
     user.save!
 
-    user.phones.create! number: '404-555-1212'
+    user.phones.create! number: '+1 404-555-1212'
   end
 
 end

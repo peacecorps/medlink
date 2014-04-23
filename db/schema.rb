@@ -21,37 +21,44 @@ ActiveRecord::Schema.define(version: 20140403154914) do
   add_index "countries", ["code"], name: "index_countries_on_code"
 
   create_table "messages", force: true do |t|
+    t.datetime "created_at"
     t.string   "number"
     t.string   "text"
     t.integer  "direction"
-    t.datetime "created_at"
   end
 
   create_table "orders", force: true do |t|
+    t.datetime "created_at"
     t.integer  "country_id"
     t.integer  "user_id"
+    t.integer  "request_id"
     t.integer  "supply_id"
-    t.integer  "message_id"
-    t.text     "request_text"
-    t.integer  "entered_by"
     t.integer  "response_id"
     t.string   "delivery_method"
-    t.datetime "created_at"
   end
 
   create_table "phones", force: true do |t|
+    t.datetime "created_at"
     t.integer  "user_id"
     t.string   "number"
     t.string   "condensed"
+  end
+
+  create_table "requests", force: true do |t|
     t.datetime "created_at"
+    t.integer  "country_id"
+    t.integer  "user_id"
+    t.integer  "message_id"
+    t.text     "text"
+    t.integer  "entered_by"
   end
 
   create_table "responses", force: true do |t|
+    t.datetime "created_at"
     t.integer  "country_id"
     t.integer  "user_id"
     t.integer  "message_id"
     t.string   "extra_text"
-    t.datetime "created_at"
     t.datetime "archived_at"
   end
 
