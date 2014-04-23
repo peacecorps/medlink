@@ -12,7 +12,6 @@ describe Response do
     end
   end
 
-  pending "SMS response text"
   pending "Email response contents"
 
   it "can de-serialize responded orders" do
@@ -27,5 +26,21 @@ describe Response do
       LIMIT 1
     }.squish
     expect( raw.first["delivery_method"] ).to eq "pickup"
+  end
+
+  describe "messaging" do
+    it "all pickup" do
+      expect( @response.sms_instructions ).to match /approved for pickup/i
+    end
+
+    it "some failures" do
+      @response.orders.first.update_attributes delivery_method: DeliveryMethod::Denial
+      expect( @response.sms_instructions ).to match /unable to fill.*entire order/i
+    end
+
+    it "mixed approval" do
+      @response.orders.first.update_attributes delivery_method: DeliveryMethod::Delivery
+      expect( @response.sms_instructions ).to match /approved.*check email/i
+    end
   end
 end
