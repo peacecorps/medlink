@@ -32,10 +32,9 @@ class SMS < ActiveRecord::Base
   end
 
   def check_duplicates! span
-    dup = SMS.incoming.where(text: text).reject { |m| m.id == id }.last
-    if dup && dup.created_at >=span.ago
+    if dup = find_duplicate(span)
       raise FriendlyError.new "sms.duplicate_order", {
-        supplies: supplies.map(&:name),
+        supplies: supply_names,
         due_date: Request.due_date(dup.request.created_at)
       }, condense: :supply
     end
@@ -79,5 +78,13 @@ class SMS < ActiveRecord::Base
 
   def supply_names
     @_supply_names ||= supplies.map { |s| "#{s.name} (#{s.shortcode})" }
+  end
+
+  def find_duplicate span
+    SMS.incoming.
+      where(text: text).
+      where(["created_at >= ?", span.ago]).
+      where(["id != ?", id]).
+      last
   end
 end
