@@ -19,6 +19,7 @@ en:
       password_reset_invalid: "No user matches that email and PCV ID"
 
   sms:
+    unexpected_error: "Sorry! Something went wrong. An administrator has been notified."
     unrecognized_user: "Sorry! Can't find user account. Start your message with '@your-pcvid' or text from a recognized number. Contact med unit to add a new number to your account"
     unrecognized_shortcodes: "Unrecognized supply short codes: %{codes}. Resubmit your request in the format: Supply Short Code, Supply Short Code - Special Instructions"
     unparseable: "Could not parse message. Resubmit your request in the format: Supply Short Code, Supply Short Code - Special Instructions"

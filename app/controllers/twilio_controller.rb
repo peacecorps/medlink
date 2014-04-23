@@ -8,6 +8,11 @@ class TwilioController < ApplicationController
     sms.send_confirmation!
   rescue SMS::FriendlyError => e
     SMS.deliver params[:From], e.message
+  rescue
+    # :nocov: This _should_ be impossible, but just in cases ...
+    SMS.deliver params[:From], I18n.t!("sms.unexpected_error")
+    raise
+    # :nocov:
   ensure
     head :no_content
   end
