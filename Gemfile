@@ -27,6 +27,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'bullet'
   gem 'letter_opener'
   gem 'pry'
   gem 'sqlite3'

@@ -30,6 +30,11 @@ Medlink::Application.configure do
   config.action_mailer.delivery_method = :letter_opener
 
   config.eager_load = false
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.raise  = true
+  end
 end
 
 # Stub out the Twilio Client

@@ -12,10 +12,10 @@ class OrdersController < ApplicationController
   private
 
   def accessible_orders
-    current_user.accessible(Order).includes :user, :supply, :request
+    current_user.accessible(Order).includes :user, :supply
   end
 
   def accessible_responses
-    current_user.accessible(Response)
+    current_user.accessible(Response).includes :orders => :supply
   end
 end

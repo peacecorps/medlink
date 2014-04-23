@@ -5,7 +5,7 @@ class ReportsController < ApplicationController
 
   def order_history
     authorize! :report, Order
-    @orders = current_user.accessible Order
+    @orders = current_user.accessible(Order).includes :user, :supply, :response
   end
 
   def users
@@ -15,6 +15,6 @@ class ReportsController < ApplicationController
 
   def pcmo_response_times
     authorize! :report, User
-    @orders = current_user.accessible Order
+    @orders = current_user.accessible(Order).includes :user, :supply, :response, :country
   end
 end

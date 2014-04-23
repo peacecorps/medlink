@@ -1,6 +1,7 @@
-- orders.group_by { |o| o.request }.each do |request, os|
+- orders.group_by { |o| o.request_id }.each do |_, os|
   %dl
     %dt
-      %span= request.created_at.in_time_zone(user.time_zone).strftime '%-m/%-d/%y'
-      %small.cell--secondary= request.created_at.in_time_zone(user.time_zone).strftime '%H:%M'
+      - time = os.first.created_at.in_time_zone user.time_zone
+      %span= time.strftime '%-m/%-d/%y'
+      %small.cell--secondary= time.strftime '%H:%M'
     %dd= os.map { |o| o.supply.name }.join ', '
