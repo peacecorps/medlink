@@ -17,7 +17,7 @@ class DeliveryMethod
     freeze
   end
 
-  def eq other
+  def == other
     name == other.name
   end
 

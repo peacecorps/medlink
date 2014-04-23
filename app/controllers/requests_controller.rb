@@ -18,16 +18,7 @@ class RequestsController < ApplicationController
     end
 
     if @request.save
-      next_page = if current_user.admin?
-        new_admin_user_path
-      elsif current_user.pcmo?
-        manage_orders_path
-      else
-        orders_path
-      end
-
-      redirect_to next_page, flash: {
-        success: I18n.t!("flash.request_placed_for", username: @request.user.name) }
+      redirect_to after_create_page, flash: { success: create_success_message }
     else
       render :new
     end
@@ -38,5 +29,23 @@ class RequestsController < ApplicationController
   def create_params
     params.require(:request).permit :user_id, :body,
       orders_attributes: [:supply_id]
+  end
+
+  def after_create_page
+    if current_user.admin?
+      new_admin_user_path
+    elsif current_user.pcmo?
+      manage_orders_path
+    else
+      orders_path
+    end
+  end
+
+  def create_success_message
+    if @request.user_id == @request.entered_by
+      I18n.t! "flash.request_placed"
+    else
+      I18n.t! "flash.request_placed_for", username: @request.user.name
+    end
   end
 end

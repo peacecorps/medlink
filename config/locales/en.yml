@@ -1,7 +1,8 @@
 en:
   flash:
-    response_sent: "Success! Your response has been sent to %{user}. This request will now appear in the response tracker awaiting fulfillment."
+    request_placed: "Success! Your order has been sent."
     request_placed_for: "Success! The order you placed on behalf of %{username} has been sent."
+    response_sent: "Success! Your response has been sent to %{user}. This request will now appear in the response tracker awaiting fulfillment."
     response_archived: "Response has been marked as archived."
 
     user_added: "Success! You have added a new user to PC Medlink"
@@ -23,3 +24,11 @@ en:
     unparseable: "Could not parse message. Resubmit your request in the format: Supply Short Code, Supply Short Code - Special Instructions"
     confirmation: "Thanks! Your request for %{supplies} has been received. You can expect a response shortly after %{due_date}."
     duplicate_order: "Oops! We have already received your request for %{supplies}. A response will follow shortly after %{due_date}."
+    response:
+      delivery: "Your request for %{supplies} has been approved for delivery to you."
+      pickup: "Your request for %{supplies} has been approved for pickup."
+      purchase: "Sorry, we are unable to fulfill you request for %{supplies}. Please purchase and allow us to reimburse you."
+      denial: "Sorry, we are unable to fulfill you request for %{supplies}."
+      mixed_approval: "Your request for %{supplies} has been approved. Check email for details."
+      partial_denial: "Sorry, we are unable to fill your entire order for %{supplies}. Check email for details."
+
