@@ -12,8 +12,6 @@ describe Response do
     end
   end
 
-  pending "Email response contents"
-
   it "can de-serialize responded orders" do
     expect( Order.last.delivery_method ).to respond_to :name
   end

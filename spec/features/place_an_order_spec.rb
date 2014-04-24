@@ -26,6 +26,7 @@ describe "A PCV placing an order" do
       login pcmo
       visit manage_orders_path
       expect( page.find "#pending-requests" ).to have_content @supply.name
+      expect( Order.last ).not_to be_denied
     end
   end
 

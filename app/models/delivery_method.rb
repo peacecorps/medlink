@@ -21,21 +21,24 @@ class DeliveryMethod
     name == other.name
   end
 
-  Delivery = new :delivery,
-    'Your request is estimated to arrive at your location on [enter date here]'
-  Pickup = new :pickup,
-    'Your request will be available for pick up at [enter location here] after [enter date]'
-  Purchase = new :purchase,
-    'We do not have the requested item in stock. Please purchase elsewhere and allow us to
-     reimburse you.'.squish, 'Purchase & Reimburse'
-  Denial  = new :denial,
-    'We are sorry but we are unable to fulfill your request: [enter reason] '
+  module Choices
+    Delivery = DeliveryMethod.new :delivery,
+      'Your request is estimated to arrive at your location on [enter date here]'
+    Pickup = DeliveryMethod.new :pickup,
+      'Your request will be available for pick up at [enter location here] after [enter date]'
+    Purchase = DeliveryMethod.new :purchase,
+      'We do not have the requested item in stock. Please purchase elsewhere and allow us to
+       reimburse you.'.squish, 'Purchase & Reimburse'
+    Denial = DeliveryMethod.new :denial,
+      'We are sorry but we are unable to fulfill your request: [enter reason]'
+  end
+  include Choices
 
   class << self
     include Enumerable
 
     def each
-      [Delivery, Pickup, Purchase, Denial].each { |m| yield m }
+      Choices.constants.each { |name| yield const_get(name) }
     end
   end
 end

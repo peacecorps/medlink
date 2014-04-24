@@ -7,7 +7,8 @@ class UserMailer < ActionMailer::Base
 
   def fulfillment id
     @response = Response.find id
-    @subject = "TODO: define subject"
-    mail to: @response.user.email, subject: @subject
+    @orders   = @response.orders.includes :supply
+    @subject  = "Your order has been processed"
+    mail to: @response.user.email, subject: "[PC Medlink] #{@subject}"
   end
 end

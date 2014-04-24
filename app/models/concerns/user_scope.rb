@@ -9,6 +9,6 @@ module Concerns::UserScope
     def country_id
       super || user.country_id
     end
-    before_save { self.country = user.country }
+    before_save { self.country ||= user.country }
   end
 end

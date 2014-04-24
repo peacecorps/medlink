@@ -5,7 +5,7 @@ describe ResponsesController do
     @country = create :country
     @user = create :user, country: @country
     create :phone, user: @user
-    4.times { create :order, user: @user }
+    4.times { create :order, user: @user, country: @country }
 
     @pcmo = create :pcmo, country: @country
     login @pcmo

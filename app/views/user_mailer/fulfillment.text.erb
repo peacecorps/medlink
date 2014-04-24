@@ -1,16 +1,9 @@
-#{@subject}
+<%= @subject %>
 ==============================================
 
-Your order for:
-
-<%- @response.orders.each do |order| %>
-  <%= "#{order.supply.name}; \n" %>
-<%- end %>
-
-<%- if @response.orders.any? &:denied? %>
-has been denied. Please see the attached response:
-<%- else %>
-has successfully been fulfilled. Please follow the attached instructions:
+<%- @orders.each do |order| %>
+  <%= "#{order.supply.name} (#{order.supply.shortcode})" %>
+  <%= "  #{order.delivery_method.title}\n" %>
 <%- end %>
 
 <%= @response.extra_text %>

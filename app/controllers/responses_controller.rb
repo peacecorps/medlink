@@ -16,7 +16,7 @@ class ResponsesController < ApplicationController
   def create
     @response.update_attributes(response_params) || raise("Failed to update response")
     orders = params[:orders].select { |_,data| data.include? "delivery_method" }
-    Order.where(id: orders.keys).includes(:request, :user, :supply).each do |o|
+    Order.where(id: orders.keys).includes(:request, :user, :country, :supply).each do |o|
       data = orders[o.id.to_s].merge response_id: @response.id
       o.update_attributes data.permit :delivery_method, :response_id
     end

@@ -1,14 +1,16 @@
 %h1= @subject
 
-%p Your order for:
-
-%ul
-  - @response.orders.each do |order|
-    %li= "#{order.supply.name}"
-
-- if @response.orders.any? &:denied?
-  %p has been denied. Please see the attached response:
-- else
-  %p has successfully been fulfilled. Please follow the attached instructions:
+%table
+  %thead
+    %tr
+      %th Supply
+      %th
+      %th Response
+  %tbody
+    - @orders.each do |order|
+      %tr
+        %td= order.supply.shortcode
+        %td= order.supply.name
+        %td= order.delivery_method.title
 
 %p= @response.extra_text
