@@ -34,7 +34,6 @@ class User < ActiveRecord::Base
     pcmo.includes(:country).group_by &:country
   end
 
-  # TODO: should this be a default scope? Can those inspect current_user?
   def accessible model
     if admin?
       model.all

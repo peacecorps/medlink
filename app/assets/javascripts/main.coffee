@@ -1,4 +1,3 @@
-# FIXME: extract into a more appropriate location / framework?
 $ ->
   # -- Order list -----
   $("tr[data-link]").click ->

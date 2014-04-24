@@ -34,7 +34,6 @@ class SMS
     end
 
     def partial
-      # TODO: this is en-specific
       @_partial ||= begin
         slot = "#{@values.first}"
         if @values.length > 1

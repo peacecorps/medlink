@@ -7,22 +7,19 @@ class Admin::UsersController < AdminController
   end
 
   def create
-    # FIXME: This is a hack to accomodate the edit user
-    #    selection being on the new user (/admin home) page
+    # This is a kludge to accomodate the edit user
+    #   selection being on the new user (/admin home) page
     if id = params[:edit_user]
       user = User.find id
       redirect_to edit_admin_user_path(user) and return
     end
 
-    password = 'password' # Devise.friendly_token.first 8
-
     @users = users_by_country
-    @user = User.new user_params.merge(password: password)
+    @user = User.new user_params.merge(password: SecureRandom.hex)
 
     if @user.save
       redirect_to new_admin_user_path,
         notice: I18n.t!("flash.user_added")
-      # FIXME: email password to the user
     else
       render :new
     end
@@ -51,7 +48,6 @@ class Admin::UsersController < AdminController
   def upload_csv
     upload = run_upload!
     if upload.errors.present?
-      # TODO: notify of errors somehow (we can't flash, since we're not rendering a page)
       send_data upload.errors, type: 'text/csv', filename: 'invalid_users.csv'
     else
       flash[:success] = I18n.t! "flash.valid_csv", users: upload.added.count

@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   skip_before_filter :authenticate_user!, only: :help
 
   rescue_from CanCan::AccessDenied do |exception|
-    # TODO: it'd be nice to redirect to the login page in case the user wants
-    #   to sign in with another (authorized) account. Devise redirects logged
+    # It'd be nice to redirect to the login page in case the user wants to
+    #   sign in with another (authorized) account. Devise redirects logged
     #   in users away from that page, however, and clobbers the flash message
     #   in the process.
     redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
