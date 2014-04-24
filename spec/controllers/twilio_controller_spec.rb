@@ -10,7 +10,7 @@ describe TwilioController do
   it "can create multiple orders from an incoming text" do
     body = "Sup wit - Please"
 
-    post :receive,
+    post :receive, AccountSid: ENV.fetch("TWILIO_ACCOUNT_SID"),
       From: @user.primary_phone.number,
       Body: body
 
@@ -22,7 +22,7 @@ describe TwilioController do
   it "responds with error messages when something is wrong" do
     body = "Bro - do you even liftM?"
 
-    post :receive,
+    post :receive, AccountSid: ENV.fetch("TWILIO_ACCOUNT_SID"),
       From: @user.primary_phone.number,
       Body: body
 
@@ -33,12 +33,20 @@ describe TwilioController do
 
   it "rejects duplicate messages" do
     2.times do
-      post :receive,
+      post :receive, AccountSid: ENV.fetch("TWILIO_ACCOUNT_SID"),
         From: @user.primary_phone.number,
         Body: "Sup"
     end
 
     expect( Order.count ).to eq 1
     expect( SMS.outgoing.last.text ).to match /already received/
+  end
+
+  it "verifies that messages came from Twilio" do
+    expect do
+      post :receive,
+        From: @user.primary_phone.number,
+        Body: "Sup"
+    end.to raise_error /account sid/i
   end
 end
