@@ -1,7 +1,10 @@
-require 'factory_girl_rails'
-
 class Generator
-  include FactoryGirl::Syntax::Methods
+  begin
+    require 'factory_girl_rails'
+    include FactoryGirl::Syntax::Methods
+  rescue LoadError => e
+    # This will fail in production. That's okay.
+  end
 
   USERS_PER_COUNTRY  = 2..4
   ORDERS_PER_USER    = 1..5
