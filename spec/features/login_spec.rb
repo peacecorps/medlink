@@ -3,15 +3,16 @@ require 'spec_helper'
 describe "Logging in" do
   before :each do
     @user = create :user
-    visit root_path
   end
 
   it "does not appear to be logged in initially" do
+    visit root_path
     expect( page ).to have_content "Sign in"
   end
 
   it "can log in with the helper routine" do
     login @user
+    visit root_path
     expect( page ).to have_content "Sign Out"
   end
 

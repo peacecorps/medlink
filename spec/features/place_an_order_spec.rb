@@ -21,7 +21,7 @@ describe "A PCV placing an order" do
     end
 
     it "can see the order in the PCMO response tracker" do
-      logout
+      logout @user
       pcmo = create :pcmo, country: @user.country
       login pcmo
       visit manage_orders_path
@@ -38,9 +38,10 @@ describe "A PCV placing an order" do
 
 
   it "lets pcmos place orders for users" do
-    logout
+    logout @user
     pcmo = create :pcmo, country: @user.country
     login pcmo
+    visit root_path
     click_on "Place a Request"
 
     select @user.name, from: :request_user_id
@@ -54,9 +55,10 @@ describe "A PCV placing an order" do
   end
 
   it "lets admins place orders for users" do
-    logout
+    logout @user
     admin = create :admin
     login admin
+    visit root_path
     click_on "Place a Request"
 
     select @user.name, from: :request_user_id
