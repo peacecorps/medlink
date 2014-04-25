@@ -1,6 +1,9 @@
 class OrdersController < ApplicationController
   def index
-    @orders = accessible_orders.order created_at: :desc
+    @orders = current_user.orders.
+      includes(:supply).
+      order(created_at: :desc).
+      page(params[:page]).per 10
   end
 
   def manage

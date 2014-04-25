@@ -1,6 +1,7 @@
 #request-history
   %h2 Request History
-  %table#orders.table.table-bordered.table-hover
+  = render partial: "partials/pager", locals: { anchor: "request-history", pager: @orders }
+  %table.table.table-bordered.table-hover
     %thead
       %tr
         %th Supply
