@@ -4,7 +4,7 @@
     %span Back to all Orders
 
   %p
-  = render partial: 'partials/errors', locals: {object: @response}
+  = render partial: 'partials/errors', locals: { object: @response }
 
 .order
   %h1= @user.name
@@ -15,72 +15,8 @@
     = icon "phone-alt"
     = @user.primary_phone ? @user.primary_phone.number : '-'
 
-  = form_for @response, url: user_responses_path(@user, @response) do |f|
-    %table.table.table-hover
-      %thead
-        %tr
-          %th
-          %th
-          - DeliveryMethod.each do |method|
-            %th.delivery-method{ "data-method" => method.name }= method.title
-      %tbody
-        - @orders.group_by { |o| o.created_at.strftime '%-m/%-d/%y' }.each do |ts, os|
-          - os.each_with_index do |order,i|
-            %tr
-              - if i.zero?
-                %td.ts{rowspan: os.length}= ts
-              %td= order.supply.name
-              - DeliveryMethod.each do |method|
-                %td
-                  = radio_button_tag "orders[#{order.id}][delivery_method]", method.name
-
-    %span.order__characters "160 characters remaining"
-    .order__instructions
-      = f.text_area :extra_text, size: "40x4", maxlength: 160, class: 'input-xlarge', placeholder: "Extra information (e.g. delivery date, pickup instructions)"
-
-    .form-actions
-      .btn-group
-        %button.btn.btn-primary(type="submit") Send Response
-
-:javascript
-  $(function() {
-    $('.delivery-method').click(function() {
-      var val = $(this).data("method");
-      $('#new_response :radio[value='+ val +']').prop('checked', true);
-    });
-
-    var remaining = $(".order__characters")
-      , instructions = $(".order__instructions textares");
-
-    instructions.keyup(function() {
-        var count = 160 - instructions.val().length;
-        remaining.text(count + " characters remaining");
-    }).keyup();
-  })
+  = render partial: "form", locals: { user: @user, response: @response, orders: @orders }
 
 %hr
 
-%h2
-  Past Orders
-  %small
-    for
-    = @user.first_name
-= render partial: "partials/pager", locals: { anchor: "order-history", pager: @history }
-
-%table.table.table-striped.table-hover
-  %thead
-    %tr
-      %th Date
-      %th Supply
-      %th
-  - @history.each do |o|
-    %tr
-      %td
-        - if @last_date.to_i != o.created_at.to_i
-          = @last_date = o.created_at
-      %td= o.supply
-      %td
-        - if o.denied?
-          = icon :remove
-        - else
-          = icon :ok
+= render partial: "history", locals: { user: @user, history: @history }
