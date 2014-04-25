@@ -5,23 +5,9 @@
   %hr
 
 - if active_country?
-  .order-table#past-due-requests
-    %br
-    %h3 Past Due Requests
-    %table#past-due-orders.table.table-bordered.table-hover
-      = render partial: 'request_table', locals: { orders: @orders.past_due }
-
-  .order-table#pending-requests
-    %br
-    %h3 Pending Requests
-    %table#pending-orders.table.table-bordered.table-hover
-      = render partial: 'request_table', locals: { orders: @orders.pending }
-
-  .order-table#response-tracker
-    %br
-    %h3 Response Tracker
-    %table#responded-orders.table.table-bordered.table-hover
-      = render partial: 'response_table', locals: { responses: @responses }
+  = render partial: "table", locals: { title: "Past Due Requests", rows: @past_due,  table: "request_table", page_param: "past_due_page" }
+  = render partial: "table", locals: { title: "Pending Requests",  rows: @pending,   table: "request_table", page_param: "pending_page" }
+  = render partial: "table", locals: { title: "Response Tracker",  rows: @responses, table: "response_table", page_param: "response_page" }
 
 :javascript
   $("tr[data-link]").click -> window.location = $(this).data "link"

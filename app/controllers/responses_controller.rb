@@ -4,12 +4,10 @@ class ResponsesController < ApplicationController
 
   def new
     @orders = @user.orders.without_responses.
-      order("orders.created_at DESC").
       includes(:supply)
     @history = @user.orders.with_responses.
-      order("orders.created_at DESC").
       includes(:supply).
-      page(params[:page]).per 10
+      page(params[:page])
   end
 
   def create

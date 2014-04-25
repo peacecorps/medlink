@@ -15,7 +15,7 @@ describe TwilioController do
       Body: body
 
     expect( SMS.incoming.last.text ).to eq body
-    expect( @user.orders.map { |o| o.supply.name } ).to eq %w(Sup wit)
+    expect( @user.orders.map { |o| o.supply.name }.sort ).to eq %w(Sup wit)
     expect( SMS.outgoing.last.text ).to match /request.*received/i
   end
 

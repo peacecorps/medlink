@@ -9,6 +9,9 @@ class Order < ActiveRecord::Base
 
   serialize :delivery_method, DeliveryMethod
 
+  paginates_per 10
+  default_scope { order created_at: :desc }
+
   scope :with_responses, -> { includes(:response).where("response_id IS NOT NULL") }
   scope :without_responses, -> { where("response_id IS NULL") }
 

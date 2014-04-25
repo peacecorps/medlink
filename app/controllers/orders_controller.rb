@@ -2,14 +2,14 @@ class OrdersController < ApplicationController
   def index
     @orders = current_user.orders.
       includes(:supply).
-      order(created_at: :desc).
-      page(params[:page]).per 10
+      page(params[:page])
   end
 
   def manage
     authorize! :respond, User
-    @orders    = accessible_orders
-    @responses = accessible_responses
+    @past_due  = accessible_orders.past_due.page params[:past_due_page]
+    @pending   = accessible_orders.pending.page params[:pending_page]
+    @responses = accessible_responses.page params[:response_page]
   end
 
   def active_country?
