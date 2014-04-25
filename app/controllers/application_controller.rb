@@ -13,14 +13,6 @@ class ApplicationController < ActionController::Base
   end
 
   def root
-    start_page = if current_user.admin?
-      new_admin_user_path
-    elsif current_user.pcmo?
-      manage_orders_path
-    else
-      new_request_path
-    end
-
     redirect_to start_page
   end
 
@@ -29,6 +21,16 @@ class ApplicationController < ActionController::Base
   end
 
   private # ----------
+
+  def start_page
+    if current_user.admin?
+      new_admin_user_path
+    elsif current_user.pcmo?
+      manage_orders_path
+    else
+      new_request_path
+    end
+  end
 
   # Redirects to the login path to allow the flash messages to
   #    display for sign_out.

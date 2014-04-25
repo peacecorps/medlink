@@ -10,4 +10,4 @@
   = render partial: "table", locals: { title: "Response Tracker",  rows: @responses, table: "response_table", page_param: "response_page" }
 
 :javascript
-  $("tr[data-link]").click -> window.location = $(this).data "link"
+  $("tr[data-link]").click(function() { window.location = $(this).data("link"); });

@@ -3,7 +3,7 @@
   %h3= title
   - if rows.any?
     = render partial: "partials/pager", locals: { anchor: id, pager: rows, page_param: page_param }
-    %table.table.table-bordered.table-hover
+    %table.table.table-striped.table-bordered.table-hover
       = render partial: table, locals: { rows: rows }
   - else
     .well
