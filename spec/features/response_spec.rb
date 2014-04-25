@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ResponsesController do
+describe "responding to orders" do
   before :each do
     @country = create :country
     @user = create :user, country: @country
@@ -9,6 +9,23 @@ describe ResponsesController do
 
     @pcmo = create :pcmo, country: @country
     login @pcmo
+  end
+
+  it "allows admins to select what country to manage" do
+    admin = create :admin
+    login admin
+    visit manage_orders_path
+
+    expect( page ).not_to have_content "Pending Requests"
+
+    within ".admin_country_select" do
+      select @user.country.name, from: :country_country_id
+      click_button "Change"
+    end
+
+    expect( alert.text ).to match /#{@user.country.name}/
+    expect( page ).to have_content "Pending Requests"
+    expect( page.text ).to include @user.name
   end
 
   it "can bulk process orders", :worker do
@@ -21,7 +38,7 @@ describe ResponsesController do
     fill_in :response_extra_text, with: "Extra instructions ..."
     click_on "Send Response"
 
-    expect( page.find(".flash").text ).to match /response.*sent.*#{@user.name}/i
+    expect( alert.text ).to match /response.*sent.*#{@user.name}/i
 
     sms = SMS.outgoing.last
     expect( sms.number ).to eq @user.primary_phone.number
@@ -40,7 +57,7 @@ describe ResponsesController do
     expect( page ).to have_content @user.first_name
     click_on "archive-#{response.id}" # TODO: less brittle selector
 
-    expect( page.find(".flash").text ).to match /response.*archived/i
+    expect( alert.text ).to match /response.*archived/i
     expect( page ).not_to have_content @user.first_name
   end
 end

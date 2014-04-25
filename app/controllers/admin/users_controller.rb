@@ -1,5 +1,9 @@
 class Admin::UsersController < AdminController
-  before_action :set_user, except: [:new, :create, :upload_csv]
+  def set_active_country
+    country = Country.find params.require(:country)[:country_id]
+    session[:active_country_id] = country.id
+    redirect_to :back, notice: I18n.t!("flash.country_selected", country: country.name)
+  end
 
   def new
     @users = users_by_country
@@ -26,10 +30,12 @@ class Admin::UsersController < AdminController
   end
 
   def edit
+    @user  = User.find params[:id]
     @users = users_by_country
   end
 
   def update
+    @user  = User.find params[:id]
     _attrs = @user.attributes
     if @user.update_attributes user_params
       diff = User::Change.new _attrs, @user
@@ -59,10 +65,6 @@ class Admin::UsersController < AdminController
   end
 
   private # ----------
-
-  def set_user
-    @user = User.find params[:id]
-  end
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :location,

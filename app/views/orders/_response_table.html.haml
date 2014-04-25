@@ -1,21 +1,23 @@
-%thead
-  %tr
-    %th First Name
-    %th Last Name
-    %th Location
-    %th Requests
-    %th Archive
-%tbody
-  - responses.each do |r|
-    %tr{ "class" => "order link c#{r.user.country_id}", "data-link" => user_response_path(r.user, r) }
-      %td= r.user.first_name
-      %td= r.user.last_name
-      %td= r.user.location
-      %td= render partial: "group", locals: { user: r.user, orders: r.orders }
-      %td
-        = form_tag user_response_archive_path(r.user, r) do
-          %button.btn.btn-default{ "id" => "archive-#{r.id}" }
-            = icon :save
+- if responses.any?
+  %thead
+    %tr
+      %th First Name
+      %th Last Name
+      %th Location
+      %th Requests
+      %th Archive
+  %tbody
+    - responses.each do |r|
+      %tr.order.link{ "data-link" => user_response_path(r.user, r) }
+        %td= r.user.first_name
+        %td= r.user.last_name
+        %td= r.user.location
+        %td= render partial: "group", locals: { user: r.user, orders: r.orders }
+        %td
+          = form_tag user_response_archive_path(r.user, r) do
+            %button.btn.btn-default{ "id" => "archive-#{r.id}" }
+              = icon :save
 
-.well.empty{ display: "none" }
-  No orders
+- else
+  .well.empty{ display: "none" }
+    No orders

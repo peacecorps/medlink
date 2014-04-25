@@ -28,11 +28,3 @@
         .form-actions
           .btn-group
             %button.btn.btn-primary(type="submit") Submit
-
-:javascript
-  var locations = #{Hash[ User.all.map { |u| [u.id, u.location] } ].to_json}
-
-  $('#order_user_id').change(function() {
-    var val = $('#order_user_id').val()
-    $('#order_location').val( locations[val] );
-  });

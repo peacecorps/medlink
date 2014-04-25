@@ -11,7 +11,7 @@ describe "Uploading a User CSV" do
     attach_file "csv", Rails.root.join("spec/data/users.good.csv")
     click_button "Upload CSV"
 
-    expect( page.find(".flash").text ).to match /country/i
+    expect( alert.text ).to match /country/i
     expect( User.pcv.count ).to eq 0
   end
 
@@ -20,7 +20,7 @@ describe "Uploading a User CSV" do
     select @admin.country.name, from: "country_id"
     click_button "Upload CSV"
 
-    expect( page.find(".flash").text ).to match /uploaded.*3 users/i
+    expect( alert.text ).to match /uploaded.*3 users/i
     expect( User.pcv.count ).to eq 3
   end
 

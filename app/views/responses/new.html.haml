@@ -1,13 +1,3 @@
-= content_for :onload do
-  :javascript
-    $(function() {
-      $('.delivery-method').click(function() {
-        var val = $(this).data("method");
-        $('#new_response :radio[value='+ val +']').prop('checked', true);
-      });
-    })
-
-
 .order-back
   = link_to manage_orders_path do
     = icon "chevron-left"
@@ -51,6 +41,22 @@
     .form-actions
       .btn-group
         %button.btn.btn-primary(type="submit") Send Response
+
+:javascript
+  $(function() {
+    $('.delivery-method').click(function() {
+      var val = $(this).data("method");
+      $('#new_response :radio[value='+ val +']').prop('checked', true);
+    });
+
+    var remaining = $(".order__characters")
+      , instructions = $(".order__instructions textares");
+
+    instructions.keyup(function() {
+        var count = 160 - instructions.val().length;
+        remaining.text(count + " characters remaining");
+    }).keyup();
+  })
 
 %hr
 

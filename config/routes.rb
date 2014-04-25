@@ -25,7 +25,9 @@ Medlink::Application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:new, :create, :edit, :update] do
-      post :upload_csv, on: :collection
+      %i( upload_csv set_active_country ).each do |action|
+        post action, on: :collection
+      end
     end
   end
 

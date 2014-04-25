@@ -12,7 +12,7 @@ describe "User management" do
     login create :pcmo
     visit new_admin_user_path
 
-    expect( page.find(".flash").text ).to match /must be an admin/i
+    expect( alert.text ).to match /must be an admin/i
     expect( current_path ).to eq manage_orders_path
   end
 
@@ -30,7 +30,7 @@ describe "User management" do
         click_on "Add"
       end
 
-      expect( page.find(".flash").text ).to match /added.*user/i
+      expect( alert.text ).to match /added.*user/i
       expect( User.last.name ).to eq "James Dabbs"
     end
 

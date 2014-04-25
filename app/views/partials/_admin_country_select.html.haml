@@ -1,0 +1,6 @@
+= form_tag set_active_country_admin_users_path, class: "admin_country_select" do
+  = select :country, :country_id,
+    Country.with_orders.collect { |country| [country.name, country.id] },
+    {include_blank: "Select Country"},
+    {class: "input-sm"}
+  %button.btn(type="submit") Change

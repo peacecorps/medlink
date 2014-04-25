@@ -1,16 +1,18 @@
-%thead
-  %tr
-    %th First Name
-    %th Last Name
-    %th Location
-    %th Requests
-%tbody
-  - orders.group_by(&:user).each do |user, os|
-    %tr{ "class" => "order link c#{user.country_id}", "data-link" => new_user_response_path(user) }
-      %td= user.first_name
-      %td= user.last_name
-      %td= user.location
-      %td= render partial: "group", locals: { user: user, orders: os }
+- if orders.any?
+  %thead
+    %tr
+      %th First Name
+      %th Last Name
+      %th Location
+      %th Requests
+  %tbody
+    - orders.group_by(&:user).each do |user, os|
+      %tr.order.link{ "data-link" => new_user_response_path(user) }
+        %td= user.first_name
+        %td= user.last_name
+        %td= user.location
+        %td= render partial: "group", locals: { user: user, orders: os }
 
-.well.empty
-  No orders
+- else
+  .well.empty
+    No orders

@@ -12,6 +12,8 @@ en:
     valid_csv: "Successfully uploaded information for %{users} users"
     invalid_csv: "CSV has invalid entries!"
 
+    country_selected: "You now administrating %{country}"
+
     auth:
       admin: "You must be an admin to view that page"
       pcmo: "You must be an admin or PCMO to view that page"

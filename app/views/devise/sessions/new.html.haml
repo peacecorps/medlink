@@ -1,8 +1,6 @@
-:javascript
-  $('f.email_field, f.password_field').placeholder();
 = form_for resource, html: {class: 'form form-horizontal'}, as: resource_name, url: session_path(resource_name) do |f|
 
-  %h3 Sign in
+  %h3 Sign In
   .row
     .col-md-4
       .form__section
@@ -12,5 +10,5 @@
           = f.check_box :remember_me
           = f.label :remember_me
         .btn-group
-          %button.btn.btn-primary(type="submit") Sign in
+          %button.btn.btn-primary(type="submit") Sign In
         = link_to 'Forgot Password', new_user_password_path, class: 'btn btn-primary'
