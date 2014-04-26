@@ -1,4 +1,7 @@
 = form_tag admin_users_path, class: 'form-search' do
-  = select_tag :edit_user, grouped_options_for_select(users, selected: selected), prompt: 'Select Volunteer to edit', class: 'input-sm', style: 'border-color:lightGray'
+  = select_tag :edit_user,
+    grouped_options_for_select(users_by_country, selected: selected),
+    prompt: 'Select Volunteer to edit',
+    class: 'input-sm'
   %br
   %button.btn.btn-primary(type="submit") Edit

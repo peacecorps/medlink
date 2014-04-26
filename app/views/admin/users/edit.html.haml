@@ -1,5 +1,5 @@
 %h1 Edit Account
-= render partial: "edit_widget", locals: { users: @users, selected: @user.id }
+= render partial: "edit_widget", locals: { selected: @user.id }
 %hr
 
 = render partial: 'form', locals: { user: @user, action: :edit }

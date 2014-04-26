@@ -1,4 +1,5 @@
 - url = action == :edit ? admin_user_path(user) : admin_users_path
+- user.phones.new # Ensure we display a blank field
 = nested_form_for user, url: url, id: 'user-form' do |f|
   = render partial: 'partials/errors', locals: {object: user}
 

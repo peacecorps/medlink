@@ -1,3 +1,5 @@
+- @request.orders.new # Ensure we display a blank order
+
 %h1= current_user.pcv? ? "Request Form" : "Place an Order"
 
 = nested_form_for @request, html: {class: 'form--order'} do |f|
@@ -11,20 +13,41 @@
           %small= current_user.pcv_id
         = f.hidden_field :user_id, value: current_user.id
       - else
-        = f.select(:user_id, [['Select Volunteer to request for', '']] + current_user.accessible(User).map { |u| [u.name, u.id] }, {}, class: 'form-control input-sm')
-      %hr
+        = f.select :user_id,
+          current_user.accessible(User).map { |u| [u.name, u.id] },
+          {include_blank: 'Select Volunteer to request for'},
+          {class: 'form-control input-sm'}
+        %hr
 
     .row
       .col-md-4
         .select.select--full
           = f.fields_for :orders do |order_form|
-            = order_form.select(:supply_id, [['Select Supply', '']] + Supply.choices, {}, class: 'form-control input-sm')
-          = f.link_to_add :orders, class: "btn btn-success" do
+            = order_form.select :supply_id,
+              Supply.choices,
+              {include_blank: 'Select Supply'},
+              {class: 'form-control input-sm supply-select'}
+          = f.link_to_add :orders,
+            id:    "add-supply",
+            style: "display:none",
+            class: "btn btn-success" do
             = icon :plus
-          %i.icon-caret-down.select__arrow
 
-        = f.text_area :text, placeholder: 'Special instructions area', rows: 3, class: 'form-control input-sm'
+    = f.text_area :text,
+      placeholder: 'Special instructions area',
+      rows: 3,
+      class: 'form-control input-sm'
 
-        .form-actions
-          .btn-group
-            %button.btn.btn-primary(type="submit") Submit
+    .form-actions
+      .btn-group
+        %button.btn.btn-primary(type="submit") Submit
+
+:javascript
+  $(function() {
+    var next = function() {
+      $(this).off();
+      $("#add-supply").click();
+      $(".supply-select").last().change(next);
+    }
+    $(".supply-select").change(next);
+  });

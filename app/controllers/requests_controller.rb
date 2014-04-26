@@ -2,7 +2,6 @@ class RequestsController < ApplicationController
 
   def new
     @request = current_user.requests.new
-    @request.orders.new
   end
 
   def create

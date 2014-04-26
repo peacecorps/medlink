@@ -8,8 +8,7 @@ class Admin::UsersController < AdminController
   end
 
   def new
-    @users = users_by_country
-    @user  = User.new
+    @user = User.new
   end
 
   def create
@@ -20,7 +19,6 @@ class Admin::UsersController < AdminController
       redirect_to edit_admin_user_path(user) and return
     end
 
-    @users = users_by_country
     @user = User.new user_params.merge(password: SecureRandom.hex)
 
     if @user.save
@@ -33,8 +31,7 @@ class Admin::UsersController < AdminController
   end
 
   def edit
-    @user  = User.find params[:id]
-    @users = users_by_country
+    @user = User.find params[:id]
   end
 
   def update
@@ -49,7 +46,6 @@ class Admin::UsersController < AdminController
       end
       redirect_to new_admin_user_path, flash: _flash
     else
-      @users = users_by_country
       render :edit
     end
   end
@@ -74,12 +70,6 @@ class Admin::UsersController < AdminController
     params.require(:user).permit(:first_name, :last_name, :location,
       :country_id, :email, :pcv_id, :role, :remember_me, :time_zone,
       phones_attributes: [:id, :number, :_destroy])
-  end
-
-  def users_by_country
-    User.includes(:country).to_a.group_by(&:country).map do |c,us|
-      [c.name, us.map { |u| [u.name, u.id] }]
-    end
   end
 
   def run_upload!
