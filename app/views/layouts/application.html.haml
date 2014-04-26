@@ -30,7 +30,9 @@
 
       .row
         %nav
-          = render 'partials/global_nav'
+          - if current_user
+            = render 'partials/global_nav'
+
           .flash
             - flash.each do |name, msg|
               .flash__message.alert{"class" => " alert-#{translate_flash_class name}"}
