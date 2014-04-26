@@ -30,9 +30,14 @@ class Generator
     users.each do |user|
       ORDERS_PER_USER.to_a.sample.times do
         created_at   = (1..40).to_a.sample.days.ago
+        request      = create :request, created_at: created_at
         supply_count = SUPPLIES_PER_ORDER.to_a.sample
         supplies.sample(supply_count).each do |supply|
-          create :order, user: user, supply: supply, created_at: created_at
+          create :order,
+            user:       user,
+            request:    request,
+            supply:     supply,
+            created_at: created_at
         end
       end
     end

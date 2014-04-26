@@ -4,7 +4,7 @@ class ResponsesController < ApplicationController
 
   def new
     @orders = @user.orders.without_responses.
-      includes(:supply)
+      includes(:request, :supply)
     @history = @user.orders.with_responses.
       includes(:supply).
       page(params[:page])

@@ -4,14 +4,16 @@
       %tr
         %th
         %th
+        %th
         - DeliveryMethod.each do |method|
           %th.delivery-method{ "data-method" => method.name }= method.title
     %tbody
-      - orders.group_by { |o| o.created_at.strftime '%-m/%-d/%y' }.each do |ts, os|
+      - orders.group_by(&:request).each do |req, os|
         - os.each_with_index do |order,i|
           %tr
             - if i.zero?
-              %td.ts{rowspan: os.length}= ts
+              %td.ts{rowspan: os.length}= req.created_at.strftime '%-m/%-d/%y'
+              %td.ts{rowspan: os.length}= req.text
             %td= order.supply.name
             - DeliveryMethod.each do |method|
               %td
