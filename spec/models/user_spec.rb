@@ -56,9 +56,9 @@ describe User do
       @r = create :pcmo, country: @senegal
 
       # TODO: validate pcmo for pcvs? Country match?
-      @a = create :pcv, country: @us, pcmo_id: @p.id
-      @b = create :pcv, country: @us, pcmo_id: @q.id
-      @c = create :pcv, country: @senegal, pcmo_id: @r.id
+      @a = create :pcv, country: @us
+      @b = create :pcv, country: @us
+      @c = create :pcv, country: @senegal
     end
 
     it 'can group pcmos by country' do

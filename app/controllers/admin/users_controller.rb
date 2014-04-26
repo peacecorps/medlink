@@ -68,7 +68,7 @@ class Admin::UsersController < AdminController
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :location,
-      :country_id, :email, :pcv_id, :role, :pcmo_id, :remember_me, :time_zone,
+      :country_id, :email, :pcv_id, :role, :remember_me, :time_zone,
       phones_attributes: [:id, :number, :_destroy])
   end
 
