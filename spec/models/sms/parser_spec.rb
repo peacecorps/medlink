@@ -36,6 +36,6 @@ describe SMS::Parser do
   end
 
   it "raises a friendly error on failure" do
-    expect { parse "" }.to raise_friendly_error /parse/i
+    expect { parse "" }.to raise_friendly_error /format.*incorrect/i
   end
 end
