@@ -3,10 +3,7 @@ class TwilioController < ApplicationController
 
   def receive
     verify_sid!
-    sms = SMS.create number: params[:From], text: params[:Body], direction: :incoming
-    sms.check_duplicates! 1.hour
-    sms.create_orders!
-    sms.send_confirmation!
+    SMS.receive params[:From], params[:Body]
   rescue SMS::FriendlyError => e
     SMS.deliver params[:From], e.message
   rescue

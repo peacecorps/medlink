@@ -7,6 +7,13 @@ class SMS < ActiveRecord::Base
 
   has_one :request, foreign_key: :message_id
 
+  def self.receive number, text
+    sms = SMS.create number: number, text: text, direction: :incoming
+    sms.check_duplicates! 1.hour
+    sms.create_orders!
+    sms.send_confirmation!
+  end
+
   def self.deliver number, text
     sms = SMS.create number: number, text: text, direction: :outgoing
 
@@ -53,6 +60,7 @@ class SMS < ActiveRecord::Base
         supply_id: supply.id,
       )
     end
+    user.mark_updated_orders
   end
 
   def confirmation_message

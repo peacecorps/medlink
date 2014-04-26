@@ -7,7 +7,7 @@ class UserMailer < ActionMailer::Base
 
   def fulfillment id
     @response = Response.find id
-    @orders   = @response.orders.includes :supply
+    @orders   = @response.orders.includes(:supply).reject &:duplicated_at
     @subject  = "Your order has been processed"
     mail to: @response.user.email, subject: "[PC Medlink] #{@subject}"
   end

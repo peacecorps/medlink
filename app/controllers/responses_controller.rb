@@ -17,6 +17,7 @@ class ResponsesController < ApplicationController
       data = orders[o.id.to_s].merge response_id: @response.id
       o.update_attributes data.permit :delivery_method, :response_id
     end
+    @response.include_updated_orders!
     @response.send!
     redirect_to manage_orders_path, flash:
       { success: I18n.t!("flash.response_sent", user: @user.name) }

@@ -57,4 +57,13 @@ class User < ActiveRecord::Base
   def name
     "#{first_name} #{last_name}".strip
   end
+
+  def mark_updated_orders
+    orders.without_responses.
+      group_by(&:supply_id).
+      select { |_,dups| dups.count > 1 }.
+    each do |_,os|
+      os.sort_by(&:created_at).slice(0..-2).each { |o| o.touch :duplicated_at }
+    end
+  end
 end

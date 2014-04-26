@@ -10,14 +10,17 @@
     %tbody
       - orders.group_by(&:request).each do |req, os|
         - os.each_with_index do |order,i|
-          %tr
+          %tr{ "class" => (order.duplicated_at ? "duplicated" : "") }
             - if i.zero?
-              %td.ts{rowspan: os.length}= req.created_at.strftime '%-m/%-d/%y'
+              %td.ts{rowspan: os.length}= req.created_at.strftime '%-m/%-d'
               %td.ts{rowspan: os.length}= req.text
             %td= order.supply.name
-            - DeliveryMethod.each do |method|
-              %td
-                = radio_button_tag "orders[#{order.id}][delivery_method]", method.name
+            - if order.duplicated_at
+              %td{ "colspan" => DeliveryMethod.count }
+                = "Updated on #{order.duplicated_at.strftime '%-m/%-d'}"
+            - else
+              - DeliveryMethod.each do |method|
+                %td= radio_button_tag "orders[#{order.id}][delivery_method]", method.name
 
   %span.order__characters "160 characters remaining"
   .order__instructions

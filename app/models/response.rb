@@ -23,10 +23,16 @@ class Response < ActiveRecord::Base
     MailerJob.enqueue :fulfillment, id
   end
 
+  def include_updated_orders!
+    user.orders.where(supply: supplies, delivery_method: nil).each do |o|
+      o.update_attributes response_id: id
+    end
+  end
+
   private
 
   def supply_names
-    supplies.map { |s| "#{s.name} (#{s.shortcode})" }
+    supplies.uniq.map { |s| "#{s.name} (#{s.shortcode})" }
   end
 
   def type

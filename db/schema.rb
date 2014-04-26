@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140426151200) do
+ActiveRecord::Schema.define(version: 20140426194426) do
 
   create_table "countries", force: true do |t|
     t.string "name"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20140426151200) do
     t.integer  "supply_id"
     t.integer  "response_id"
     t.string   "delivery_method"
+    t.datetime "duplicated_at"
   end
 
   create_table "phones", force: true do |t|

@@ -38,13 +38,6 @@ describe TwilioController do
     expect( SMS.outgoing.last.text ).to match /already received/
   end
 
-  it "allows messages with some supply overlap" do
-    request @user, "Sup wit - first request"
-    request @user, "Wit dat - second request"
-
-    pending "Figure out what should happen with duplicate orders"
-  end
-
   it "verifies that messages came from Twilio" do
     expect do
       post :receive,

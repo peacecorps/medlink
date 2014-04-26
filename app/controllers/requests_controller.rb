@@ -18,6 +18,7 @@ class RequestsController < ApplicationController
     end
 
     if @request.save
+      @request.user.mark_updated_orders
       redirect_to after_create_page, flash: { success: create_success_message }
     else
       render :new
