@@ -16,10 +16,12 @@ class RequestsController < ApplicationController
       authorize! :create, @request
     end
 
-    if @request.save
+    if @request.orders.any?
+      @request.save!
       @request.user.mark_updated_orders
       redirect_to after_create_page, flash: { success: create_success_message }
     else
+      flash[:error] = I18n.t! "flash.request_empty"
       render :new
     end
   end
@@ -27,8 +29,10 @@ class RequestsController < ApplicationController
   private
 
   def create_params
-    params.require(:request).permit :user_id, :body,
+    p = params.require(:request).permit :user_id, :body,
       orders_attributes: [:supply_id]
+    p[:orders_attributes].reject! { |_,ps| ps[:supply_id].empty? }
+    p
   end
 
   def after_create_page

@@ -67,9 +67,11 @@ class Admin::UsersController < AdminController
   private # ----------
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :location,
+    p = params.require(:user).permit(:first_name, :last_name, :location,
       :country_id, :email, :pcv_id, :role, :remember_me, :time_zone,
       phones_attributes: [:id, :number, :_destroy])
+    p[:phones_attributes].reject! { |_,ps| ps[:number].empty? }
+    p
   end
 
   def run_upload!

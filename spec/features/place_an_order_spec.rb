@@ -33,7 +33,7 @@ describe "A PCV placing an order" do
 
   it "can display validations" do
     click_on "Submit"
-    expect( page.find(".alert").text ).to match /supply.*blank/i
+    expect( page.find(".alert").text ).to match /order.*empty/i
   end
 
 

@@ -1,5 +1,6 @@
 en:
   flash:
+    request_empty: "Your order was empty. Please select at least one supply."
     request_placed: "Success! Your order has been sent."
     request_placed_for: "Success! The order you placed on behalf of %{username} has been sent."
     response_sent: "Success! Your response has been sent to %{user}. This request will now appear in the response tracker awaiting further action."
