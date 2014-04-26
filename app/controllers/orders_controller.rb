@@ -17,11 +17,13 @@ class OrdersController < ApplicationController
   end
   helper_method :active_country?
 
-  private
 
   def active_country_id
     current_user.admin? ? session[:active_country_id] : current_user.country_id
   end
+  helper_method :active_country_id
+
+  private
 
   def accessible_orders
     current_user.

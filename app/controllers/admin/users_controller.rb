@@ -1,6 +1,8 @@
 class Admin::UsersController < AdminController
   def set_active_country
-    country = Country.find params.require(:country)[:country_id]
+    id = params[:country][:country_id]
+    redirect_to :back and return unless id.present?
+    country = Country.find id
     session[:active_country_id] = country.id
     redirect_to :back, notice: I18n.t!("flash.country_selected", country: country.name)
   end
