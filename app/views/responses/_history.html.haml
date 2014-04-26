@@ -17,7 +17,7 @@
         %td
           - if @last_date.to_i != o.created_at.to_i
             = @last_date = o.created_at
-        %td= o.supply
+        %td= o.supply.name
         %td
           - if o.denied?
             = icon :remove
