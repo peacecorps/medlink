@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Uploading a User CSV" do
+describe "Uploading a User CSV", :worker do
   before :each do
     @admin = create :admin
     login @admin

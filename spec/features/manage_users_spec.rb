@@ -17,7 +17,7 @@ describe "User management" do
   end
 
   describe "create" do
-    it "can create" do
+    it "can create", :worker do
       within "#new_user" do
         fill_in :user_pcv_id, with: "112358"
         fill_in :user_first_name, with: "James"

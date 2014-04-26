@@ -21,9 +21,8 @@ class User
         user   = User.where(pcv_id: pcv_id).first if @overwrite
         user ||= User.new pcv_id: pcv_id
 
-        user.country = @country
-
-        unless user.password
+        if new_user = user.new_record?
+          user.country  = @country
           user.password = user.password_confirmation = SecureRandom.hex
         end
 
@@ -42,7 +41,7 @@ class User
           phones.each do |number|
             Phone.where(user_id: user.id, number: number).first_or_create!
           end
-          @added << user
+          @added << user if new_user
         else
           @errors << row.push(user.errors.full_messages.to_sentence).to_s
         end
