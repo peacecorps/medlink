@@ -25,7 +25,7 @@ describe "User management" do
         fill_in :user_email, with: "james@example.com"
         select Country.last.name, from: :user_country_id
         fill_in :user_location, with: "Hotlanta"
-        select "Pcv", from: :user_role
+        select "PCV", from: :user_role
         select "Eastern Time (US & Canada)", from: :user_time_zone
         click_on "Add"
       end

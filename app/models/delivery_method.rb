@@ -28,7 +28,7 @@ class DeliveryMethod
       'Your request will be available for pick up at [enter location here] after [enter date]'
     Purchase = DeliveryMethod.new :purchase,
       'We do not have the requested item in stock. Please purchase elsewhere and allow us to
-       reimburse you.'.squish, 'Purchase & Reimburse'
+       reimburse you.'.squish, 'Reimburse'
     Denial = DeliveryMethod.new :denial,
       'We are sorry but we are unable to fulfill your request: [enter reason]'
   end

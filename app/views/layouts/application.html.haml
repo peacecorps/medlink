@@ -23,7 +23,6 @@
         = link_to image_tag("/logo_50.gif", id: 'brand'), root_path
         %hgroup.inline
           %h2.inline PC Medlink
-          %h4.inline Medical Supplies
           - if current_user
             %span.badge= current_user.country.name
         %br

@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   enum role: [ :pcv, :pcmo, :admin ]
+  def self.role_names
+    { "PCV" => "pcv", "PCMO" => "pcmo", "Admin" => "admin" }
+  end
 
   belongs_to :country
 

@@ -18,7 +18,9 @@
         = icon :plus
     .col-md-4.col-md-offset-1
       = f.text_field :pcv_id, placeholder: 'PCV ID', class: 'form-control input-sm'
-      = f.select :role, User.roles.map { |r,_| [r.capitalize, r] }, {include_blank: 'Assign Role'}, class: 'form-control input-sm'
+      = f.select :role, User.role_names,
+        {include_blank: 'Assign Role'},
+        {class: 'form-control input-sm'}
       .form-actions
         .btn-group
           %button.btn.btn-primary(type="submit")
