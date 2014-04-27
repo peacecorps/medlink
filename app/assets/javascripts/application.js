@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require messenger
+//= require messenger-theme-future
 //= require main
 //= require jquery-placeholder
 //= require jquery_nested_form

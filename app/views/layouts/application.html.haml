@@ -29,9 +29,5 @@
           %h2= content_for :page_title
 
     .container
-      .flash
-        - flash.each do |name, msg|
-          .alert{"class" => " alert-#{translate_flash_class name}"}
-            = msg
-
+      = render "partials/flash"
       = yield
