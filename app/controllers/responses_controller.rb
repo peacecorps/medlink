@@ -1,6 +1,6 @@
 class ResponsesController < ApplicationController
   before_filter :initialize_response, only: [:new, :create]
-  before_filter :find_response, only: [:show, :archive]
+  before_filter :find_response, only: [:show, :archive, :unarchive]
 
   def new
     @orders = @user.orders.without_responses.
@@ -30,6 +30,12 @@ class ResponsesController < ApplicationController
     @response.archive!
     redirect_to manage_orders_path, flash:
       { success: I18n.t!("flash.response_archived") }
+  end
+
+  def unarchive
+    @response.unarchive!
+    redirect_to manage_orders_path, flash:
+      { success: I18n.t!("flash.response_unarchived") }
   end
 
   private # -----

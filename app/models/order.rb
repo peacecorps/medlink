@@ -12,7 +12,7 @@ class Order < ActiveRecord::Base
   paginates_per 10
   default_scope { order created_at: :desc }
 
-  scope :with_responses, -> { includes(:response).where("response_id IS NOT NULL") }
+  scope :with_responses, -> { where("response_id IS NOT NULL") }
   scope :without_responses, -> { where("response_id IS NULL") }
 
   def self.due_cutoff

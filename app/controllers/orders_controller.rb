@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
     authorize! :respond, User
     @past_due  = accessible_orders.past_due.page params[:past_due_page]
     @pending   = accessible_orders.pending.page params[:pending_page]
-    @responses = accessible_responses.page params[:response_page]
+    @responses = archived accessible_responses.page params[:response_page]
   end
 
   def active_country?
@@ -36,6 +36,16 @@ class OrdersController < ApplicationController
     current_user.
       accessible(Response).
       where(country_id: active_country_id).
-      includes :orders => :supply
+      includes :user, :orders => :supply
+  end
+
+  def archived responses
+    if params[:responses] == "archived"
+      responses.where "archived_at IS NOT NULL"
+    elsif params[:responses] == "all"
+      responses
+    else
+      responses.where archived_at: nil
+    end
   end
 end

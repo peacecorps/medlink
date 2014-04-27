@@ -6,11 +6,9 @@ class Response < ActiveRecord::Base
   has_many :orders
   has_many :supplies, through: :orders
 
-  default_scope { where(archived_at: nil) }
-
-  def archive!
-    update_attributes archived_at: Time.now
-  end
+  def archived?  ; !!archived_at ; end
+  def archive!   ; update_attributes archived_at: Time.now ; end
+  def unarchive! ; update_attributes archived_at: nil      ; end
 
   def sms_instructions
     SMS::Condenser.new("sms.response.#{type}", :supply,

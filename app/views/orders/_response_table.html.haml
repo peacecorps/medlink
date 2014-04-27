@@ -4,7 +4,7 @@
     %th Last Name
     %th Location
     %th Requests
-    %th Archive
+    %th
 %tbody
   - rows.each do |r|
     %tr.order.link{ "data-link" => user_response_path(r.user, r) }
@@ -13,6 +13,15 @@
       %td= r.user.location
       %td= render partial: "group", locals: { user: r.user, orders: r.orders }
       %td
-        = form_tag user_response_archive_path(r.user, r) do
-          %button.btn.btn-default{ "id" => "archive-#{r.id}" }
-            = icon :save
+        -# FIXME: see the javascript for this anchor, then fix it
+        - path_params = { anchor: 'archive-selector' }
+        - if r.archived?
+          = form_tag user_response_unarchive_path(r.user, r, path_params) do
+            %button.btn.btn-danger{ "id" => "unarchive-#{r.id}" }
+              = icon :open
+              Unarchive
+        - else
+          = form_tag user_response_archive_path(r.user, r, path_params) do
+            %button.btn.btn-default{ "id" => "archive-#{r.id}" }
+              = icon :save
+              Archive

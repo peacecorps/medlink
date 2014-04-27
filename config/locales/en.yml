@@ -5,6 +5,7 @@ en:
     request_placed_for: "Success! The order you placed on behalf of %{username} has been sent."
     response_sent: "Success! Your response has been sent to %{user}. This request will now appear in the response tracker awaiting further action."
     response_archived: "Response has been marked as archived."
+    response_unarchived: "Response has been unarchived."
 
     user_added: "Success! You have added a new user to PC Medlink"
     changes: "Success! You have made the following changes to this user account: %{changes}"

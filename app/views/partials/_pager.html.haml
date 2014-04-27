@@ -5,11 +5,15 @@
       %a.disabled &larr; Newer
   - else
     %li.previous
-      = link_to "&larr; Newer".html_safe, anchor: anchor, params: { page_param => pager.current_page - 1 }
+      = link_to "&larr; Newer".html_safe,
+        anchor: anchor,
+        params: page_params(pager.current_page - 1, page_param)
 
   - if pager.current_page == pager.total_pages
     %li.next.disabled
       %a.disabled Older &rarr;
   - else
     %li.next
-      = link_to "Older &rarr;".html_safe, anchor: anchor, params: { page_param => pager.current_page + 1 }
+      = link_to "Older &rarr;".html_safe,
+        anchor: anchor,
+        params: page_params(pager.current_page + 1, page_param)

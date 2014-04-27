@@ -37,4 +37,10 @@ module ApplicationHelper
       end
     end
   end
+
+  def page_params page, param
+    params.
+      reject { |k,v| %w(action controller).include? k }.
+      tap    { |ps| ps[param] = page }
+  end
 end

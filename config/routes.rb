@@ -21,7 +21,7 @@ Medlink::Application.routes.draw do
 
   resources :users, only: [] do
     resources :responses, only: [:new, :create, :show] do
-      post :archive
+      %i(archive unarchive).each { |n| post n }
     end
   end
 

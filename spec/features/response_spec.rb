@@ -59,5 +59,13 @@ describe "responding to orders" do
 
     expect( alert.text ).to match /response.*archived/i
     expect( page ).not_to have_content @user.first_name
+
+    %w(all archived).each do |selected|
+      visit manage_orders_path responses: selected
+      expect( page ).to have_content @user.first_name
+    end
+
+    click_on "unarchive-#{response.id}"
+    expect( alert.text ).to match /response.*unarchived/i
   end
 end
