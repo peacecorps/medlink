@@ -42,6 +42,7 @@ describe "A PCV placing an order" do
     pcmo = create :pcmo, country: @user.country
     login pcmo
     visit root_path
+    click_on "Requests"
     click_on "Place a Request"
 
     select @user.name, from: :request_user_id
@@ -59,6 +60,7 @@ describe "A PCV placing an order" do
     admin = create :admin
     login admin
     visit root_path
+    click_on "Requests"
     click_on "Place a Request"
 
     select @user.name, from: :request_user_id

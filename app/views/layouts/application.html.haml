@@ -13,29 +13,25 @@
 
     %title= content_for?(:title) ? yield(:title) : "PC Medlink"
     = csrf_meta_tags
+
+    - %w( Droid+Sans:400,700 Droid+Serif Boogaloo Economica:700,400italic ).each do |font|
+      = stylesheet_link_tag "//fonts.googleapis.com/css?family=#{font}"
     = stylesheet_link_tag "application", :media => "all"
     /[if lt IE 8]
       = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
 
   %body
+    = render 'partials/global_nav'
+
+    #page-title
+      #page-title-inner
+        .container
+          %h2= content_for :page_title
+
     .container
-      .row
-        = link_to image_tag("/logo_50.gif", id: 'brand'), root_path
-        %hgroup.inline
-          %h2.inline PC Medlink
-          - if current_user
-            %span.badge= current_country
-        %br
-        %br
+      .flash
+        - flash.each do |name, msg|
+          .alert{"class" => " alert-#{translate_flash_class name}"}
+            = msg
 
-      .row
-        %nav
-          - if current_user
-            = render 'partials/global_nav'
-
-          .flash
-            - flash.each do |name, msg|
-              .flash__message.alert{"class" => " alert-#{translate_flash_class name}"}
-                = msg
-        %section
-          = yield
+      = yield

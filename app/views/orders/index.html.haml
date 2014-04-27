@@ -1,7 +1,7 @@
 #request-history
   %h2 Request History
   = render partial: "partials/pager", locals: { anchor: "request-history", pager: @orders }
-  %table.table.table-bordered.table-hover
+  %table.table.table-striped.table-hover
     %thead
       %tr
         %th Supply
@@ -12,6 +12,6 @@
         %tr.order
           %td= order.supply.name
           %td
-            %span= order.created_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y'
-            %small.cell--secondary= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
-          %td= order.responded_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d/%y' if order.responded_at
+            %span= order.created_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d'
+            %small= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
+          %td= order.responded_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d' if order.responded_at

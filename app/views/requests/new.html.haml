@@ -1,45 +1,41 @@
 - @request.orders.new # Ensure we display a blank order
 
-%h1= current_user.pcv? ? "Request Form" : "Place an Order"
+= content_for :page_title do
+  = current_user.pcv? ? "Request Form" : "Place an Order"
 
-= nested_form_for @request, html: {class: 'form--order'} do |f|
+= nested_form_for @request do |f|
   = render partial: 'partials/errors', locals: { object: @request }
 
-  .form__section
-    .input-group
-      - if current_user.pcv?
-        %h2
-          = current_user.name
-          %small= current_user.pcv_id
-        = f.hidden_field :user_id, value: current_user.id
-      - else
-        = f.select :user_id,
-          current_user.accessible(User).map { |u| [u.name, u.id] },
-          {include_blank: 'Select Volunteer to request for'},
-          {class: 'form-control input-sm'}
-        %hr
+  .row
+    .col-md-6
+      - inputs f do |i|
 
-    .row
-      .col-md-4
-        .select.select--full
+        - if current_user.pcv?
+          %h2
+            = current_user.name
+            %small= current_user.pcv_id
+          = f.hidden_field :user_id, value: current_user.id
+
+        - else
+          = i.select :user_id,
+            current_user.accessible(User).map { |u| [u.name, u.id] },
+            {include_blank: true},
+            {label: "Volunteer"}
+
+        .form-group
+          %label Supplies
           = f.fields_for :orders do |order_form|
             = order_form.select :supply_id,
               Supply.choices,
-              {include_blank: 'Select Supply'},
-              {class: 'form-control input-sm supply-select'}
+              {include_blank: true},
+              {class: 'form-control supply-select'}
           = f.link_to_add :orders,
             id:    "add-supply",
-            style: "display:none",
-            class: "btn btn-success" do
+            style: "display:none" do
             = icon :plus
 
-    = f.text_area :text,
-      placeholder: 'Special instructions area',
-      rows: 3,
-      class: 'form-control input-sm'
+        = i.text_area :text, rows: 3, label: "Special Instructions"
 
-    .form-actions
-      .btn-group
         %button.btn.btn-primary(type="submit") Submit
 
 :javascript

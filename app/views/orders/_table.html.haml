@@ -1,9 +1,10 @@
 - id = title.downcase.gsub /\s/, '-'
 .order-table{ id: id }
-  %h3= title
+  .title
+    %h2= title
   - if rows.any?
     = render partial: "partials/pager", locals: { anchor: id, pager: rows, page_param: page_param }
-    %table.table.table-striped.table-bordered.table-hover
+    %table.table.table-striped.table-hover
       = render partial: table, locals: { rows: rows }
   - else
     .well

@@ -1,17 +1,19 @@
-= form_for(resource, :as => resource_name, :url => user_registration_path(resource_name), :html => { :method => :patch }) do |f|
+= content_for :page_title do
+  Change Password
+
+= form_for(resource, as: resource_name, url: user_registration_path(resource_name), html: {method: :patch}) do |f|
 
   = devise_error_messages!
 
-  %h1 Change Password
-  %h3
-    %span= current_user.name
-    %small= current_user.pcv_id
+  .title
+    %h2
+      = current_user.name
+      %small= current_user.pcv_id
   .row
-    .col-md-4
-      .form__section
-        = f.password_field :current_password, placeholder: 'Current Password', class: 'form-control input-sm'
-        = f.password_field :password, placeholder: 'New Password', class: 'form-control input-sm'
-        = f.password_field :password_confirmation, placeholder: 'Password Confirmation', class: 'form-control input-sm'
-        .form-actions
-          .btn-group
-            %button.btn.btn-primary(type="submit") Update
+    .col-md-6
+      - inputs f do |i|
+        = i.password_field :current_password
+        = i.password_field :password, title: "New Password"
+        = i.password_field :password_confirmation
+
+      %button.btn.btn-primary(type="submit") Update
