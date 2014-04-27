@@ -17,7 +17,7 @@
     var m = Messenger();
 
     $(".flash").hide();
-    $(".alert").each(function(index, el) {
+    $(".flash .alert").each(function(index, el) {
       var $el = $(el);
       m.post({
         message: $el.html(),

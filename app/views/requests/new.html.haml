@@ -11,7 +11,7 @@
       - inputs f do |i|
 
         - if current_user.pcv?
-          %h2
+          = title do
             = current_user.name
             %small= current_user.pcv_id
           = f.hidden_field :user_id, value: current_user.id

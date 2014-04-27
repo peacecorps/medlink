@@ -1,0 +1,23 @@
+= content_for :page_title do
+  Edit Account
+
+.row
+  .col-md-6
+    = form_for @user do |f|
+      = render partial: "partials/errors", locals: { object: @user }
+
+      = title do
+        = @user.name
+        %small= @user.pcv_id
+
+      - inputs f do |i|
+        = i.text_field :first_name
+        = i.text_field :last_name
+        = i.email_field :email
+        = i.text_field :location
+        = i.select :time_zone,
+          ActiveSupport::TimeZone.all.map { |t| [t, t.name] },
+          { include_blank: true }, {}
+
+      %button.btn.btn-primary(type="submit") Save
+      = link_to "Change Password", edit_user_registration_path, class: "btn btn-default"

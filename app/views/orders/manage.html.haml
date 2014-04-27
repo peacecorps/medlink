@@ -7,9 +7,9 @@
   %hr
 
 - if active_country?
-  = render partial: "table", locals: { title: "Past Due Requests", rows: @past_due,  table: "request_table", page_param: "past_due_page" }
-  = render partial: "table", locals: { title: "Pending Requests",  rows: @pending,   table: "request_table", page_param: "pending_page" }
-  = render partial: "table", locals: { title: "Response Tracker",  rows: @responses, table: "response_table", page_param: "response_page" }
+  = render partial: "table", locals: { label: "Past Due Requests", rows: @past_due,  table: "request_table", page_param: "past_due_page" }
+  = render partial: "table", locals: { label: "Pending Requests",  rows: @pending,   table: "request_table", page_param: "pending_page" }
+  = render partial: "table", locals: { label: "Response Tracker",  rows: @responses, table: "response_table", page_param: "response_page" }
 
 :javascript
   $("tr[data-link]").click(function() { window.location = $(this).data("link"); });

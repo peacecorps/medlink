@@ -14,6 +14,7 @@ en:
     invalid_csv: "CSV has invalid entries!"
 
     country_selected: "You now administrating %{country}"
+    account_updated: "Your account has been updated"
 
     auth:
       admin: "You must be an admin to view that page"

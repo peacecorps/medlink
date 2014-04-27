@@ -1,8 +1,8 @@
 Medlink::Application.routes.draw do
-  devise_for :users, :controllers => { :passwords => "passwords" }, :skip => [:registrations]
+  devise_for :users, controllers: { passwords: "passwords" }, skip: [:registrations]
   as :user do
-    get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
-    patch 'users/:id' => 'devise/registrations#update', :as => 'user_registration'
+    get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
+    patch 'users/:id' => 'devise/registrations#update', as: 'user_registration'
   end
 
   resources :reports, only: [:index] do
@@ -16,6 +16,8 @@ Medlink::Application.routes.draw do
   end
 
   resources :requests, only: [:new, :create]
+
+  resource :user, only: [:edit, :update]
 
   resources :users, only: [] do
     resources :responses, only: [:new, :create, :show] do

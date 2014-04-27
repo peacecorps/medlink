@@ -5,10 +5,10 @@
 
   = devise_error_messages!
 
-  .title
-    %h2
-      = current_user.name
-      %small= current_user.pcv_id
+  = title do
+    = current_user.name
+    %small= current_user.pcv_id
+
   .row
     .col-md-6
       - inputs f do |i|
@@ -17,3 +17,4 @@
         = i.password_field :password_confirmation
 
       %button.btn.btn-primary(type="submit") Update
+      = link_to "Cancel", :back, class: "btn btn-default"

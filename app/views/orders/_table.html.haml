@@ -1,7 +1,7 @@
-- id = title.downcase.gsub /\s/, '-'
+- id = label.downcase.gsub /\s/, '-'
 .order-table{ id: id }
-  .title
-    %h2= title
+  = title do
+    = label
   - if rows.any?
     = render partial: "partials/pager", locals: { anchor: id, pager: rows, page_param: page_param }
     %table.table.table-striped.table-hover

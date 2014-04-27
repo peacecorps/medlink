@@ -46,7 +46,7 @@ describe "User management" do
       @user = create :user
       visit root_path
       select @user.name, from: :edit_user
-      click_on "Edit"
+      click_on "Edit User"
     end
 
     it "can edit users" do

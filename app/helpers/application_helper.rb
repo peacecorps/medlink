@@ -33,4 +33,12 @@ module ApplicationHelper
   def inputs builder, opts={}
     yield InputBuilder.new builder, opts
   end
+
+  def title &block
+    capture_haml do
+      haml_tag ".title" do
+        haml_tag "h2", &block
+      end
+    end
+  end
 end
