@@ -20,7 +20,7 @@
           = i.select :user_id,
             current_user.accessible(User).map { |u| [u.name, u.id] },
             {include_blank: true},
-            {label: "Volunteer"}
+            {label: "For Volunteer"}
 
         .form-group
           %label Supplies

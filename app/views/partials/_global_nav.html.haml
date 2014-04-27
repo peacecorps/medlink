@@ -11,7 +11,7 @@
         %img(src="/logo_50.gif")
         %span PC Medlink
         - if current_user
-          %small= current_country
+          %small= current_user.country.name
 
     - if current_user
       -# Collect the nav links, forms, and other content for toggling

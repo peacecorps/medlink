@@ -20,7 +20,7 @@ describe "responding to orders" do
 
     within ".admin_country_select" do
       select @user.country.name, from: :country_country_id
-      click_button "Change"
+      click_button "Select Country"
     end
 
     expect( alert.text ).to match /#{@user.country.name}/

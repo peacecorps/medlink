@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "A PCV placing an order" do
   before :each do
     @supply = create :supply
-    @user = create :user
+    @user   = create :user
     login @user
     visit new_request_path
   end
