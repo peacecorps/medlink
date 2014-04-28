@@ -45,6 +45,10 @@ describe "User management" do
     before :each do
       @user = create :user
       visit root_path
+      within ".admin_country_select" do
+        select @user.country.name
+        click_on "Update"
+      end
       select @user.name, from: :edit_user
       click_on "Edit User"
     end

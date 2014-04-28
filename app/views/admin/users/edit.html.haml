@@ -1,5 +1,14 @@
-%h1 Edit Account
+= content_for :page_title do
+  Edit Account
+
+= link_to new_admin_user_path do
+  = icon "chevron-left"
+  %span Back to Admin Home
+
+%hr
+
 = render partial: "edit_widget", locals: { selected: @user.id }
+
 %hr
 
 = render partial: 'form', locals: { user: @user, action: :edit }

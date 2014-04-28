@@ -20,12 +20,6 @@ module ApplicationHelper
     "<i class='glyphicon glyphicon-#{name} #{opts[:class]}'></i>".html_safe
   end
 
-  def users_by_country
-    User.includes(:country).to_a.group_by(&:country).map do |c,us|
-      [c.name, us.map { |u| [u.name, u.id] }]
-    end
-  end
-
   def inputs builder, opts={}
     yield InputBuilder.new builder, opts
   end

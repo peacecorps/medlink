@@ -60,13 +60,6 @@ describe User do
       @b = create :pcv, country: @us
       @c = create :pcv, country: @senegal
     end
-
-    it 'can group pcmos by country' do
-      expect(User.pcmos_by_country).to eq({
-        @us      => [@p,@q],
-        @senegal => [@r]
-      })
-    end
   end
 
   context 'lookup' do

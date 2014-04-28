@@ -3,7 +3,7 @@
   = link_to "Place a Request", new_request_path, class: "btn btn-default btn-mini"
 
 - if current_user.admin?
-  = render partial: "partials/admin_country_select"
+  = render partial: "partials/admin_country_select", locals: { countries: Country.with_orders }
 
 - if active_country?
   = render partial: "table", locals: { label: "Past Due Requests", rows: @past_due, page_param: "past_due_page" }

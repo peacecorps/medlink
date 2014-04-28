@@ -62,6 +62,11 @@ class Admin::UsersController < AdminController
     end
   end
 
+  def editable_users
+    User.where(country_id: active_country_id).map { |u| [u.name, u.id] }
+  end
+  helper_method :editable_users
+
   private # ----------
 
   def user_params
@@ -76,4 +81,5 @@ class Admin::UsersController < AdminController
     upload = User::Upload.new params[:country_id], params[:csv], overwrite: params[:overwrite].present?
     upload.tap &:run!
   end
+
 end

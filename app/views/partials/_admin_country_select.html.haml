@@ -2,9 +2,10 @@
   .col-xs-4
     = form_tag set_active_country_admin_users_path, class: "admin_country_select form-inline" do
       .form-group
+        - blank = active_country? ? false : "Select Country"
         = select :country, :country_id,
-          Country.with_orders.collect { |country| [country.name, country.id] },
-          {include_blank: "Select Country", selected: active_country_id},
+          countries.collect { |country| [country.name, country.id] },
+          {include_blank: blank, selected: active_country_id},
           {class: "form-control"}
       %button.btn.btn-default(type="submit") Update
 

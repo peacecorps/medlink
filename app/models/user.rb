@@ -33,10 +33,6 @@ class User < ActiveRecord::Base
     @_primary_phone ||= phones.first
   end
 
-  def self.pcmos_by_country
-    pcmo.includes(:country).group_by &:country
-  end
-
   def accessible model
     if admin?
       model.all
