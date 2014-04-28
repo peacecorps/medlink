@@ -33,14 +33,18 @@ class ResponsesController < ApplicationController
 
   def archive
     @response.archive!
-    redirect_to responses_path(page: params[:page]), flash:
+    redirect_to responses_path(redir_params), flash:
       { success: I18n.t!("flash.response_archived") }
   end
   def unarchive
     @response.unarchive!
-    redirect_to responses_path(page: params[:page]), flash:
+    redirect_to responses_path(redir_params), flash:
       { success: I18n.t!("flash.response_unarchived") }
   end
+  def redir_params
+    { responses: params[:responses], page: params[:page] }
+  end
+  helper_method :redir_params
 
   private # -----
 
