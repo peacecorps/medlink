@@ -18,6 +18,7 @@
         = i.select :time_zone,
           ActiveSupport::TimeZone.all.map { |t| [t, t.name] },
           { include_blank: true }, {}
+        = render partial: "partials/phone_form.html.haml", locals: { form: f }
 
       %button.btn.btn-primary(type="submit") Save
       = link_to "Change Password", edit_user_registration_path, class: "btn btn-default"

@@ -1,0 +1,14 @@
+.form-group
+  %label
+    Phones
+    = form.link_to_add :phones, data: { target: "#phone-fields" } do
+      = icon :plus
+  #phone-fields
+    = form.fields_for :phones do |phone_form|
+      .input-group
+        = phone_form.text_field :number,
+          placeholder: 'Phone number',
+          class:       'form-control'
+        %span.input-group-btn
+          = phone_form.link_to_remove class: "btn btn-danger" do
+            = icon :remove

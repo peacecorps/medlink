@@ -18,21 +18,7 @@
       = i.select :role,
         User.role_names,
         {include_blank: 'Assign Role'}, {}
-
-      .form-group
-        %label
-          Phones
-          = f.link_to_add :phones, data: { target: "#phone-fields" } do
-            = icon :plus
-        #phone-fields
-          = f.fields_for :phones do |phone_form|
-            .input-group
-              = phone_form.text_field :number,
-                placeholder: 'Phone number',
-                class:       'form-control'
-              %span.input-group-btn
-                = phone_form.link_to_remove class: "btn btn-danger" do
-                  = icon :remove
+      = render partial: "partials/phone_form.html.haml", locals: { form: f }
 
     %button.btn.btn-primary(type="submit")
       = action == :edit ? "Save User" : "Add User"
