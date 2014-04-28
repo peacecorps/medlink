@@ -7,21 +7,9 @@ class OrdersController < ApplicationController
 
   def manage
     authorize! :respond, User
-    @past_due  = accessible_orders.past_due.page params[:past_due_page]
-    @pending   = accessible_orders.pending.page params[:pending_page]
-    @responses = archived accessible_responses.page params[:response_page]
+    @past_due = accessible_orders.past_due.page params[:past_due_page]
+    @pending  = accessible_orders.pending.page params[:pending_page]
   end
-
-  def active_country?
-    !current_user.admin? || active_country_id.present?
-  end
-  helper_method :active_country?
-
-
-  def active_country_id
-    current_user.admin? ? session[:active_country_id] : current_user.country_id
-  end
-  helper_method :active_country_id
 
   private
 
@@ -30,22 +18,5 @@ class OrdersController < ApplicationController
       accessible(Order).
       where(country_id: active_country_id).
       includes :user, :supply
-  end
-
-  def accessible_responses
-    current_user.
-      accessible(Response).
-      where(country_id: active_country_id).
-      includes :user, :orders => :supply
-  end
-
-  def archived responses
-    if params[:responses] == "archived"
-      responses.where "archived_at IS NOT NULL"
-    elsif params[:responses] == "all"
-      responses
-    else
-      responses.where archived_at: nil
-    end
   end
 end

@@ -20,6 +20,15 @@ class ApplicationController < ActionController::Base
     render 'partials/help'
   end
 
+  def active_country_id
+    return unless current_user
+    current_user.admin? ? session[:active_country_id] : current_user.country_id
+  end
+  def active_country?
+    active_country_id.present?
+  end
+  helper_method :active_country_id, :active_country?
+
   private # ----------
 
   def start_page

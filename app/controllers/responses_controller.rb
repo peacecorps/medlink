@@ -2,6 +2,11 @@ class ResponsesController < ApplicationController
   before_filter :initialize_response, only: [:new, :create]
   before_filter :find_response, only: [:show, :archive, :unarchive]
 
+  def index
+    authorize! :respond, User
+    @responses = archived accessible_responses.page params[:response_page]
+  end
+
   def new
     @orders = @user.orders.without_responses.
       includes(:request, :supply)
@@ -28,13 +33,12 @@ class ResponsesController < ApplicationController
 
   def archive
     @response.archive!
-    redirect_to manage_orders_path, flash:
+    redirect_to responses_path(page: params[:page]), flash:
       { success: I18n.t!("flash.response_archived") }
   end
-
   def unarchive
     @response.unarchive!
-    redirect_to manage_orders_path, flash:
+    redirect_to responses_path(page: params[:page]), flash:
       { success: I18n.t!("flash.response_unarchived") }
   end
 
@@ -55,5 +59,22 @@ class ResponsesController < ApplicationController
 
   def response_params
     params.require(:response).permit :extra_text
+  end
+
+  def accessible_responses
+    current_user.
+      accessible(Response).
+      where(country_id: active_country_id).
+      includes :user, :orders => :supply
+  end
+
+  def archived responses
+    if params[:responses] == "archived"
+      responses.where "archived_at IS NOT NULL"
+    elsif params[:responses] == "all"
+      responses
+    else
+      responses.where archived_at: nil
+    end
   end
 end

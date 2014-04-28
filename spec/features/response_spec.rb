@@ -53,15 +53,15 @@ describe "responding to orders" do
       o.update_attributes response: response, delivery_method: DeliveryMethod.to_a.sample
     end
 
-    visit manage_orders_path
+    visit responses_path
     expect( page ).to have_content @user.first_name
     click_on "archive-#{response.id}" # TODO: less brittle selector
 
     expect( alert.text ).to match /response.*archived/i
     expect( page ).not_to have_content @user.first_name
 
-    %w(all archived).each do |selected|
-      visit manage_orders_path responses: selected
+    %w(All Archived).each do |selected|
+      click_on selected
       expect( page ).to have_content @user.first_name
     end
 

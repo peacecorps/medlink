@@ -1,11 +1,24 @@
-- id = label.downcase.gsub /\s/, '-'
-.order-table{ id: id }
+- anchor = label.downcase.gsub /\s/,'-'
+%div{ id: anchor }
   = title do
     = label
   - if rows.any?
-    = render partial: "partials/pager", locals: { anchor: id, pager: rows, page_param: page_param }
+    = render partial: "partials/pager",
+      locals: { anchor: anchor, pager: rows, page_param: page_param }
     %table.table.table-striped.table-hover
-      = render partial: table, locals: { rows: rows }
+      %thead
+        %tr
+          %th First Name
+          %th Last Name
+          %th Location
+          %th Requests
+      %tbody
+        - rows.group_by(&:user).each do |user, os|
+          %tr.order.link{ "data-link" => new_user_response_path(user) }
+            %td= user.first_name
+            %td= user.last_name
+            %td= user.location
+            %td= render partial: "partials/group", locals: { user: user, orders: os }
   - else
     .well
       No orders

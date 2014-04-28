@@ -5,23 +5,25 @@ Medlink::Application.routes.draw do
     patch 'users/:id' => 'devise/registrations#update', as: 'user_registration'
   end
 
-  resources :reports, only: [:index] do
-    [:order_history, :users, :pcmo_response_times].each do |r|
-      get r, on: :collection
-    end
-  end
-
-  resources :orders, only: [:index] do
-    get :manage, on: :collection
-  end
-
-  resources :requests, only: [:new, :create]
-
   resource :user, only: [:edit, :update]
 
   resources :users, only: [] do
     resources :responses, only: [:new, :create, :show] do
       %i(archive unarchive).each { |n| post n }
+    end
+  end
+
+  resources :requests, only: [:new, :create]
+
+  resources :orders, only: [:index] do
+    get :manage, on: :collection
+  end
+
+  resources :responses, only: [:index]
+
+  resources :reports, only: [:index] do
+    [:order_history, :users, :pcmo_response_times].each do |r|
+      get r, on: :collection
     end
   end
 
