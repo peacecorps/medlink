@@ -20,6 +20,6 @@
         %td= o.supply.name
         %td
           - if o.denied?
-            = icon :remove
+            = icon :remove, class: "danger"
           - else
-            = icon :ok
+            = icon :ok, class: "success"

@@ -16,8 +16,8 @@ class InputBuilder
 end
 
 module ApplicationHelper
-  def icon name
-    "<i class='glyphicon glyphicon-#{name}'></i>".html_safe
+  def icon name, opts={}
+    "<i class='glyphicon glyphicon-#{name} #{opts[:class]}'></i>".html_safe
   end
 
   def users_by_country

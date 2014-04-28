@@ -22,7 +22,12 @@
               - DeliveryMethod.each do |method|
                 %td= radio_button_tag "orders[#{order.id}][delivery_method]", method.name
 
-  = f.text_area :extra_text, size: "40x4", maxlength: 160, class: 'input-xlarge', placeholder: "Extra information (e.g. delivery date, pickup instructions)"
+  .form-group
+    = f.text_area :extra_text,
+      size:        "40x4",
+      maxlength:   160,
+      class:       "form-control input-xlarge",
+      placeholder: "Extra information (e.g. delivery date, pickup instructions)"
 
   .form-actions
     .btn-group

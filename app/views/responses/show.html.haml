@@ -29,13 +29,16 @@
               %td{rowspan: os.length}= req.text
             %td= order.supply.name
             - if order.duplicated_at
-              %td.duplicate-order{colspan: => DeliveryMethod.count }
+              %td.duplicate-order{colspan: DeliveryMethod.count }
                 Updated on #{order.duplicated_at.strftime '%-m/%-d'}
             - else
               - DeliveryMethod.each do |method|
                 %td
                   - if order.delivery_method == method
-                    = icon :ok
+                    - if order.denied?
+                      = icon :remove, class: "danger"
+                    - else
+                      = icon :ok, class: "success"
 
   - if @response.extra_text
     .well

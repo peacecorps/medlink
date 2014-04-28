@@ -2,6 +2,6 @@
   %dl
     %dt
       - time = os.first.created_at.in_time_zone user.time_zone
-      %span= time.strftime '%-m/%-d/%y'
+      %span= time.strftime '%-m/%-d'
       %small.cell--secondary= time.strftime '%H:%M'
     %dd= os.map { |o| o.supply.name }.join ', '
