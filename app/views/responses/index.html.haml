@@ -8,8 +8,8 @@
   #response-tracker
     .btn-group
       - %w(unarchived all archived).each do |t|
-        - klass = t == (params[:responses]||"unarchived") ? "btn-primary" : "btn-default"
-        = link_to t.capitalize, responses: t, page: params[:page]
+        - status = t == (params[:responses]||"unarchived") ? "btn-primary" : "btn-default"
+        = link_to t.capitalize, {responses: t, page: params[:page]}, class: "btn #{status}"
 
     - if @responses.any?
       = render partial: "partials/pager", locals: { anchor: "response-tracker", pager: @responses }

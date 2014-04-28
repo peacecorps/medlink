@@ -1,5 +1,5 @@
 .order-back
-  = link_to manage_orders_path do
+  = link_to responses_path do
     = icon "chevron-left"
     %span Back to Response Tracker
 
@@ -17,19 +17,25 @@
       %tr
         %th
         %th
+        %th
         - DeliveryMethod.each do |method|
           %th= method.title
     %tbody
-      - @response.orders.group_by { |o| o.created_at.strftime '%-m/%-d/%y' }.each do |ts, os|
+      - @response.orders.includes(:request).group_by { |o| o.request }.each do |req, os|
         - os.each_with_index do |order,i|
           %tr
             - if i.zero?
-              %td.ts{rowspan: os.length}= ts
+              %td.ts{rowspan: os.length}= req.created_at.strftime '%-m/%-d'
+              %td{rowspan: os.length}= req.text
             %td= order.supply.name
-            - DeliveryMethod.each do |method|
-              %td
-                - if order.delivery_method == method
-                  = icon :ok
+            - if order.duplicated_at
+              %td.duplicate-order{colspan: => DeliveryMethod.count }
+                Updated on #{order.duplicated_at.strftime '%-m/%-d'}
+            - else
+              - DeliveryMethod.each do |method|
+                %td
+                  - if order.delivery_method == method
+                    = icon :ok
 
   - if @response.extra_text
     .well

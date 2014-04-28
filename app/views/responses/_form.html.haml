@@ -16,15 +16,13 @@
               %td.ts{rowspan: os.length}= req.text
             %td= order.supply.name
             - if order.duplicated_at
-              %td{ "colspan" => DeliveryMethod.count }
-                = "Updated on #{order.duplicated_at.strftime '%-m/%-d'}"
+              %td.duplicate-order{colspan: DeliveryMethod.count}
+                Updated on #{order.duplicated_at.strftime '%-m/%-d'}
             - else
               - DeliveryMethod.each do |method|
                 %td= radio_button_tag "orders[#{order.id}][delivery_method]", method.name
 
-  %span.order__characters "160 characters remaining"
-  .order__instructions
-    = f.text_area :extra_text, size: "40x4", maxlength: 160, class: 'input-xlarge', placeholder: "Extra information (e.g. delivery date, pickup instructions)"
+  = f.text_area :extra_text, size: "40x4", maxlength: 160, class: 'input-xlarge', placeholder: "Extra information (e.g. delivery date, pickup instructions)"
 
   .form-actions
     .btn-group
@@ -38,12 +36,4 @@
       var val = $(this).data("method");
       $('#new_response :radio[value='+ val +']').prop('checked', true);
     });
-
-    // Update 'characters remaining' count
-    var remaining = $(".order__characters")
-      , instructions = $(".order__instructions textarea");
-    instructions.keyup(function() {
-        var count = 160 - instructions.val().length;
-        remaining.text(count + " characters remaining");
-    }).keyup();
   })

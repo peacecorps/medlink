@@ -22,7 +22,8 @@ class Response < ActiveRecord::Base
   end
 
   def include_updated_orders!
-    user.orders.where(supply: supplies, delivery_method: nil).each do |o|
+    supply_ids = supplies.pluck :id
+    user.orders.where(supply_id: supply_ids, delivery_method: nil).each do |o|
       o.update_attributes response_id: id
     end
   end

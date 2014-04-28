@@ -3,7 +3,7 @@
 
 .row
   .col-md-6
-    = form_for @user do |f|
+    = nested_form_for @user do |f|
       = render partial: "partials/errors", locals: { object: @user }
 
       = title do
