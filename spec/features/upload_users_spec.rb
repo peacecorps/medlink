@@ -11,7 +11,7 @@ describe "Uploading a User CSV", :worker do
     attach_file "csv", Rails.root.join("spec/data/users.good.csv")
     click_button "Upload CSV"
 
-    expect( alert.text ).to match /country/i
+    expect( page.find(".alert").text ).to match /country/i
     expect( User.pcv.count ).to eq 0
   end
 
@@ -24,14 +24,14 @@ describe "Uploading a User CSV", :worker do
     expect( User.pcv.count ).to eq 3
   end
 
-  it "downloads lines with errors" do
+  it "redisplays lines with errors" do
     attach_file "csv", Rails.root.join("spec/data/users.csv")
     select @admin.country.name, from: "country_id"
     click_button "Upload CSV"
 
-    row = CSV.parse(page.html).first
-    expect( row.first ).to eq "d@example.com"
-    expect( row.last  ).to match /role.*blank/i
+    alert = page.find(".alert").text
+    expect( alert ).to match /d@example.com/
+    expect( alert ).to match /role.*blank/i
 
     expect( User.pcv.count ).to eq 3
   end

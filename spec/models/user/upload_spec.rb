@@ -5,7 +5,7 @@ describe User::Upload do
     # TODO: support country lookup?
     country = create :country
     io      = StringIO.new csv
-    @upload = User::Upload.new country, io
+    @upload = User::Upload.new country.id, io
     @upload.run!
   end
 
@@ -18,14 +18,12 @@ describe User::Upload do
   end
 
   it "rejects CSVs without a header row" do
-    expect do
-      upload "a@example.com,111,,A,Person"
-    end.to raise_error /missing header/i
+    upload "a@example.com,111,,A,Person"
+    expect( @upload.global_errors.first.message ).to match /missing header/i
   end
 
   it "rejects CSVs with bad headers" do
-    expect do
-      upload "email,not_a_field\na@example.com,nope"
-    end.to raise_error /unrecognized header/i
+    upload "email,not_a_field\na@example.com,nope"
+    expect( @upload.global_errors.first.message ).to match /unrecognized header/i
   end
 end

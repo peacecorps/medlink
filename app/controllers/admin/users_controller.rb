@@ -51,17 +51,15 @@ class Admin::UsersController < AdminController
   end
 
   def upload_csv
-    upload = run_upload!
-    if upload.errors.present?
-      send_data upload.errors, type: 'text/csv', filename: 'invalid_users.csv'
+    @upload = run_upload!
+    if @upload.errors.any?
+      @user = User.new
+      render :new
     else
-      upload.added.each { |u| MailerJob.enqueue :welcome, u.id }
-      flash[:success] = I18n.t! "flash.valid_csv", users: upload.added.count
+      @upload.added.each { |u| MailerJob.enqueue :welcome, u.id }
+      flash[:success] = I18n.t! "flash.valid_csv", users: @upload.added.count
       redirect_to new_admin_user_path
     end
-
-  rescue => e
-    redirect_to new_admin_user_path, flash: { error: e.message }
   end
 
   private # ----------
@@ -75,8 +73,7 @@ class Admin::UsersController < AdminController
   end
 
   def run_upload!
-    country = Country.find params[:country_id]
-    upload  = User::Upload.new country, params[:csv], overwrite: params[:overwrite].present?
+    upload = User::Upload.new params[:country_id], params[:csv], overwrite: params[:overwrite].present?
     upload.tap &:run!
   end
 end
