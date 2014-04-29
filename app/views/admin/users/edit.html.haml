@@ -1,9 +1,7 @@
 = content_for :page_title do
   Edit Account
 
-= link_to new_admin_user_path do
-  = icon "chevron-left"
-  %span Back to Admin Home
+= back_link "Back to Admin Home", new_admin_user_path
 
 %hr
 

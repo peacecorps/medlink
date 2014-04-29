@@ -17,7 +17,9 @@ end
 
 module ApplicationHelper
   def icon name, opts={}
-    "<i class='glyphicon glyphicon-#{name} #{opts[:class]}'></i>".html_safe
+    capture_haml do
+      haml_tag "i", class: "glyphicon glyphicon-#{name} #{opts[:class]}"
+    end
   end
 
   def inputs builder, opts={}
@@ -29,6 +31,12 @@ module ApplicationHelper
       haml_tag ".title" do
         haml_tag "h2", &block
       end
+    end
+  end
+
+  def back_link title, path
+    link_to path, class: "btn btn-default btn-back" do
+      "<i class='glyphicon glyphicon-chevron-left'></i> #{title}".html_safe
     end
   end
 

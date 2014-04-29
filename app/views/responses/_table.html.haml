@@ -12,14 +12,4 @@
       %td= r.user.last_name
       %td= r.user.location
       %td= render partial: "partials/group", locals: { user: r.user, orders: r.orders }
-      %td
-        - if r.archived?
-          = form_tag user_response_unarchive_path(r.user, r, redir_params) do
-            %button.btn.btn-danger{ "id" => "unarchive-#{r.id}" }
-              = icon :open
-              Unarchive
-        - else
-          = form_tag user_response_archive_path(r.user, r, redir_params) do
-            %button.btn.btn-default{ "id" => "archive-#{r.id}" }
-              = icon :save
-              Archive
+      %td= render partial: "archive_button", locals: { response: r }

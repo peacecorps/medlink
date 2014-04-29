@@ -1,0 +1,7 @@
+%h1= user.name
+%p
+  = icon "globe"
+  = "#{user.location}, #{user.country.name}"
+  &nbsp;
+  = icon "phone-alt"
+  = user.primary_phone ? user.primary_phone.number : '-'

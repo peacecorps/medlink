@@ -1,20 +1,9 @@
-.order-back
-  = link_to manage_orders_path do
-    = icon "chevron-left"
-    %span Back to all Orders
+= back_link "Back to all Orders", manage_orders_path
 
-  %p
-  = render partial: 'partials/errors', locals: { object: @response }
+= render partial: 'partials/errors', locals: { object: @response }
 
 .order
-  %h1= @user.name
-  %p
-    = icon "globe"
-    = "#{@user.location}, #{@user.country.name}"
-    &nbsp;
-    = icon "phone-alt"
-    = @user.primary_phone ? @user.primary_phone.number : '-'
-
+  = render partial: "user_detail", locals: { user: @user }
   = render partial: "form", locals: { user: @user, response: @response, orders: @orders }
 
 %hr

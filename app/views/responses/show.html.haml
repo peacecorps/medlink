@@ -1,16 +1,8 @@
 .order-back
-  = link_to responses_path do
-    = icon "chevron-left"
-    %span Back to Response Tracker
+  = back_link "Back to Response Tracker", responses_path
 
 .order
-  %h1= @user.name
-  %p
-    = icon "globe"
-    = "#{@user.location}, #{@user.country.name}"
-    &nbsp;
-    = icon "phone-alt"
-    = @user.primary_phone ? @user.primary_phone.number : '-'
+  = render partial: "user_detail", locals: { user: @user }
 
   %table.table.table-hover
     %thead
@@ -40,6 +32,8 @@
                     - else
                       = icon :ok, class: "success"
 
-  - if @response.extra_text
+  - if @response.extra_text.present?
     .well
       = @response.extra_text
+
+= render partial: "archive_button", locals: { response: @response }
