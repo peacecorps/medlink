@@ -21,7 +21,7 @@ class RequestsController < ApplicationController
       @request.user.mark_updated_orders
       redirect_to after_create_page, flash: { success: create_success_message }
     else
-      flash[:error] = I18n.t! "flash.request_empty"
+      flash[:error] = I18n.t! "flash.request.empty"
       render :new
     end
   end
@@ -47,9 +47,9 @@ class RequestsController < ApplicationController
 
   def create_success_message
     if @request.user_id == @request.entered_by
-      I18n.t! "flash.request_placed"
+      I18n.t! "flash.request.placed"
     else
-      I18n.t! "flash.request_placed_for", username: @request.user.name
+      I18n.t! "flash.request.placed_for", username: @request.user.name
     end
   end
 end

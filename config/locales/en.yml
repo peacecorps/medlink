@@ -1,22 +1,26 @@
 en:
   flash:
-    request_empty: "Your order was empty. Please select at least one supply."
-    request_placed: "Success! Your order has been sent."
-    request_placed_for: "Success! The order you placed on behalf of %{username} has been sent."
-    response_sent: "Success! Your response has been sent to %{user}. This request will now appear in the response tracker awaiting further action."
-    response_archived: "Response has been marked as archived."
-    response_unarchived: "Response has been unarchived."
-    response_none_selected: "No response selected."
+    request:
+      empty: "Your order was empty. Please select at least one supply."
+      placed: "Success! Your order has been sent."
+      placed_for: "Success! The order you placed on behalf of %{username} has been sent."
 
-    user_added: "Success! You have added a new user to PC Medlink"
-    changes: "Success! You have made the following changes to this user account: %{changes}"
-    no_changes: "No changes made"
+    response:
+      sent: "Success! Your response has been sent to %{user}. This request will now appear in the response tracker awaiting further action."
+      archived: "Response has been marked as archived."
+      unarchived: "Response has been unarchived."
+      none_selected: "No response selected."
 
-    valid_csv: "Successfully uploaded information for %{users} users"
-    invalid_csv: "CSV has invalid entries!"
+    user:
+      added: "Success! You have added a new user to PC Medlink"
+      changes: "Success! You have made the following changes to this user account: %{changes}"
+      no_changes: "No changes made"
+      account_updated: "Your account has been updated"
+
+    csv:
+      valid: "Successfully uploaded information for %{users} users"
 
     country_selected: "You now administrating %{country}"
-    account_updated: "Your account has been updated"
 
     auth:
       admin: "You must be an admin to view that page"

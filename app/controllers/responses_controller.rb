@@ -22,10 +22,10 @@ class ResponsesController < ApplicationController
       @response.send!
       @response.mark_updated_orders!
       redirect_to manage_orders_path, flash:
-        { success: I18n.t!("flash.response_sent", user: @user.name) }
+        { success: I18n.t!("flash.response.sent", user: @user.name) }
     else
       redirect_to manage_orders_path, flash:
-        { error: I18n.t!("flash.response_none_selected") }
+        { error: I18n.t!("flash.response.none_selected") }
     end
   end
 
@@ -35,12 +35,12 @@ class ResponsesController < ApplicationController
   def archive
     @response.archive!
     redirect_to responses_path(redir_params), flash:
-      { success: I18n.t!("flash.response_archived") }
+      { success: I18n.t!("flash.response.archived") }
   end
   def unarchive
     @response.unarchive!
     redirect_to responses_path(redir_params), flash:
-      { success: I18n.t!("flash.response_unarchived") }
+      { success: I18n.t!("flash.response.unarchived") }
   end
   def redir_params
     { responses: params[:responses], page: params[:page] }

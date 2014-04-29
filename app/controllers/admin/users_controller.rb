@@ -24,7 +24,7 @@ class Admin::UsersController < AdminController
     if @user.save
       MailerJob.enqueue :welcome, @user.id
       redirect_to new_admin_user_path,
-        notice: I18n.t!("flash.user_added")
+        notice: I18n.t!("flash.user.added")
     else
       render :new
     end
@@ -40,9 +40,9 @@ class Admin::UsersController < AdminController
     if @user.update_attributes user_params
       diff = User::Change.new _attrs, @user
       _flash = if diff.changed?
-        { success: I18n.t!("flash.changes", changes: diff.summary) }
+        { success: I18n.t!("flash.user.changes", changes: diff.summary) }
       else
-        { notice: I18n.t!("flash.no_changes") }
+        { notice: I18n.t!("flash.user.no_changes") }
       end
       redirect_to new_admin_user_path, flash: _flash
     else
@@ -57,7 +57,7 @@ class Admin::UsersController < AdminController
       render :new
     else
       @upload.added.each { |u| MailerJob.enqueue :welcome, u.id }
-      flash[:success] = I18n.t! "flash.valid_csv", users: @upload.added.count
+      flash[:success] = I18n.t! "flash.csv.valid", users: @upload.added.count
       redirect_to new_admin_user_path
     end
   end
