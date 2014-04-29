@@ -21,7 +21,7 @@ class Response < ActiveRecord::Base
     MailerJob.enqueue :fulfillment, id
   end
 
-  def include_updated_orders!
+  def mark_updated_orders!
     supply_ids = supplies.pluck :id
     user.orders.where(supply_id: supply_ids, delivery_method: nil).each do |o|
       o.update_attributes response_id: id

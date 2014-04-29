@@ -47,6 +47,14 @@ describe "responding to orders" do
     expect( mail.to ).to eq [@user.email]
   end
 
+  it "does not create a response when nothing is selected" do
+    visit new_user_response_path(@user)
+    click_on "Send Response"
+
+    expect( alert.text ).to match /no response/i
+    expect( Response.count ).to eq 0
+  end
+
   it "can archive responses" do
     response = create :response, user: @user
     @user.orders.each do |o|
