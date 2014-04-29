@@ -6,5 +6,6 @@
   = render partial: "partials/admin_country_select", locals: { countries: Country.with_orders }
 
 - if active_country?
-  = render partial: "table", locals: { label: "Past Due Requests", rows: @past_due, page_param: "past_due_page" }
+  - if @past_due.any?
+    = render partial: "table", locals: { label: "Past Due Requests", rows: @past_due, page_param: "past_due_page" }
   = render partial: "table", locals: { label: "Pending Requests",  rows: @pending,  page_param: "pending_page"  }

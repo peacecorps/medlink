@@ -12,7 +12,7 @@
         - DeliveryMethod.each do |method|
           %th= method.title
     %tbody
-      - @response.orders.includes(:request).group_by { |o| o.request }.each do |req, os|
+      - @response.orders.includes(:request, :supply).group_by { |o| o.request }.each do |req, os|
         - os.each_with_index do |order,i|
           %tr
             - if i.zero?
