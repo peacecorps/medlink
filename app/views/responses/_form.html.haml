@@ -30,8 +30,8 @@
       placeholder: "Extra information (e.g. delivery date, pickup instructions)"
 
   .form-actions
-    .btn-group
-      %button.btn.btn-primary(type="submit") Send Response
+    %button.btn.btn-primary(type="submit") Send Response
+    %button.btn.btn-default.clear-radios(style="display:none") Reset Selections
 
 
 :javascript
@@ -40,5 +40,11 @@
     $('.delivery-method').click(function() {
       var val = $(this).data("method");
       $('#new_response :radio[value='+ val +']').prop('checked', true);
+    });
+
+    // Deselect radio buttons
+    $('.clear-radios').show().click(function() {
+      $('#new_response :radio').prop('checked', false);
+      return false;
     });
   })
