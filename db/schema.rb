@@ -11,14 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140426194426) do
+ActiveRecord::Schema.define(version: 20140502001523) do
 
   create_table "countries", force: true do |t|
     t.string "name"
-    t.string "code"
   end
-
-  add_index "countries", ["code"], name: "index_countries_on_code"
 
   create_table "messages", force: true do |t|
     t.datetime "created_at"

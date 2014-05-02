@@ -10,13 +10,13 @@ require 'csv'
 
 puts "Creating intial records from seed data:"
 
-CSV.read(Rails.root+"db/supply.csv").each do |a|
-  Supply.new(:shortcode => a[1], :name => a[0]).save
+CSV.read(Rails.root+"db/supply.csv").each do |shortcode, name|
+  Supply.new(shortcode: shortcode, name: name).save
 end
 puts "... Loaded #{Supply.count} supplies"
 
-CSV.read(Rails.root+"db/country.csv", { :col_sep => ";" }).each do |a|
-  Country.new(:code => a[1], :name => a[0]).save
+File.read(Rails.root+"db/country.csv").each_line do |name|
+  Country.new(name: name.strip).save
 end
 puts "... Loaded #{Country.count} countries"
 
