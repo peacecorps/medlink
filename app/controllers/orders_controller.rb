@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   def index
     @orders = current_user.orders.
-      includes(:supply, :response).
+      includes(:request, :supply, :response).
       page(params[:page])
   end
 
