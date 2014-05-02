@@ -21,7 +21,7 @@ class SMS < ActiveRecord::Base
     client = Twilio::REST::Client.new sid, auth
     client.account.sms.messages.create(
       from: ENV['TWILIO_PHONE_NUMBER'],
-      to:   number,
+      to:   Phone.condense(number),
       body: text
     )
 
