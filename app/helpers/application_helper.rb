@@ -45,4 +45,12 @@ module ApplicationHelper
       reject { |k,v| %w(action controller).include? k }.
       tap    { |ps| ps[param] = page }
   end
+
+  def sortable column, title: nil, prefix: ""
+    column  = column.to_s
+    title ||= column.titleize
+    css_class = column == sort_column(prefix) ? "current #{sort_direction(prefix)}" : nil
+    direction = column == sort_column(prefix) && sort_direction(prefix) == :asc ? :desc : :asc
+    link_to title, {"#{prefix}sort" => column, "#{prefix}direction" => direction}, {:class => css_class}
+  end
 end

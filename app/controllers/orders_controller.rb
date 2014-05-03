@@ -7,17 +7,20 @@ class OrdersController < ApplicationController
 
   def manage
     authorize! :respond, User
-    @past_due = users :past_due, params[:past_due_page], params[:past_due_sort]
-    @pending  = users :pending,  params[:pending_page],  params[:pending_sort]
+    @past_due = users :past_due
+    @pending  = users :pending
   end
 
   private
 
-  def users type, page, sort
-    rel = User.
-      where(country_id: active_country_id).
+  def users type
+    User.where(country_id: active_country_id).
       send(type).
-      page(page || 1)
-    sort ? rel.order(sort) : rel
+      order(order "#{type}_").
+      page(params["#{type}_page"] || 1)
+  end
+
+  def order prefix
+    "#{sort_column prefix} #{sort_direction prefix}"
   end
 end

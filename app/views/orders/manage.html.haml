@@ -7,5 +7,5 @@
 
 - if active_country?
   - if @past_due.any?
-    = render partial: "table", locals: { label: "Past Due Requests", rows: @past_due, page_param: "past_due_page" }
-  = render partial: "table", locals: { label: "Pending Requests",  rows: @pending,  page_param: "pending_page"  }
+    = render partial: "table", locals: { label: "Past Due Requests", rows: @past_due, prefix: "past_due_" }
+  = render partial: "table", locals: { label: "Pending Requests",  rows: @pending,  prefix: "pending_" }

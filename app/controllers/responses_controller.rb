@@ -4,7 +4,8 @@ class ResponsesController < ApplicationController
 
   def index
     authorize! :respond, User
-    @responses = archived accessible_responses.page params[:response_page]
+    @responses = archived(accessible_responses).
+      page params[:response_page]
   end
 
   def new
@@ -77,10 +78,9 @@ class ResponsesController < ApplicationController
   end
 
   def accessible_responses
-    current_user.
-      accessible(Response).
-      where(country_id: active_country_id).
-      includes :user, :orders => :supply
+    Response.where(country_id: active_country_id).
+      includes(:user).
+      order("users.#{sort_column} #{sort_direction}")
   end
 
   def archived responses

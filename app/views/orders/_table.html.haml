@@ -4,14 +4,14 @@
     = label
   - if rows.any?
     = render partial: "partials/pager",
-      locals: { anchor: anchor, pager: rows, page_param: page_param }
+      locals: { anchor: anchor, pager: rows, page_param: "#{prefix}page" }
     %table.table.table-striped.table-hover
       %thead
         %tr
-          %th First Name
-          %th Last Name
-          %th Location
-          %th Requests
+          %th= sortable :first_name, prefix: prefix
+          %th= sortable :last_name, prefix: prefix
+          %th= sortable :location, prefix: prefix
+          %th= sortable :waiting_since, title: "Requests", prefix: prefix
       %tbody
         - rows.each do |user|
           %tr.order.link{ "data-link" => new_user_response_path(user) }

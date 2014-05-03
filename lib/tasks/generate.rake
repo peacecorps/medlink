@@ -39,7 +39,9 @@ class Generator
             supply:     supply,
             created_at: created_at
         end
+        user.mark_updated_orders
       end
+      user.update_waiting!
     end
   end
 

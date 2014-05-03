@@ -63,7 +63,7 @@ class Admin::UsersController < AdminController
   end
 
   def editable_users
-    User.where(country_id: active_country_id).map { |u| [u.name, u.id] }
+    User.where(country: active_country_id).map { |u| [u.name, u.id] }
   end
   helper_method :editable_users
 

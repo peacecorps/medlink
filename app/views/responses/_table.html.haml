@@ -1,9 +1,9 @@
 %thead
   %tr
-    %th First Name
-    %th Last Name
-    %th Location
-    %th Requests
+    %th= sortable :first_name
+    %th= sortable :last_name
+    %th= sortable :location
+    %th= sortable :waiting_since, title: "Requests"
     %th
 %tbody
   - rows.each do |r|

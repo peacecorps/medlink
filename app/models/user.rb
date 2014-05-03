@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
     has_many name, dependent: :destroy
   end
 
-  paginates_per 5
+  paginates_per 10
 
   has_many :phones, dependent: :destroy
   accepts_nested_attributes_for :phones, allow_destroy: true
@@ -41,8 +41,7 @@ class User < ActiveRecord::Base
   end
 
   def update_waiting!
-    oldest_order = orders.without_responses.order(created_at: :asc).first
-    update_attributes waiting_since: oldest_order.try(:created_at)
+    update_attributes waiting_since: orders.without_responses.minimum(:created_at)
   end
 
   def primary_phone
