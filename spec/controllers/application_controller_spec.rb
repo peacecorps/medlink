@@ -7,11 +7,4 @@ describe ApplicationController do
       expect( response ).to be_redirection
     end
   end
-
-  describe "GET /help" do
-    it 'displays a help template' do
-      get 'help'
-      expect( response ).to be_success
-    end
-  end
 end
