@@ -1,5 +1,9 @@
 <%= @subject %>
-==============================================
+<%= "=" * @subject.length %>
+
+Hello <%= @response.user.name %>,
+
+We have processed your requested medical supplies, and this completes your order. Below you will find instructions and information about your order.
 
 <%- @orders.each do |order| %>
   <%= "#{order.supply.name} (#{order.supply.shortcode})" %>
@@ -7,3 +11,9 @@
 <%- end %>
 
 <%= @response.extra_text %>
+
+-----
+
+To review previous orders go to pcmedlink.org
+
+If you need further assistance, or wish to request other medications not listed on PCMedlink please contact your Health Unit directly.
