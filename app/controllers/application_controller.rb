@@ -17,10 +17,10 @@ class ApplicationController < ActionController::Base
   end
 
   def help
-    if current_user.pcmo? || current_user.admin?
-      render 'partials/pcmo_help'
-    else
+    if current_user.nil? || current_user.pcv?
       render 'partials/help'
+    else
+      render 'partials/pcmo_help'
     end
   end
 

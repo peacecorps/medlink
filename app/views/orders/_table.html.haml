@@ -13,12 +13,12 @@
           %th Location
           %th Requests
       %tbody
-        - rows.group_by(&:user).each do |user, os|
+        - rows.each do |user|
           %tr.order.link{ "data-link" => new_user_response_path(user) }
             %td= user.first_name
             %td= user.last_name
             %td= user.location
-            %td= render partial: "partials/group", locals: { user: user, orders: os }
+            %td= render partial: "partials/group", locals: { user: user, orders: user.orders }
   - else
     .well
       No orders

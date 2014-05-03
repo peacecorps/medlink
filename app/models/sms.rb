@@ -61,6 +61,7 @@ class SMS < ActiveRecord::Base
       )
     end
     user.mark_updated_orders
+    user.update_waiting!
   end
 
   def confirmation_message

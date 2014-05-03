@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140502001523) do
+ActiveRecord::Schema.define(version: 20140503184518) do
 
   create_table "countries", force: true do |t|
     t.string "name"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 20140502001523) do
     t.integer  "role"
     t.string   "location"
     t.string   "time_zone"
+    t.datetime "waiting_since"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

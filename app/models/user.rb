@@ -13,13 +13,24 @@ class User < ActiveRecord::Base
     has_many name, dependent: :destroy
   end
 
+  paginates_per 5
+
   has_many :phones, dependent: :destroy
   accepts_nested_attributes_for :phones, allow_destroy: true
 
   validates_presence_of :country, :location, :first_name, :last_name, :role
-  validates_presence_of :pcv_id, :if => :pcv?
-  validates :pcv_id, uniqueness: true, :if => :pcv?
+  validates_presence_of :pcv_id, if: :pcv?
+  validates :pcv_id, uniqueness: true, if: :pcv?
   validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map(&:name) }
+
+  def self.due_cutoff
+    now    = Time.now
+    oldest = now.at_beginning_of_month
+    now.day < 3 ? oldest - 1.month : oldest
+  end
+
+  scope :past_due, -> { where ["waiting_since  < ?", due_cutoff] }
+  scope :pending,  -> { where ["waiting_since >= ?", due_cutoff] }
 
   def self.find_by_pcv_id str
     where(['lower(pcv_id) = ?', str.downcase]).first!
@@ -27,6 +38,11 @@ class User < ActiveRecord::Base
 
   def self.find_by_phone_number number
     Phone.lookup(number).user
+  end
+
+  def update_waiting!
+    oldest_order = orders.without_responses.order(created_at: :asc).first
+    update_attributes waiting_since: oldest_order.try(:created_at)
   end
 
   def primary_phone

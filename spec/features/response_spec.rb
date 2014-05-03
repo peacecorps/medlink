@@ -6,6 +6,7 @@ describe "responding to orders" do
     @user = create :user, country: @country
     create :phone, user: @user
     4.times { create :order, user: @user, country: @country }
+    @user.update_waiting!
 
     @pcmo = create :pcmo, country: @country
     login @pcmo

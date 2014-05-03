@@ -21,6 +21,7 @@ class ResponsesController < ApplicationController
       attach_orders @response, orders.select { |_,data| data.include? "delivery_method" }
       @response.send!
       @response.mark_updated_orders!
+      @response.user.update_waiting!
       redirect_to manage_orders_path, flash:
         { success: I18n.t!("flash.response.sent", user: @user.name) }
     else

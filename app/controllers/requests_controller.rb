@@ -19,6 +19,7 @@ class RequestsController < ApplicationController
     if @request.orders.any?
       @request.save!
       @request.user.mark_updated_orders
+      @request.user.update_waiting!
       redirect_to after_create_page, flash: { success: create_success_message }
     else
       flash[:error] = I18n.t! "flash.request.empty"
