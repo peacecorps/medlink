@@ -10,7 +10,7 @@ require 'csv'
 
 puts "Creating intial records from seed data:"
 
-CSV.read(Rails.root+"db/supply.csv").each do |shortcode, name|
+CSV.read(Rails.root+"db/supply.csv").each do |name, shortcode|
   Supply.new(shortcode: shortcode, name: name).save
 end
 puts "... Loaded #{Supply.count} supplies"
