@@ -2,18 +2,8 @@ class UserMailerPreview < ActionMailer::Preview
   include DeliveryMethod::Choices
 
   def fulfillment
-    mailer = nil
-
-    ActiveRecord::Base.transaction do
-      country = Country.where(name: "United States").first
-
-      user = User.where(
-        email:      "user@example.com",
-        first_name: "User",
-        last_name:  "Name"
-      ).first_or_initialize
-      user.save! validate: false
-
+    transiently do
+      country  = Country.where(name: "United States").first
       response = Response.new(
         country:    country,
         user:       user,
@@ -30,11 +20,30 @@ class UserMailerPreview < ActionMailer::Preview
         ).save! validate: false
       end
 
-      mailer = UserMailer.fulfillment response.id
+      UserMailer.fulfillment response.id
+    end
+  end
 
+  def welcome
+    transiently { UserMailer.welcome user.id }
+  end
+
+  private
+
+  def transiently &block
+    result = nil
+    ActiveRecord::Base.transaction do
+      result = block.call
       raise ActiveRecord::Rollback
     end
+    result
+  end
 
-    mailer
+  def user
+    @_user ||= User.where(
+      email:      "user@example.com",
+      first_name: "User",
+      last_name:  "Name"
+    ).first_or_initialize.tap { |u| u.save! validate: false }
   end
 end

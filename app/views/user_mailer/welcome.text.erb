@@ -1,4 +1,4 @@
-Welcome <%=@user.name%>!
+Welcome, <%=@user.name%>!
 ========================
 
 PC Medlink is your gateway to ordering Non-Prescription Medical Supplies and/or medical supplies found in your Peace Corps issued medical kit. Orders may be placed through the web or by SMS on your cell phone. Please note that this application is never to be used for ordering your prescribed medications, or communicating private medical information to your Health Unit.
@@ -24,7 +24,7 @@ Short Code List
 ---------------
 
 <%- Supply.all.each do |s| %>
-  <%= "#{s.name}\t#{s.shortcode}" %>
+  <%= "#{s.shortcode}\t#{s.name}" %>
 <% end %>
 
 If you need some help to get you started, visit our help section for more information or e-mail us at support@pcmedlink.org.
