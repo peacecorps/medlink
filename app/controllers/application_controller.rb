@@ -17,7 +17,11 @@ class ApplicationController < ActionController::Base
   end
 
   def help
-    render 'partials/help'
+    if current_user.pcmo? || current_user.admin?
+      render 'partials/pcmo_help'
+    else
+      render 'partials/help'
+    end
   end
 
   def active_country_id
