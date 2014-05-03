@@ -3,7 +3,7 @@
     %th= sortable :first_name
     %th= sortable :last_name
     %th= sortable :location
-    %th= sortable :waiting_since, title: "Requests"
+    %th= sortable :last_requested_at, title: "Requests"
     %th
 %tbody
   - rows.each do |r|

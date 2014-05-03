@@ -60,7 +60,7 @@ end
 
 desc "Generates random order data"
 task :generate => :environment do
-  g = Generator.new "United States", "Senegal"
+  g = Generator.new "Georgia", "Senegal"
   g.clear_existing!
   g.create_users!
   g.create_orders!

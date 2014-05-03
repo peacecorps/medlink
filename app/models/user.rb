@@ -41,7 +41,10 @@ class User < ActiveRecord::Base
   end
 
   def update_waiting!
-    update_attributes waiting_since: orders.without_responses.minimum(:created_at)
+    update_attributes(
+      waiting_since:     orders.without_responses.minimum(:created_at),
+      last_requested_at: orders.maximum(:created_at)
+    )
   end
 
   def primary_phone

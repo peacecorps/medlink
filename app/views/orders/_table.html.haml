@@ -11,7 +11,7 @@
           %th= sortable :first_name, prefix: prefix
           %th= sortable :last_name, prefix: prefix
           %th= sortable :location, prefix: prefix
-          %th= sortable :waiting_since, title: "Requests", prefix: prefix
+          %th= sortable :last_requested_at, title: "Requests", prefix: prefix
       %tbody
         - rows.each do |user|
           %tr.order.link{ "data-link" => new_user_response_path(user) }
