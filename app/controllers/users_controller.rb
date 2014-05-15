@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update_attributes update_params
-      redirect_to edit_user_path, flash: { success: I18n.t!("flash.account_updated") }
+      redirect_to edit_user_path, flash: { success: I18n.t!("flash.user.account_updated") }
     else
       render :edit
     end
