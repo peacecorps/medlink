@@ -1,7 +1,7 @@
 language: ruby
 bundler_args: --without development production
 rvm:
-- 2.1.1
+- 2.1.2
 script:
 - RAILS_ENV=test COVERAGE=true bundle exec rake db:setup spec
 branches:
