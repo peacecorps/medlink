@@ -4,7 +4,7 @@
   - csv << ["Placed", "PCV ID", "First name", "Last name", "Email", "Phone", "Item", "Location", "Responded", "Response", "Instructions", "Fulfilled", "Received"]
   - @orders.each do |order|
     - user = order.user
-    - fields = [order.created_at, user.pcv_id, user.first_name, user.last_name, user.email, user.primary_phone.try(:number), order.supply, user.location]
+    - fields = [order.created_at, user.pcv_id, user.first_name, user.last_name, user.email, user.primary_phone.try(:number), order.supply.name, user.location]
     - if response = order.response
-      - fields += [response.created_at, order.delivery_method, response.extra_text, nil, nil]
+      - fields += [response.created_at, order.delivery_method.try(:name), response.extra_text]
     - csv << fields
