@@ -56,6 +56,18 @@ describe "responding to orders" do
     expect( Response.count ).to eq 0
   end
 
+  it "auto-archives orders when possible", :worker do
+    visit new_user_response_path(@user)
+    choose :orders_4_delivery_method_denial
+    choose :orders_3_delivery_method_purchase
+    choose :orders_2_delivery_method_denial
+    choose :orders_1_delivery_method_purchase
+    click_on "Send Response"
+
+    visit responses_path
+    expect( page ).not_to have_content @user.first_name
+  end
+
   it "can archive responses" do
     response = create :response, user: @user
     @user.orders.each do |o|
