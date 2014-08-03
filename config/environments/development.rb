@@ -34,7 +34,7 @@ Medlink::Application.configure do
   config.after_initialize do
     Bullet.enable = true
     Bullet.raise  = true
-  end
+  end if ENV["BULLET"]
 end
 
 # Stub out the Twilio Client

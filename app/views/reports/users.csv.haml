@@ -1,6 +1,0 @@
-- require 'csv'
-
-= CSV.generate do |csv|
-  - csv << ["Create Date", "PCV ID", "First", "Last", "Email", "Phone", "Country", "Role", "Location"]
-  - @users.each do |user|
-    - csv << [user.created_at, user.pcv_id, user.first_name, user.last_name,  user.email, user.primary_phone.try(:number), user.country.name, user.role, user.location]

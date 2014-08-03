@@ -5,16 +5,19 @@ class ReportsController < ApplicationController
 
   def order_history
     authorize! :report, Order
-    @orders = current_user.accessible(Order).includes :user, :supply, :response
+    report = Report::OrderHistory.new(current_user.accessible Order)
+    send_data report.to_csv
   end
 
   def users
     authorize! :report, User
-    @users = User.all.includes :phones, :country
+    report = Report::Users.new(User.all)
+    send_data report.to_csv
   end
 
   def pcmo_response_times
     authorize! :report, User
-    @orders = current_user.accessible(Order).includes :user, :supply, :response, :country
+    report = Report::PcmoResponseTimes.new(current_user.accessible Order)
+    send_data report.to_csv
   end
 end
