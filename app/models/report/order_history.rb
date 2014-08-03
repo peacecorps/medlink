@@ -21,9 +21,7 @@ class Report::OrderHistory < Report
       "Location"     => user.location,
       "Responded"    => response.try(:created_at),
       "Response"     => delivery_method.try(:name),
-      "Instructions" => response.try(:extra_text),
-      "Fulfilled"    => nil,
-      "Received"     => nil
+      "Instructions" => response.try(:extra_text)
     }
   end
 end
