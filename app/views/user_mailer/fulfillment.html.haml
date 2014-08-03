@@ -22,7 +22,12 @@
         %td= order.supply.name
         %td= order.delivery_method.title
 
-%p= @response.extra_text
+%h4{style(:header)} Notes
+%p
+  - if @response.extra_text.present?
+    = @response.extra_text
+  - else
+    %i (None)
 
 %hr
 

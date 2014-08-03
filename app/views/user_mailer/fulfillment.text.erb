@@ -10,7 +10,12 @@ We have processed your requested medical supplies, and this completes your order
   <%= "  #{order.delivery_method.title}\n" %>
 <%- end %>
 
-<%= @response.extra_text %>
+Notes:
+<%- if @response.extra_text.present? %>
+  <%= @response.extra_text %>
+<%- else %>
+  None
+<% end %>
 
 -----
 
