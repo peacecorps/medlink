@@ -63,4 +63,8 @@ module ApplicationHelper
 
     status ? "#{o.supply.name} (#{status})" : o.supply.name
   end
+
+  def short_date date
+    date.strftime "%B %d" # January 01
+  end
 end

@@ -12,12 +12,12 @@
         - os.each_with_index do |order,i|
           %tr{ "class" => (order.duplicated_at ? "duplicated" : "") }
             - if i.zero?
-              %td.ts{rowspan: os.length}= req.created_at.strftime '%-m/%-d'
+              %td.ts{rowspan: os.length}= short_date req.created_at
               %td.ts{rowspan: os.length}= req.text
             %td= order.supply.name
             - if order.duplicated_at
               %td.duplicate-order{colspan: DeliveryMethod.count}
-                Updated on #{order.duplicated_at.strftime '%-m/%-d'}
+                Updated on #{short_date order.duplicated_at}
             - else
               - DeliveryMethod.each do |method|
                 %td= radio_button_tag "orders[#{order.id}][delivery_method]", method.name

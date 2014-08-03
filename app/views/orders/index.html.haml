@@ -18,7 +18,7 @@
           - else
             %td= order.request.text
             %td
-              %span= order.created_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d'
+              %span= short_date order.created_at.in_time_zone(order.user.time_zone)
               %small= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
-          %td= order.responded_at.in_time_zone(order.user.time_zone).strftime '%-m/%-d' if order.responded_at
+          %td= short_date(order.responded_at.in_time_zone order.user.time_zone) if order.responded_at
         - @_last = order.request_id
