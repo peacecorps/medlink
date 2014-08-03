@@ -53,4 +53,14 @@ module ApplicationHelper
     direction = column == sort_column(prefix) && sort_direction(prefix) == :asc ? :desc : :asc
     link_to title, {"#{prefix}sort" => column, "#{prefix}direction" => direction}, {:class => css_class}
   end
+
+  def short_order o
+    status = if o.duplicated?
+      "Duplicate"
+    elsif o.delivery_method
+      o.delivery_method.title
+    end
+
+    status ? "#{o.supply.name} (#{status})" : o.supply.name
+  end
 end

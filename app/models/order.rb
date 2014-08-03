@@ -48,4 +48,8 @@ class Order < ActiveRecord::Base
   def denied?
     delivery_method == DeliveryMethod::Denial
   end
+
+  def duplicated?
+    duplicated_at.present?
+  end
 end
