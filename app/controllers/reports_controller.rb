@@ -10,7 +10,7 @@ class ReportsController < ApplicationController
 
   def users
     authorize! :report, User
-    @users = User.all
+    @users = User.all.includes :phones, :country
   end
 
   def pcmo_response_times
