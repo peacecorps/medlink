@@ -19,7 +19,9 @@
             = @last_date = o.created_at
         %td= o.supply.name
         %td
-          - if o.denied?
+          - if o.duplicated?
+            = icon :minus
+          - elsif o.denied?
             = icon :remove, class: "danger"
           - else
             = icon :ok, class: "success"
