@@ -35,3 +35,8 @@ dl
 
 .btn-back
   margin-bottom: 2em
+
+// Hide links while printing - see http://stackoverflow.com/questions/3476393
+@media print
+  a:link:after, a:visited:after
+    content: ""
