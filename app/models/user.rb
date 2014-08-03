@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
   def self.role_names
     { "PCV" => "pcv", "PCMO" => "pcmo", "Admin" => "admin" }
   end
+  def role= r
+    r = r.downcase if r.respond_to?(:downcase)
+    super r
+  end
 
   belongs_to :country
 

@@ -47,6 +47,7 @@ class User
     end
 
     def add_user_from_row row
+      return if row.values.all?(&:empty?)
       pcv_id = row["pcv_id"]
 
       user   = User.where(pcv_id: pcv_id).first if @overwrite
@@ -61,7 +62,7 @@ class User
       row.each do |k,v|
         if user.respond_to? "#{k}="
           user.send "#{k}=", v
-        elsif k.start_with?("phone")
+        elsif k && k.start_with?("phone")
           user.phones.new number: v if v.present?
         end
       end
