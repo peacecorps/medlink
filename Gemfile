@@ -50,7 +50,7 @@ end
 
 group :production do
   gem 'exceptiontrap'
-  gem 'passenger'
+  gem 'unicorn'
   gem 'pg'
   gem 'rails_12factor' # For asset compilation
 end
