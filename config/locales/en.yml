@@ -16,6 +16,7 @@ en:
       changes: "Success! You have made the following changes to this user account: %{changes}"
       no_changes: "No changes made"
       account_updated: "Your account has been updated"
+      none_selected: "Please select a user to edit"
 
     csv:
       valid: "Successfully uploaded information for %{users} users"

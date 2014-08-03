@@ -15,8 +15,12 @@ class Admin::UsersController < AdminController
     # This is a kludge to accomodate the edit user
     #   selection being on the new user (/admin home) page
     if id = params[:edit_user]
-      user = User.find id
-      redirect_to edit_admin_user_path(user) and return
+      if id.present?
+        user = User.find id
+        redirect_to edit_admin_user_path(user) and return
+      else
+        redirect_to new_admin_user_path, notice: I18n.t!("flash.user.none_selected") and return
+      end
     end
 
     @user = User.new user_params.merge(password: SecureRandom.hex)
