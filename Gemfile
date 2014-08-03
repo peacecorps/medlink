@@ -30,6 +30,7 @@ group :development, :test do
   gem 'bullet'
   gem 'letter_opener'
   gem 'pry'
+  gem 'quiet_assets'
   gem 'sqlite3'
 
   gem 'spring'
