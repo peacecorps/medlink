@@ -7,7 +7,7 @@ class Phone < ActiveRecord::Base
 
   def has_country_code
     unless number.start_with? '+'
-      @errors.add :number, "should include a country code"
+      @errors.add :number, "should include a country code (e.g. +1 for the US)"
     end
   end
   validate :has_country_code
