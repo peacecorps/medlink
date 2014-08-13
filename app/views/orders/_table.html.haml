@@ -18,7 +18,7 @@
             %td= user.first_name
             %td= user.last_name
             %td= user.location
-            %td= render partial: "partials/group", locals: { user: user, orders: user.orders }
+            %td= render partial: "partials/group", locals: { user: user, orders: user.orders.without_responses }
   - else
     .well
       No orders
