@@ -11,6 +11,7 @@ class Supply < ActiveRecord::Base
   end
   
   def self.choices_for country_id
+    return self.choices if country_id == nil
     country = Country.find_by_id country_id
     country.supplies.map { |supply| [supply.name, supply.id] }
   end
