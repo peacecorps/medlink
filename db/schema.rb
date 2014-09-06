@@ -11,11 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140503204758) do
+ActiveRecord::Schema.define(version: 20140906182957) do
 
   create_table "countries", force: true do |t|
     t.string "name"
   end
+
+  create_table "country_supplies", force: true do |t|
+    t.integer  "country_id"
+    t.integer  "supply_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "country_supplies", ["country_id"], name: "index_country_supplies_on_country_id"
+  add_index "country_supplies", ["supply_id"], name: "index_country_supplies_on_supply_id"
 
   create_table "messages", force: true do |t|
     t.datetime "created_at"
