@@ -9,6 +9,11 @@ class Supply < ActiveRecord::Base
   def self.choices
     all.map { |supply| [supply.name, supply.id] }
   end
+  
+  def self.choices_for country_id
+    country = Country.find_by_id country_id
+    country.supplies.map { |supply| [supply.name, supply.id] }
+  end
 
   def self.find_by_shortcode code
     where(shortcode: code.upcase).first!
