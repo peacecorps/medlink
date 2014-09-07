@@ -4,7 +4,10 @@ describe "Duplicate orders" do
   it "can pass through the system", :worker do
     user = create :user
     create :phone, user: user
-    %w( A B C ).each { |name| create :supply, name: name, shortcode: name }
+    %w( A B C ).each do |name| 
+      @supply = create :supply, name: name, shortcode: name 
+      user.country.supplies << @supply
+    end
 
     SMS.receive user.primary_phone.number, "A B - first instructions"
     SMS.receive user.primary_phone.number, "A C - second instructions"
