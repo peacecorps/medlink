@@ -5,7 +5,6 @@ class CountrySuppliesController < ApplicationController
     @supplies = Supply.all 
   end
   def create
-    puts params
     @country = Country.find(active_country_id)
     @country.supplies.destroy_all
     @supplies = Supply.all
