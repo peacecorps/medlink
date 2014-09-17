@@ -8,5 +8,5 @@
     = check_box_tag "#{s.name}", 1 , @country_supplies.count(s.id) > 0 
     = label_tag s.name
     %p
-  = submit_tag 'Update'
+  = submit_tag 'Update', class: 'btn btn-primary'
 
