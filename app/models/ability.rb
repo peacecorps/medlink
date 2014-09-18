@@ -16,7 +16,7 @@ class Ability
       can :manage, User
       can :manage, Order
       can :manage, Request
-
+      can :manage, CountrySupply
     else
       raise "Can't check authorization for unknown role (#{user.role})"
     end
