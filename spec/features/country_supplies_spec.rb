@@ -28,7 +28,6 @@ describe "Managing Country Supplies" do
       login role
       visit country_supplies_path
       expect( page ).to have_content @supply.name
-      #save_and_open_page
       expect{ find('#update-country') }.to raise_error(Capybara::ElementNotFound)
     end
   end
