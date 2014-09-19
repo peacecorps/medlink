@@ -12,9 +12,7 @@ class CountrySuppliesController < ApplicationController
     @country.supplies.destroy_all
     @supplies = Supply.all
     @supplies.each do |s|
-      if params[s.name] == "1"
-        @country.supplies << s
-      end
+      if params[s.name] == "1"; @country.supplies << s end
     end
     redirect_to :back
   end
