@@ -4,6 +4,7 @@ describe "A PCV placing an order" do
   before :each do
     @supply = create :supply
     @user   = create :user
+    @user.country.supplies << @supply
     login @user
     visit new_request_path
   end

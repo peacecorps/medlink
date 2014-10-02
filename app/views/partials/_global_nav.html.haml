@@ -19,6 +19,7 @@
         %ul.nav.navbar-right.navbar-nav
           - if current_user.admin?
             %li= link_to 'Users', new_admin_user_path
+            %li= link_to 'Supplies', country_supplies_path
 
           - if current_user.pcv?
             %li= link_to 'Place a Request', new_request_path
