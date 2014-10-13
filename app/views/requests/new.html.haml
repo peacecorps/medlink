@@ -26,7 +26,7 @@
           %label Supplies
           = f.fields_for :orders do |order_form|
             = order_form.select :supply_id,
-              Supply.choices,
+              (Supply.choices_for active_country_id),
               {include_blank: true},
               {class: 'form-control supply-select'}
           = f.link_to_add :orders,

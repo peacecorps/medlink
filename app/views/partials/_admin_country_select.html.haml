@@ -7,6 +7,6 @@
           countries.collect { |country| [country.name, country.id] },
           {include_blank: blank, selected: active_country_id},
           {class: "form-control"}
-      %button.btn.btn-default(type="submit") Update
+      %button#pick-country.btn.btn-default(type="submit") Update
 
 %hr

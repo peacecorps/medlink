@@ -82,7 +82,7 @@ class SMS < ActiveRecord::Base
   end
 
   def supplies
-    @_supplies ||= Supply.find_by_shortcodes parsed.shortcodes
+    @_supplies ||= Supply.find_by_shortcodes parsed.shortcodes, user.country
   end
 
   def supply_names

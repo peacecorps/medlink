@@ -5,6 +5,8 @@ Medlink::Application.routes.draw do
     patch 'users/:id' => 'devise/registrations#update', as: 'user_registration'
   end
 
+  resources :country_supplies, only: [:index, :create]
+
   resource :user, only: [:edit, :update]
 
   resources :users, only: [] do

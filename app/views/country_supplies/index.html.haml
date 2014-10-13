@@ -1,0 +1,18 @@
+- if current_user.admin?
+  %h2 Select Country To Administer
+  = render partial: 'partials/admin_country_select', locals: { countries: Country.all }
+- if active_country?
+  %h2= "Supplies available in #{@country.name}"
+  %p
+- if active_country? and can? :manage, CountrySupply 
+  = form_tag(:controller => "country_supplies", :action => "create", :method => "post") do
+    - @supplies.each do |s|
+      = hidden_field_tag "#{s.name}", 0 
+      = check_box_tag "#{s.name}", 1 , @country_supplies.count(s.id) > 0 
+      = label_tag s.name
+      %p
+    = submit_tag 'Update', class: 'btn btn-primary', id: 'update-country'
+
+- elsif active_country?
+  - @supplies.each do |s|
+    = s.name

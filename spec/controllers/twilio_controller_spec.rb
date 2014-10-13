@@ -8,9 +8,12 @@ describe TwilioController do
   end
 
   before :each do
-    %w(Sup wit dat).each { |n| create :supply, name: n, shortcode: n }
     @user = create :user, pcv_id: 'asdf'
     create :phone, user: @user
+    %w(Sup wit dat).each do |n| 
+      @supply = create :supply, name: n, shortcode: n 
+      @user.country.supplies << @supply
+    end
   end
 
   it "can create multiple orders from an incoming text" do
