@@ -28,6 +28,10 @@ class Response < ActiveRecord::Base
     end
   end
 
+  def auto_archivable?
+    orders.all? { |o| o.delivery_method && o.delivery_method.auto_archive? }
+  end
+
   private
 
   def supply_names

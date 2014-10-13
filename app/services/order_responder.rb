@@ -9,9 +9,7 @@ class OrderResponder
     @response.send!
     @response.mark_updated_orders!
     @response.user.update_waiting!
-    if @response.orders.all? { |o| o.delivery_method.auto_archive? }
-      @response.archive!
-    end
+    @response.archive! if @response.auto_archivable?
   end
 
   private #----------
