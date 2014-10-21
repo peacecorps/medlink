@@ -21,13 +21,12 @@ end
 puts "... Loaded #{Country.count} countries"
 
 puts "Please run `rake admin:create` if you would like to make an admin account"
-    
-    Country.find_each do |country|
-      Supply.find_each do |supply|
-       cs = CountrySupply.new
-       cs.country_id = country.id
-       cs.supply_id = supply.id
-       cs.save
-      end
-    end
- 
+
+Country.find_each do |country|
+  Supply.find_each do |supply|
+   cs = CountrySupply.new
+   cs.country_id = country.id
+   cs.supply_id = supply.id
+   cs.save
+  end
+end

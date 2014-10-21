@@ -5,7 +5,7 @@
       %th Name
       %th Short Code
   %tbody
-    - Supply.all.each do |s|
+    - Supply.order("name asc").find_each do |s|
       %tr
         %td= s.name
         %td= s.shortcode

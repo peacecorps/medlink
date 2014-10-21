@@ -9,7 +9,7 @@ class Supply < ActiveRecord::Base
   def self.choices
     all.map { |supply| [supply.name, supply.id] }
   end
-  
+
   def self.choices_for country_id
     return self.choices if country_id == nil
     country = Country.find_by_id country_id
@@ -34,7 +34,7 @@ class Supply < ActiveRecord::Base
     if invalid.any?
       raise SMS::FriendlyError.new "sms.invalid_for_country",
         { codes: invalid , country: country.name}, condense: :code
-    end  
+    end
 
     found
   end
