@@ -15,7 +15,7 @@ To get started with a local copy of the project, run
 
 ```bash
 $ git clone git@github.com:atlrug-rhok/medlink.git
-$ bundle
+$ bundle --without production
 $ rake db:setup
 ```
 
