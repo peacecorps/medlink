@@ -6,6 +6,8 @@ class Supply < ActiveRecord::Base
 
   before_save { self.shortcode = shortcode.upcase }
 
+  default_scope { order name: :asc }
+
   def self.choices
     all.map { |supply| [supply.name, supply.id] }
   end
