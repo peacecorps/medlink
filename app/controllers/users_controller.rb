@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def update_params
     p = params.require(:user).permit :first_name, :last_name, :email, :location, :time_zone,
       phones_attributes: [:id, :number, :_destroy]
-    p[:phones_attributes].reject! { |_,ps| ps[:number].empty? }
+    p[:phones_attributes].reject! { |_,ps| ps[:number].empty? } if p[:phones_attributes]
     p
   end
 end
