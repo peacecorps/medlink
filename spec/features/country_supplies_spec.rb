@@ -22,14 +22,26 @@ describe "Managing Country Supplies" do
     expect( cbox ).not_to be_checked 
   end
 
-  it "does not let a PCMO/PCV manage supplies for a country" do
-    ["pcmo","pcv"].each do |role|
-      role = create role.to_sym 
-      login role
-      visit country_supplies_path
-      expect( page ).to have_content @supply.name
-      expect{ find('#update-country') }.to raise_error(Capybara::ElementNotFound)
-    end
+  it "lets PCMO manage supplies for her country only" do
+    pcmo = create :pcmo, country: @country
+    login pcmo
+    visit country_supplies_path
+    expect{ find('#pick-country') }.to raise_error(Capybara::ElementNotFound)
+    expect( page ).to have_content @supply.name
+    cbox = find(:css, "input[type='checkbox']#" + @supply.name.squish.tr(" ","_"))
+    expect( cbox ).to be_checked 
+    uncheck @supply.name 
+    expect( cbox ).not_to be_checked 
+    find('#update-country').click 
+    expect( cbox ).not_to be_checked 
+  end
+
+  it "does not let a PCV manage supplies for a country" do
+    role = create :pcv 
+    login role
+    visit country_supplies_path
+    expect( page ).to have_content @supply.name
+    expect{ find('#update-country') }.to raise_error(Capybara::ElementNotFound)
   end
 
 
