@@ -11,6 +11,7 @@ class Ability
       can :respond, User, country_id: user.country_id
       can :manage, Order, country_id: user.country_id
       can :manage, Request, country_id: user.country_id
+      can :manage, CountrySupply, country_id: user.country_id
 
     elsif user.admin?
       can :manage, User

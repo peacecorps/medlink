@@ -4,6 +4,7 @@
 
 ## PC Medlink - Peace Corps Medical Supplies
 
+As seen on the White House Office of Science and Technology Blog: [Keeping Volunteers Healthy One Text at a Time](http://www.whitehouse.gov/blog/2014/10/31/keeping-peace-corps-volunteers-healthy-one-text-time-0)
 This project grew out of a [National Day of Civic Hacking](http://hackforchange.org/). You can see a live version of the site at [pcmedlink.org](http://pcmedlink.org).
 
 ### Developing locally
@@ -14,7 +15,7 @@ To get started with a local copy of the project, run
 
 ```bash
 $ git clone git@github.com:atlrug-rhok/medlink.git
-$ bundle
+$ bundle --without production
 $ rake db:setup
 ```
 
