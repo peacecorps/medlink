@@ -27,7 +27,7 @@ describe "User management" do
         fill_in :user_location, with: "Hotlanta"
         select "PCV", from: :user_role
         select "Eastern Time (US & Canada)", from: :user_time_zone
-        click_on "Add"
+        click_on "Add User"
       end
 
       expect( alert.text ).to match /added.*user/i
@@ -35,7 +35,7 @@ describe "User management" do
     end
 
     it "redisplays errors" do
-      click_on "Add"
+      click_on "Add User"
       expect( page.find(".alert").text ).to match /email can't be blank/i
       expect( User.pcv.count ).to be_zero
     end
