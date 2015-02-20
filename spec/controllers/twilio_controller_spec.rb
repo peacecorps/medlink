@@ -7,12 +7,10 @@ describe TwilioController do
       Body: body
   end
 
-  before :all do
+  before :each do
     @twilio = TwilioAccount.default
     @twilio.save!
-  end
 
-  before :each do
     @user = create :user, pcv_id: 'asdf'
     create :phone, user: @user
     %w(Sup wit dat).each do |n|

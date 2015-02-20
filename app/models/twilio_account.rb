@@ -1,6 +1,6 @@
 class TwilioAccount < ActiveRecord::Base
   def self.default
-    @_default ||= where(
+    where(
       sid:    ENV.fetch('TWILIO_ACCOUNT_SID'),
       auth:   ENV.fetch('TWILIO_AUTH'),
       number: ENV.fetch('TWILIO_PHONE_NUMBER')

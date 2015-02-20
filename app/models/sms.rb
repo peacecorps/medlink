@@ -14,11 +14,6 @@ class SMS < ActiveRecord::Base
     sms.send_confirmation!
   end
 
-  def self.deliver number, text
-    # TODO: switch based on incoming number?
-    TwilioAccount.default.send_text number, text
-  end
-
   def user
     @_user ||= if parsed.pcv_id
       User.find_by_pcv_id parsed.pcv_id
@@ -63,7 +58,7 @@ class SMS < ActiveRecord::Base
   end
 
   def send_confirmation!
-    SMS.deliver number, confirmation_message
+    user.send_text confirmation_message
   end
 
   private
