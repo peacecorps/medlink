@@ -1,7 +1,8 @@
 class ResponseSMSJob < BaseJob
   def perform id
     response = ::Response.find id # not Celluloid::Response
-    return unless phone = response.user.primary_phone
-    sms = SMS.deliver phone.number, response.sms_instructions
+    user     = response.user
+    return unless user.try :textable?
+    user.send_text response.sms_instructions
   end
 end

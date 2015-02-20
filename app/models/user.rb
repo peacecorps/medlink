@@ -84,4 +84,12 @@ class User < ActiveRecord::Base
       os.sort_by(&:created_at).slice(0..-2).each { |o| o.touch :duplicated_at }
     end
   end
+
+  def textable?
+    primary_phone.present?
+  end
+
+  def send_text message
+    country.twilio_account.send_text primary_phone.number, message
+  end
 end

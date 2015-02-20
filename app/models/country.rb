@@ -13,4 +13,12 @@ class Country < ActiveRecord::Base
   def self.choices
     all.map { |c| [c.name, c.id] }
   end
+
+  def twilio_account
+    if twilio_account_id
+      TwilioAccount.find twilio_account_id
+    else
+      TwilioAccount.default
+    end
+  end
 end

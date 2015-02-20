@@ -2,16 +2,21 @@ require 'spec_helper'
 
 describe TwilioController do
   def request user, body
-    post :receive, AccountSid: ENV.fetch("TWILIO_ACCOUNT_SID"),
+    post :receive, AccountSid: @twilio.sid,
       From: user.primary_phone.number,
       Body: body
+  end
+
+  before :all do
+    @twilio = TwilioAccount.default
+    @twilio.save!
   end
 
   before :each do
     @user = create :user, pcv_id: 'asdf'
     create :phone, user: @user
-    %w(Sup wit dat).each do |n| 
-      @supply = create :supply, name: n, shortcode: n 
+    %w(Sup wit dat).each do |n|
+      @supply = create :supply, name: n, shortcode: n
       @user.country.supplies << @supply
     end
   end
@@ -42,10 +47,9 @@ describe TwilioController do
   end
 
   it "verifies that messages came from Twilio" do
-    expect do
-      post :receive,
-        From: @user.primary_phone.number,
-        Body: "Sup"
-    end.to raise_error /account sid/i
+    post :receive,
+      From: @user.primary_phone.number,
+      Body: "Sup"
+    expect( response.status ).to eq 400
   end
 end

@@ -15,17 +15,8 @@ class SMS < ActiveRecord::Base
   end
 
   def self.deliver number, text
-    sms = SMS.create number: number, text: text, direction: :outgoing
-
-    sid, auth = %w(ACCOUNT_SID AUTH).map { |k| ENV.fetch "TWILIO_#{k}" }
-    client = Twilio::REST::Client.new sid, auth
-    client.account.sms.messages.create(
-      from: ENV['TWILIO_PHONE_NUMBER'],
-      to:   Phone.condense(number),
-      body: text
-    )
-
-    sms
+    # TODO: switch based on incoming number?
+    TwilioAccount.default.send_text number, text
   end
 
   def user

@@ -2,24 +2,23 @@ class TwilioController < ApplicationController
   skip_before_filter :authenticate_user!, :verify_authenticity_token
 
   def receive
-    verify_sid!
-    SMS.receive params[:From], params[:Body]
-  rescue SMS::FriendlyError => e
-    SMS.deliver params[:From], e.message
-  rescue
-    # :nocov: This _should_ be impossible, but just in cases ...
-    SMS.deliver params[:From], I18n.t!("sms.unexpected_error")
-    raise
-    # :nocov:
-  ensure
-    head :no_content
-  end
+    account = TwilioAccount.where(sid: params[:AccountSid]).first
+    unless account
+      head :bad_request
+      return
+    end
 
-  private
-
-  def verify_sid!
-    unless params[:AccountSid] == ENV.fetch("TWILIO_ACCOUNT_SID")
-      raise "Invalid Account SID"
+    begin
+      SMS.receive params[:From], params[:Body]
+    rescue SMS::FriendlyError => e
+      account.send_text params[:From], e.message
+    rescue
+      # :nocov: This _should_ be impossible, but just in cases ...
+      account.send_text params[:From], I18n.t!("sms.unexpected_error")
+      raise
+      # :nocov:
+    ensure
+      head :no_content
     end
   end
 end
