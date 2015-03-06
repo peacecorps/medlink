@@ -90,6 +90,9 @@ class User < ActiveRecord::Base
   end
 
   def send_text message
-    country.twilio_account.send_text primary_phone.number, message
+    twilio = country.twilio_account
+    to     = primary_phone.number
+    Rails.logger.info "Texting #{email}: #{twilio.number} => #{to}"
+    twilio.send_text to, message
   end
 end
