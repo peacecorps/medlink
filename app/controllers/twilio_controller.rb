@@ -4,6 +4,7 @@ class TwilioController < ApplicationController
   def receive
     account = TwilioAccount.where(sid: params[:AccountSid]).first
     unless account
+      Rails.logger.error "Error: Rejecting incoming text - invalid SID #{params[:AccountSid]}"
       head :bad_request
       return
     end
