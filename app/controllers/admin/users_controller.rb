@@ -26,7 +26,7 @@ class Admin::UsersController < AdminController
     @user = User.new user_params.merge(password: SecureRandom.hex)
 
     if @user.save
-      MailerJob.enqueue :welcome, @user.id
+      MailerJob.perform_later "welcome", @user.id
       redirect_to new_admin_user_path,
         notice: I18n.t!("flash.user.added")
     else
@@ -60,7 +60,7 @@ class Admin::UsersController < AdminController
       @user = User.new
       render :new
     else
-      @upload.added.each { |u| MailerJob.enqueue :welcome, u.id }
+      @upload.added.each { |u| MailerJob.perform_later "welcome", u.id }
       flash[:success] = I18n.t! "flash.csv.valid", users: @upload.added.count
       redirect_to new_admin_user_path
     end

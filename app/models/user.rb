@@ -65,11 +65,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  # We want to send mail in the background by default, but still need
-  #   access to the underlying method to send things from the background
-  def send_reset_password_instructions now=false
-    return super() if now
-    MailerJob.enqueue :forgotten_password, id
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
   end
 
   def name

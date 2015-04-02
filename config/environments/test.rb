@@ -8,7 +8,7 @@ Medlink::Application.configure do
   config.cache_classes = true
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
 
   # Show full error reports and disable caching
@@ -37,5 +37,9 @@ Medlink::Application.configure do
   config.after_initialize do
     Bullet.enable = true
     Bullet.raise  = true
+
+    # See e.g. `app/controllers/requests_controller.rb`'s @request.save!
+    #   hitting the `before_save` in the UserScope concern ...
+    Bullet.add_whitelist type: :n_plus_one_query, class_name: "User", association: :country
   end if ENV["BULLET"]
 end

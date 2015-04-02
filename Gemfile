@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.1'
 
-gem 'rails', '4.1.9'
+gem 'rails', '4.2.1'
 
 gem 'jquery-rails'
 gem 'haml-rails'
@@ -19,8 +19,6 @@ gem 'kaminari'
 gem 'nested_form'
 
 group :assets do
-  # 2.12.0 is borked - https://github.com/sstephenson/sprockets/issues/537
-  gem 'sprockets', '2.11.0'
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
@@ -41,7 +39,7 @@ group :test do
   gem 'coveralls', require: false
   gem 'simplecov'
 
-  gem 'rspec-rails', '2.99'
+  gem 'rspec-rails'
   gem 'rspec-its'
   gem 'capybara'
   gem 'factory_girl_rails'

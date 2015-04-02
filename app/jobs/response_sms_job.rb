@@ -1,4 +1,4 @@
-class ResponseSMSJob < BaseJob
+class ResponseSMSJob < ActiveJob::Base
   def perform id
     Rails.logger.info "Sending SMS for response ##{id}"
     response = ::Response.find id # not Celluloid::Response

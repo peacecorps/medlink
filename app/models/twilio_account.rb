@@ -15,7 +15,7 @@ class TwilioAccount < ActiveRecord::Base
     # TODO: need to log from number?
     sms = SMS.create number: to, text: text, direction: :outgoing
 
-    client.messages.create(
+    client.account.sms.messages.create(
       from: number,
       to:   Phone.condense(to),
       body: text
