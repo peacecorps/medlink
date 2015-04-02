@@ -33,7 +33,7 @@ describe ReportsController do
 
     it "can see partial order history" do
       visit order_history_reports_path(format: :csv)
-      expect( page.html ).to have(2).lines
+      expect( page.html.lines.count ).to eq 2
     end
 
     it "can't see user reports" do
@@ -52,7 +52,7 @@ describe ReportsController do
 
     it "can see all orders" do
       visit order_history_reports_path(format: :csv)
-      expect( CSV.parse page.html ).to have(3).members
+      expect( CSV.parse(page.html).size ).to eq 3
     end
 
     it "can see user reports" do

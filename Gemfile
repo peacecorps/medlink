@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.1.4'
+ruby '2.2.1'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.9'
 
 gem 'jquery-rails'
 gem 'haml-rails'
@@ -41,7 +41,8 @@ group :test do
   gem 'coveralls', require: false
   gem 'simplecov'
 
-  gem 'rspec-rails'
+  gem 'rspec-rails', '2.99'
+  gem 'rspec-its'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'sms-spec'

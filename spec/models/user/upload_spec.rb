@@ -12,9 +12,9 @@ describe User::Upload do
   it "created phone numbers" do
     upload File.read Rails.root.join "spec/data/users.csv"
     a,b,c = %w(a b c).map { |n| User.where(email: "#{n}@example.com").first! }
-    expect( a ).to have(1).phones
-    expect( b ).to have(2).phones
-    expect( c ).to have(0).phones
+    expect( a.phones.count ).to eq 1
+    expect( b.phones.count ).to eq 2
+    expect( c.phones.count ).to eq 0
   end
 
   it "rejects CSVs without a header row" do
