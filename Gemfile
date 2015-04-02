@@ -13,10 +13,12 @@ gem 'devise'
 gem 'cancan'
 
 gem 'sucker_punch'
+gem 'rollbar'
 
 gem 'kaminari'
 
 gem 'nested_form'
+
 
 group :assets do
   gem 'sass-rails'
@@ -49,8 +51,7 @@ group :test do
 end
 
 group :production do
-  gem 'exceptiontrap'
-  gem 'unicorn'
   gem 'pg'
-  gem 'rails_12factor' # For asset compilation
+  gem 'puma'
+  gem 'rails_12factor'
 end
