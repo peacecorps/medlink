@@ -52,7 +52,9 @@ describe ReportsController do
 
     it "can see all orders" do
       visit order_history_reports_path(format: :csv)
-      expect( CSV.parse(page.html).size ).to eq 3
+      rows = CSV.parse(page.html, headers: true)
+      expect( rows.count ).to eq Order.count
+      expect( rows.first["Country"] ).to eq Order.first.country.name
     end
 
     it "can see user reports" do

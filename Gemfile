@@ -19,7 +19,6 @@ gem 'kaminari'
 
 gem 'nested_form'
 
-
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
@@ -29,7 +28,7 @@ end
 group :development, :test do
   gem 'bullet'
   gem 'letter_opener'
-  gem 'pry'
+  gem 'pry-rails'
   gem 'quiet_assets'
   gem 'sqlite3'
 
