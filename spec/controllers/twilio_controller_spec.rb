@@ -3,6 +3,7 @@ require 'spec_helper'
 describe TwilioController do
   def request user, body
     post :receive, AccountSid: @twilio.sid,
+      To:   @twilio.number,
       From: user.primary_phone.number,
       Body: body
   end

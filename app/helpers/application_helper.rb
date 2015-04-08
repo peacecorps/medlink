@@ -72,7 +72,7 @@ module ApplicationHelper
     n = if current_user
       current_user.country.twilio_account
     else
-      TwilioAccount.first
+      TwilioAccount.default
     end.number.to_s
     "#{n[0..-11]} (#{n[-10..-8]}) #{n[-7..-5]}-#{n[-4..-1]}"
   end
