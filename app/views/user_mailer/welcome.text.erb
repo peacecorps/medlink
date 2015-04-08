@@ -23,7 +23,7 @@ If your request is received without errors, you will receive a confirmation that
 Short Code List
 ---------------
 
-<%- Supply.all.each do |s| %>
+<%- @user.available_supplies.each do |s| %>
   <%= "#{s.shortcode}\t#{s.name}" %>
 <% end %>
 

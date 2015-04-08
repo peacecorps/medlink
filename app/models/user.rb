@@ -92,4 +92,8 @@ class User < ActiveRecord::Base
     Rails.logger.info "Texting #{email}: #{twilio.number} => #{to}"
     twilio.send_text to, message
   end
+
+  def available_supplies
+    country.supplies.includes(:supplies)
+  end
 end

@@ -22,7 +22,7 @@
 %h3{style(:header)} Short Code List
 
 %table
-  - Supply.all.each do |s|
+  - @user.available_supplies.each do |s|
     %tr
       %td= s.name
       %td= s.shortcode
