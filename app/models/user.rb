@@ -96,4 +96,9 @@ class User < ActiveRecord::Base
   def available_supplies
     country.supplies.includes(:supplies)
   end
+
+  def sms_contact_number
+    n = country.twilio_account.number.to_s
+    "#{n[0..-11]} (#{n[-10..-8]}) #{n[-7..-5]}-#{n[-4..-1]}"
+  end
 end

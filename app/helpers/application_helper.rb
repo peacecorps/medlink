@@ -67,13 +67,4 @@ module ApplicationHelper
   def short_date date
     date.strftime "%B %d" # January 01
   end
-
-  def contact_number
-    n = if current_user
-      current_user.country.twilio_account
-    else
-      TwilioAccount.default
-    end.number.to_s
-    "#{n[0..-11]} (#{n[-10..-8]}) #{n[-7..-5]}-#{n[-4..-1]}"
-  end
 end
