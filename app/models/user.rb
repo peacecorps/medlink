@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def available_supplies
-    country.supplies.includes(:supplies)
+    country.supplies
   end
 
   def sms_contact_number
