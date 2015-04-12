@@ -7,7 +7,10 @@ Medlink::Application.routes.draw do
 
   resources :country_supplies, only: [:index, :create]
 
-  resource :user, only: [:edit, :update]
+  resource :user, only: [:edit, :update] do
+    get   '/welcome/video' => 'users#welcome_video', as: 'welcome_video'
+    post  '/welcome' => 'users#confirm_welcome', as: 'welcome_shown'
+  end
 
   resources :users, only: [] do
     resources :responses, only: [:new, :create, :show] do

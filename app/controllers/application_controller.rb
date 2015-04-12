@@ -62,4 +62,13 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource_or_scope)
     new_user_session_path
   end
+
+  # Customizes path after login to show welcome_video if first login
+  def after_sign_in_path_for(user) 
+    if current_user.welcome_video_seen?
+      root_path  
+    else
+      welcome_video_user_path
+    end
+  end
 end

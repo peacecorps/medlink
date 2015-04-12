@@ -12,6 +12,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def welcome_video
+    @video = current_user.welcome_video
+    render :welcome_video
+  end
+
+  def confirm_welcome
+    current_user.record_welcome!
+    redirect_to root_path
+  end
+
   private
 
   def update_params
