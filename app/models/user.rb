@@ -98,6 +98,6 @@ class User < ActiveRecord::Base
   end
 
   def welcome_video_seen?
-    self.welcome_video_shown_at != nil
+    !self.welcome_video_shown_at.nil?
   end
 end

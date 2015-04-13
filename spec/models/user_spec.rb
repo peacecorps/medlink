@@ -93,4 +93,12 @@ describe User do
       Ability.new(User.new).can? :create, Order
     end.to raise_error /unknown role/i
   end
+
+  it 'generates different video links for pcmos and pcvs' do
+    pcmo = create :pcmo
+    pcv = create :pcv
+    expect( pcmo.welcome_video ).not_to eq pcv.welcome_video
+
+    #check neither is nil
+  end
 end
