@@ -17,8 +17,8 @@ class Response < ActiveRecord::Base
   end
 
   def send!
-    ResponseSMSJob.enqueue id
-    MailerJob.enqueue :fulfillment, id
+    ResponseSMSJob.perform_later id
+    MailerJob.perform_later "fulfillment", id
   end
 
   def mark_updated_orders!

@@ -5,7 +5,7 @@
       %th Name
       %th Short Code
   %tbody
-    - Supply.find_each do |s|
+    - current_user.available_supplies.each do |s|
       %tr
         %td= s.name
         %td= s.shortcode

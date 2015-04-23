@@ -78,10 +78,8 @@ describe User do
     before(:each) { ActionMailer::Base.deliveries = [] }
 
     it 'asyncronously', :worker do
-      MailerJob.should_receive(:enqueue).with(:forgotten_password,
-        subject.id).and_call_original
       subject.send_reset_password_instructions
-      expect( ActionMailer::Base ).to have_exactly(1).deliveries
+      expect( ActionMailer::Base.deliveries.count ).to eq 1
     end
   end
 

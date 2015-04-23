@@ -1,7 +1,9 @@
-class ResponseSMSJob < BaseJob
+class ResponseSMSJob < ActiveJob::Base
   def perform id
+    Rails.logger.info "Sending SMS for response ##{id}"
     response = ::Response.find id # not Celluloid::Response
-    return unless phone = response.user.primary_phone
-    sms = SMS.deliver phone.number, response.sms_instructions
+    user     = response.user
+    return unless user.try :textable?
+    user.send_text response.sms_instructions
   end
 end

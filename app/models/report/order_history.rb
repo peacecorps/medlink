@@ -12,6 +12,7 @@ class Report::OrderHistory < Report
 
     {
       "Placed"       => order.created_at,
+      "Country"      => user.country.name,
       "PCV ID"       => user.pcv_id,
       "First Name"   => user.first_name,
       "Last Name"    => user.last_name,

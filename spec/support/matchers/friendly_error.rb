@@ -5,4 +5,8 @@ RSpec::Matchers.define :raise_friendly_error do |msg|
       expect( e.message ).to match_regex msg
     }
   end
+
+  def supports_block_expectations?
+    true
+  end
 end
