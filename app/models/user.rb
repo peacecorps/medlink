@@ -101,4 +101,20 @@ class User < ActiveRecord::Base
     n = country.twilio_account.number.to_s
     "#{n[0..-11]} (#{n[-10..-8]}) #{n[-7..-5]}-#{n[-4..-1]}"
   end
+
+  def welcome_video
+    if self.pcv?
+      "yTNr0Nh7WYU"
+    else
+      "KkXb_5kkfwk"
+    end
+  end
+
+  def record_welcome!
+    self.update!(welcome_video_shown_at: Time.now)
+  end
+
+  def welcome_video_seen?
+    !self.welcome_video_shown_at.nil?
+  end
 end

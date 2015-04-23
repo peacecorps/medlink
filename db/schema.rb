@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150220153558) do
+ActiveRecord::Schema.define(version: 20150412183456) do
 
-  create_table "countries", force: true do |t|
-    t.string  "name"
+  create_table "countries", force: :cascade do |t|
+    t.string  "name",              limit: 255
     t.integer "twilio_account_id"
   end
 
-  create_table "country_supplies", force: true do |t|
+  create_table "country_supplies", force: :cascade do |t|
     t.integer  "country_id"
     t.integer  "supply_id"
     t.datetime "created_at"
@@ -28,32 +28,32 @@ ActiveRecord::Schema.define(version: 20150220153558) do
   add_index "country_supplies", ["country_id"], name: "index_country_supplies_on_country_id"
   add_index "country_supplies", ["supply_id"], name: "index_country_supplies_on_supply_id"
 
-  create_table "messages", force: true do |t|
+  create_table "messages", force: :cascade do |t|
     t.datetime "created_at"
-    t.string   "number"
-    t.string   "text"
+    t.string   "number",     limit: 255
+    t.string   "text",       limit: 255
     t.integer  "direction"
   end
 
-  create_table "orders", force: true do |t|
+  create_table "orders", force: :cascade do |t|
     t.datetime "created_at"
     t.integer  "country_id"
     t.integer  "user_id"
     t.integer  "request_id"
     t.integer  "supply_id"
     t.integer  "response_id"
-    t.string   "delivery_method"
+    t.string   "delivery_method", limit: 255
     t.datetime "duplicated_at"
   end
 
-  create_table "phones", force: true do |t|
+  create_table "phones", force: :cascade do |t|
     t.datetime "created_at"
     t.integer  "user_id"
-    t.string   "number"
-    t.string   "condensed"
+    t.string   "number",     limit: 255
+    t.string   "condensed",  limit: 255
   end
 
-  create_table "requests", force: true do |t|
+  create_table "requests", force: :cascade do |t|
     t.datetime "created_at"
     t.integer  "country_id"
     t.integer  "user_id"
@@ -62,52 +62,53 @@ ActiveRecord::Schema.define(version: 20150220153558) do
     t.integer  "entered_by"
   end
 
-  create_table "responses", force: true do |t|
+  create_table "responses", force: :cascade do |t|
     t.datetime "created_at"
     t.integer  "country_id"
     t.integer  "user_id"
     t.integer  "message_id"
-    t.string   "extra_text"
+    t.string   "extra_text",  limit: 255
     t.datetime "archived_at"
   end
 
-  create_table "supplies", force: true do |t|
-    t.string "shortcode"
-    t.string "name"
+  create_table "supplies", force: :cascade do |t|
+    t.string "shortcode", limit: 255
+    t.string "name",      limit: 255
   end
 
   add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode"
 
-  create_table "twilio_accounts", force: true do |t|
-    t.string   "sid"
-    t.string   "auth"
-    t.string   "number"
+  create_table "twilio_accounts", force: :cascade do |t|
+    t.string   "sid",        limit: 255
+    t.string   "auth",       limit: 255
+    t.string   "number",     limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
+    t.integer  "sign_in_count",                      default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "pcv_id"
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.string   "pcv_id",                 limit: 255
     t.integer  "country_id"
     t.integer  "role"
-    t.string   "location"
-    t.string   "time_zone"
+    t.string   "location",               limit: 255
+    t.string   "time_zone",              limit: 255
     t.datetime "waiting_since"
     t.datetime "last_requested_at"
+    t.datetime "welcome_video_shown_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
