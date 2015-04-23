@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.1.4'
+ruby '2.2.1'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.2.1'
 
 gem 'jquery-rails'
 gem 'haml-rails'
@@ -13,14 +13,13 @@ gem 'devise'
 gem 'cancan'
 
 gem 'sucker_punch'
+gem 'rollbar'
 
 gem 'kaminari'
 
 gem 'nested_form'
 
 group :assets do
-  # 2.12.0 is borked - https://github.com/sstephenson/sprockets/issues/537
-  gem 'sprockets', '2.11.0'
   gem 'sass-rails'
   gem 'coffee-rails'
   gem 'uglifier'
@@ -29,7 +28,7 @@ end
 group :development, :test do
   gem 'bullet'
   gem 'letter_opener'
-  gem 'pry'
+  gem 'pry-rails'
   gem 'quiet_assets'
   gem 'sqlite3'
 
@@ -42,6 +41,7 @@ group :test do
   gem 'simplecov'
 
   gem 'rspec-rails'
+  gem 'rspec-its'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'sms-spec'
@@ -50,8 +50,7 @@ group :test do
 end
 
 group :production do
-  gem 'exceptiontrap'
-  gem 'unicorn'
   gem 'pg'
-  gem 'rails_12factor' # For asset compilation
+  gem 'puma'
+  gem 'rails_12factor'
 end

@@ -26,7 +26,7 @@ class Admin::UsersController < AdminController
     @user = User.new user_params.merge(password: SecureRandom.hex)
 
     if @user.save
-      MailerJob.enqueue :welcome, @user.id
+      MailerJob.perform_later "welcome", @user.id
       redirect_to new_admin_user_path,
         notice: I18n.t!("flash.user.added")
     else
@@ -55,12 +55,16 @@ class Admin::UsersController < AdminController
   end
 
   def upload_csv
-    @upload = run_upload!
+    @upload = User::Upload.new(
+      params[:country_id], params[:csv], overwrite: params[:overwrite].present?)
+    @upload.run!
+
+    @upload.added.each { |u| MailerJob.perform_later "welcome", u.id }
+
     if @upload.errors.any?
       @user = User.new
       render :new
     else
-      @upload.added.each { |u| MailerJob.enqueue :welcome, u.id }
       flash[:success] = I18n.t! "flash.csv.valid", users: @upload.added.count
       redirect_to new_admin_user_path
     end
@@ -80,10 +84,4 @@ class Admin::UsersController < AdminController
     p[:phones_attributes].reject! { |_,ps| ps[:number].empty? }
     p
   end
-
-  def run_upload!
-    upload = User::Upload.new params[:country_id], params[:csv], overwrite: params[:overwrite].present?
-    upload.tap &:run!
-  end
-
 end

@@ -14,20 +14,6 @@ class SMS < ActiveRecord::Base
     sms.send_confirmation!
   end
 
-  def self.deliver number, text
-    sms = SMS.create number: number, text: text, direction: :outgoing
-
-    sid, auth = %w(ACCOUNT_SID AUTH).map { |k| ENV.fetch "TWILIO_#{k}" }
-    client = Twilio::REST::Client.new sid, auth
-    client.account.sms.messages.create(
-      from: ENV['TWILIO_PHONE_NUMBER'],
-      to:   Phone.condense(number),
-      body: text
-    )
-
-    sms
-  end
-
   def user
     @_user ||= if parsed.pcv_id
       User.find_by_pcv_id parsed.pcv_id
@@ -72,7 +58,7 @@ class SMS < ActiveRecord::Base
   end
 
   def send_confirmation!
-    SMS.deliver number, confirmation_message
+    user.send_text confirmation_message
   end
 
   private

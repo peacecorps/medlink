@@ -11,7 +11,7 @@
 %p PC Medlink is managed by your Health Unit and orders will be processed on the 1st of the month. You will receive a confirmation e-mail when you submit an order. You will also receive an e-mail when your order has been processed. This e-mail will contain instructions from your PCMO and inform you of whether your request has been made ready for pick-up, delivery, or refused. Order processing is at the discretion of your Health Unit.
 
 %h3{style(:header)} Instructions for SMS
-%p Send an SMS to +1 (202) 999-3852 with the supply short codes of the items you would like and any special instructions. You should format your message like this:
+%p Send an SMS to #{@user.sms_contact_number} with the supply short codes of the items you would like and any special instructions. You should format your message like this:
 
 %pre{style(:center)}  Supply Short Code 1, Supply Short Code 2, Supply Short Code 3 - Special Instructions
 
@@ -22,7 +22,7 @@
 %h3{style(:header)} Short Code List
 
 %table
-  - Supply.all.each do |s|
+  - @user.available_supplies.each do |s|
     %tr
       %td= s.name
       %td= s.shortcode

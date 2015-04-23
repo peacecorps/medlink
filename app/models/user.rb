@@ -65,11 +65,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  # We want to send mail in the background by default, but still need
-  #   access to the underlying method to send things from the background
-  def send_reset_password_instructions now=false
-    return super() if now
-    MailerJob.enqueue :forgotten_password, id
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
   end
 
   def name
@@ -83,5 +80,25 @@ class User < ActiveRecord::Base
     each do |_,os|
       os.sort_by(&:created_at).slice(0..-2).each { |o| o.touch :duplicated_at }
     end
+  end
+
+  def textable?
+    primary_phone.present?
+  end
+
+  def send_text message
+    twilio = country.twilio_account
+    to     = primary_phone.number
+    Rails.logger.info "Texting #{email}: #{twilio.number} => #{to}"
+    twilio.send_text to, message
+  end
+
+  def available_supplies
+    country.supplies
+  end
+
+  def sms_contact_number
+    n = country.twilio_account.number.to_s
+    "#{n[0..-11]} (#{n[-10..-8]}) #{n[-7..-5]}-#{n[-4..-1]}"
   end
 end

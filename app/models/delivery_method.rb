@@ -19,7 +19,7 @@ class DeliveryMethod
   end
 
   def == other
-    name == other.name
+    name == other.try(:name)
   end
 
   def auto_archive?

@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141021231231) do
+ActiveRecord::Schema.define(version: 20150220153558) do
 
   create_table "countries", force: true do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "twilio_account_id"
   end
 
   create_table "country_supplies", force: true do |t|
@@ -76,6 +77,14 @@ ActiveRecord::Schema.define(version: 20141021231231) do
   end
 
   add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode"
+
+  create_table "twilio_accounts", force: true do |t|
+    t.string   "sid"
+    t.string   "auth"
+    t.string   "number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
