@@ -12,6 +12,11 @@ class Country < ActiveRecord::Base
     find ids
   end
 
+  def self.with_users
+    ids = User.unscoped.uniq.pluck :country_id
+    find ids
+  end
+
   def self.choices
     all.map { |c| [c.name, c.id] }
   end

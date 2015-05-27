@@ -38,6 +38,8 @@ Medlink::Application.routes.draw do
         post action, on: :collection
       end
     end
+
+    resources :messages, only: [:index, :create]
   end
 
   get '/help' => 'application#help'

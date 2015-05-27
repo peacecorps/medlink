@@ -4,6 +4,7 @@ ruby '2.2.1'
 
 gem 'rails', '4.2.1'
 
+gem 'pg'
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'twilio-ruby'
@@ -30,7 +31,6 @@ group :development, :test do
   gem 'letter_opener'
   gem 'pry-rails'
   gem 'quiet_assets'
-  gem 'sqlite3'
 
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -50,7 +50,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'puma'
   gem 'rails_12factor'
 end
