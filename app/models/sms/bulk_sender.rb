@@ -12,11 +12,10 @@ class SMS::BulkSender
   def send!
     raise "No message provided" if body.empty?
 
-    country_ids.reject! &:empty?
-    country_ids.each do |country_id|
-      CountrySMSJob.perform_later country_id, body
+    users = User.where(country_id: country_ids)
+    users.each do |user|
+      SMSJob.perform_later user, body
     end
-
-    User.where(country_id: country_ids).count
+    users.count
   end
 end

@@ -1,3 +1,4 @@
+require 'sidekiq/web'
 Medlink::Application.routes.draw do
   devise_for :users, controllers: { passwords: "passwords" }, skip: [:registrations]
   as :user do
@@ -46,4 +47,8 @@ Medlink::Application.routes.draw do
   root to: 'application#root'
 
   post '/medrequest' => 'twilio#receive'
+
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq', as: 'sidekiq'
+  end
 end

@@ -60,6 +60,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
+    connection_pool (2.2.0)
     coveralls (0.8.0)
       multi_json (~> 1.10)
       rest-client (>= 1.6.8, < 2)
@@ -145,6 +146,8 @@ GEM
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.0)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.1)
@@ -177,6 +180,9 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
+    redis (3.2.1)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rest-client (1.8.0)
@@ -219,11 +225,21 @@ GEM
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
     sexp_processor (4.5.0)
+    sidekiq (3.3.4)
+      celluloid (>= 0.16.0)
+      connection_pool (>= 2.1.1)
+      json
+      redis (>= 3.0.6)
+      redis-namespace (>= 1.3.1)
     simplecov (0.9.2)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
       simplecov-html (~> 0.9.0)
     simplecov-html (0.9.0)
+    sinatra (1.4.6)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (>= 1.3, < 3)
     slop (3.6.0)
     sms-spec (0.1.7)
       rspec
@@ -239,8 +255,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    sucker_punch (1.4.0)
-      celluloid (~> 0.16.0)
     term-ansicolor (1.3.0)
       tins (~> 1.0)
     thor (0.19.1)
@@ -296,11 +310,12 @@ DEPENDENCIES
   rspec-its
   rspec-rails
   sass-rails
+  sidekiq
   simplecov
+  sinatra
   sms-spec
   spring
   spring-commands-rspec
-  sucker_punch
   twilio-ruby
   uglifier
   zonebie

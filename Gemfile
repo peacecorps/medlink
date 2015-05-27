@@ -13,8 +13,9 @@ gem 'jquery-placeholder-rails'
 gem 'devise'
 gem 'cancan'
 
-gem 'sucker_punch'
 gem 'rollbar'
+gem 'sidekiq'
+gem 'sinatra', require: nil
 
 gem 'kaminari'
 
