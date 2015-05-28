@@ -21,6 +21,8 @@ gem 'kaminari'
 
 gem 'nested_form'
 
+gem 'quiet_assets'
+
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
@@ -31,7 +33,6 @@ group :development, :test do
   gem 'bullet'
   gem 'letter_opener'
   gem 'pry-rails'
-  gem 'quiet_assets'
 
   gem 'spring'
   gem 'spring-commands-rspec'
