@@ -88,8 +88,8 @@ class User < ActiveRecord::Base
 
   def send_text message
     twilio = country.twilio_account
-    to     = primary_phone.number
-    Rails.logger.info "Texting #{email}: #{twilio.number} => #{to}"
+    to     = primary_phone.try :number
+    return unless to
     twilio.send_text to, message
   rescue => e
     Rails.logger.error "Error while texting #{email} - #{e}"
