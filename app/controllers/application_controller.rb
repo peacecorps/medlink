@@ -12,8 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def active_country_id
-    return unless current_user
-    current_user.admin? ? session[:active_country_id] : current_user.country_id
+    current_user.try :country_id
   end
   def active_country?
     active_country_id.present?

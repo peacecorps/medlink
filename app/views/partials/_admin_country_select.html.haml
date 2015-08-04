@@ -1,6 +1,6 @@
 .row
   .col-xs-4
-    = form_tag set_active_country_admin_users_path, class: "admin_country_select form-inline" do
+    = form_tag set_country_admin_users_path, class: "admin_country_select form-inline" do
       .form-group
         - blank = active_country? ? false : "Select Country"
         = select :country, :country_id,

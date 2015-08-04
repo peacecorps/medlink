@@ -17,7 +17,7 @@ describe "responding to orders" do
     login admin
     visit manage_orders_path
 
-    expect( page ).not_to have_content "Pending Requests"
+    expect( page.text ).not_to include @user.name
 
     within ".admin_country_select" do
       select @user.country.name, from: :country_country_id

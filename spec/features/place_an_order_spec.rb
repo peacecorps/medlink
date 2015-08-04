@@ -58,7 +58,7 @@ describe "A PCV placing an order" do
 
   it "lets admins place orders for users" do
     logout @user
-    admin = create :admin
+    admin = create :admin, country: @user.country
     login admin
     visit root_path
     click_on "Requests"
