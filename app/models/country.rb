@@ -9,12 +9,7 @@ class Country < ActiveRecord::Base
 
   def self.with_orders
     ids = Order.unscoped.uniq.pluck :country_id
-    find ids
-  end
-
-  def self.with_users
-    ids = User.unscoped.uniq.pluck :country_id
-    find ids
+    find(ids).sort_by(&:name)
   end
 
   def self.choices

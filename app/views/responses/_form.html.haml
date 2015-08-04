@@ -27,11 +27,14 @@
       size:        "40x4",
       maxlength:   160,
       class:       "form-control input-xlarge",
+      data:        { "character-count" => 160 },
       placeholder: "Extra information (e.g. delivery date, pickup instructions)"
 
   .form-actions
     %button.btn.btn-primary(type="submit") Send Response
     %button.btn.btn-default.clear-radios(style="display:none") Reset Selections
+
+    %span.pull-right.character-count
 
 
 :javascript
