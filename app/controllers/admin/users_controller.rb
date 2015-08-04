@@ -25,7 +25,6 @@ class Admin::UsersController < AdminController
     @user = User.new user_params.merge(password: SecureRandom.hex)
 
     if @user.save
-      UserMailer.welcome(@user).deliver_later
       redirect_to new_admin_user_path, notice: I18n.t!("flash.user.added")
     else
       render :new
@@ -56,8 +55,6 @@ class Admin::UsersController < AdminController
     @upload = User::Upload.new(
       params[:country_id], params[:csv], overwrite: params[:overwrite].present?)
     @upload.run!
-
-    @upload.added.each { |u| UserMailer.welcome(u).deliver_later }
 
     if @upload.errors.any?
       @user = User.new

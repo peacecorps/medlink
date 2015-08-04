@@ -1,9 +1,9 @@
 = content_for :page_title do
   Sign In
 
-= form_for resource, html: {class: 'form form-horizontal'}, as: resource_name, url: session_path(resource_name) do |f|
-  .row
-    .col-md-6
+.row
+  .col-md-6
+    = form_for resource, html: {class: 'form'}, as: resource_name, url: session_path(resource_name) do |f|
       - inputs f do |i|
         %fieldset
           = i.email_field :email, autofocus: true
@@ -12,4 +12,12 @@
             = f.check_box :remember_me
             = f.label :remember_me
         %button.btn.btn-primary(type="submit") Sign In
-        = link_to 'Forgot Password', new_user_password_path, class: 'btn btn-default'
+
+  .col-md-6
+    %h3 Trouble logging in?
+    %p Input your email below and we'll send you instructions on setting or resetting your password.
+    = form_for resource, html: {class: 'form'}, as: resource_name, url: send_login_help_path do |f|
+      - inputs f do |i|
+        %fieldset
+          = i.email_field :email
+        %button.btn.btn-primary(type="submit") Send Help Email
