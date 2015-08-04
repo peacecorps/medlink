@@ -13,7 +13,8 @@ This project grew out of a [National Day of Civic Hacking](http://hackforchange.
 
 ### Developing locally
 
-If you have any questions at all, feel free to email [James](https://github.com/jamesdabbs) or post on the [Google Group](https://groups.google.com/forum/?fromgroups#!forum/atlrug-rhok).
+
+If you have never run a Rails project on your machine, you might want to consult [something like this](https://gorails.com/setup/osx/10.10-yosemite) to help get Ruby, Bundler, and the like all setup. If you have any questions at all, feel free to email [James](https://github.com/jamesdabbs) or post on the [Google Group](https://groups.google.com/forum/?fromgroups#!forum/atlrug-rhok).
 
 To get started with a local copy of the project, run
 
