@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   end
 
   def manage
-    authorize! :respond, User
+    authorize :user, :respond?
     @past_due = users :past_due
     @pending  = users :pending
   end

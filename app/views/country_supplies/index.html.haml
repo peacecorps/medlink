@@ -4,7 +4,7 @@
 - if active_country?
   %h2= "Supplies available in #{@country.name}"
   %p
-- if active_country? and can? :manage, CountrySupply 
+- if active_country? and policy(@country).manage_supplies?
   = form_tag(:controller => "country_supplies", :action => "create", :method => "post") do
     - @supplies.each do |s|
       = hidden_field_tag "#{s.name}", 0 

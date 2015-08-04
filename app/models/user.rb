@@ -54,20 +54,6 @@ class User < ActiveRecord::Base
     @_primary_phone ||= phones.first
   end
 
-  def accessible model
-    if admin?
-      model.all
-    elsif pcmo?
-      model.where(country_id: country_id)
-    else
-      model.where(user_id: id)
-    end
-  end
-
-  def send_devise_notification(notification, *args)
-    devise_mailer.send(notification, self, *args).deliver_later
-  end
-
   def name
     "#{first_name} #{last_name}".strip
   end
@@ -98,7 +84,11 @@ class User < ActiveRecord::Base
   end
 
   def available_supplies
-    country.supplies
+    @_supplies ||= if admin?
+      Supply.all
+    else
+      country.supplies
+    end
   end
 
   def sms_contact_number

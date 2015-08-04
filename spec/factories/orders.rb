@@ -3,5 +3,6 @@ FactoryGirl.define do
     user
     supply
     request { create :request, user: user }
+    country { user.country }
   end
 end

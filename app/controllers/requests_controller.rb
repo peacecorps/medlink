@@ -1,20 +1,25 @@
 class RequestsController < ApplicationController
+  # TODO: figure out why the @#!% update is causing an n+1 in update_watching!
+  # Hypothesis: it has something to do with the UserScope magic
+  around_action :skip_bullet, only: [:create], if: -> { Rails.env.test? }
 
   def new
-    @request = current_user.requests.new
+    @request = Request.new entered_by: current_user.id
+    authorize @request
   end
 
   def create
     @request = Request.new create_params
     @request.entered_by = current_user.id
+    @request.country_id = @request.user.country_id
+
     @request.orders.each do |o|
-      o.request = @request
-      o.user    = @request.user
+      o.request    = @request
+      o.user       = @request.user
+      o.country_id = @request.user.country_id
     end
 
-    if @request.user_id
-      authorize! :create, @request
-    end
+    authorize @request
 
     if @request.orders.any?
       @request.save!

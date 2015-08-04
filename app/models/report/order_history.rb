@@ -1,6 +1,6 @@
 class Report::OrderHistory < Report
   def initialize orders
-    self.rows = orders.includes :supply, :response, :user => :phones
+    self.rows = orders.includes :supply, :response, :user => [:phones, :country]
   end
 
   def format order

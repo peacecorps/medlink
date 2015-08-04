@@ -6,9 +6,10 @@ class CountrySuppliesController < ApplicationController
     end
     @supplies = Supply.all
   end
+
   def create
-    authorize! :manage , CountrySupply
     @country = Country.find(active_country_id)
+    authorize @country, :manage_supplies?
     @country.supplies.destroy_all
     @supplies = Supply.all
     @supplies.each do |s|

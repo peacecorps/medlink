@@ -3,7 +3,7 @@ class ResponsesController < ApplicationController
   before_filter :find_response, only: [:show, :archive, :unarchive]
 
   def index
-    authorize! :respond, User
+    authorize :user, :respond?
     @responses = archived(accessible_responses).
       page params[:response_page]
   end
@@ -49,15 +49,15 @@ class ResponsesController < ApplicationController
 
   def initialize_response
     @user = User.find params[:user_id]
-    authorize! :respond, @user
-    @response = Response.new user: @user
+    authorize @user, :respond?
+    @response = Response.new user: @user, country: @user.country
   end
 
   def find_response
     id = params[:response_id] || params[:id]
     @response = Response.find id
     @user     = @response.user
-    authorize! :respond, @user
+    authorize @user, :respond?
   end
 
   def response_params

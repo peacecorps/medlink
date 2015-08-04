@@ -37,12 +37,14 @@ class SMS < ActiveRecord::Base
     request = Request.create!(
       message_id: id,
       user:       user,
+      country:    user.country,
       text:       parsed.instructions,
       entered_by: user.id
     )
     supplies.each do |supply|
       request.orders.create!(
         user:      user,
+        country:   user.country,
         supply_id: supply.id,
       )
     end

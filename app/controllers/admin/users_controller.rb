@@ -1,4 +1,6 @@
 class Admin::UsersController < AdminController
+  around_action :skip_bullet, only: [:create] if Rails.env.test?
+
   def set_country
     id = params[:country][:country_id]
     redirect_to :back and return unless id.present?

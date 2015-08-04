@@ -11,7 +11,7 @@ gem 'twilio-ruby'
 gem 'jquery-placeholder-rails'
 
 gem 'devise'
-gem 'cancan'
+gem 'pundit'
 
 gem 'rollbar'
 gem 'sidekiq'

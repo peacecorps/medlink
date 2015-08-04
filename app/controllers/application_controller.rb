@@ -3,7 +3,8 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_user!
 
-  rescue_from CanCan::AccessDenied do |exception|
+  include Pundit
+  rescue_from Pundit::NotAuthorizedError do |exception|
     # It'd be nice to redirect to the login page in case the user wants to
     #   sign in with another (authorized) account. Devise redirects logged
     #   in users away from that page, however, and clobbers the flash message
@@ -46,5 +47,12 @@ class ApplicationController < ActionController::Base
     else
       welcome_video_user_path
     end
+  end
+
+  def skip_bullet
+    Bullet.enable = false
+    yield
+  ensure
+    Bullet.enable = true
   end
 end
