@@ -60,7 +60,5 @@ module Medlink
     I18n.config.enforce_available_locales = false
 
     config.autoload_paths += %W(#{config.root}/lib)
-
-    config.active_job.queue_adapter = :sidekiq
   end
 end
