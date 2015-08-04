@@ -1,10 +1,6 @@
 class UserMailer < ActionMailer::Base
   default from: "support@pcmedlink.org"
 
-  def forgotten_password id
-    User.find(id).send_reset_password_instructions true
-  end
-
   def welcome user
     @user       = user
     @token, enc = Devise.token_generator.generate User, :reset_password_token

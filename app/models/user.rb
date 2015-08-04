@@ -23,8 +23,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :phones, allow_destroy: true
 
   validates_presence_of :country, :location, :first_name, :last_name, :role
-  validates_presence_of :pcv_id, if: :pcv?
-  validates :pcv_id, uniqueness: true, if: :pcv?
+  validates :pcv_id, presence: true, uniqueness: true, if: :pcv?
   validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map(&:name) }
 
   def self.due_cutoff
