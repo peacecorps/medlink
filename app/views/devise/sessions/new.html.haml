@@ -2,7 +2,7 @@
   Sign In
 
 .row
-  .col-md-6
+  .col-md-6.sign-in
     = form_for resource, html: {class: 'form'}, as: resource_name, url: session_path(resource_name) do |f|
       - inputs f do |i|
         %fieldset

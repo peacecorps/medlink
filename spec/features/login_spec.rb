@@ -18,9 +18,11 @@ describe "Logging in" do
 
   it "can log in and out manually" do
     visit new_user_session_path
-    fill_in :user_email, with: @user.email
-    fill_in :user_password, with: @user.password
-    click_on "Sign In"
+    within ".sign-in" do
+      fill_in :user_email, with: @user.email
+      fill_in :user_password, with: @user.password
+      click_on "Sign In"
+    end
     click_on "Sign Out"
     expect( alert.text ).to match /signed out/i
   end
