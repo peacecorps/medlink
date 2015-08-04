@@ -1,7 +1,7 @@
 en:
   flash:
     email:
-      not_found: "No account found for '%{email}'"
+      not_found: "No account found for %{email}"
       help_sent: "Email sent to %{email}. Check your inbox (and spam) for instructions."
     request:
       empty: "Your order was empty. Please select at least one supply."
