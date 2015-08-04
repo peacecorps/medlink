@@ -69,7 +69,7 @@ class Admin::UsersController < AdminController
   end
 
   def editable_users
-    User.where(country: active_country_id).map { |u| [u.name, u.id] }
+    User.where(country: active_country_id).order(last_name: :asc).map { |u| [u.name, u.id] }
   end
   helper_method :editable_users
 
