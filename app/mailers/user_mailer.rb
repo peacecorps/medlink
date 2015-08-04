@@ -5,8 +5,8 @@ class UserMailer < ActionMailer::Base
     User.find(id).send_reset_password_instructions true
   end
 
-  def welcome id
-    @user       = User.find id
+  def welcome user
+    @user       = user
     @token, enc = Devise.token_generator.generate User, :reset_password_token
 
     @user.reset_password_token   = enc
@@ -16,8 +16,8 @@ class UserMailer < ActionMailer::Base
     mail to: @user.email, subject: "Welcome to PC Medlink"
   end
 
-  def fulfillment id
-    @response = Response.find id
+  def fulfillment response
+    @response = response
     @orders   = @response.orders.includes(:supply).reject &:duplicated_at
     @subject  = "Your order has been processed"
     mail to: @response.user.email, subject: "[PC Medlink] #{@subject}"

@@ -43,8 +43,8 @@ Medlink::Application.routes.draw do
     resources :messages, only: [:index, :create]
   end
 
-  get '/help' => 'application#help'
-  root to: 'application#root'
+  get '/help' => 'pages#help'
+  root to: 'pages#root'
 
   post '/medrequest' => 'twilio#receive'
 

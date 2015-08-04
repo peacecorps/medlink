@@ -15,7 +15,7 @@
 %p If your request is received without errors, you will receive a confirmation that the system received the request. Once your order is processed by the health unit you will receive a response via text and e-mail with the details of how you will receive approved items.
 
 - if current_user
-  = render "partials/supply_table"
+  = render "partials/supply_table", locals: { supplies: @supplies }
 
 
 = title do

@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150412183456) do
+ActiveRecord::Schema.define(version: 20150804000849) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "countries", force: :cascade do |t|
     t.string  "name",              limit: 255
@@ -25,8 +28,8 @@ ActiveRecord::Schema.define(version: 20150412183456) do
     t.datetime "updated_at"
   end
 
-  add_index "country_supplies", ["country_id"], name: "index_country_supplies_on_country_id"
-  add_index "country_supplies", ["supply_id"], name: "index_country_supplies_on_supply_id"
+  add_index "country_supplies", ["country_id"], name: "index_country_supplies_on_country_id", using: :btree
+  add_index "country_supplies", ["supply_id"], name: "index_country_supplies_on_supply_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.datetime "created_at"
@@ -76,7 +79,7 @@ ActiveRecord::Schema.define(version: 20150412183456) do
     t.string "name",      limit: 255
   end
 
-  add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode"
+  add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode", using: :btree
 
   create_table "twilio_accounts", force: :cascade do |t|
     t.string   "sid",        limit: 255
@@ -111,7 +114,18 @@ ActiveRecord::Schema.define(version: 20150412183456) do
     t.datetime "welcome_video_shown_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "country_supplies", "countries"
+  add_foreign_key "country_supplies", "supplies"
+  add_foreign_key "orders", "requests"
+  add_foreign_key "orders", "supplies"
+  add_foreign_key "phones", "users"
+  add_foreign_key "requests", "countries"
+  add_foreign_key "requests", "messages"
+  add_foreign_key "requests", "users"
+  add_foreign_key "responses", "countries"
+  add_foreign_key "responses", "messages"
+  add_foreign_key "responses", "users"
 end

@@ -68,4 +68,6 @@ Medlink::Application.configure do
   config.eager_load = true
 
   config.log_level = :info
+
+  config.active_job.queue_adapter = :sidekiq
 end

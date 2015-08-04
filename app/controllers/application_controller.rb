@@ -2,7 +2,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :authenticate_user!
-  skip_before_filter :authenticate_user!, only: :help
 
   rescue_from CanCan::AccessDenied do |exception|
     # It'd be nice to redirect to the login page in case the user wants to
@@ -10,18 +9,6 @@ class ApplicationController < ActionController::Base
     #   in users away from that page, however, and clobbers the flash message
     #   in the process.
     redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
-  end
-
-  def root
-    redirect_to start_page
-  end
-
-  def help
-    if current_user.nil? || current_user.pcv?
-      render 'partials/help'
-    else
-      render 'partials/pcmo_help'
-    end
   end
 
   def active_country_id
@@ -34,16 +21,6 @@ class ApplicationController < ActionController::Base
   helper_method :active_country_id, :active_country?
 
   private # ----------
-
-  def start_page
-    if current_user.admin?
-      new_admin_user_path
-    elsif current_user.pcmo?
-      manage_orders_path
-    else
-      new_request_path
-    end
-  end
 
   def sort_column prefix=nil
     sort = params["#{prefix}sort"]
@@ -64,9 +41,9 @@ class ApplicationController < ActionController::Base
   end
 
   # Customizes path after login to show welcome_video if first login
-  def after_sign_in_path_for(user) 
+  def after_sign_in_path_for(user)
     if user.welcome_video_seen?
-      root_path  
+      root_path
     else
       welcome_video_user_path
     end

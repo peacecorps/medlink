@@ -26,7 +26,7 @@ describe SMS do
   it "can abridge the confirmation message if it's too long" do
     n = 12
     user = create :user
-    n.times do 
+    n.times do
       supply = create :supply
       user.country.supplies << supply
     end

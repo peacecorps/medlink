@@ -34,8 +34,9 @@ describe "responding to orders" do
 
     visit new_user_response_path(@user)
     # TODO: these specifications are brittle ...
-    choose :orders_4_delivery_method_delivery
-    choose :orders_3_delivery_method_denial
+    o1,o2 = @user.orders.first 2
+    choose "orders_#{o1.id}_delivery_method_delivery"
+    choose "orders_#{o2.id}_delivery_method_denial"
     fill_in :response_extra_text, with: "Extra instructions ..."
     click_on "Send Response"
 
@@ -58,10 +59,9 @@ describe "responding to orders" do
 
   it "auto-archives orders when possible", :worker do
     visit new_user_response_path(@user)
-    choose :orders_4_delivery_method_denial
-    choose :orders_3_delivery_method_purchase
-    choose :orders_2_delivery_method_denial
-    choose :orders_1_delivery_method_purchase
+    @user.orders.zip(%w( denial purchase denial purchase )).each do |order, method|
+      choose "orders_#{order.id}_delivery_method_#{method}"
+    end
     click_on "Send Response"
 
     visit responses_path
