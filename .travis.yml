@@ -1,5 +1,6 @@
 language: ruby
 bundler_args: --without development production
+sudo: false
 rvm:
 - 2.2.1
 script:
