@@ -98,9 +98,9 @@ class User < ActiveRecord::Base
 
   def welcome_video
     if self.pcv?
-      "yTNr0Nh7WYU"
+      "qoZvHiSBTAs"
     else
-      "KkXb_5kkfwk"
+      "4L_XqUhXaMw"
     end
   end
 
