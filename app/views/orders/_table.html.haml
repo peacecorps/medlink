@@ -1,19 +1,17 @@
-- anchor = label.downcase.gsub /\s/,'-'
-%div{ id: anchor }
+%div{ id: table.anchor }
   = title do
     = label
-  - if rows.any?
-    = render partial: "partials/pager",
-      locals: { anchor: anchor, pager: rows, page_param: "#{prefix}page" }
+  - if table.page.any?
+    = render partial: "partials/pager", locals: { table: table }
     %table.table.table-striped.table-hover
       %thead
         %tr
-          %th= sortable :first_name, prefix: prefix
-          %th= sortable :last_name, prefix: prefix
-          %th= sortable :location, prefix: prefix
-          %th= sortable :last_requested_at, title: "Requests", prefix: prefix
+          %th= sortable_header(table, :first_name)
+          %th= sortable_header(table, :last_name)
+          %th= sortable_header(table, :location)
+          %th= sortable_header(table, :last_requested_at, title: "Requests")
       %tbody
-        - rows.each do |user|
+        - table.page.each do |user|
           %tr.order.link{ "data-link" => new_user_response_path(user) }
             %td= user.first_name
             %td= user.last_name

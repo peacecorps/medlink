@@ -1,6 +1,6 @@
 #request-history
   %h2 Request History
-  = render partial: "partials/pager", locals: { anchor: "request-history", pager: @orders }
+  = render partial: "partials/pager", locals: { anchor: "request-history", table: @orders }
   %table.table.table-striped.table-hover
     %thead
       %tr

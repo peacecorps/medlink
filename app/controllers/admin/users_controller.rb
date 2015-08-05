@@ -1,30 +1,24 @@
 class Admin::UsersController < AdminController
+  # This n+1 comes from each welcome email fetching country supplies, which we don't
+  #   care about since those are handled out-of-band in production
   around_action :skip_bullet, only: [:create] if Rails.env.test?
 
   def set_country
     id = params[:country][:country_id]
     redirect_to :back and return unless id.present?
+    authorize current_user, :update?
     current_user.update country: Country.find(id)
     redirect_to :back, notice: I18n.t!("flash.country_selected", country: current_user.country.name)
   end
 
   def new
     @user = User.new
+    authorize @user
   end
 
   def create
-    # This is a kludge to accomodate the edit user
-    #   selection being on the new user (/admin home) page
-    if id = params[:edit_user]
-      if id.present?
-        user = User.find id
-        redirect_to edit_admin_user_path(user) and return
-      else
-        redirect_to new_admin_user_path, notice: I18n.t!("flash.user.none_selected") and return
-      end
-    end
-
     @user = User.new user_params.merge(password: SecureRandom.hex)
+    authorize @user
 
     if @user.save
       redirect_to new_admin_user_path, notice: I18n.t!("flash.user.added")
@@ -41,7 +35,8 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    @user  = User.find params[:id]
+    @user = User.find params[:id]
+    authorize @user
     _attrs = @user.attributes
     if @user.update_attributes user_params
       diff = User::Change.new _attrs, @user
@@ -59,6 +54,7 @@ class Admin::UsersController < AdminController
   def upload_csv
     @upload = User::Upload.new(
       params[:country_id], params[:csv], overwrite: params[:overwrite].present?)
+    authorize @upload, :run?
     @upload.run!
 
     if @upload.errors.any?

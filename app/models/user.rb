@@ -43,28 +43,12 @@ class User < ActiveRecord::Base
     Phone.lookup(number).user
   end
 
-  def update_waiting!
-    update_attributes(
-      waiting_since:     orders.without_responses.minimum(:created_at),
-      last_requested_at: orders.maximum(:created_at)
-    )
-  end
-
   def primary_phone
     @_primary_phone ||= phones.first
   end
 
   def name
     "#{first_name} #{last_name}".strip
-  end
-
-  def mark_updated_orders
-    orders.without_responses.
-      group_by(&:supply_id).each do |_, orders|
-        orders.sort_by! &:created_at
-        orders.pop
-        orders.each { |o| o.touch :duplicated_at }
-      end
   end
 
   def textable?
@@ -97,10 +81,10 @@ class User < ActiveRecord::Base
   end
 
   def welcome_video
-    if self.pcv?
-      "qoZvHiSBTAs"
+    if pcv?
+      Video::PCV_WELCOME
     else
-      "4L_XqUhXaMw"
+      Video::PCMO_WELCOME
     end
   end
 

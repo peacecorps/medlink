@@ -40,18 +40,15 @@ module ApplicationHelper
     end
   end
 
-  def page_params page, param
-    params.
+  def update_params_link title, param_updates, opts={}
+    updated = params.
       reject { |k,v| %w(action controller).include? k }.
-      tap    { |ps| ps[param] = page }
+      merge param_updates
+    link_to title, opts.merge(params: updated)
   end
 
-  def sortable column, title: nil, prefix: ""
-    column  = column.to_s
-    title ||= column.titleize
-    css_class = column == sort_column(prefix) ? "current #{sort_direction(prefix)}" : nil
-    direction = column == sort_column(prefix) && sort_direction(prefix) == :asc ? :desc : :asc
-    link_to title, {"#{prefix}sort" => column, "#{prefix}direction" => direction}, {:class => css_class}
+  def sortable_header table, *args
+    update_params_link *table.sorter_for(*args)
   end
 
   def short_order o

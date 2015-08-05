@@ -1,14 +1,15 @@
-- page_param ||= :page
+- pager = table.page
 - unless pager.total_pages < 2
+  %a{name: table.anchor} &nbsp;
   %ul.pager
     - if pager.current_page == 1
       %li.previous.disabled
         %a.disabled &larr; Newer
     - else
       %li.previous
-        = link_to "&larr; Newer".html_safe,
-          anchor: anchor,
-          params: page_params(pager.current_page - 1, page_param)
+        = update_params_link "&larr; Newer".html_safe,
+          { table.page_param => pager.current_page - 1 },
+          anchor: table.anchor
 
     %li Page #{pager.current_page} of #{pager.total_pages}
 
@@ -17,6 +18,6 @@
         %a.disabled Older &rarr;
     - else
       %li.next
-        = link_to "Older &rarr;".html_safe,
-          anchor: anchor,
-          params: page_params(pager.current_page + 1, page_param)
+        = update_params_link "Older &rarr;".html_safe,
+          { table.page_param => pager.current_page + 1 },
+          anchor: table.anchor
