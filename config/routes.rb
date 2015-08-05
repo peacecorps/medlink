@@ -1,6 +1,6 @@
 require 'sidekiq/web'
 Medlink::Application.routes.draw do
-  devise_for :users, controllers: { passwords: "passwords", confirmations: "confirmations" }, skip: [:registrations]
+  devise_for :users, controllers: { confirmations: "confirmations" }, skip: [:registrations]
   as :user do
     get   'users/edit' => 'devise/registrations#edit',   as: 'edit_user_registration'
     patch 'users/:id'  => 'devise/registrations#update', as: 'user_registration'
