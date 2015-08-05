@@ -20,7 +20,6 @@ class ApplicationController < ActionController::Base
     new_user_session_path
   end
 
-  # Customizes path after login to show welcome_video if first login
   def after_sign_in_path_for(user)
     if user.welcome_video_seen?
       root_path

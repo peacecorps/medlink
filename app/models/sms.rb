@@ -34,22 +34,14 @@ class SMS < ActiveRecord::Base
   end
 
   def create_orders!
-    request = Request.create!(
-      message_id: id,
-      user:       user,
-      country:    user.country,
-      text:       parsed.instructions,
-      entered_by: user.id
-    )
-    supplies.each do |supply|
-      request.orders.create!(
-        user:      user,
-        country:   user.country,
-        supply_id: supply.id,
-      )
-    end
-    user.mark_updated_orders
-    user.update_waiting!
+    orders = supplies.map { |s| { supply_id: s.id } }
+    rc = RequestCreator.new(user, orders: orders, request: {
+      message_id:        id,
+      user_id:           user.id,
+      text:              parsed.instructions
+    })
+    rc.save
+    update request: rc.request
   end
 
   def confirmation_message

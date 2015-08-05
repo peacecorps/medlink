@@ -6,7 +6,8 @@ describe "responding to orders" do
     @user = create :user, country: @country
     create :phone, user: @user
     4.times { create :order, user: @user, country: @country }
-    @user.update_waiting!
+    # FIXME: having to remember this seems too brittle
+    @user.update_attributes waiting_since: @user.orders.without_responses.minimum(:created_at)
 
     @pcmo = create :pcmo, country: @country
     login @pcmo

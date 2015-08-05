@@ -8,7 +8,7 @@ class OrderResponder
     attach_orders orders.select { |_,data| data.include? "delivery_method" }
     @response.send!
     @response.mark_updated_orders!
-    @response.user.update_waiting!
+    update_waiting! @response.user
     @response.archive! if @response.auto_archivable?
   end
 
@@ -21,5 +21,10 @@ class OrderResponder
         data = order_params[o.id.to_s].merge response_id: @response.id
         o.update_attributes data.permit :delivery_method, :response_id
     end
+  end
+
+  def update_waiting! user
+    user.update_attributes \
+      waiting_since: user.orders.without_responses.minimum(:created_at)
   end
 end

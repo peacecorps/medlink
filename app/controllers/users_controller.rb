@@ -3,10 +3,12 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
+    authorize @user
   end
 
   def update
     @user = current_user
+    authorize @user
     if @user.update_attributes update_params
       redirect_to edit_user_path, flash: { success: I18n.t!("flash.user.account_updated") }
     else
@@ -26,8 +28,7 @@ class UsersController < ApplicationController
 
   def send_login_help
     email = params[:user][:email]
-    user  = User.find_by_email email
-    if user.nil?
+    unless user = User.find_by_email(email)
       redirect_to :back, flash: { error: I18n.t!("flash.email.not_found", email: email) }
       return
     end
