@@ -1,4 +1,6 @@
 class Admin::UsersController < AdminController
+  # This n+1 comes from each welcome email fetching country supplies, which we don't
+  #   care about since those are handled out-of-band in production
   around_action :skip_bullet, only: [:create] if Rails.env.test?
 
   def set_country
@@ -13,17 +15,6 @@ class Admin::UsersController < AdminController
   end
 
   def create
-    # This is a kludge to accomodate the edit user
-    #   selection being on the new user (/admin home) page
-    if id = params[:edit_user]
-      if id.present?
-        user = User.find id
-        redirect_to edit_admin_user_path(user) and return
-      else
-        redirect_to new_admin_user_path, notice: I18n.t!("flash.user.none_selected") and return
-      end
-    end
-
     @user = User.new user_params.merge(password: SecureRandom.hex)
 
     if @user.save

@@ -14,18 +14,6 @@ class ApplicationController < ActionController::Base
 
   private # ----------
 
-  def sort_column prefix=nil
-    sort = params["#{prefix}sort"]
-    User.column_names.include?(sort) ? sort : "waiting_since"
-  end
-  helper_method :sort_column
-
-  def sort_direction prefix=nil
-    dir = params["#{prefix}direction"]
-    %w(asc desc).include?(dir) ? dir.to_sym : :asc
-  end
-  helper_method :sort_direction
-
   # Redirects to the login path to allow the flash messages to
   #    display for sign_out.
   def after_sign_out_path_for(resource_or_scope)

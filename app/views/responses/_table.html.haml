@@ -1,12 +1,12 @@
 %thead
   %tr
-    %th= sortable :first_name
-    %th= sortable :last_name
-    %th= sortable :location
-    %th= sortable :last_requested_at, title: "Requests"
+    %th= sortable_header(table, :first_name)
+    %th= sortable_header(table, :last_name)
+    %th= sortable_header(table, :location)
+    %th= sortable_header(table, :last_requested_at, title: "Requests")
     %th
 %tbody
-  - rows.each do |r|
+  - table.ordered.each do |r|
     %tr.order.link{ "data-link" => user_response_path(r.user, r) }
       %td= r.user.first_name
       %td= r.user.last_name

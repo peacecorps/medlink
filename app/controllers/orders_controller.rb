@@ -1,26 +1,15 @@
 class OrdersController < ApplicationController
   def index
-    @orders = current_user.orders.
-      includes(:request, :supply, :response).
-      page(params[:page])
+    @orders = SortTable.new current_user.orders.includes(:request, :supply, :response),
+      params: params
   end
 
   def manage
     authorize :user, :respond?
-    @past_due = users :past_due
-    @pending  = users :pending
-  end
-
-  private
-
-  def users type
-    current_user.country.users.
-      send(type).
-      order(order "#{type}_").
-      page(params["#{type}_page"] || 1)
-  end
-
-  def order prefix
-    "#{sort_column prefix} #{sort_direction prefix}"
+    users = current_user.country.users
+    @past_due = SortTable.new users.past_due,
+      params: params, prefix: "past_due", default: "waiting_since"
+    @pending = SortTable.new users.pending,
+      params: params, prefix: "pending",  default: "waiting_since"
   end
 end

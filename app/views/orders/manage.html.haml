@@ -7,5 +7,5 @@
 
 - if current_user.country_id
   - if @past_due.any?
-    = render partial: "table", locals: { label: "Past Due Requests", rows: @past_due, prefix: "past_due_" }
-  = render partial: "table", locals: { label: "Pending Requests",  rows: @pending,  prefix: "pending_" }
+    = render partial: "table", locals: { label: "Past Due Requests", table: @past_due }
+  = render partial: "table", locals: { label: "Pending Requests",  table: @pending }
