@@ -49,7 +49,7 @@ describe "User management" do
         select @user.country.name
         click_on "Update"
       end
-      select @user.name, from: :edit_user
+      select @user.name, from: :edit_user_id
       click_on "Edit User"
     end
 

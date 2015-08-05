@@ -34,6 +34,9 @@ class Admin::UsersController < AdminController
   end
 
   def edit
+    if params[:edit]
+      redirect_to edit_admin_user_path(params[:edit][:user_id]) and return
+    end
     @user = User.find params[:id]
   end
 
@@ -66,11 +69,6 @@ class Admin::UsersController < AdminController
       redirect_to new_admin_user_path
     end
   end
-
-  def editable_users
-    User.where(country: active_country_id).order(last_name: :asc).map { |u| [u.name, u.id] }
-  end
-  helper_method :editable_users
 
   private # ----------
 

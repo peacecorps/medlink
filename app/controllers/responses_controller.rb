@@ -65,7 +65,7 @@ class ResponsesController < ApplicationController
   end
 
   def accessible_responses
-    Response.where(country_id: active_country_id).
+    current_user.country.responses.
       includes(:user).
       order("users.#{sort_column} #{sort_direction}")
   end

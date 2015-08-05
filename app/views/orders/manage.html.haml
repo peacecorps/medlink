@@ -5,7 +5,7 @@
 - if current_user.admin?
   = render partial: "partials/admin_country_select", locals: { countries: Country.with_orders }
 
-- if active_country?
+- if current_user.country_id
   - if @past_due.any?
     = render partial: "table", locals: { label: "Past Due Requests", rows: @past_due, prefix: "past_due_" }
   = render partial: "table", locals: { label: "Pending Requests",  rows: @pending,  prefix: "pending_" }

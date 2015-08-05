@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   private
 
   def users type
-    User.where(country_id: active_country_id).
+    current_user.country.users.
       send(type).
       order(order "#{type}_").
       page(params["#{type}_page"] || 1)

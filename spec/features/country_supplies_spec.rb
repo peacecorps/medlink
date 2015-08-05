@@ -44,9 +44,14 @@ describe "Managing Country Supplies" do
   it "does not let a PCV manage supplies for a country" do
     role = create :pcv
     login role
-    visit country_supplies_path
 
+    visit country_supplies_path
+    expect( page ).not_to have_content @supply.name
+
+    role.country.supplies << @supply
+    visit country_supplies_path
     expect( page ).to have_content @supply.name
+
     expect{ find('#update-country') }.to raise_error(Capybara::ElementNotFound)
   end
 end

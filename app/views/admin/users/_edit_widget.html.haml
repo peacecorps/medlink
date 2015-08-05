@@ -1,7 +1,5 @@
-= form_tag admin_users_path, class: 'form-inline' do
+= form_tag edit_admin_user_path(-1), class: 'form-inline', method: :get do
   .form-group
-    = select_tag :edit_user,
-      options_for_select(editable_users, selected: selected),
-      prompt: 'Select Volunteer to edit',
-      class: 'form-control'
+    = collection_select :edit, :user_id, policy_scope(User).order(last_name: :asc), :id, :name,
+      { selected: selected, prompt: 'Select Volunteer to edit' }, class: 'form-control'
   %button.btn.btn-primary(type="submit") Edit User

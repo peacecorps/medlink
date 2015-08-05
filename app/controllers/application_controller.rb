@@ -12,14 +12,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
   end
 
-  def active_country_id
-    current_user.try :country_id
-  end
-  def active_country?
-    active_country_id.present?
-  end
-  helper_method :active_country_id, :active_country?
-
   private # ----------
 
   def sort_column prefix=nil
