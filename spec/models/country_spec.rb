@@ -6,10 +6,10 @@ describe Country do
   end
 
   it 'should list choices mapped by name and id for all countries' do
-    aus = create(:country, name: "Australia")
+    aus = create(:country, name: "Aaaaaustralia")
     test_choices = Country.choices
     expect(test_choices.count).to eq(Country.count)
-    expect(test_choices.last).to eq [aus.name, aus.id]
+    expect(test_choices.first).to eq [aus.name, aus.id]
   end
 
   it "should have a with_orders method that only returns countries with orders" do
