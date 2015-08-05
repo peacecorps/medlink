@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  devise :database_authenticatable, :registerable, :confirmable,
+  devise :database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
   enum role: [ :pcv, :pcmo, :admin ]
