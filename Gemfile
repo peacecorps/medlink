@@ -23,6 +23,9 @@ gem 'nested_form'
 
 gem 'quiet_assets'
 
+gem 'bullet'
+gem 'slack-notifier'
+
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
@@ -30,7 +33,6 @@ group :assets do
 end
 
 group :development, :test do
-  gem 'bullet'
   gem 'letter_opener'
   gem 'pry-rails'
 

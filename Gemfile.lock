@@ -241,6 +241,7 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
+    slack-notifier (1.2.1)
     slop (3.6.0)
     sms-spec (0.1.7)
       rspec
@@ -314,6 +315,7 @@ DEPENDENCIES
   sidekiq
   simplecov
   sinatra
+  slack-notifier
   sms-spec
   spring
   spring-commands-rspec
