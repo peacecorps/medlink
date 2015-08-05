@@ -17,7 +17,7 @@ class OrderResponder
   def attach_orders order_params
     Order.
       where(id: order_params.keys).
-      includes(:request, :user, :supply).each do |o|
+      includes(:user, :supply).each do |o|
         data = order_params[o.id.to_s].merge response_id: @response.id
         o.update_attributes data.permit :delivery_method, :response_id
     end
