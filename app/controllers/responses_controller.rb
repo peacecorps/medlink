@@ -54,7 +54,6 @@ class ResponsesController < ApplicationController
     id = params[:response_id] || params[:id]
     @response = Response.find id
     @user     = @response.user
-    authorize @user, :respond?
   end
 
   def response_params

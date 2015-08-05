@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|

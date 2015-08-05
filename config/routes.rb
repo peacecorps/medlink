@@ -44,7 +44,7 @@ Medlink::Application.routes.draw do
       end
     end
 
-    resources :messages, only: [:index, :create]
+    resources :messages, only: [:new, :create]
   end
 
   get '/help' => 'pages#help'

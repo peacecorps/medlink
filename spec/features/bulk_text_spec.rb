@@ -13,7 +13,7 @@ describe "Bulk texting" do
     @user = create :admin
     login @user
 
-    visit admin_messages_path
+    visit new_admin_message_path
   end
 
   it "can send to multiple countries", :worker do

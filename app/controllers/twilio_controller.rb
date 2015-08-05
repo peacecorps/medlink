@@ -1,5 +1,5 @@
 class TwilioController < ApplicationController
-  skip_before_filter :authenticate_user!, :verify_authenticity_token
+  skip_before_action :authenticate_user!, :verify_authenticity_token, only: [:receive]
 
   def receive
     account = TwilioAccount.where(sid: params[:AccountSid], number: params[:To]).first

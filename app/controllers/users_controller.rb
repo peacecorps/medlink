@@ -18,11 +18,13 @@ class UsersController < ApplicationController
 
   def welcome_video
     @video = current_user.welcome_video
+    authorize @video, :show?
     render :welcome_video
   end
 
   def confirm_welcome
     current_user.record_welcome!
+    authorize current_user, :update?
     redirect_to root_path
   end
 
