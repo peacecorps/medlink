@@ -7,6 +7,8 @@ class Country < ActiveRecord::Base
 
   belongs_to :twilio_account
 
+  default_scope -> { order(name: :asc) }
+
   def self.with_orders
     ids = Order.unscoped.uniq.pluck :country_id
     find(ids).sort_by(&:name)
