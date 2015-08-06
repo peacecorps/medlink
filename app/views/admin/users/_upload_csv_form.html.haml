@@ -7,12 +7,12 @@
     .form-group
       %label(for="country_id") Country
       = select_tag "country_id",
-        options_for_select(Country.choices),
-        {include_blank: true, class: "form-control"}
+        options_for_select(Country.choices, selected: upload.country.id),
+        class: "form-control"
 
     .form-group
       %label
-        = check_box_tag 'overwrite', 1
+        = check_box_tag 'overwrite', 1, upload.overwrite?
         Overwrite Existing Users For Duplicate Entries
 
     = submit_tag 'Upload CSV', class: 'btn btn-primary'

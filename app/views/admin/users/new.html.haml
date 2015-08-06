@@ -3,9 +3,6 @@
 
 = render partial: "partials/admin_country_select", locals: { countries: Country.order(name: :asc) }
 
-- if @upload && @upload.errors.any?
-  = render partial: "upload_errors", locals: { upload: @upload }
-
 .row
   .col-md-6
     = title do
@@ -19,4 +16,4 @@
 
     = title do
       Bulk Upload
-    = render partial: 'upload_csv'
+    = render partial: 'upload_csv_form', locals: { upload: @upload }

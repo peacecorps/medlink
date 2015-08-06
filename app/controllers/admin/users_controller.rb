@@ -14,6 +14,8 @@ class Admin::UsersController < AdminController
   def new
     @user = User.new
     authorize @user
+
+    @upload = User::Upload.new(country: current_user.country)
   end
 
   def create
@@ -23,6 +25,7 @@ class Admin::UsersController < AdminController
     if @user.save
       redirect_to new_admin_user_path, notice: I18n.t!("flash.user.added")
     else
+      @upload = User::Upload.new(country: current_user.country)
       render :new
     end
   end
@@ -53,15 +56,15 @@ class Admin::UsersController < AdminController
 
   def upload_csv
     @upload = User::Upload.new(
-      params[:country_id], params[:csv], overwrite: params[:overwrite].present?)
-    authorize @upload, :run?
-    @upload.run!
+      country:   Country.find(params[:country_id]),
+      overwrite: params[:overwrite].present?
+    )
 
-    if @upload.errors.any?
-      @user = User.new
-      render :new
-    else
-      flash[:success] = I18n.t! "flash.csv.valid", users: @upload.added.count
+    authorize @upload, :run?
+    @upload.run! params[:csv]
+
+    if @upload.successful?
+      flash[:success] = I18n.t! "flash.csv.valid", users: @upload.rows.count
       redirect_to new_admin_user_path
     end
   end

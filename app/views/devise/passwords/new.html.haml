@@ -1,7 +1,7 @@
 = content_for :page_title do
   Forgot Password
 
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: 'form-devise', method: :post }) do |f|
+= bootstrap_form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: 'form-devise', method: :post }) do |f|
 
   .row
     .col-md-6
@@ -9,10 +9,9 @@
 
       %p Please enter in your email address and PCV ID that we have on file.  You will receive an email with instructions to help you reset your password.
 
-      - inputs f do |i|
-        = i.email_field :email, autofocus: true
-        = i.text_field :pcv_id, label: "PCV ID"
-        %p.help-block Peace Corps Staff with a peacecorps.gov email address do not need to input a PCVID.
+      = f.email_field :email, autofocus: true
+      = f.text_field :pcv_id, label: "PCV ID"
+      %p.help-block Peace Corps Staff with a peacecorps.gov email address do not need to input a PCVID.
 
       = link_to "Cancel", new_user_session_path, class: 'btn btn-default'
       = f.submit "Reset Password", class: 'btn btn-primary'
