@@ -1,7 +1,7 @@
 = content_for :page_title do
   Change Password
 
-= form_for(resource, as: resource_name, url: user_registration_path(resource_name), html: {method: :patch}) do |f|
+= bootstrap_form_for(resource, as: resource_name, url: user_registration_path(resource_name), html: {method: :patch}) do |f|
 
   = devise_error_messages!
 
@@ -11,10 +11,9 @@
 
   .row
     .col-md-6
-      - inputs f do |i|
-        = i.password_field :current_password
-        = i.password_field :password, title: "New Password"
-        = i.password_field :password_confirmation
+      = f.password_field :current_password
+      = f.password_field :password, title: "New Password"
+      = f.password_field :password_confirmation
 
       %button.btn.btn-primary(type="submit") Update
       = link_to "Cancel", :back, class: "btn btn-default"

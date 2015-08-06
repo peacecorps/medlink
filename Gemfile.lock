@@ -39,6 +39,7 @@ GEM
     addressable (2.3.8)
     arel (6.0.0)
     bcrypt (3.1.10)
+    bootstrap_form (2.3.0)
     builder (3.2.2)
     bullet (4.14.7)
       activesupport (>= 3.0.0)
@@ -288,6 +289,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bootstrap_form
   bullet
   capybara
   coffee-rails

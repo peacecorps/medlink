@@ -7,42 +7,48 @@ describe "Uploading a User CSV", :worker do
     visit root_path
   end
 
-  it "redisplays if no country is selected" do
-    attach_file "csv", Rails.root.join("spec/data/users.good.csv")
+  def upload_to country, file, overwrite: false
+    attach_file "csv", Rails.root.join("spec/data/#{file}.csv")
+    select country.name, from: "country_id"
+    check "overwrite" if overwrite
     click_button "Upload CSV"
-
-    expect( page.find(".alert").text ).to match /country/i
-    expect( User.pcv.count ).to eq 0
   end
 
   it "can create users" do
-    attach_file "csv", Rails.root.join("spec/data/users.good.csv")
-    select @admin.country.name, from: "country_id"
-    click_button "Upload CSV"
+    upload_to @admin.country, "users.good"
 
     expect( alert.text ).to match /uploaded.*3 users/i
     expect( User.pcv.count ).to eq 3
     expect( sent_mail.flat_map(&:to).sort ).to eq User.pcv.pluck(:email).sort
   end
 
-  describe "uploads with some errors" do
-    before :each do
-      attach_file "csv", Rails.root.join("spec/data/users.csv")
-      select @admin.country.name, from: "country_id"
-      click_button "Upload CSV"
-    end
+  it "can handle malformed csvs" do
+    upload_to @admin.country, "malformed"
 
-    it "redisplays lines with errors" do
-      alert = page.find(".alert").text
-      expect( alert ).to match /d@example.com/
-      expect( alert ).to match /role.*blank/i
+    header = page.find("th.has-error")
+    expect( header.text ).to eq "not_a_user_field is not a recognized column"
+    expect( User.pcv.count ).to eq 0
+    expect( sent_mail.count ).to eq 0
+  end
 
-      expect( User.pcv.count ).to eq 3
-    end
+  it "does not create users when there are errors" do
+    upload_to @admin.country, "users"
 
-    it "still sends welcome emails to valid users" do
-      expect( sent_mail.count ).to eq 3
-      expect( sent_mail.flat_map &:to ).not_to include "d@example.com"
-    end
+    expect( page.all("td.has-error").count ).to be > 0
+    expect( User.pcv.count ).to eq 0
+    expect( sent_mail.count ).to eq 0
+  end
+
+  it "can be set to overwrite users" do
+    create :user, pcv_id: "123"
+
+    upload_to @admin.country, "users.good", overwrite: true
+
+    expect( User.pcv.count ).to eq 3
+    expect( sent_mail.count ).to eq 2
+
+    old = User.find_by_pcv_id "123"
+    expect( old.email ).to eq "a@example.com"
+    expect( old.last_name ).to eq "Person"
   end
 end

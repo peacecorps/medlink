@@ -1,10 +1,9 @@
-= form_for(resource, as: resource_name, url: confirm_path) do |form|
+= bootstrap_form_for(resource, as: resource_name, url: confirm_path) do |form|
   = devise_error_messages!
-  - inputs form do |i|
-    %fieldset
-      = i.password_field :password, autofocus: true
-      = i.password_field :password_confirmation
-    = form.hidden_field :confirmation_token, value: @original_token
+  %fieldset
+    = form.password_field :password, autofocus: true
+    = form.password_field :password_confirmation
+  = form.hidden_field :confirmation_token, value: @original_token
 
   %p
     I hereby authorize the Peace Corps Office of Health Services and Peace Corps Medical Officers to communicate with me through PC Medlink with regards to my non-prescription medical supply (NPMS) orders. This includes automated responses by electronic mail, and telephone text at the number and e-mail address that I have provided to Peace Corps, or have updated on the PC Medlink application. I understand that personally identifiable (phone number, volunteer ID, and location) may be included in such communications.

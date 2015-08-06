@@ -3,40 +3,39 @@
 = content_for :page_title do
   = current_user.pcv? ? "Request Form" : "Place an Order"
 
-= nested_form_for @request do |f|
+= bootstrap_nested_form_for @request do |f|
   = render partial: 'partials/errors', locals: { object: @request }
 
   .row
     .col-md-6
-      - inputs f do |i|
 
-        - if current_user.pcv?
-          = title do
-            = current_user.name
-            %small= current_user.pcv_id
-          = f.hidden_field :user_id, value: current_user.id
+      - if current_user.pcv?
+        = title do
+          = current_user.name
+          %small= current_user.pcv_id
+        = f.hidden_field :user_id, value: current_user.id
 
-        - else
-          = i.select :user_id,
-            policy_scope(User).all.map { |u| [u.name, u.id] },
+      - else
+        = f.select :user_id,
+          policy_scope(User).all.map { |u| [u.name, u.id] },
+          {include_blank: true},
+          {label: "For Volunteer"}
+
+      .form-group
+        %label Supplies
+        = f.fields_for :orders do |order_form|
+          = order_form.select :supply_id,
+            Supply.choices_for(current_user.country_id),
             {include_blank: true},
-            {label: "For Volunteer"}
+            {class: 'form-control supply-select'}
+        = f.link_to_add :orders,
+          id:    "add-supply",
+          style: "display:none" do
+          = icon :plus
 
-        .form-group
-          %label Supplies
-          = f.fields_for :orders do |order_form|
-            = order_form.select :supply_id,
-              Supply.choices_for(current_user.country_id),
-              {include_blank: true},
-              {class: 'form-control supply-select'}
-          = f.link_to_add :orders,
-            id:    "add-supply",
-            style: "display:none" do
-            = icon :plus
+      = f.text_area :text, rows: 3, label: "Special Instructions"
 
-        = i.text_area :text, rows: 3, label: "Special Instructions"
-
-        %button.btn.btn-primary(type="submit") Submit
+      %button.btn.btn-primary(type="submit") Submit
 
 :javascript
   $(function() {
