@@ -2,9 +2,6 @@
   Request Manager
   = link_to "Place a Request", new_request_path, class: "btn btn-default btn-mini"
 
-- if current_user.admin?
-  = render partial: "partials/admin_country_select", locals: { countries: Country.with_orders }
-
 - if current_user.country_id
   - if @past_due.any?
     = render partial: "table", locals: { label: "Past Due Requests", table: @past_due }

@@ -1,0 +1,31 @@
+<noscript>
+  <div class="flash">
+    <% flash.each do |name, msg| %>
+      <div class="alert alert-<%= translate_flash_class name %>">
+        <%= msg %>
+      </div>
+    <% end %>
+  </div>
+</noscript>
+
+<script>
+$(function() {
+  var messages = <%= flash.to_json.html_safe %>
+  var translate = function(type) {
+    if (type === "danger") {
+      "error"
+    } else {
+      type
+    }
+  }
+
+  var m = Messenger();
+
+  $(messages).each(function(index, el) {
+    m.post({
+      message: el[1],
+      type:    translate(el[0])
+    })
+  })
+});
+</script>

@@ -1,7 +1,0 @@
-= form_tag set_country_admin_users_path, class: "admin_country_select form-inline" do
-  .form-group
-    - blank = current_user.country_id ? false : "Select Country"
-    = collection_select :country, :country_id, countries, :id, :name,
-      {include_blank: blank, selected: current_user.country_id},
-      {class: "form-control"}
-  %button#pick-country.btn.btn-default(type="submit") Update

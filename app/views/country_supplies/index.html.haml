@@ -1,7 +1,3 @@
-- if current_user.admin?
-  %h2 Select Country To Administer
-  = render partial: 'partials/admin_country_select', locals: { countries: Country.all }
-
 - if @country
   %h2= "Supplies available in #{@country.name}"
   %p
@@ -18,3 +14,5 @@
     - @supplies.each do |s|
       - if @available.include?(s.id)
         = s.name
+- else
+  %h2 Select a country to administer

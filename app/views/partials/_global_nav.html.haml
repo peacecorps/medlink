@@ -11,12 +11,22 @@
       %a.navbar-brand(href=root_path)
         %img(src="/logo_50.gif")
         %span PC Medlink
-        - if current_user
+        - if current_user && !current_user.admin?
           %small= current_user.country.name
+
 
     - if current_user
       -# Collect the nav links, forms, and other content for toggling
       #main-navigation.collapse.navbar-collapse
+        - if current_user.try :admin?
+          = form_tag set_country_admin_users_path, class: "admin_country_select navbar-form navbar-left" do
+            .form-group
+              - blank = current_user.country_id ? false : "Select Country"
+              = collection_select :country, :country_id, Country.all, :id, :name,
+                { include_blank: blank, selected: current_user.country_id },
+                { class: "form-control" }
+            %noscript
+              %button.btn.btn-default.btn-sm Update
         %ul.nav.navbar-right.navbar-nav
           - if current_user.admin?
             %li= link_to 'Users', new_admin_user_path

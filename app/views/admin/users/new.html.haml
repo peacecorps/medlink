@@ -1,8 +1,6 @@
 = content_for :page_title do
   User Management
 
-= render partial: "partials/admin_country_select", locals: { countries: Country.order(name: :asc) }
-
 .row
   .col-md-6
     = title do

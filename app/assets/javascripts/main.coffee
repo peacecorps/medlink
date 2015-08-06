@@ -11,3 +11,5 @@ $ ->
     $('.character-count').text(remaining + ' characters left')
   .keyup()
 
+  $('form.admin_country_select select').change ->
+    @form.submit()

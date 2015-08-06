@@ -16,9 +16,11 @@ describe "Managing Country Supplies" do
     admin = create :admin
     login admin
     visit country_supplies_path
+    within ".admin_country_select" do
+      select @country.name
+      click_on "Update"
+    end
 
-    select @country.name, from: "country[country_id]"
-    find('#pick-country').click
     expect( page ).to have_content @supply.name
     expect( checkbox_for @supply ).to be_checked
     uncheck @supply.name
