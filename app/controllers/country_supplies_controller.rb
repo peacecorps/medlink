@@ -14,7 +14,7 @@ class CountrySuppliesController < ApplicationController
     country.supplies.destroy_all
     Supply.find_each do |s|
       if params[s.name] == "1"
-        @country.supplies << s
+        country.supplies << s
       end
     end
     redirect_to :back
