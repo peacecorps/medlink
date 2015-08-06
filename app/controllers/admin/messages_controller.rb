@@ -8,6 +8,7 @@ class Admin::MessagesController < AdminController
 
   def create
     @bulk = SMS::BulkSender.new create_params
+    authorize @bulk
     begin
       user_count = @bulk.send!
       flash[:notice] = "Sent messages to #{user_count} users"
