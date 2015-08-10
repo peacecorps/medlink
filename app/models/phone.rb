@@ -17,6 +17,6 @@ class Phone < ActiveRecord::Base
   end
 
   def self.lookup number
-    where(condensed: condense(number)).first!
+    where(condensed: condense(number)).first
   end
 end

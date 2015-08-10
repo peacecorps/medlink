@@ -11,6 +11,7 @@ end
 
 FactoryGirl.define do
   factory :phone do
+    user
     number { Fakerer.phone }
   end
 end

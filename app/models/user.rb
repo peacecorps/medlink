@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   paginates_per 10
 
   has_many :phones, dependent: :destroy
+  has_many :messages, class_name: "SMS"
   accepts_nested_attributes_for :phones, allow_destroy: true
 
   validates_presence_of :country, :location, :first_name, :last_name, :role
@@ -36,7 +37,7 @@ class User < ActiveRecord::Base
   scope :pending,  -> { where ["waiting_since >= ?", due_cutoff] }
 
   def self.find_by_pcv_id str
-    where(['lower(pcv_id) = ?', str.downcase]).first!
+    where(['lower(pcv_id) = ?', str.downcase]).first
   end
 
   def self.find_by_phone_number number

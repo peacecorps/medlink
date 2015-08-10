@@ -1,4 +1,6 @@
 class TwilioAccount < ActiveRecord::Base
+  has_many :messages, class_name: "SMS"
+
   def self.default
     where(
       sid:    ENV.fetch('TWILIO_ACCOUNT_SID'),
@@ -12,8 +14,14 @@ class TwilioAccount < ActiveRecord::Base
   end
 
   def send_text to, text
-    # TODO: need to log from number?
-    sms = SMS.create number: to, text: text, direction: :outgoing
+    user = User.find_by_phone_number to
+
+    sms = messages.create!(
+      user:      user,
+      number:    to,
+      text:      text,
+      direction: :outgoing
+    )
 
     client.account.sms.messages.create(
       from: number,
