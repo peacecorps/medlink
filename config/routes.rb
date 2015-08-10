@@ -38,6 +38,10 @@ Medlink::Application.routes.draw do
 
   namespace :admin do
     resources :users, only: [:new, :create, :edit, :update] do
+      member do
+        patch :inactivate  
+      end
+
       collection do
         post :upload_csv
         post :set_country
