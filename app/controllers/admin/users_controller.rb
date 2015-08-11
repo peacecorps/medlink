@@ -37,7 +37,7 @@ class Admin::UsersController < AdminController
     if params[:edit]
       redirect_to edit_admin_user_path(params[:edit][:user_id]) and return
     end
-    @user = User.find params[:id]
+    @user = User.where(:active => true).find params[:id]
   end
 
   def update

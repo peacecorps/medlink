@@ -42,6 +42,10 @@ class ApplicationPolicy
     user.admin?
   end
 
+  def active?
+    user.inactive?
+  end
+
   def country_pcmo?
     user.pcmo? && (user.country_id == record.country_id)
   end
