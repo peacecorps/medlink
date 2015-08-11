@@ -56,9 +56,16 @@ class Admin::UsersController < AdminController
     end
   end
 
-  def delete
+  def inactivate
     @user = User.find params[:id]
-    print "hello"
+    @user.active = false
+    @user.save!
+    _flash = if @user.save!
+      { success: I18n.t!("flash.user.inactive_user") }
+    else
+      { notice: I18n.t!("flash.user.no_changes") }
+    end
+    redirect_to new_admin_user_path, flash: _flash
   end
 
   def upload_csv
