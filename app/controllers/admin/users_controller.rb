@@ -56,6 +56,11 @@ class Admin::UsersController < AdminController
     end
   end
 
+  def delete
+    @user = User.find params[:id]
+    print "hello"
+  end
+
   def upload_csv
     @upload = User::Upload.new(
       params[:country_id], params[:csv], overwrite: params[:overwrite].present?)
