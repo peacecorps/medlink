@@ -14,15 +14,7 @@
     = f.text_field :pcv_id, label: "PCV ID"
     = f.select :role, User.role_names, include_blank: 'Assign Role'
 
-    .form-group
-      #phone-fields
-        - remove = f.link_to_remove class: "btn btn-danger" do
-          = icon :remove
-        = f.fields_for :phones do |phone_form|
-          = phone_form.text_field :number, placeholder: "Phone number must include '+' and the country code", append: remove
-      = f.link_to_add :phones, data: { target: "#phone-fields" } do
-        Add Additional Phone Number
-        = icon :plus
+    = render partial: "partials/phone_form.html.haml", locals: { form: f }
 
     %button.btn.btn-primary(type="submit")
       = user.persisted? ? "Save User" : "Add User"
