@@ -60,6 +60,7 @@ describe "Bulk texting" do
       end
 
       @user = create :pcmo, country: country
+      create :phone, user: @user
       login @user
 
       visit new_message_path
@@ -70,9 +71,9 @@ describe "Bulk texting" do
       click_button "Send"
 
       expect( page ).to have_content "PCMO message"
-      expect( page ).to have_content "4 users" # includes the PCMO
+      expect( page ).to have_content "4 users"
 
-      expect( SMS.outgoing.pluck :text ).to eq(["PCMO message"] * 3)
+      expect( SMS.outgoing.pluck :text ).to eq(["PCMO message"] * 4)
     end
 
     it "can only send messages to that country" do

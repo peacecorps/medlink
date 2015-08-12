@@ -12,7 +12,7 @@ class MessageSender
   def send!
     raise "No message provided" if body.empty?
 
-    users = User.where(country_id: country_ids)
+    users = User.where(country_id: country_ids).includes(:phones).select &:textable?
     users.each do |user|
       SMSJob.perform_later user, body
     end
