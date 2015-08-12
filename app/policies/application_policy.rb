@@ -42,7 +42,7 @@ class ApplicationPolicy
     user.admin?
   end
 
-  def active?
+  def inactive?
     user.inactive?
   end
 
