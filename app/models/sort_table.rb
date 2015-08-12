@@ -7,7 +7,7 @@ class SortTable
     @scope   = scope
     @params  = params.clone
     @prefix  = prefix ? "#{prefix}_" : ""
-    @default = default
+    @default = default || { id: :asc }
     @model   = sort_model || @scope.model
   end
 
@@ -40,12 +40,12 @@ class SortTable
 
   def sort_column
     given = @params["#{prefix}sort"]
-    allowed_columns.include?(given) ? given : @default
+    allowed_columns.include?(given) ? given : @default.keys.first
   end
 
   def sort_direction
     given = @params["#{prefix}direction"]
-    %w(asc desc).include?(given) ? given.to_sym : :asc
+    %w(asc desc).include?(given) ? given.to_sym : @default.values.first
   end
 
   def anchor

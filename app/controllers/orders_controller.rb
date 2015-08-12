@@ -8,8 +8,8 @@ class OrdersController < ApplicationController
     authorize :user, :respond?
     users = current_user.country.users
     @past_due = SortTable.new users.past_due,
-      params: params, prefix: "past_due", default: "waiting_since"
+      params: params, prefix: "past_due", default: { waiting_since: :asc }
     @pending = SortTable.new users.pending,
-      params: params, prefix: "pending",  default: "waiting_since"
+      params: params, prefix: "pending",  default: { waiting_since: :asc }
   end
 end

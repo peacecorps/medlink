@@ -1,4 +1,4 @@
-class SMS::BulkSender
+class MessageSender
   include ActiveModel::Model
 
   attr_accessor :country_ids, :body

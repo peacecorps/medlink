@@ -22,6 +22,8 @@ Medlink::Application.routes.draw do
     end
   end
 
+  resources :messages, only: [:new, :create]
+
   resources :requests, only: [:new, :create]
 
   resources :orders, only: [:index] do
@@ -43,8 +45,6 @@ Medlink::Application.routes.draw do
         post :set_country
       end
     end
-
-    resources :messages, only: [:new, :create]
   end
 
   get '/help' => 'pages#help'

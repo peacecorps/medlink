@@ -46,8 +46,8 @@
               %i.fa.fa-cog
             %ul.dropdown-menu
               %li= link_to 'Help', help_path
-              - unless current_user.pcv?
-                %li= link_to 'Messages', new_admin_message_path
+              - if policy(:message_sender).new?
+                %li= link_to 'Messages', new_message_path
               %li= link_to 'Edit Account', edit_user_path
               %li= link_to 'Change Password', edit_user_registration_path
               %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
