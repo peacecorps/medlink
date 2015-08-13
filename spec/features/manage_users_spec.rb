@@ -92,17 +92,16 @@ describe "User management" do
       expect( @user.active ).to be true
     end
 
-    # it "confirms before marking as inactive" do
-    #   select @user.name, from: :edit_user_id
-    #   click_on "Edit User"
-    #   click_on "Delete User"
+    it "confirms before marking as inactive" do
+      select @user.name, from: :edit_user_id
+      click_on "Edit User"
+      click_on "Delete User"
 
-    #   expect( page.find(".alert").test ).to match /are you sure/i
-    # end
+      expect( page.find(".alert").test ).to include /are you sure/i
+    end
 
     it "does not show inactive users" do
       @retired = create :user, active: false
-      # select @retired.name, from: :edit_user_id
       
       expect( page ).not_to have_content @retired.first_name
     end
