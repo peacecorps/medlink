@@ -49,6 +49,14 @@ describe SMSResponder do
     expect( resp.number ).to eq new_phone.number
   end
 
+  it "handles unknown phones" do
+    phone = Phone.new number: "+11234561234"
+    resp = response_for phone, "#{@supply.shortcode} - ?"
+
+    expect( resp.number ).to eq phone.number
+    expect( resp.text ).to match /can't find user account/i
+  end
+
   it "does not create requests for duplicate responses" do
     msg = "#{@supply.shortcode} - please and thank you!"
 

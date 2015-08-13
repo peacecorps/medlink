@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by_phone_number number
-    Phone.lookup(number).user
+    Phone.lookup(number).try :user
   end
 
   def primary_phone
