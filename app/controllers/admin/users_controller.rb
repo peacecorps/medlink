@@ -56,7 +56,7 @@ class Admin::UsersController < AdminController
     end
   end
 
-  def inactivate
+  def inactive
     @user = User.find params[:id]
     @user.active = false
     @user.save!

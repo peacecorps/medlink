@@ -74,4 +74,39 @@ describe "User management" do
       expect( User.last.first_name ).to eq @user.first_name
     end
   end
+
+  describe "inactivating users" do
+    before :each do
+      @user = create :user
+      visit root_path
+      within ".admin_country_select" do
+        select @user.country.name
+        click_on "Update"
+      end
+    end
+
+    it "has users active by default" do
+      select @user.name, from: :edit_user_id
+      click_on "Edit User"
+
+      expect( @user.active ).to be true
+    end
+
+    # it "confirms before marking as inactive" do
+    #   select @user.name, from: :edit_user_id
+    #   click_on "Edit User"
+    #   click_on "Delete User"
+
+    #   expect( page.find(".alert").test ).to match /are you sure/i
+    # end
+
+    it "does not show inactive users" do
+      @retired = create :user, active: false
+      # select @retired.name, from: :edit_user_id
+      
+      expect( page ).not_to have_content @retired.first_name
+    end
+
+
+  end
 end
