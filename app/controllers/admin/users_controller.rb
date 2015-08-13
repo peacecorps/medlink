@@ -41,7 +41,7 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    @user  = User.find params[:id]
+    @user  = User.where(role: 0).find params[:id]
     _attrs = @user.attributes
     if @user.update_attributes user_params
       diff = User::Change.new _attrs, @user
