@@ -7,8 +7,7 @@
       %fieldset
         = f.email_field :email, autofocus: true
         = f.password_field :password
-        .form-group
-          = f.check_box :remember_me
+        = f.check_box :remember_me
       %button.btn.btn-primary(type="submit") Sign In
 
   .col-md-6
