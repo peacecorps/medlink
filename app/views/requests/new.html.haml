@@ -22,7 +22,6 @@
           {label: "For Volunteer"}
 
       .form-group
-        %label Supplies
         = f.fields_for :orders do |order_form|
           = order_form.select :supply_id,
             Supply.choices_for(current_user.country_id),
