@@ -32,3 +32,5 @@
     .container
       = render "partials/flash"
       = yield
+
+    = render 'partials/google_analytics' if Rails.env.production?
