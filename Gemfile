@@ -55,6 +55,7 @@ group :test do
   gem 'zonebie'
 end
 
+gem 'newrelic_rpm'
 group :production do
   gem 'puma'
   gem 'rails_12factor'

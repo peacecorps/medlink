@@ -130,6 +130,7 @@ GEM
     multi_json (1.11.2)
     nested_form (0.3.2)
     netrc (0.10.3)
+    newrelic_rpm (3.13.0.299)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
@@ -299,6 +300,7 @@ DEPENDENCIES
   kaminari
   letter_opener
   nested_form
+  newrelic_rpm
   pg
   pry-rails
   puma
