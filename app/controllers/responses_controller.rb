@@ -41,6 +41,22 @@ class ResponsesController < ApplicationController
   end
   helper_method :redir_params
 
+  def mark_received
+    response = Response.find params[:id]
+    authorize response
+    response.orders.each &:mark_received!
+    response.archive!
+    redirect_to :back
+  end
+
+  def flag
+    response = Response.find params[:id]
+    authorize response
+    response.orders.each &:flag!
+    redirect_to :back
+  end
+
+
   private # -----
 
   def initialize_response

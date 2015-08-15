@@ -36,8 +36,8 @@ module ApplicationHelper
   end
 
   def order_status o
-    status = if o.duplicated?
-      "Duplicate"
+    if o.duplicated?
+      "Duplicated"
     elsif o.delivery_method
       o.delivery_method.title
     end

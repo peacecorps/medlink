@@ -16,6 +16,10 @@ Medlink::Application.routes.draw do
   end
 
   resources :users, only: [] do
+    member do
+      get :timeline
+    end
+
     resources :responses, only: [:new, :create, :show] do
       post :archive
       post :unarchive
@@ -24,12 +28,7 @@ Medlink::Application.routes.draw do
 
   resources :messages, only: [:new, :create]
 
-  resources :requests, only: [:new, :create] do
-    member do
-      post :mark_received
-      post :flag
-    end
-  end
+  resources :requests, only: [:new, :create]
 
   resources :orders, only: [:index] do
     collection do
@@ -42,7 +41,12 @@ Medlink::Application.routes.draw do
     end
   end
 
-  resources :responses, only: [:index]
+  resources :responses, only: [:index] do
+    member do
+      post :mark_received
+      post :flag
+    end
+  end
 
   resources :reports, only: [:index] do
     [:order_history, :users, :pcmo_response_times].each do |r|

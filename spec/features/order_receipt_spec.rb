@@ -11,11 +11,17 @@ describe "recording receipt" do
     end
     @old, @new = @user.requests.to_a
 
+    @r1 = create :response, user: @user
+    (@old.orders.to_a + [@new.orders.last]).each { |o| o.update! response: @r1 }
+
+    @r2 = create :response, user: @user
+    @new.orders.first.update! response: @r2
+
     login @user
   end
 
   def approve_button supply
-    row = find('tr', text: supply.name)
+    row = find('.response tr', text: supply.name)
     row.find("a[title='Mark as received']")
   end
 
@@ -37,33 +43,27 @@ describe "recording receipt" do
 
     all("a[title='Mark all as received']").first.click
 
-    @new.supplies.each do |supply|
+    @r2.supplies.each do |supply|
       expect( approve_button(supply)[:class] ).to eq "btn btn-success"
     end
-    @old.supplies.each do |supply|
+    @r1.supplies.each do |supply|
       expect( approve_button(supply)[:class] ).to eq "btn btn-default"
     end
   end
 
   it "archives responses when they have been received" do
-    r1 = create :response
-    (@old.orders.to_a + [@new.orders.last]).each { |o| o.update! response: r1 }
-
-    r2 = create :response
-    @new.orders.first.update! response: r2
-
     visit orders_path
-    @new.supplies.each do |supply|
+    @r2.supplies.each do |supply|
       approve_button(supply).click
     end
-    [r1,r2].each &:reload
+    [@r1,@r2].each &:reload
 
-    expect( r1 ).not_to be_archived
-    expect( r2 ).to be_archived
+    expect( @r1 ).not_to be_archived
+    expect( @r2 ).to be_archived
 
     all("a[title='Mark all as received']").last.click
-    r1.reload
-    expect( r1 ).to be_archived
+    @r1.reload
+    expect( @r1 ).to be_archived
   end
 
   it "allows users to flag orders" do
@@ -74,8 +74,8 @@ describe "recording receipt" do
 
     flag_buttons = all("a[title='Flag for follow-up']")
     expect( flag_buttons.count ).to eq 4
-    expect( flag_buttons.count { |a| a[:class].include? "btn-danger" } ).to eq 3
-    expect( flag_buttons.count { |a| a[:class].include? "btn-default" } ).to eq 1
+    expect( flag_buttons.count { |a| a[:class].include? "btn-danger" } ).to eq 2
+    expect( flag_buttons.count { |a| a[:class].include? "btn-default" } ).to eq 2
   end
 
   describe "via sms" do

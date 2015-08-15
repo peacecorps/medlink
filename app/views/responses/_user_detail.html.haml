@@ -1,4 +1,4 @@
-%h1= user.name
+%h1= link_to user.name, timeline_user_path(user)
 %p
   = icon "globe"
   = "#{user.location}, #{user.country.name}"

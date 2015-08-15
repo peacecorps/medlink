@@ -3,8 +3,9 @@ class OrdersController < ApplicationController
   around_action :skip_bullet, only: [:index]
 
   def index
-    @requests = sort_table current_user.requests.includes(orders: [:supply, :response]),
-      default: { created_at: :desc }, per_page: 5
+    @timeline = Timeline.new current_user
+    authorize @timeline, :show?
+    render "timelines/show"
   end
 
   def manage
@@ -15,17 +16,17 @@ class OrdersController < ApplicationController
   end
 
   def mark_received
-    @order = Order.find params[:id]
-    authorize @order
-    @order.mark_received!
-    @order.response.try :check_for_completion!
+    order = Order.find params[:id]
+    authorize order
+    order.mark_received!
+    order.response.try :check_for_completion!
     redirect_to :back
   end
 
   def flag
-    @order = Order.find params[:id]
-    authorize @order
-    @order.flag!
+    order = Order.find params[:id]
+    authorize order
+    order.flag!
     redirect_to :back
   end
 end
