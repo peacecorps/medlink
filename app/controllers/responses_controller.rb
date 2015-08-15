@@ -4,13 +4,12 @@ class ResponsesController < ApplicationController
 
   def index
     authorize :user, :respond?
-    @responses = SortTable.new archived(accessible_responses), params: params, sort_model: User
+    @responses = sort_table archived(accessible_responses), sort_model: User, per_page: 10
   end
 
   def new
-    @orders = SortTable.new @user.orders.without_responses.includes(:request, :supply),
-      params: params
-    @history = SortTable.new @user.orders.with_responses.includes(:supply), params: params
+    @orders  = sort_table @user.orders.without_responses.includes(:request, :supply)
+    @history = sort_table @user.orders.with_responses.includes(:supply)
   end
 
   def create
@@ -61,7 +60,7 @@ class ResponsesController < ApplicationController
   end
 
   def accessible_responses
-    current_user.country.responses.includes(:user)
+    current_user.country.responses.includes(user: :phones, orders: :supply)
   end
 
   def archived responses

@@ -3,13 +3,34 @@
     %th= sortable_header(table, :first_name)
     %th= sortable_header(table, :last_name)
     %th= sortable_header(table, :location)
+    %th Phone
     %th= sortable_header(table, :last_requested_at, title: "Requests")
     %th
 %tbody
-  - table.ordered.each do |r|
+  - table.each do |r|
     %tr.order.link{ "data-link" => user_response_path(r.user, r) }
       %td= r.user.first_name
       %td= r.user.last_name
       %td= r.user.location
-      %td= render partial: "partials/group", locals: { user: r.user, orders: r.orders }
+      %td= phone_link r.user.primary_phone
+      %td
+        - groups = r.orders.group_by(&:request_id).sort_by { |_, os| os.first.created_at }.reverse
+        - groups.each do |_, orders|
+          %table.table
+            %thead
+              %tr
+                %th{ colspan: 3 }
+                  - time = orders.first.created_at.in_time_zone r.user.time_zone
+                  = short_date time
+                  %small= time.strftime "%H:%M"
+            %tbody
+              - orders.each do |order|
+                %tr{ class: order.flagged? ? "danger" : "" }
+                  %td= order.supply.name
+                  %td= order_status order
+                  %td
+                    - if order.received?
+                      = icon :ok, class: :success
+                    - if order.flagged?
+                      = icon :flag, class: :danger
       %td= render partial: "archive_button", locals: { response: r }

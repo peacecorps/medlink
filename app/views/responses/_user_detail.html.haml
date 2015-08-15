@@ -4,4 +4,4 @@
   = "#{user.location}, #{user.country.name}"
   &nbsp;
   = icon "phone-alt"
-  = user.primary_phone ? user.primary_phone.number : '-'
+  = phone_link user.primary_phone
