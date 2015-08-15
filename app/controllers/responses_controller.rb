@@ -2,6 +2,8 @@ class ResponsesController < ApplicationController
   before_filter :initialize_response, only: [:new, :create]
   before_filter :find_response, only: [:show, :archive, :unarchive]
 
+  # Bullet doesn't seem to realize that we _are_ eager loading phones?
+  around_action :skip_bullet, only: [:index]
   def index
     authorize :user, :respond?
     @responses = sort_table archived(accessible_responses), sort_model: User, per_page: 10

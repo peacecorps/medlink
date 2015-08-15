@@ -4,22 +4,29 @@
       %th
       %th
       %th
-        .btn-group
-          = link_to mark_received_response_path(response), class: "btn btn-default", title: "Mark all as received", method: :post do
-            = icon :ok
-          = link_to flag_response_path(response), class: "btn btn-default", title: "Flag all for follow-up", method: :post do
-            = icon :flag
+        - if policy(response).mark_received?
+          .btn-group
+            = link_to mark_received_response_path(response), class: "btn btn-default", title: "Mark all as received", method: :post do
+              = icon :ok
+            = link_to flag_response_path(response), class: "btn btn-default", title: "Flag all for follow-up", method: :post do
+              = icon :flag
   %tbody
     - response.orders.reject(&:duplicated?).each do |order|
       %tr
         %td= order.supply.name
         %td= order_status order
         %td
-          .btn-group
-            = link_to mark_received_order_path(order), class: "btn btn-#{order.received? ? 'success' : 'default'}", title: "Mark as received", method: :post do
-              = icon "ok"
-            = link_to flag_order_path(order), class: "btn btn-#{order.flagged? ? 'danger' : 'default'}", title: "Flag for follow-up", method: :post do
-              = icon "flag"
+          - if policy(order).mark_received?
+            .btn-group
+              = link_to mark_received_order_path(order), class: "btn btn-#{order.received? ? 'success' : 'default'}", title: "Mark as received", method: :post do
+                = icon "ok"
+              = link_to flag_order_path(order), class: "btn btn-#{order.flagged? ? 'danger' : 'default'}", title: "Flag for follow-up", method: :post do
+                = icon "flag"
+          - else
+            - if order.received?
+              = icon :ok, class: :success
+            - if order.flagged?
+              = icon :flag, class: :danger
 
 - if response.extra_text.present?
   %pre= response.extra_text

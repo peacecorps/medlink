@@ -33,4 +33,8 @@
                       = icon :ok, class: :success
                     - if order.flagged?
                       = icon :flag, class: :danger
-      %td= render partial: "archive_button", locals: { response: r }
+      %td
+        = link_to timeline_user_path(r.user), class: "btn btn-default" do
+          = icon :search
+          History
+        = render partial: "archive_button", locals: { response: r }
