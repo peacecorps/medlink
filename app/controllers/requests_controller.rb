@@ -21,7 +21,21 @@ class RequestsController < ApplicationController
     end
   end
 
-  private
+  def mark_received
+    @request = Request.find params[:id]
+    authorize @request
+    @request.orders.each &:mark_received!
+    redirect_to :back
+  end
+
+  def flag
+    @request = Request.find params[:id]
+    authorize @request
+    @request.orders.each &:flag!
+    redirect_to :back
+  end
+
+private
 
   def after_create_path
     if current_user.admin?

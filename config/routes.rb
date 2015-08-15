@@ -24,10 +24,22 @@ Medlink::Application.routes.draw do
 
   resources :messages, only: [:new, :create]
 
-  resources :requests, only: [:new, :create]
+  resources :requests, only: [:new, :create] do
+    member do
+      post :mark_received
+      post :flag
+    end
+  end
 
   resources :orders, only: [:index] do
-    get :manage, on: :collection
+    collection do
+      get :manage
+    end
+
+    member do
+      post :mark_received
+      post :flag
+    end
   end
 
   resources :responses, only: [:index]

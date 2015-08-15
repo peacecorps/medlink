@@ -1,24 +1,35 @@
-#request-history
-  %h2 Request History
-  = render partial: "partials/pager", locals: { anchor: "request-history", table: @orders }
-  %table.table.table-striped.table-hover
-    %thead
-      %tr
-        %th Supply
-        %th Instructions
-        %th Requested
-        %th Response
-    %tbody
-      - @orders.each do |order|
-        %tr.order
-          %td= order.supply.name
-          - if order.request_id == @_last
-            %td "
-            %td "
-          - else
-            %td= order.request.text
-            %td
-              %span= short_date order.created_at.in_time_zone(order.user.time_zone)
-              %small= order.created_at.in_time_zone(order.user.time_zone).strftime '%H:%M'
-          %td= short_date(order.responded_at.in_time_zone order.user.time_zone) if order.responded_at
-        - @_last = order.request_id
+= content_for :page_title do
+  Request History
+
+= render partial: "partials/pager", locals: { table: @requests }
+
+- @requests.each do |request|
+  .request
+    - if request.orders.any?
+      %table.table.table-striped.table-hover
+        %thead
+          %tr
+            %th{ colspan: 2 }
+              = short_date request.created_at, request.user.time_zone
+              %small #{time_ago_in_words request.created_at} ago
+            %th
+              .btn-group
+                = link_to mark_received_request_path(request), class: "btn btn-default", title: "Mark all as received", method: :post do
+                  = icon :ok
+                = link_to flag_request_path(request), class: "btn btn-default", title: "Flag all for follow-up", method: :post do
+                  = icon :flag
+        %tbody
+          - request.orders.each do |order|
+            %tr
+              %td= order.supply.name
+              %td
+                - if order.response_id
+                  = order.delivery_method.try :title
+                  %small= "#{time_ago_in_words order.responded_at} ago"
+              %td
+                .btn-group
+                  = link_to mark_received_order_path(order), class: "btn btn-#{order.received? ? 'success' : 'default'}", title: "Mark as received", method: :post do
+                    = icon "ok"
+                  = link_to flag_order_path(order), class: "btn btn-#{order.flagged? ? 'danger' : 'default'}", title: "Flag for follow-up", method: :post do
+                    = icon "flag"
+    %p= request.text

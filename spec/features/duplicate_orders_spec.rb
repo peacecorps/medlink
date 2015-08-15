@@ -9,18 +9,10 @@ describe "Duplicate orders" do
       user.country.supplies << @supply
     end
 
-    twilio = create :twilio_account
     [
       "A B - first instructions",
       "A C - second instructions"
-    ].each do |msg|
-      SMSResponder.new(
-        account_sid: twilio.sid,
-        from:        user.primary_phone.number,
-        to:          twilio.number,
-        body:        msg
-      ).record_and_respond
-    end
+    ].each { |msg| send_text user, msg }
 
     pcmo = create :pcmo, country: user.country
     login pcmo

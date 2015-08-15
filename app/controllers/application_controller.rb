@@ -12,7 +12,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
   end
 
-  private # ----------
+private # ----------
+
+  def sort_table scope, opts={}
+    opts[:params] = params
+    SortTable.new scope, opts
+  end
 
   # Redirects to the login path to allow the flash messages to
   #    display for sign_out.

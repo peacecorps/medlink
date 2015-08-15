@@ -1,6 +1,8 @@
 require "spec_helper"
 
-describe SMSResponder do
+# Note: these tests are really about the SMSOrderPlacer, but are ported straight from
+#   before there was anything to dispatch to
+describe SMSDispatcher do
   before :each do
     @phone  = create :phone
     @user   = @phone.user
@@ -11,7 +13,7 @@ describe SMSResponder do
 
   def response_for phone, text
     t = create :twilio_account
-    r = SMSResponder.new(account_sid: t.sid, from: phone.number, to: t.number, body: text)
+    r = SMSDispatcher.new(account_sid: t.sid, from: phone.number, to: t.number, body: text)
     r.record_and_respond
 
     recorded = SMS.outgoing.last

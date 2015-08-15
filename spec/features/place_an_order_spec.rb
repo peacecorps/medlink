@@ -18,7 +18,7 @@ describe "A PCV placing an order" do
 
     it "created an order for that user" do
       expect( page.text ).to match /success.*order.*has been sent/i
-      expect( page.find "#request-history" ).to have_content @supply.name
+      expect( page ).to have_content @supply.name
     end
 
     it "can see the order in the PCMO response tracker" do
