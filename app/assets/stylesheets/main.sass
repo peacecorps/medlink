@@ -39,8 +39,17 @@ dl
 .navbar-form
   padding: 10px 0
 
+.collapsed-only
+  display: none !important
+
+@media only screen and (max-width: 767px)
+  .uncollapsed
+    display: none !important
+
+  .collapsed-only
+    display: block !important
+
 // Hide links while printing - see http://stackoverflow.com/questions/3476393
 @media print
   a:link:after, a:visited:after
     content: ""
-

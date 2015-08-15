@@ -39,9 +39,16 @@
             %li= link_to 'Requests', manage_orders_path
             %li= link_to 'Responses', responses_path
             %li= link_to 'Reports', reports_path
+            -# Inline the gear menu when collapsed
+            %li.collapsed-only= link_to 'Help', help_path
+            - if policy(:message_sender).new?
+              %li.collapsed-only= link_to 'Messages', new_message_path
+            %li.collapsed-only= link_to 'Edit Account', edit_user_path
+            %li.collapsed-only= link_to 'Change Password', edit_user_registration_path
+            %li.collapsed-only= link_to 'Sign Out', destroy_user_session_path, method: :delete
 
-          -# Gear dropdown menu
-          %li.dropdown
+          -# Gear dropdown menu for wide resolutions
+          %li.uncollapsed.dropdown
             %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
               %i.fa.fa-cog
             %ul.dropdown-menu
