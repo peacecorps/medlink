@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     else
       user.send_confirmation_instructions
     end
-    redirect_to :back, notice: I18n.t!("flash.email.help_sent")
+    redirect_to :back, notice: I18n.t!("flash.email.help_sent", email: email)
   end
 
   private
