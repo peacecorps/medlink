@@ -5,8 +5,8 @@ en:
       help_sent: "Email sent to %{email}. Check your inbox (and spam) for instructions."
     request:
       empty: "Your order was empty. Please select at least one supply."
-      placed: "Success! Your order has been sent."
-      placed_for: "Success! The order you placed on behalf of %{username} has been sent."
+      placed: "Success! Your order has been sent. You should expect a response shortly after %{expected_receipt_date}."
+      placed_for: "Success! The order you placed on behalf of %{username} has been sent. You should expect a response shortly after %{expected_receipt_date}."
 
     response:
       sent: "Success! Your response has been sent to %{user}. This request will now appear in the response tracker awaiting further action."

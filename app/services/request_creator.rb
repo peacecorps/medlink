@@ -20,10 +20,11 @@ class RequestCreator
   end
 
   def success_message
+    due = request.orders.first.due_at.strftime "%B %d"
     if user == request.user
-      I18n.t! "flash.request.placed"
+      I18n.t! "flash.request.placed", expected_receipt_date: due
     else
-      I18n.t! "flash.request.placed_for", username: request.user.name
+      I18n.t! "flash.request.placed_for", username: request.user.name, expected_receipt_date: due
     end
   end
 
