@@ -25,6 +25,11 @@ class RequestsController < ApplicationController
     @request = Request.find params[:id]
     authorize @request
     @request.orders.each &:mark_received!
+    # FIXME: this is gross, but we should be bulk-marking _responses_ not requests anyways
+    Response.
+      where(id: @request.orders.pluck(:response_id).uniq.compact, archived_at: nil).
+      includes(:orders).
+      each &:check_for_completion!
     redirect_to :back
   end
 

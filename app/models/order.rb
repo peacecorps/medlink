@@ -65,4 +65,8 @@ class Order < ActiveRecord::Base
   def flag!
     update! flagged: true
   end
+
+  def complete?
+    received? || delivery_method.try(:auto_archive?)
+  end
 end

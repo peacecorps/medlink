@@ -18,6 +18,7 @@ class OrdersController < ApplicationController
     @order = Order.find params[:id]
     authorize @order
     @order.mark_received!
+    @order.response.try :check_for_completion!
     redirect_to :back
   end
 

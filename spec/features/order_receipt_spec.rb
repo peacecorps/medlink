@@ -9,6 +9,7 @@ describe "recording receipt" do
         create :order, request: request, user: @user
       end
     end
+    @old, @new = @user.requests.to_a
 
     login @user
   end
@@ -21,15 +22,14 @@ describe "recording receipt" do
   it "lets users mark individual supplies as receieved" do
     visit orders_path
 
-    req = @user.requests.last
-    sup = req.supplies.first
+    sup = @new.supplies.first
 
     approve = approve_button sup
     expect( approve[:class] ).to eq "btn btn-default"
     approve.click
 
     expect( approve_button(sup)[:class] ).to eq "btn btn-success"
-    expect( approve_button(req.supplies.last)[:class] ).to eq "btn btn-default"
+    expect( approve_button(@new.supplies.last)[:class] ).to eq "btn btn-default"
   end
 
   it "lets users mark entire requests as received" do
@@ -37,12 +37,33 @@ describe "recording receipt" do
 
     all("a[title='Mark all as received']").first.click
 
-    @user.requests.last.supplies.each do |supply|
+    @new.supplies.each do |supply|
       expect( approve_button(supply)[:class] ).to eq "btn btn-success"
     end
-    @user.requests.first.supplies.each do |supply|
+    @old.supplies.each do |supply|
       expect( approve_button(supply)[:class] ).to eq "btn btn-default"
     end
+  end
+
+  it "archives responses when they have been received" do
+    r1 = create :response
+    (@old.orders.to_a + [@new.orders.last]).each { |o| o.update! response: r1 }
+
+    r2 = create :response
+    @new.orders.first.update! response: r2
+
+    visit orders_path
+    @new.supplies.each do |supply|
+      approve_button(supply).click
+    end
+    [r1,r2].each &:reload
+
+    expect( r1 ).not_to be_archived
+    expect( r2 ).to be_archived
+
+    all("a[title='Mark all as received']").last.click
+    r1.reload
+    expect( r1 ).to be_archived
   end
 
   it "allows users to flag orders" do
@@ -59,14 +80,14 @@ describe "recording receipt" do
 
   describe "via sms" do
     before :each do
-      @user.requests.first.orders.each &:mark_received!
+      @old.orders.each &:mark_received!
     end
 
     it "allows users to approve all outstanding via sms" do
       response = send_text @user, "ok"
 
       expect( response.text ).to match /marked as received/i
-      @user.requests.last.supplies.each do |supply|
+      @new.supplies.each do |supply|
         expect( response.text ).to include supply.name
       end
       expect( @user.orders.select(&:received?).count ).to eq 4
@@ -77,7 +98,7 @@ describe "recording receipt" do
       response = send_text @user, "no"
 
       expect( response.text ).to match /flagged for follow-up/i
-      @user.requests.last.supplies.each do |supply|
+      @new.supplies.each do |supply|
         expect( response.text ).to include supply.name
       end
       expect( @user.orders.select(&:received?).count ).to eq 2

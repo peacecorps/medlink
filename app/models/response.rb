@@ -32,7 +32,15 @@ class Response < ActiveRecord::Base
     orders.all? { |o| o.delivery_method && o.delivery_method.auto_archive? }
   end
 
-  private
+  def check_for_completion!
+    archive! if complete?
+  end
+
+  def complete?
+    orders.all? &:complete?
+  end
+
+private
 
   def supply_names
     supplies.uniq.map { |s| "#{s.name} (#{s.shortcode})" }
