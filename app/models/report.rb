@@ -4,11 +4,14 @@ class Report
   def to_csv opts={}
     CSV.generate(opts) do |csv|
       csv << columns
-      rows.each do |obj|
-        values = format(obj).values.map { |v| clean v }
-        csv << values if values.any?(&:present?)
-      end
+      cleaned_rows.each { |values| csv << values }
     end
+  end
+
+  def cleaned_rows
+    rows.map do |obj|
+      format(obj).values.map { |v| clean v }
+    end.select { |values| values.any? &:present? }
   end
 
   def clean value
