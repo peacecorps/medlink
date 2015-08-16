@@ -36,7 +36,7 @@ and you should be off to the races. You can check your setup by running the spec
 $ rake spec
 ```
 
-If it's green, you should be good to go.
+If it's green, you should be good to go. You can also generate a coverage report by running `rake coverage`.
 
 Then create a pull request and we will review it and merge it into the repo.
 We also use [Travis](https://travis-ci.org/PeaceCorps/medlink) for Continuous
