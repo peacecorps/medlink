@@ -11,5 +11,5 @@
 
 = render partial: 'form', locals: { user: @user, action: :edit }
 
-%button.btn.btn-primary(type="submit")
+%button.btn.btn-primary.delete(type="submit")
   = link_to 'Delete User', inactivate_admin_user_path, :method => :patch, :data => {:confirm => "You are about to inactivate this user. Are you sure?"}

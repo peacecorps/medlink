@@ -95,9 +95,9 @@ describe "User management" do
     it "confirms before marking as inactive" do
       select @user.name, from: :edit_user_id
       click_on "Edit User"
-      click_on "Delete User"
-
-      expect( page.find(".alert").test ).to include /are you sure/i
+      delete_link = find_link 'Delete User'
+      
+      expect(delete_link['data-confirm']).to eq "You are about to inactivate this user. Are you sure?"
     end
 
     it "does not show inactive users" do
