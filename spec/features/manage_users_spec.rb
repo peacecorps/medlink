@@ -105,7 +105,5 @@ describe "User management" do
       
       expect( page ).not_to have_content @retired.first_name
     end
-
-
   end
 end
