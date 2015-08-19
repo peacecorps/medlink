@@ -37,11 +37,11 @@ class Admin::UsersController < AdminController
     if params[:edit]
       redirect_to edit_admin_user_path(params[:edit][:user_id]) and return
     end
-    @user = User.where(:active => true).find params[:id]
+    @user = User.find params[:id]
   end
 
   def update
-    @user  = User.where(role: 0).find params[:id]
+    @user  = User.pcv.find params[:id]
     _attrs = @user.attributes
     if @user.update_attributes user_params
       diff = User::Change.new _attrs, @user
@@ -56,15 +56,11 @@ class Admin::UsersController < AdminController
     end
   end
 
-  def inactive
+  def inactivate
     @user = User.find params[:id]
     @user.active = false
     @user.save!
-    _flash = if @user.save!
-      { success: I18n.t!("flash.user.inactive_user") }
-    else
-      { notice: I18n.t!("flash.user.no_changes") }
-    end
+    _flash = { success: I18n.t!("flash.user.inactive_user", user: @user.first_name + " " + @user.last_name) }
     redirect_to new_admin_user_path, flash: _flash
   end
 

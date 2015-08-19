@@ -98,12 +98,12 @@ describe "User management" do
       delete_link = find_link 'Delete User'
       
       expect(delete_link['data-confirm']).to eq "You are about to inactivate this user. Are you sure?"
-    end
 
-    it "does not show inactive users" do
-      @retired = create :user, active: false
-      
-      expect( page ).not_to have_content @retired.first_name
+      delete_link.click
+      @user.reload
+      expect( @user.active ).to eq false
+
+      expect( :edit_user_id ).not_to have_content @user.name
     end
   end
 end
