@@ -46,15 +46,14 @@ class ResponsesController < ApplicationController
   def mark_received
     response = Response.find params[:id]
     authorize response
-    response.orders.each &:mark_received!
-    response.archive!
+    response.mark_received! by: current_user
     redirect_to :back
   end
 
   def flag
     response = Response.find params[:id]
     authorize response
-    response.orders.each &:flag!
+    response.flag!
     redirect_to :back
   end
 

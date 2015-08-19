@@ -32,12 +32,17 @@ class Response < ActiveRecord::Base
     orders.all? { |o| o.delivery_method && o.delivery_method.auto_archive? }
   end
 
-  def check_for_completion!
-    archive! if complete?
+  def flag!
+    update! flagged: true
   end
 
-  def complete?
-    orders.all? &:complete?
+  def mark_received! by: nil
+    by_id = by ? by.id : user_id
+    update! received_at: Time.now, received_by: by_id, flagged: false
+  end
+
+  def received?
+    received_at.present?
   end
 
 private

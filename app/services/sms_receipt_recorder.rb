@@ -12,30 +12,31 @@ class SMSReceiptRecorder < SMSResponder
   end
 
   def respond
-    unless outstanding_orders.any?
-      send_response I18n.t! "sms.no_outstanding_orders"
+    unless outstanding_responses.any?
+      send_response I18n.t! "sms.no_outstanding_responses"
       return
     end
 
     if intent == :flag
-      outstanding_orders.each &:flag!
-      send_response response_message "flagged"
+      message = response_message "flagged"
+      outstanding_responses.each &:flag!
     elsif intent == :approve
-      outstanding_orders.each &:mark_received!
-      send_response response_message "received"
+      message = response_message "received"
+      outstanding_responses.each { |r| r.mark_received! by: user }
     end
+    send_response message
   end
 
 private
 
-  def outstanding_orders
-    @_outstanding_orders ||= user.orders.includes(:supply, :response).
-      reject { |o| o.response.try(:archived?) || o.received? }
+  def outstanding_responses
+    @_outstanding_responses ||= user.responses.where(received_at: nil, flagged: false)
   end
 
   def response_message type
+    orders = Order.where(response: outstanding_responses).includes(:supply)
     SMS::Condenser.new("sms.orders_#{type}", :supply,
-      supplies: outstanding_orders.map { |o| o.supply.name }
+      supplies: orders.map { |o| o.supply.name }
     ).message
   end
 end

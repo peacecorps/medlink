@@ -19,7 +19,7 @@
           %table.table
             %thead
               %tr
-                %th{ colspan: 3 }
+                %th{ colspan: 2 }
                   - time = orders.first.created_at.in_time_zone r.user.time_zone
                   = short_date time
                   %small= time.strftime "%H:%M"
@@ -28,11 +28,6 @@
                 %tr{ class: order.flagged? ? "danger" : "" }
                   %td= order.supply.name
                   %td= order_status order
-                  %td
-                    - if order.received?
-                      = icon :ok, class: :success
-                    - if order.flagged?
-                      = icon :flag, class: :danger
       %td
         = link_to timeline_user_path(r.user), class: "btn btn-default" do
           = icon :search

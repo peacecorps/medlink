@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815145137) do
+ActiveRecord::Schema.define(version: 20150819192312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,9 @@ ActiveRecord::Schema.define(version: 20150815145137) do
     t.integer  "message_id"
     t.string   "extra_text",  limit: 255
     t.datetime "archived_at"
+    t.boolean  "flagged",                 default: false, null: false
+    t.datetime "received_at"
+    t.integer  "received_by"
   end
 
   create_table "supplies", force: :cascade do |t|
@@ -141,4 +144,5 @@ ActiveRecord::Schema.define(version: 20150815145137) do
   add_foreign_key "responses", "countries"
   add_foreign_key "responses", "messages"
   add_foreign_key "responses", "users"
+  add_foreign_key "responses", "users", column: "received_by"
 end

@@ -42,7 +42,7 @@ en:
     duplicate_order: "Oops! We have already received your request for %{supplies}. A response will follow shortly after %{due_date}."
     orders_flagged: "Your orders for %{supplies} have been flagged for follow-up from your PCMO."
     orders_received: "Thanks! Your orders for %{supplies} have been marked as received."
-    no_outstanding_orders: "Sorry! We can't find any outstanding orders for your account."
+    no_outstanding_responses: "Sorry! We can't find any outstanding orders for your account."
     response:
       delivery: "Your request for %{supplies} has been approved for delivery to you."
       pickup: "Your request for %{supplies} has been approved for pickup."

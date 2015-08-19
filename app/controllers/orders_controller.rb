@@ -14,19 +14,4 @@ class OrdersController < ApplicationController
     @past_due = sort_table users.past_due.includes(orders: :supply), prefix: "past_due", default: { waiting_since: :asc }
     @pending  = sort_table users.pending.includes(orders: :supply),  prefix: "pending",  default: { waiting_since: :asc }
   end
-
-  def mark_received
-    order = Order.find params[:id]
-    authorize order
-    order.mark_received!
-    order.response.try :check_for_completion!
-    redirect_to :back
-  end
-
-  def flag
-    order = Order.find params[:id]
-    authorize order
-    order.flag!
-    redirect_to :back
-  end
 end

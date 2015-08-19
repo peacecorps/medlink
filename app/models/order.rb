@@ -53,20 +53,4 @@ class Order < ActiveRecord::Base
   def duplicated?
     duplicated_at.present?
   end
-
-  def received?
-    received_at.present?
-  end
-
-  def mark_received!
-    update! received_at: Time.now
-  end
-
-  def flag!
-    update! flagged: true
-  end
-
-  def complete?
-    received? || delivery_method.try(:auto_archive?)
-  end
 end

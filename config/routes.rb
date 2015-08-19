@@ -34,11 +34,6 @@ Medlink::Application.routes.draw do
     collection do
       get :manage
     end
-
-    member do
-      post :mark_received
-      post :flag
-    end
   end
 
   resources :responses, only: [:index] do
