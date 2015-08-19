@@ -91,6 +91,17 @@ describe SMSResponder do
     expect( resp.text ).to match /unrecognized supply short codes: ZXCV and ASDF/i
   end
 
+  it "indicates when supplies are valid but not available in-country" do
+    unavailable = 3.times.map { create :supply }
+    resp = response_for @phone, unavailable.map(&:shortcode).join(", ")
+
+    unavailable.each do |s|
+      expect( resp.text ).to include s.shortcode
+    end
+    expect( resp.text ).to match /not.*offered.*in #{@user.country.name}/i
+    expect( resp.text ).not_to include @user.country.supplies.first.shortcode
+  end
+
   it "can abridge the confirmation message if it's too long" do
     n = 12
     n.times { @user.country.supplies << create(:supply) }
