@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150812183649) do
+ActiveRecord::Schema.define(version: 20150819175641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,8 +80,9 @@ ActiveRecord::Schema.define(version: 20150812183649) do
   end
 
   create_table "supplies", force: :cascade do |t|
-    t.string "shortcode", limit: 255
-    t.string "name",      limit: 255
+    t.string  "shortcode", limit: 255
+    t.string  "name",      limit: 255
+    t.boolean "orderable",             default: true
   end
 
   add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode", using: :btree
