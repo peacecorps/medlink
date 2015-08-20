@@ -21,7 +21,7 @@ class RequestsController < ApplicationController
     end
   end
 
-  private
+private
 
   def after_create_path
     if current_user.admin?

@@ -11,7 +11,8 @@ en:
     response:
       sent: "Success! Your response has been sent to %{user}. This request will now appear in the response tracker awaiting further action."
       archived: "Response has been marked as archived."
-      unarchived: "Response has been unarchived."
+      cancelled: "Response has been cancelled."
+      reordered: "Response has been cancelled and reordered."
       none_selected: "No response selected."
 
     user:
@@ -40,6 +41,9 @@ en:
     unparseable: "Oops! The format of your message was incorrect. Resubmit your request in the format: Supply Short Code, Supply Short Code - Special Instructions"
     confirmation: "Thanks! Your request for %{supplies} has been received. You can expect a response shortly after %{due_date}."
     duplicate_order: "Oops! We have already received your request for %{supplies}. A response will follow shortly after %{due_date}."
+    orders_flagged: "Your orders for %{supplies} have been flagged for follow-up from your PCMO."
+    orders_received: "Thanks! Your orders for %{supplies} have been marked as received."
+    no_outstanding_responses: "Sorry! We can't find any outstanding orders for your account."
     response:
       delivery: "Your request for %{supplies} has been approved for delivery to you."
       pickup: "Your request for %{supplies} has been approved for pickup."

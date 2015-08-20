@@ -2,13 +2,10 @@ class Response < ActiveRecord::Base
   include Concerns::UserScope
 
   belongs_to :message
+  belongs_to :replacement, class_name: "Request"
 
   has_many :orders
   has_many :supplies, through: :orders
-
-  def archived?  ; !!archived_at ; end
-  def archive!   ; update_attributes archived_at: Time.now ; end
-  def unarchive! ; update_attributes archived_at: nil      ; end
 
   def sms_instructions
     SMS::Condenser.new("sms.response.#{type}", :supply,
@@ -32,7 +29,47 @@ class Response < ActiveRecord::Base
     orders.all? { |o| o.delivery_method && o.delivery_method.auto_archive? }
   end
 
-  private
+  def flag!
+    update! flagged: true
+  end
+
+  def mark_received! by: nil
+    by_id = by ? by.id : user_id
+    update! received_at: Time.now, received_by: by_id, flagged: false
+  end
+
+  def cancel!
+    update! cancelled_at: Time.now
+  end
+
+  def reorder! by:
+    rc = RequestCreator.new by, supplies: supplies, \
+      request: { user_id: user.id, reorder_of_id: id}
+    rc.save
+    update! replacement: rc.request, cancelled_at: rc.request.created_at
+  end
+
+  def received?
+    received_at.present?
+  end
+
+  def cancelled?
+    cancelled_at.present?
+  end
+
+  def archived?
+    received? || cancelled?
+  end
+
+  def reordered?
+    replacement_id.present?
+  end
+
+  def reordered_at
+    replacement.try :created_at
+  end
+
+private
 
   def supply_names
     supplies.uniq.map { |s| "#{s.name} (#{s.shortcode})" }

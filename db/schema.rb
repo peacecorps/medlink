@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150812183649) do
+ActiveRecord::Schema.define(version: 20150820134640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(version: 20150812183649) do
     t.integer  "response_id"
     t.string   "delivery_method", limit: 255
     t.datetime "duplicated_at"
+    t.datetime "received_at"
+    t.boolean  "flagged",                     default: false, null: false
   end
 
   create_table "phones", force: :cascade do |t|
@@ -68,6 +70,7 @@ ActiveRecord::Schema.define(version: 20150812183649) do
     t.integer  "message_id"
     t.text     "text"
     t.integer  "entered_by"
+    t.integer  "reorder_of_id"
   end
 
   create_table "responses", force: :cascade do |t|
@@ -75,8 +78,13 @@ ActiveRecord::Schema.define(version: 20150812183649) do
     t.integer  "country_id"
     t.integer  "user_id"
     t.integer  "message_id"
-    t.string   "extra_text",  limit: 255
+    t.string   "extra_text",     limit: 255
     t.datetime "archived_at"
+    t.boolean  "flagged",                    default: false, null: false
+    t.datetime "received_at"
+    t.integer  "received_by"
+    t.datetime "cancelled_at"
+    t.integer  "replacement_id"
   end
 
   create_table "supplies", force: :cascade do |t|
@@ -135,8 +143,11 @@ ActiveRecord::Schema.define(version: 20150812183649) do
   add_foreign_key "phones", "users"
   add_foreign_key "requests", "countries"
   add_foreign_key "requests", "messages"
+  add_foreign_key "requests", "responses", column: "reorder_of_id"
   add_foreign_key "requests", "users"
   add_foreign_key "responses", "countries"
   add_foreign_key "responses", "messages"
+  add_foreign_key "responses", "requests", column: "replacement_id"
   add_foreign_key "responses", "users"
+  add_foreign_key "responses", "users", column: "received_by"
 end

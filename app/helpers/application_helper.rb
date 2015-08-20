@@ -31,16 +31,32 @@ module ApplicationHelper
   end
 
   def short_order o
-    status = if o.duplicated?
-      "Duplicate"
-    elsif o.delivery_method
-      o.delivery_method.title
-    end
-
+    status = order_status o
     status ? "#{o.supply.name} (#{status})" : o.supply.name
   end
 
-  def short_date date
-    date.strftime "%B %d" # January 01
+  def order_status o
+    if o.duplicated?
+      "Duplicated"
+    elsif o.delivery_method
+      o.delivery_method.title
+    end
+  end
+
+  def short_date date, zone=nil
+    date = date.in_time_zone zone if zone
+    if date.year == Time.now.year
+      date.strftime "%B %d" # January 01
+    else
+      date.strftime "%B %d, %Y"
+    end
+  end
+
+  def phone_link phone
+    if phone
+      link_to phone.number, "tel:#{phone.number}"
+    else
+      "-"
+    end
   end
 end

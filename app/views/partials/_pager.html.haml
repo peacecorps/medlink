@@ -4,10 +4,10 @@
   %ul.pager
     - if pager.current_page == 1
       %li.previous.disabled
-        %a.disabled &larr; Newer
+        %a.disabled &larr; Previous
     - else
       %li.previous
-        = update_params_link "&larr; Newer".html_safe,
+        = update_params_link "&larr; Previous".html_safe,
           { table.page_param => pager.current_page - 1 },
           anchor: table.anchor
 
@@ -15,9 +15,9 @@
 
     - if pager.current_page == pager.total_pages
       %li.next.disabled
-        %a.disabled Older &rarr;
+        %a.disabled Next &rarr;
     - else
       %li.next
-        = update_params_link "Older &rarr;".html_safe,
+        = update_params_link "Next &rarr;".html_safe,
           { table.page_param => pager.current_page + 1 },
           anchor: table.anchor

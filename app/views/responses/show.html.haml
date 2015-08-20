@@ -3,6 +3,9 @@
 .order
   = render partial: "user_detail", locals: { user: @user }
 
+  .btn-group
+    = render partial: "action_buttons", locals: { response: @response }
+
   %table.table.table-hover
     %thead
       %tr
@@ -34,5 +37,3 @@
   - if @response.extra_text.present?
     .well
       = @response.extra_text
-
-= render partial: "archive_button", locals: { response: @response }

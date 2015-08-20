@@ -1,8 +1,8 @@
 class RequestCreator
-  attr_reader :user, :request, :error_message
+  attr_reader :ordered_by, :request, :error_message
 
-  def initialize user, params
-    @user       = user
+  def initialize ordered_by, params
+    @ordered_by = ordered_by
     @start_time = Time.now
     @request    = build_request params
   end
@@ -21,7 +21,7 @@ class RequestCreator
 
   def success_message
     due = request.orders.first.due_at.strftime "%B %d"
-    if user == request.user
+    if ordered_by == request.user
       I18n.t! "flash.request.placed", expected_receipt_date: due
     else
       I18n.t! "flash.request.placed_for", username: request.user.name, expected_receipt_date: due
@@ -30,12 +30,20 @@ class RequestCreator
 
 private
 
-  def build_request params
+  def order_params params
     # [ { supply_id: # }, { supply_id: # } ], in either case
-    orders = params.delete(:orders) || params[:request].delete(:orders_attributes).values
+    @_order_params ||= if supplies = params.delete(:supplies)
+      supplies.map { |s| { supply_id: s.id } }
+    else
+      params[:request].delete(:orders_attributes).values
+    end
+  end
+
+  def build_request params
+    orders = order_params params
 
     r = Request.new safe params
-    r.entered_by = user.id
+    r.entered_by = ordered_by.id
     r.country_id = r.user.country_id
 
     orders.each do |order|
@@ -51,11 +59,12 @@ private
   end
 
   def safe params
-    ActionController::Parameters.new(params).require(:request).permit :user_id, :text
+    ActionController::Parameters.new(params).require(:request).permit \
+      :user_id, :text, :reorder_of_id
   end
 
   def mark_duplicated_orders
-    user.orders.without_responses.group_by(&:supply_id).each do |_, orders|
+    request.user.orders.without_responses.group_by(&:supply_id).each do |_, orders|
       mark_all_but_newest_as_duplicate orders
     end
   end
@@ -67,8 +76,8 @@ private
   end
 
   def update_waiting_since
-    user.update_attributes(
-      waiting_since:     user.orders.without_responses.minimum(:created_at),
+    request.user.update!(
+      waiting_since:     request.user.orders.without_responses.minimum(:created_at),
       last_requested_at: @start_time
     )
   end

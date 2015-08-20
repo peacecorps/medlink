@@ -13,7 +13,12 @@
           %tr{ "class" => (order.duplicated_at ? "duplicated" : "") }
             - if i.zero?
               %td.ts{rowspan: os.length}= short_date req.created_at
-              %td.ts{rowspan: os.length}= req.text
+              %td.ts{rowspan: os.length}
+                - if req.reorder_of
+                  - label = "lost package sent #{time_ago_in_words req.reorder_of.created_at} ago"
+                  Replacement of #{link_to label, user_response_path(req.user, req.reorder_of)}
+                - else
+                  = req.text
             %td= order.supply.name
             - if order.duplicated_at
               %td.duplicate-order{colspan: DeliveryMethod.count}

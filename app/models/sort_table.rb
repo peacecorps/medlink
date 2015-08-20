@@ -3,12 +3,13 @@ class SortTable
 
   attr_reader :prefix
 
-  def initialize scope, params:,  prefix: nil, default: nil, sort_model: nil
-    @scope   = scope
-    @params  = params.clone
-    @prefix  = prefix ? "#{prefix}_" : ""
-    @default = default || { id: :asc }
-    @model   = sort_model || @scope.model
+  def initialize scope, params:,  prefix: nil, default: nil, sort_model: nil, per_page: nil
+    @scope    = scope
+    @params   = params.clone
+    @prefix   = prefix ? "#{prefix}_" : ""
+    @default  = default || { id: :asc }
+    @model    = sort_model || @scope.model
+    @per_page = per_page
   end
 
   def ordered
@@ -23,7 +24,7 @@ class SortTable
     "#{prefix}page"
   end
   def page
-    ordered.page(@params[page_param])
+    ordered.page(@params[page_param]).per(@per_page)
   end
 
   def each

@@ -1,4 +1,4 @@
-- orders.includes(:supply).group_by { |o| o.request_id }.each do |_, os|
+- orders.group_by { |o| o.request_id }.each do |_, os|
   %dl
     %dt
       - time = os.first.created_at.in_time_zone user.time_zone
