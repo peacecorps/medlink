@@ -13,11 +13,7 @@ class SortTable
   end
 
   def ordered
-    if sort_column
-      @scope.order "#{@model.table_name}.#{sort_column} #{sort_direction}"
-    else
-      @scope
-    end
+    @scope.order "#{@model.table_name}.#{sort_column} #{sort_direction}"
   end
 
   def page_param

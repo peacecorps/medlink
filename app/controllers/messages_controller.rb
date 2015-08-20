@@ -1,6 +1,4 @@
 class MessagesController < ApplicationController
-  after_action :verify_authorized
-
   def new
     @messages = SortTable.new policy_scope(SMS).includes(:user),
       params: params, default: { created_at: :desc }, sort_model: SMS

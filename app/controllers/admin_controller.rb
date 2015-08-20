@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   before_action :verify_access
+  skip_after_action :verify_authorized
 
   def verify_access
     unless current_user && current_user.admin?

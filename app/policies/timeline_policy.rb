@@ -1,7 +1,9 @@
 class TimelinePolicy < ApplicationPolicy
+  def country_id
+    record.user.country_id
+  end
+
   def show?
-    user.admin? || \
-      (user.pcmo? && user.country_id == record.user.country_id) || \
-      user == record.user
+    user == record.user || country_admin?
   end
 end

@@ -9,11 +9,13 @@ class ResponsesController < ApplicationController
   end
 
   def new
+    authorize :user, :respond?
     @orders  = sort_table @user.orders.without_responses.includes(:supply, request: :reorder_of)
     @history = sort_table @user.orders.with_responses.includes(:supply)
   end
 
   def create
+    authorize :user, :respond?
     if orders = params[:orders]
       OrderResponder.
         new(responded_by: current_user, response: @response).
@@ -29,6 +31,7 @@ class ResponsesController < ApplicationController
   def show
     @response = Response.find params[:id]
     @user     = @response.user
+    authorize @response
   end
 
   def cancel

@@ -1,6 +1,4 @@
 class CountrySuppliesController < ApplicationController
-  skip_after_action :verify_policy_scoped, only: [:index]
-
   def index
     @country = current_user.country
     authorize @country, :manage_supplies?

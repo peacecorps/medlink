@@ -25,8 +25,20 @@ describe "Welcome Vid page" do
     user = create :user, password: "password"
     test_sign_in user
     expect( page.current_path ).to eq welcome_video_user_path
-    page.click_button('watched')
-    user.reload
-    expect( user.welcome_video_shown_at.nil?).to eq false
+    page.click_button("watched")
+    expect( user.reload.welcome_video_shown_at ).not_to be nil
+
+    click_link "Sign Out"
+    test_sign_in user
+    expect( page.current_path ).to eq new_request_path
+  end
+
+  it "shows PCMOs a different video" do
+    pcmo = create :pcmo, password: "password"
+    test_sign_in pcmo
+
+    src = pcmo.welcome_video.youtube_embed_link
+    expect( page.find("iframe")[:src] ).to eq src
+    expect( src ).not_to eq build(:pcv).welcome_video.youtube_embed_link
   end
 end

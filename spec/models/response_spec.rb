@@ -41,4 +41,15 @@ describe Response do
       expect( @response.sms_instructions ).to match /approved.*check email/i
     end
   end
+
+  it "is quasi-immutable" do
+    @response.save!
+
+    @response.user = create :user
+    expect( @response.save ).to be false
+
+    @response.reload
+    @response.country_id = create(:country).id
+    expect( @response.save ).to be false
+  end
 end

@@ -1,6 +1,6 @@
 class ResponsePolicy < ApplicationPolicy
   def mark_received?
-    record.user_id == user.id || country_pcmo? || admin?
+    record.user_id == user.id || country_admin?
   end
 
   def flag?
@@ -8,10 +8,10 @@ class ResponsePolicy < ApplicationPolicy
   end
 
   def cancel?
-    country_pcmo? || admin?
+    country_admin?
   end
 
   def reorder?
-    country_pcmo? || admin?
+    country_admin?
   end
 end

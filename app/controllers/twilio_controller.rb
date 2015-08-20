@@ -1,5 +1,6 @@
 class TwilioController < ApplicationController
   skip_before_action :authenticate_user!, :verify_authenticity_token, only: [:receive]
+  skip_after_action :verify_authorized, only: :receive
 
   def receive
     message = SMSDispatcher.new \

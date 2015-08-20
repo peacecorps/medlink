@@ -5,7 +5,7 @@ describe "Response tracker" do
     @pcmo = create :pcmo
     login @pcmo
 
-    @new, @flagged, @old = [{}, {flagged: true}, {received_at: 1.week.ago}].map do |attrs|
+    @new, @flagged, @old = [{created_at: 11.months.ago}, {flagged: true}, {received_at: 1.week.ago}].map do |attrs|
       pcv  = create :pcv, country: @pcmo.country
       resp = create :response, attrs.merge(user: pcv)
       resp.orders << create(:order, user: pcv)
@@ -41,6 +41,22 @@ describe "Response tracker" do
     click_on "All"
     expect( page ).to have_content @old.user.last_name
     expect( page ).to have_content @new.user.last_name
+  end
+
+  it "can view response detail" do
+    click_on "Archived"
+    row_for(@old).find("a", text: "Received").click
+    expect( page ).to have_content @old.extra_text
+  end
+
+  it "allows PCMOs to see a volunteer's timeline" do
+    send_text @new.user, "how do?"
+    visit responses_path
+
+    row_for(@new).find("a", text: "History").click
+    expect( page ).to have_content "how do?"
+    expect( page ).to have_content @new.extra_text
+    expect( page ).to have_content @new.orders.first.request.text
   end
 
   it "allows PCMOs to mark responses as received" do

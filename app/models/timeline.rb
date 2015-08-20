@@ -11,7 +11,7 @@ class Timeline
     end
 
     def description
-      if type == "sms"
+      if type == :sms
         "Message"
       else
         type.to_s.capitalize

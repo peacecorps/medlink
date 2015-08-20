@@ -15,7 +15,7 @@ class ApplicationPolicy
   end
 
   def create?
-    admin? || country_pcmo?
+    country_admin?
   end
 
   def new?
@@ -23,7 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    admin? || country_pcmo?
+    country_admin?
   end
 
   def edit?
@@ -43,7 +43,15 @@ class ApplicationPolicy
   end
 
   def country_pcmo?
-    user.pcmo? && (user.country_id == record.country_id)
+    user.pcmo? && (user.country_id == country_id)
+  end
+
+  def country_admin?
+    admin? || country_pcmo?
+  end
+
+  def country_id
+    record.country_id
   end
 
   class Scope

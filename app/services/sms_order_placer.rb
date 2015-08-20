@@ -32,7 +32,9 @@ private
   def parsed
     @_parsed ||= SMS::Parser.new(message).tap &:run!
   rescue SMS::Parser::ParseError => e
+    # :nocov:
     error! "sms.unparseable"
+    # :nocov:
   end
 
   def create_orders

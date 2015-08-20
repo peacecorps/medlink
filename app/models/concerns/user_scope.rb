@@ -14,6 +14,6 @@ module Concerns::UserScope
     validates_presence_of :user, :country_id, on: :create
     validate :ensure_country_id, on: :create
 
-    immutable :user, :country_id
+    immutable :user_id, :country_id
   end
 end

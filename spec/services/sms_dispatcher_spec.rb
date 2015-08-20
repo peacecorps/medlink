@@ -79,6 +79,12 @@ describe SMSDispatcher do
     expect( Request.last.user ).to eq @user
   end
 
+  it "responds with a help message when the text is malformed" do
+    resp = response_for @phone, "jansldk ajanlskjd alskjdnfal kajndsflj"
+    expect( resp.text ).to match /unrecognized.*jansldk.*3.other.*resubmit.*format/i
+    expect( Request.count ).to eq 0
+  end
+
   it "responds with a help message when the user cannot be determined" do
     resp = response_for @phone, "@XXXX #{@supply.shortcode}"
     expect( resp.text ).to match /can't find user/i

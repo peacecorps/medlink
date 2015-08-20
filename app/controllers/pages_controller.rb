@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   skip_before_filter :authenticate_user!, only: :help
+  skip_after_action :verify_authorized
 
   def root
     redirect_to start_page
