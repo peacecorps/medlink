@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   enum role: [ :pcv, :pcmo, :admin ]
+
+  default_scope { where(active: true) }
   def self.role_names
     { "PCV" => "pcv", "PCMO" => "pcmo", "Admin" => "admin" }
   end

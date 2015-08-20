@@ -38,7 +38,7 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    @user = User.find params[:id]
+    @user = User.pcv.find params[:id]
     authorize @user
     _attrs = @user.attributes
     if @user.update_attributes user_params
@@ -52,6 +52,14 @@ class Admin::UsersController < AdminController
     else
       render :edit
     end
+  end
+
+  def inactivate
+    @user = User.find params[:id]
+    @user.active = false
+    @user.save!
+    _flash = { success: I18n.t!("flash.user.inactive_user", user: @user.name) }
+    redirect_to new_admin_user_path, flash: _flash
   end
 
   def upload_csv
