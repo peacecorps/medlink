@@ -1,7 +1,5 @@
-class CountryPolicy < ApplicationPolicy
+class SupplyPolicy < ApplicationPolicy
   def manage_master_supply_list?
-    if user.admin?
-      true
-    end
+    user.admin?
   end
 end

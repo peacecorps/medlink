@@ -1,43 +1,38 @@
 class SuppliesController < ApplicationController
-
-  def index
-    @supplies = Supply.all
-    authorize @supplies, :manage_master_supply_list?
+  before_action do 
+    authorize :supply, :manage_master_supply_list?
   end
 
-  #Show might not be necessary
-  def show
-    @supply = Supply.find params[:id]
-    authorize @supply, :manage_master_supply_list?
+  def index
+    @supplies = Supply.unscoped.all.order name: :asc
   end
 
   def new
-    supply = Supply.new
-    authorize supply, :manage_master_supply_list?
+    @supply = Supply.new
   end
 
   def create
-    supply = Supply.create!(supplies_params)
-    authorize supply, :manage_master_supply_list?
+    @supply = Supply.new(supplies_params)
+    if @supply.save
+      redirect_to supplies_path
+    else
+      render :new
+    end
   end
 
   def edit
     supply = Supply.find params[:id]
-    authorize supply, :manage_master_supply_list?
   end
 
   def update
     supply = Supply.find params[:id]
-    authorize supply, :manage_master_supply_list?
   end
 
-  def not_available
-    supply = Supply.find params[:id]
-    authorize supply, :manage_master_supply_list?
-    # Hide, do not destroy item.  Must add 'Available' column to Supply Schema.
+  def toggle_orderable
+    supply = Supply.unscoped.find params[:id]
 
-    supply.update(available: false)
-    if supply.save
+    supply.toggle_orderable!
+    redirect_to :back
   end
 
   private

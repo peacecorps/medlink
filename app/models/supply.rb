@@ -6,7 +6,10 @@ class Supply < ActiveRecord::Base
 
   before_save { self.shortcode = shortcode.upcase }
 
-  default_scope { order name: :asc }
+  default_scope { where(orderable: true).order name: :asc }
+
+  validates :shortcode, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true
 
   def self.choices
     all.map { |supply| [supply.name, supply.id] }
@@ -20,5 +23,9 @@ class Supply < ActiveRecord::Base
 
   def self.find_by_shortcode code
     where(shortcode: code.upcase).first!
+  end
+
+  def toggle_orderable!
+    update orderable: !orderable
   end
 end
