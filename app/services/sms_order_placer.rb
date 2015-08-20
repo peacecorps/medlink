@@ -36,8 +36,7 @@ private
   end
 
   def create_orders
-    orders = found_supplies.map { |s| { supply_id: s.id } }
-    rc = RequestCreator.new(user, orders: orders, request: {
+    rc = RequestCreator.new(user, supplies: found_supplies, request: {
       message_id:        sms.id,
       user_id:           user.id,
       text:              parsed.instructions

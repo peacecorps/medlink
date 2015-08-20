@@ -11,7 +11,8 @@ en:
     response:
       sent: "Success! Your response has been sent to %{user}. This request will now appear in the response tracker awaiting further action."
       archived: "Response has been marked as archived."
-      unarchived: "Response has been unarchived."
+      cancelled: "Response has been cancelled."
+      reordered: "Response has been cancelled and reordered."
       none_selected: "No response selected."
 
     user:

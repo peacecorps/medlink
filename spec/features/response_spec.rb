@@ -68,26 +68,4 @@ describe "responding to orders" do
     visit responses_path
     expect( page ).not_to have_content @user.first_name
   end
-
-  it "can archive responses" do
-    response = create :response, user: @user
-    @user.orders.each do |o|
-      o.update_attributes response: response, delivery_method: DeliveryMethod.to_a.sample
-    end
-
-    visit responses_path
-    expect( page ).to have_content @user.first_name
-    click_on "archive-#{response.id}" # TODO: less brittle selector
-
-    expect( alert.text ).to match /response.*archived/i
-    expect( page ).not_to have_content @user.first_name
-
-    %w(All Archived).each do |selected|
-      click_on selected
-      expect( page ).to have_content @user.first_name
-    end
-
-    click_on "unarchive-#{response.id}"
-    expect( alert.text ).to match /response.*unarchived/i
-  end
 end

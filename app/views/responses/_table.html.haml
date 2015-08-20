@@ -1,17 +1,23 @@
 %thead
   %tr
+    %th
     %th= sortable_header(table, :first_name)
     %th= sortable_header(table, :last_name)
     %th= sortable_header(table, :location)
+    %th= sortable_header(table, :email)
     %th Phone
     %th= sortable_header(table, :last_requested_at, title: "Requests")
     %th
 %tbody
   - table.each do |r|
-    %tr.order.link{ "data-link" => user_response_path(r.user, r) }
+    %tr.order.link{ "data-link" => user_response_path(r.user, r), class: r.flagged? ? "danger" : "" }
+      %td
+        - if r.flagged?
+          = icon :flag, class: :danger
       %td= r.user.first_name
       %td= r.user.last_name
       %td= r.user.location
+      %td= link_to r.user.email, "mailto:#{r.user.email}"
       %td= phone_link r.user.primary_phone
       %td
         - groups = r.orders.group_by(&:request_id).sort_by { |_, os| os.first.created_at }.reverse
@@ -25,11 +31,9 @@
                   %small= time.strftime "%H:%M"
             %tbody
               - orders.each do |order|
-                %tr{ class: order.flagged? ? "danger" : "" }
+                %tr
                   %td= order.supply.name
                   %td= order_status order
       %td
-        = link_to timeline_user_path(r.user), class: "btn btn-default" do
-          = icon :search
-          History
-        = render partial: "archive_button", locals: { response: r }
+        .btn-group-vertical
+          = render partial: "action_buttons", locals: { response: r }

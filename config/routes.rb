@@ -40,6 +40,8 @@ Medlink::Application.routes.draw do
     member do
       post :mark_received
       post :flag
+      post :cancel
+      post :reorder
     end
   end
 
