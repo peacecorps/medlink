@@ -54,7 +54,7 @@ describe "Announcements" do
     within ".new_announcement" do
       select @other.country.name, from: "Country"
       fill_in "Days", with: " 2, -2 "
-      fill_in "Hour", with: "7"
+      select "07", from: "Hour"
       click_on "Create Announcement"
     end
 
@@ -75,7 +75,7 @@ describe "Announcements" do
     within ".edit_announcement" do
       fill_in "Message", with: ""
       fill_in "Days", with: ""
-      fill_in "Hour", with: ""
+      select "", from: "Hour"
       click_on "Update Announcement"
     end
 
@@ -84,7 +84,7 @@ describe "Announcements" do
     within ".edit_announcement" do
       fill_in "Message", with: "Updated monthly reminder"
       fill_in "Days", with: ""
-      fill_in "Hour", with: ""
+      select "", from: "Hour"
       click_on "Update Announcement"
     end
 
