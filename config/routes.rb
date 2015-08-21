@@ -51,15 +51,17 @@ Medlink::Application.routes.draw do
   end
 
   resources :reports, only: [:index] do
-    [:order_history, :users, :pcmo_response_times].each do |r|
-      get r, on: :collection
+    collection do
+      get :order_history
+      get :users
+      get :pcmo_response_times
     end
   end
 
   namespace :admin do
     resources :users, only: [:new, :create, :edit, :update] do
       member do
-        patch :inactivate  
+        patch :inactivate
       end
 
       collection do

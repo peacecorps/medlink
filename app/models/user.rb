@@ -2,9 +2,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  enum role: [ :pcv, :pcmo, :admin ]
-
   default_scope { where(active: true) }
+
+  enum role: [ :pcv, :pcmo, :admin ]
   def self.role_names
     { "PCV" => "pcv", "PCMO" => "pcmo", "Admin" => "admin" }
   end
@@ -15,11 +15,11 @@ class User < ActiveRecord::Base
 
   belongs_to :country
 
-  %i( requests orders responses ).each do |name|
-    has_many name, dependent: :destroy
-  end
-
   paginates_per 10
+
+  has_many :requests
+  has_many :orders
+  has_many :responses
 
   has_many :phones, dependent: :destroy
   has_many :messages, class_name: "SMS"
