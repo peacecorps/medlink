@@ -54,7 +54,7 @@ private
     yield
     duration = Time.now - start
     if duration > 1.second
-      Slackbot.new.message "#{controller_action_name} took #{duration}"
+      Slackbot.new.message "#{controller_action_name} took #{duration} (#{request.path})"
     end
   end
 
