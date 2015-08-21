@@ -16,7 +16,7 @@
               %td.ts{rowspan: os.length}
                 - if req.reorder_of
                   - label = "lost package sent #{time_ago_in_words req.reorder_of.created_at} ago"
-                  Replacement of #{link_to label, user_response_path(req.user, req.reorder_of)}
+                  Replacement of #{link_to label, user_response_path(user, req.reorder_of)}
                 - else
                   = req.text
             %td= order.supply.name
