@@ -54,7 +54,9 @@ private
 
   # :nocov:
   def slack_notify text
-    Slack::Notifier.new(ENV["BULLET_WEBHOOK_URL"], username: "Medlink").ping text
+    if webhook = ENV["BULLET_SLACK_WEBHOOK"]
+      Slack::Notifier.new(webhook, username: "Medlink").ping text
+    end
   end
 
   def alert_if_slow
