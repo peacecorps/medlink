@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
     #   in the process.
     redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
   end
-  rescue_from Pundit::AuthorizationNotPerformedError, Bullet::Notification::UnoptimizedQueryError do |ex|
+  rescue_from Pundit::AuthorizationNotPerformedError do |ex|
     # :nocov:
     Slackbot.new.message "#{ex.to_s} - #{controller_action_name}"
     # :nocov:

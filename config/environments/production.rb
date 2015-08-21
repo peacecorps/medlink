@@ -72,7 +72,7 @@ Medlink::Application.configure do
   config.active_job.queue_adapter = :sidekiq
 
   config.after_initialize do
-    Bullet.enable = true
-    Bullet.raise  = true
+    Bullet.enable  = true
+    Bullet.rollbar = true
   end
 end
