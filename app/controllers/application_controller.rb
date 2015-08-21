@@ -12,6 +12,13 @@ class ApplicationController < ActionController::Base
     #   in the process.
     redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
   end
+  rescue_from Pundit::AuthorizationNotPerformedError do |ex|
+    if Rails.env.production?
+      Slack::Notifier.new(ENV["BULLET_SLACK_WEBHOOK"], username: "Medlink").ping ex.to_s
+    else
+      raise ex
+    end
+  end
 
 private # ----------
 
