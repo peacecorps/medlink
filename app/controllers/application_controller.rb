@@ -14,15 +14,11 @@ class ApplicationController < ActionController::Base
     #   in the process.
     redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
   end
-  rescue_from Pundit::AuthorizationNotPerformedError do |ex|
+  rescue_from Pundit::AuthorizationNotPerformedError, Bullet::Notification::UnoptimizedQueryError do |ex|
     # :nocov:
-    if Rails.env.production?
-      slack_notify "#{ex.to_s} - #{controller_action_name}"
-    else
-      raise ex
-    end
+    Slackbot.new.message "#{ex.to_s} - #{controller_action_name}"
     # :nocov:
-  end
+  end if Rails.env.production?
 
 private
 
@@ -53,18 +49,12 @@ private
   end
 
   # :nocov:
-  def slack_notify text
-    if webhook = ENV["BULLET_SLACK_WEBHOOK"]
-      Slack::Notifier.new(webhook, username: "Medlink").ping text
-    end
-  end
-
   def alert_if_slow
     start = Time.now
     yield
     duration = Time.now - start
     if duration > 1.second
-      slack_notify "#{controller_action_name} took #{duration}"
+      Slackbot.new.message "#{controller_action_name} took #{duration}"
     end
   end
 

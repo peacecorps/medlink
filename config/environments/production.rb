@@ -73,9 +73,6 @@ Medlink::Application.configure do
 
   config.after_initialize do
     Bullet.enable = true
-    Bullet.slack  = {
-      webhook_url: ENV["BULLET_SLACK_WEBHOOK"],
-      username:    "Medlink"
-    }
-  end if ENV["BULLET_SLACK_WEBHOOK"]
+    Bullet.raise  = true
+  end
 end

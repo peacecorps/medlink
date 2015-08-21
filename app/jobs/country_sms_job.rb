@@ -1,6 +1,8 @@
-class CountrySMSJob < ActiveJob::Base
+class CountrySMSJob < ApplicationJob
   def perform country, message
-    country.users.includes(:phones).each do |user|
+    users = country.textable_pcvs
+    Slackbot.new.message "Sending #{message} to #{users.count} users in #{country.name}"
+    users.each do |user|
       user.send_text message
     end
   end

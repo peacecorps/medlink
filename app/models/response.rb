@@ -14,7 +14,7 @@ class Response < ActiveRecord::Base
   end
 
   def send!
-    ResponseSMSJob.perform_later id
+    ResponseSMSJob.perform_later self
     UserMailer.fulfillment(self).deliver_later
   end
 

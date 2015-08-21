@@ -53,7 +53,7 @@ class Announcement < ActiveRecord::Base
   end
 
   def reach
-    @_reach ||= country.users.pcv.includes(:phones).select(&:textable?).count
+    @_reach ||= country.textable_pcvs.count
   end
 
   def scheduled_for_this_hour?

@@ -25,4 +25,8 @@ class Country < ActiveRecord::Base
       TwilioAccount.default
     end
   end
+
+  def textable_pcvs
+    @_textable_pcvs ||= users.pcv.includes(:phones).select(&:textable?)
+  end
 end

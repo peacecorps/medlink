@@ -25,7 +25,6 @@ gem 'nested_form'
 gem 'quiet_assets'
 
 gem 'bullet'
-gem 'slack-notifier'
 
 gem 'bootstrap_form'
 
