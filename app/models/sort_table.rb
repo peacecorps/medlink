@@ -53,7 +53,7 @@ class SortTable
     column  = column.to_s
     title ||= column.titleize
 
-    if column == sort_column
+    if column == sort_column.to_s
       css = "current #{sort_direction}"
       dir = sort_direction == :asc ? :desc : :asc
     else

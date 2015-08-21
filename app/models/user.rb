@@ -64,18 +64,16 @@ class User < ActiveRecord::Base
     return unless to
     twilio.send_text to, message
   rescue => e
+    # :nocov:
     unless e.to_s =~ /is not a mobile number/
       Rails.logger.error "Error while texting #{email} - #{e}"
       raise
     end
+    # :nocov:
   end
 
   def available_supplies
-    @_supplies ||= if admin?
-      Supply.all
-    else
-      country.supplies
-    end
+    country.supplies
   end
 
   def sms_contact_number

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_user!, only: :send_login_help
+  skip_after_action :verify_authorized, only: :send_login_help
 
   def timeline
     @timeline = Timeline.new User.find params[:id]

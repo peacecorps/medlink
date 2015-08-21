@@ -23,11 +23,17 @@ class TwilioAccount < ActiveRecord::Base
       direction: :outgoing
     )
 
-    client.account.sms.messages.create(
-      from: number,
-      to:   Phone.condense(to),
-      body: text
-    )
+    if Rails.env.development?
+      # :nocov:
+      Rails.logger.info "Sending #{sms.text} to #{to}"
+      # :nocov:
+    else
+      client.account.sms.messages.create(
+        from: number,
+        to:   Phone.condense(to),
+        body: text
+      )
+    end
 
     sms
   end

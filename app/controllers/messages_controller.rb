@@ -1,28 +1,15 @@
 class MessagesController < ApplicationController
-  def new
-    @messages = SortTable.new policy_scope(SMS).includes(:user),
-      params: params, default: { created_at: :desc }, sort_model: SMS
-
-    @bulk = MessageSender.new
-    authorize @bulk
-  end
-
-  def create
-    @bulk = MessageSender.new(
-      body:        send_params[:body],
-      country_ids: send_params[:country_ids] || [current_user.country_id]
-    )
-    authorize @bulk, :send?
-
-    user_count = @bulk.send!
-    redirect_to :back, flash: { notice: "Sent messages to #{user_count} users" }
-  rescue => e
-    redirect_to :back, flash: { danger: "Error in sending - #{e}" }
+  def index
+    authorize :message
+    @search   = MessageSearch.new search_params.merge(user: current_user)
+    @messages = sort_table \
+      @search.messages.includes(current_user.admin? ? { user: :country } : :user),
+      default: { created_at: :desc }
   end
 
 private
 
-  def send_params
-    params.require(:message_sender)
+  def search_params
+    params[:message_search] || {}
   end
 end

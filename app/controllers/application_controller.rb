@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   after_action :verify_authorized, except: :index, unless: :devise_controller?
 
+  around_action :alert_if_slow
+
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
     # It'd be nice to redirect to the login page in case the user wants to
@@ -13,14 +15,16 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
   end
   rescue_from Pundit::AuthorizationNotPerformedError do |ex|
+    # :nocov:
     if Rails.env.production?
-      Slack::Notifier.new(ENV["BULLET_SLACK_WEBHOOK"], username: "Medlink").ping ex.to_s
+      slack_notify "#{ex.to_s} - #{controller_action_name}"
     else
       raise ex
     end
+    # :nocov:
   end
 
-private # ----------
+private
 
   def sort_table scope, opts={}
     opts[:params] = params
@@ -47,4 +51,23 @@ private # ----------
   ensure
     Bullet.enable = true
   end
+
+  # :nocov:
+  def slack_notify text
+    Slack::Notifier.new(ENV["BULLET_WEBHOOK_URL"], username: "Medlink").ping text
+  end
+
+  def alert_if_slow
+    start = Time.now
+    yield
+    duration = Time.now - start
+    if duration > 1.second
+      slack_notify "#{controller_action_name} took #{duration}"
+    end
+  end
+
+  def controller_action_name
+    "#{params[:controller]}##{params[:action]}"
+  end
+  # :nocov:
 end

@@ -26,7 +26,12 @@ Medlink::Application.routes.draw do
     end
   end
 
-  resources :messages, only: [:new, :create]
+  resources :messages, only: [:index]
+  resources :announcements do
+    member do
+      post :deliver
+    end
+  end
 
   resources :requests, only: [:new, :create]
 

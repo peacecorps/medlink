@@ -10,7 +10,7 @@
         = f.check_box :remember_me
       %button.btn.btn-primary(type="submit") Sign In
 
-  .col-md-6
+  .col-md-6.help
     %h3 Trouble logging in?
     %p Input your email below and we'll send you instructions on setting or resetting your password.
     = bootstrap_form_for resource, html: {class: 'form'}, as: resource_name, url: send_login_help_path do |f|

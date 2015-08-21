@@ -6,10 +6,6 @@ class ApplicationPolicy
     @record = record
   end
 
-  def index?
-    false
-  end
-
   def show?
     scope.where(:id => record.id).exists?
   end
@@ -28,10 +24,6 @@ class ApplicationPolicy
 
   def edit?
     update?
-  end
-
-  def destroy?
-    user.admin?
   end
 
   def scope
@@ -64,11 +56,9 @@ class ApplicationPolicy
 
     def resolve
       if user.admin?
-        scope
+        scope.all
       elsif user.pcmo?
         scope.where(country_id: user.country_id)
-      else
-        scope.where(user_id: user.id)
       end
     end
   end

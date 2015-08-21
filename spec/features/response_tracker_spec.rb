@@ -44,9 +44,16 @@ describe "Response tracker" do
   end
 
   it "can view response detail" do
+    duplicate = create(:order, duplicated_at: 2.weeks.ago)
+    pickup    = create(:order, delivery_method: DeliveryMethod::Pickup)
+    @old.orders << duplicate
+    @old.orders << pickup
+
     click_on "Archived"
     row_for(@old).find("a", text: "Received").click
     expect( page ).to have_content @old.extra_text
+    expect( find("tr", text: duplicate.supply.name) ).to have_content "Updated on"
+    expect( find("tr", text: pickup.supply.name) ).to have_css ".glyphicon-ok"
   end
 
   it "allows PCMOs to see a volunteer's timeline" do

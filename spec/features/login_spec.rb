@@ -47,4 +47,45 @@ describe "Logging in" do
       expect( page.text ).to match /doesn't match/i
     end
   end
+
+  it "can send password resets" do
+    @user.update confirmed_at: 1.week.ago
+
+    visit root_path
+    within ".help" do
+      fill_in "Email", with: @user.email
+      click_on "Send Help Email"
+    end
+
+    expect( alert ).to have_content "Email sent to #{@user.email}"
+
+    mail = sent_mail.last
+    expect( mail.to ).to eq [@user.email]
+    expect( mail.to_s ).to match /Change my password/
+  end
+
+  it "can send confirmation emails" do
+    @user.update confirmed_at: nil
+
+    visit root_path
+    within ".help" do
+      fill_in "Email", with: @user.email
+      click_on "Send Help Email"
+    end
+
+    expect( alert ).to have_content "Email sent to #{@user.email}"
+
+    mail = sent_mail.last
+    expect( mail.to ).to eq [@user.email]
+    expect( mail.to_s ).to match /Welcome, #{@user.name}/
+  end
+
+  it "can fail to find users" do
+    visit root_path
+    within ".help" do
+      fill_in "Email", with: "not_a_user@example.com"
+      click_on "Send Help Email"
+    end
+    expect( alert.text ).to eq "No account found for not_a_user@example.com"
+  end
 end

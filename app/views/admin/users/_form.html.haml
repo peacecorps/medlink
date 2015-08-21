@@ -2,8 +2,6 @@
 - user.phones.new # Ensure we display a blank field
 
 = bootstrap_nested_form_for user, url: url do |f|
-  = render partial: 'partials/errors', locals: {object: user}
-
   %fieldset
     = f.text_field :first_name
     = f.text_field :last_name

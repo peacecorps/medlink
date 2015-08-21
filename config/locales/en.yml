@@ -34,6 +34,11 @@ en:
       general: "You are not authorized to view that page"
       password_reset_invalid: "No user matches that email and PCV ID"
 
+    announcement:
+      sent: "Message sent to %{volunteer_count} volunteers"
+      created: "Announcement created"
+      updated: "Announcement updated"
+
   sms:
     unexpected_error: "Sorry! Something went wrong. An administrator has been notified."
     unrecognized_user: "Sorry! Can't find user account. Start your message with '@your-pcvid' or text from a recognized number. Contact Health Unit to add a new number to your account"

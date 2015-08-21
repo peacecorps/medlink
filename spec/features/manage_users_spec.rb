@@ -36,7 +36,7 @@ describe "User management" do
 
     it "redisplays errors" do
       click_on "Add User"
-      expect( page.find(".alert").text ).to match /email can't be blank/i
+      expect( page ).to have_content "can't be blank"
       expect( User.pcv.count ).to be_zero
     end
   end
@@ -70,7 +70,7 @@ describe "User management" do
       fill_in :user_first_name, with: ""
       click_on "Save"
 
-      expect( page ).to have_content "First name can't be blank"
+      expect( page ).to have_content "can't be blank"
       expect( User.last.first_name ).to eq @user.first_name
     end
   end

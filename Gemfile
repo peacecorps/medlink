@@ -18,6 +18,7 @@ gem 'sidekiq'
 gem 'sinatra', require: nil
 
 gem 'kaminari'
+gem 'virtus'
 
 gem 'nested_form'
 
