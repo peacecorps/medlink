@@ -35,7 +35,11 @@
             %li= link_to 'Place a Request', new_request_path
             %li= link_to 'Request History', orders_path
           - else
-            %li= link_to 'Supplies', country_supplies_path
+            %li.uncollapsed.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", hreh: "#"} Supplies
+              %ul.dropdown-menu
+                %li= link_to 'Country Supplies', country_supplies_path
+                %li= link_to 'Master Supply List', supplies_path
             %li= link_to 'Requests', manage_orders_path
             %li= link_to 'Responses', responses_path
             %li= link_to 'Reports', reports_path
