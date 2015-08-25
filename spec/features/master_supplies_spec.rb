@@ -37,7 +37,14 @@ describe "Master Supply List" do
     login admin
     visit supplies_path
 
-    save_and_open_page
+    within "tbody" do
+    end
+
+    expect( Supply.count ).to eq 0
+    expect( Supply.unscoped.count ).to eq 1
+
+    #expect row to be class danger
+    #expect button icon to change
   end
 
   describe "amend list" do
@@ -48,7 +55,7 @@ describe "Master Supply List" do
     end
 
     it "allows admins to add new items" do
-      within ".new_supply" do
+      within "#new_supply" do
         fill_in "Name", with: "Test Supply"
         fill_in "Shortcode", with: "TEST"
         click_on "Save"
