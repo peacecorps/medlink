@@ -30,7 +30,7 @@
         %ul.nav.navbar-right.navbar-nav
           - if current_user.admin?
             %li= link_to 'Users', new_admin_user_path
-            %li.uncollapsed.dropdown
+            %li.dropdown
               %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"} Supplies
               %ul.dropdown-menu
                 %li= link_to 'Country Supplies', country_supplies_path
