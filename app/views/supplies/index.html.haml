@@ -17,9 +17,10 @@
         %td
           %span= supply.shortcode
         %td
-          - if supply.orderable?
-            = button_to toggle_orderable_supply_path(supply), method: :patch, class: "btn btn-danger" do
-              = icon :remove
-          - else
-            = button_to toggle_orderable_supply_path(supply), method: :patch, class: "btn btn-default" do
-              = icon :ok
+          .toggle_orderable_button
+            - if supply.orderable?
+              = button_to toggle_orderable_supply_path(supply), method: :patch, class: "btn btn-danger" do
+                = icon :remove
+            - else
+              = button_to toggle_orderable_supply_path(supply), method: :patch, class: "btn btn-default" do
+                = icon :ok

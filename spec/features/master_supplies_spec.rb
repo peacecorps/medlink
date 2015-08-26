@@ -5,7 +5,7 @@ describe "Master Supply List" do
     @supply = create :supply
   end
 
-  it "lets admins view master supply list" do
+  it "lets admins view" do
     admin = create :admin
     login admin
     visit supplies_path
@@ -14,7 +14,7 @@ describe "Master Supply List" do
     expect( @supply.orderable ).to be true
   end
 
-  it "prevents pcmo's from viewing master supply list" do
+  it "prevents pcmo's from viewing" do
     pcmo = create :pcmo
     login pcmo
     visit supplies_path
@@ -23,7 +23,7 @@ describe "Master Supply List" do
     expect( current_path ).to eq manage_orders_path
   end
 
-  it "prevents pcv's from viewing master supply list" do
+  it "prevents pcv's from viewing" do
     pcv = create :pcv
     login pcv
     visit supplies_path
@@ -36,15 +36,19 @@ describe "Master Supply List" do
     admin = create :admin
     login admin
     visit supplies_path
-
-    within "tbody" do
+    
+    within ".toggle_orderable_button" do
+      click_button ""
     end
 
     expect( Supply.count ).to eq 0
     expect( Supply.unscoped.count ).to eq 1
 
-    #expect row to be class danger
-    #expect button icon to change
+    within ".toggle_orderable_button" do
+      click_button ""
+    end
+
+    expect( Supply.count ).to eq 1
   end
 
   describe "amend list" do
