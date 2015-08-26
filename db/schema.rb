@@ -63,8 +63,6 @@ ActiveRecord::Schema.define(version: 20150821141705) do
     t.integer  "response_id"
     t.string   "delivery_method", limit: 255
     t.datetime "duplicated_at"
-    t.datetime "received_at"
-    t.boolean  "flagged",                     default: false, null: false
   end
 
   create_table "phones", force: :cascade do |t|
