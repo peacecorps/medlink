@@ -5,10 +5,12 @@ class SMS
     attr_reader :pcv_id, :shortcodes, :instructions
 
     def initialize text
-      @text = text || ""
+      @text, @shortcodes = text, []
     end
 
     def run!
+      return unless @text
+
       pref, @instructions = @text.split(/[^\w\s,@]/, 2).map &:strip
       toks = pref.split /[,\s]+/
 
