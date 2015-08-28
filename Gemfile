@@ -59,4 +59,5 @@ gem 'newrelic_rpm'
 group :production do
   gem 'puma'
   gem 'rails_12factor'
+  gem 'skylight'
 end
