@@ -54,7 +54,10 @@ describe ReportsController do
       visit order_history_reports_path(format: :csv)
       rows = CSV.parse(page.html, headers: true)
       expect( rows.count ).to eq Order.count
-      expect( rows.first["Country"] ).to eq Order.first.country.name
+
+      report_countries = rows.map { |r| r["Country"] }
+      order_countries  = Order.includes(:country).map { |o| o.country.name }
+      expect( report_countries.sort ).to eq order_countries.sort
     end
 
     it "can see user reports" do

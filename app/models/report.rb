@@ -9,7 +9,7 @@ class Report
   end
 
   def cleaned_rows
-    rows.map do |obj|
+    rows.find_each.map do |obj|
       format(obj).values.map { |v| clean v }
     end.select { |values| values.any? &:present? }
   end
