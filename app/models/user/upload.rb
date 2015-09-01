@@ -22,7 +22,7 @@ class User::Upload
     end
 
     def valid?
-      @user.valid?
+      @user && @user.valid?
     end
     def save!
       @user.save!
