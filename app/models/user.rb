@@ -64,12 +64,9 @@ class User < ActiveRecord::Base
     return unless to
     return if spammy? to, message
     twilio.send_text to, message
-  rescue => e
+  rescue Twilio::REST::RequestError => e
     # :nocov:
-    unless e.to_s =~ /is not a mobile number/
-      Rails.logger.error "Error while texting #{email} - #{e}"
-      raise
-    end
+    Rails.logger.error "Error while texting #{email} - #{e}"
     # :nocov:
   end
 
