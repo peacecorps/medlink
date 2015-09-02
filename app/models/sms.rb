@@ -14,6 +14,10 @@ class SMS < ActiveRecord::Base
   include Concerns::Immutable
   immutable :user_id, :twilio_account_id, :number, :direction, :text
 
+  def self.newest
+    order(created_at: :desc).first
+  end
+
   def duplicate within:
     SMS.incoming.
       where(text: text, number: number).

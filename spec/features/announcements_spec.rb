@@ -17,6 +17,12 @@ describe "Announcements" do
     find("tr", text: announcement.message).find("a", text: "Send Now")
   end
 
+  it "won't spam users" do
+    announce = Announcement.new country: @pcmo.country, message: "-"
+    expect { announce.send! }.to change { SMS.count }.by 1
+    expect { announce.send! }.not_to change { SMS.count }
+  end
+
   it "allows PCMOs to send messages on demand" do
     login @pcmo
     visit announcements_path

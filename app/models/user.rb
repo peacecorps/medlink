@@ -62,6 +62,7 @@ class User < ActiveRecord::Base
     twilio = country.twilio_account
     to     = primary_phone.try :number
     return unless to
+    return if spammy? to, message
     twilio.send_text to, message
   rescue => e
     # :nocov:
@@ -70,6 +71,11 @@ class User < ActiveRecord::Base
       raise
     end
     # :nocov:
+  end
+
+  def spammy? number, text
+    last = messages.newest
+    last && last.text == text && last.number == number && last.outgoing?
   end
 
   def available_supplies

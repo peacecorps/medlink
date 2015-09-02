@@ -35,13 +35,10 @@ describe User do
     end
   end
 
-  context 'can send reset instructions' do
-    before(:each) { ActionMailer::Base.deliveries = [] }
-
-    it 'asyncronously', :worker do
-      subject.send_reset_password_instructions
-      expect( ActionMailer::Base.deliveries.count ).to eq 1
-    end
+  it 'can send reset instructions' do
+    ActionMailer::Base.deliveries = []
+    subject.send_reset_password_instructions
+    expect( ActionMailer::Base.deliveries.count ).to eq 1
   end
 
   it 'generates different video links for pcmos and pcvs' do
