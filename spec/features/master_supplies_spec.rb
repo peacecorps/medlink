@@ -43,12 +43,14 @@ describe "Master Supply List" do
 
     expect( Supply.count ).to eq 0
     expect( Supply.unscoped.count ).to eq 1
+    expect( page.body.include?("tr class='danger'") ).to be true
 
     within ".toggle_orderable_button" do
       click_button ""
     end
 
     expect( Supply.count ).to eq 1
+    expect( page.body.include?("tr class='danger'") ).to be false
   end
 
   describe "amend list" do

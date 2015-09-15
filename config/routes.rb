@@ -41,7 +41,6 @@ Medlink::Application.routes.draw do
     end
   end
 
-
   resources :orders, only: [:index] do
     collection do
       get :manage
