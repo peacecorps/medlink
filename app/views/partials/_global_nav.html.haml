@@ -30,12 +30,20 @@
         %ul.nav.navbar-right.navbar-nav
           - if current_user.admin?
             %li= link_to 'Users', new_admin_user_path
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"} Supplies
+              %ul.dropdown-menu
+                %li= link_to 'Country Supplies', country_supplies_path
+                %li= link_to 'Master Supply List', supplies_path
+
+          - if current_user.pcmo?
+            %li= link_to 'Supplies', country_supplies_path
 
           - if current_user.pcv?
             %li= link_to 'Place a Request', new_request_path
             %li= link_to 'Request History', orders_path
+
           - else
-            %li= link_to 'Supplies', country_supplies_path
             %li= link_to 'Requests', manage_orders_path
             %li= link_to 'Responses', responses_path
             %li= link_to 'Reports', reports_path

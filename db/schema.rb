@@ -63,8 +63,6 @@ ActiveRecord::Schema.define(version: 20150821141705) do
     t.integer  "response_id"
     t.string   "delivery_method", limit: 255
     t.datetime "duplicated_at"
-    t.datetime "received_at"
-    t.boolean  "flagged",                     default: false, null: false
   end
 
   create_table "phones", force: :cascade do |t|
@@ -99,8 +97,9 @@ ActiveRecord::Schema.define(version: 20150821141705) do
   end
 
   create_table "supplies", force: :cascade do |t|
-    t.string "shortcode", limit: 255
-    t.string "name",      limit: 255
+    t.string  "shortcode", limit: 255
+    t.string  "name",      limit: 255
+    t.boolean "orderable",             default: true
   end
 
   add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode", using: :btree
