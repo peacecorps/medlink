@@ -7,8 +7,9 @@ class AttachTimezonesToCountries < ActiveRecord::Migration
     require 'csv'
     CSV.foreach Rails.root.join("db", "timezones.csv") do |name, zone_name, offset|
       next if name == "country"
-      c = Country.find_by_name! name
-      c.update! time_zone: zone_name
+      country = Country.find_by_name name
+      next unless country
+      country.update! time_zone: zone_name
     end
 
     raise if Country.where(time_zone: nil).exists?
