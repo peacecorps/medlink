@@ -16,6 +16,10 @@ class SMSDispatcher < SMSResponder
       error! "sms.unrecognized_user"
     end
 
+    if body.empty?
+      error! "sms.unparseable"
+    end
+
     handler.respond
   rescue PresentableError => e
     send_response e.message

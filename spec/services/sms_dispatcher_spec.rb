@@ -26,6 +26,12 @@ describe SMSDispatcher do
     recorded
   end
 
+  it "handles empty messages" do
+    resp = response_for @phone, ""
+    expect( Request.count ).to eq 0
+    expect( resp.text ).to match /resubmit.*in.*format/i
+  end
+
   it "creates a request for well-formed texts" do
     incoming = "#{@supply.shortcode} - please and thank you!"
     resp = response_for @phone, incoming

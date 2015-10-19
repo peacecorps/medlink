@@ -1,6 +1,6 @@
 class SMS
   class Parser
-    Error = Class.new(StandardError)
+    ParseError = Class.new(StandardError)
 
     attr_reader :pcv_id, :shortcodes, :instructions
 
@@ -9,7 +9,7 @@ class SMS
     end
 
     def run!
-      return unless @text
+      return unless @text.present?
 
       pref, @instructions = @text.split(/[^\w\s,@]/, 2).map &:strip
       toks = pref.split /[,\s]+/
@@ -20,7 +20,7 @@ class SMS
 
       @shortcodes = toks
     rescue => e
-      raise Error, e
+      raise ParseError, e
     end
   end
 end
