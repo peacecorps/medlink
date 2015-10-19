@@ -1,4 +1,6 @@
 class Response < ActiveRecord::Base
+  MAX_LENGTH = 160
+
   include Concerns::UserScope
 
   belongs_to :message
@@ -6,6 +8,12 @@ class Response < ActiveRecord::Base
 
   has_many :orders
   has_many :supplies, through: :orders
+
+  validates :extra_text, length: { maximum: MAX_LENGTH }
+
+  def set_text text
+    self.extra_text = text.slice(0, MAX_LENGTH)
+  end
 
   def sms_instructions
     SMS::Condenser.new("sms.response.#{type}", :supply,

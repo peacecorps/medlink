@@ -5,8 +5,9 @@ class OrderResponder
     @responded_by, @response = responded_by, response
   end
 
-  def respond response_params, orders
-    response.update_attributes(response_params) || raise("Failed to update response")
+  def respond params, orders
+    response.set_text params[:extra_text]
+    response.save!
     attach_orders orders.select { |_,data| data.include? "delivery_method" }
     response.send!
     response.mark_updated_orders!

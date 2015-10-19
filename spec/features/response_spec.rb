@@ -43,11 +43,26 @@ describe "responding to orders" do
 
     expect( alert.text ).to match /response.*sent.*#{@user.name}/i
 
+    expect( Response.last.extra_text ).to match /Extra instructions/
+
     sms = SMS.outgoing.last
     expect( sms.number ).to eq @user.primary_phone.number
 
     mail = ActionMailer::Base.deliveries.last
     expect( mail.to ).to eq [@user.email]
+  end
+
+  it "truncates long extra text" do
+    # HTML5 / JS *should* prevent this, but don't always, because IE
+    visit new_user_response_path(@user)
+
+    o = @user.orders.first
+    choose "orders_#{o.id}_delivery_method_delivery"
+    fill_in :response_extra_text, with: ("a" * 300)
+    click_on "Send Response"
+
+    expect( alert.text ).to match /response.*sent.*#{@user.name}/i
+    expect( Response.last.extra_text.length ).to eq Response::MAX_LENGTH
   end
 
   it "does not create a response when nothing is selected" do
