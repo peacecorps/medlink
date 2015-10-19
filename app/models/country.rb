@@ -7,6 +7,9 @@ class Country < ActiveRecord::Base
 
   belongs_to :twilio_account
 
+  validates :name, presence: true
+  validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }
+
   default_scope -> { order(name: :asc) }
 
   def self.with_orders
