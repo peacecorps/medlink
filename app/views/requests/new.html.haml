@@ -32,9 +32,9 @@
           style: "display:none" do
           = icon :plus
 
-      = f.text_area :text, rows: 3, label: "Special Instructions"
+      = f.text_area :text, rows: 3, label: "Special Instructions", placeholder: "Optional: add useful information for your Health Unit (i.e. specific bus lines, pick-up location, dates at site, planned trips etc.)"
 
-      %button.btn.btn-primary(type="submit") Submit
+  %button.btn.btn-primary(type="submit") Submit
 
 :javascript
   $(function() {
