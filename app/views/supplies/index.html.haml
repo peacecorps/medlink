@@ -8,9 +8,9 @@
       %th
   %tbody
     - @supplies.each do |supply|
-      %tr{ class: supply.orderable? ? "" : "danger" }
+      %tr{ class: ("danger" if !supply.orderable?) }
         %td
-          -if supply.orderable
+          -if supply.orderable?
             = supply.name
           -else
             %s= supply.name
