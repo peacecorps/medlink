@@ -32,9 +32,15 @@ class Admin::UsersController < AdminController
 
   def edit
     if params[:edit]
-      redirect_to edit_admin_user_path(params[:edit][:user_id]) and return
+      # Need to redirect to set the right path
+      if params[:edit][:user_id].present?
+        redirect_to edit_admin_user_path(params[:edit][:user_id])
+      else
+        redirect_to :back, flash: { notice: "Please select a user to edit" }
+      end
+    else
+      @user = User.find params[:id]
     end
-    @user = User.find params[:id]
   end
 
   def update
