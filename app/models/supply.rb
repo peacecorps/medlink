@@ -24,8 +24,4 @@ class Supply < ActiveRecord::Base
   def self.find_by_shortcode code
     where(shortcode: code.upcase).first!
   end
-
-  def toggle_orderable!
-    update orderable: !orderable
-  end
 end

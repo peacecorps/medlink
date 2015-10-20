@@ -23,7 +23,7 @@ class SuppliesController < ApplicationController
   def toggle_orderable
     supply = Supply.unscoped.find params[:id]
 
-    supply.toggle_orderable!
+    supply.toggle!(:orderable)
     redirect_to :back
   end
 
