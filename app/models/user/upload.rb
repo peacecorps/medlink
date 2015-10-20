@@ -29,7 +29,7 @@ class User::Upload
     end
 
     def each
-      @user.valid?
+      @user.try :valid?
       @cells.each { |cell| yield cell }
     end
   end
