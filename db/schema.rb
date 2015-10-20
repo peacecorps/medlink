@@ -99,8 +99,9 @@ ActiveRecord::Schema.define(version: 20151020181142) do
   end
 
   create_table "supplies", force: :cascade do |t|
-    t.string "shortcode", limit: 255
-    t.string "name",      limit: 255
+    t.string  "shortcode", limit: 255
+    t.string  "name",      limit: 255
+    t.boolean "orderable",             default: true
   end
 
   add_index "supplies", ["shortcode"], name: "index_supplies_on_shortcode", using: :btree
