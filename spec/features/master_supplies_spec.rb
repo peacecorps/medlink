@@ -80,7 +80,6 @@ describe "Master Supply List" do
       expect( Supply.last.name ).not_to eq "Test Supply"
       expect( Supply.count ).to eq 1
       expect( page.find("#new_supply") ).to have_selector("div", ".form-group has error")
-      expect( page.text ).to include "can't be blank"
     end
 
     it "does not save items without shortcode" do
@@ -92,7 +91,6 @@ describe "Master Supply List" do
       expect( Supply.last.shortcode ).not_to eq "TEST"
       expect( Supply.count ).to eq 1
       expect( page.find("#new_supply") ).to have_selector("div", ".form-group has error")
-      expect( page.text ).to include "can't be blank"
     end
   end
 end
