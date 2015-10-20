@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151019212019) do
+ActiveRecord::Schema.define(version: 20151020181142) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,8 +64,6 @@ ActiveRecord::Schema.define(version: 20151019212019) do
     t.integer  "response_id"
     t.string   "delivery_method", limit: 255
     t.datetime "duplicated_at"
-    t.datetime "received_at"
-    t.boolean  "flagged",                     default: false, null: false
   end
 
   create_table "phones", force: :cascade do |t|
@@ -73,6 +71,7 @@ ActiveRecord::Schema.define(version: 20151019212019) do
     t.integer  "user_id"
     t.string   "number",     limit: 255
     t.string   "condensed",  limit: 255
+    t.string   "send_error"
   end
 
   create_table "requests", force: :cascade do |t|
