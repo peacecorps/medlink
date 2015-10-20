@@ -9,10 +9,6 @@ class TwilioAccount < ActiveRecord::Base
     ).first_or_create!
   end
 
-  def client
-    @_client ||= Twilio::REST::Client.new sid, auth
-  end
-
   def send_text to, text
     user = User.find_by_phone_number to
 
@@ -28,13 +24,24 @@ class TwilioAccount < ActiveRecord::Base
       Rails.logger.info "Sending #{sms.text} to #{to}"
       # :nocov:
     else
-      client.account.sms.messages.create(
-        from: number,
-        to:   Phone.condense(to),
-        body: text
-      )
+      send_to_twilio(from: number, to: Phone.condense(to), body: text)
     end
 
     sms
+  end
+
+private
+
+  def client
+    @_client ||= Twilio::REST::Client.new sid, auth
+  end
+
+  def send_to_twilio from:, to:, body:
+    client.account.sms.messages.create(from: from, to: to, body: body)
+  rescue Twilio::REST::RequestError => e
+    Rails.logger.error "Error while texting #{email} - #{e}"
+    if p = Phone.lookup(to)
+      p.update! send_error: e
+    end
   end
 end
