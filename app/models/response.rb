@@ -13,14 +13,6 @@ class Response < ActiveRecord::Base
 
   validates :extra_text, length: { maximum: MAX_LENGTH }
 
-  def self.send_receipt_reminders!
-    reminder_candidates = where(archived_at: nil, received_at: nil, cancelled_at: nil, flagged: false)
-    reminder_candidates.each do |response|
-      next unless response.needs_receipt_reminder?
-      ReceiptReminderJob.perform_later response
-    end
-  end
-
   def set_text text
     self.extra_text = text.slice(0, MAX_LENGTH)
   end
@@ -93,24 +85,28 @@ class Response < ActiveRecord::Base
 
   def needs_receipt_reminder?
     return false unless outstanding?
-    return false if created_at >= 14.days.ago # Allow some time for items to arrive.
-    return false if created_at  < 30.days.ago # _Many_ old orders won't have responses. Don't want to spam folks.
+    return false if created_at >= 7.days.ago # Allow some time for items to arrive.
+    return false if created_at < 30.days.ago # _Many_ old orders won't have responses. Don't want to spam folks.
 
-    # No more than once every 3 days
+    # No more than once a day
     last_reminded_at = receipt_reminders.maximum :created_at
-    last_reminded_at.nil? || last_reminded_at < 3.days.ago
+    last_reminded_at.nil? || last_reminded_at < 1.day.ago
   end
 
   def send_receipt_reminder!
     return false unless needs_receipt_reminder?
 
+    slack = Slackbot.new
     if receipt_reminders.count >= 3
       flag!
+      slack.message "Flagged response #{id} for manual follow-up"
       return
     end
 
     text = SMS::Condenser.new("sms.response.receipt_reminder", :supply,
-                              supplies: supply_names, response_date: created_at.strftime("%B %d")).message
+      supplies: supply_names, response_date: created_at.strftime("%B %d")).message
+
+    slack.message "Pinging #{user.email} to acknowledge receipt of response #{id}"
     if sms = user.send_text(text)
       receipt_reminders.create!(user: user, message: sms)
     end

@@ -18,8 +18,6 @@ describe "recording receipt" do
     @r2 = create :response, user: @user, created_at: 15.days.ago
     @new.orders.first.update! response: @r2
 
-    Response.send_receipt_reminders!
-
     login @user
   end
 
@@ -69,6 +67,7 @@ describe "recording receipt" do
     end
 
     it "allows users to approve all outstanding via sms" do
+      @r2.send_receipt_reminder!
       response = send_text @user, "ok"
 
       expect( response.text ).to match /marked as received/i
@@ -79,6 +78,7 @@ describe "recording receipt" do
     end
 
     it "allows users to flag all outstanding via sms" do
+      @r2.send_receipt_reminder!
       response = send_text @user, "no"
 
       expect( response.text ).to match /flagged for follow-up/i

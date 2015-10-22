@@ -53,7 +53,6 @@ group :test do
   gem 'sms-spec'
   gem 'database_cleaner'
   gem 'zonebie'
-  gem 'timecop'
 end
 
 gem 'newrelic_rpm'
