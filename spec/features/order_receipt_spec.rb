@@ -3,6 +3,7 @@ require "spec_helper"
 describe "recording receipt" do
   before :each do
     @user = create :user
+    create :phone, user: @user
     2.times do
       request = create :request, user: @user
       2.times do
@@ -11,10 +12,10 @@ describe "recording receipt" do
     end
     @old, @new = @user.requests.to_a
 
-    @r1 = create :response, user: @user
+    @r1 = create :response, user: @user, created_at: 20.days.ago
     (@old.orders.to_a + [@new.orders.last]).each { |o| o.update! response: @r1 }
 
-    @r2 = create :response, user: @user
+    @r2 = create :response, user: @user, created_at: 15.days.ago
     @new.orders.first.update! response: @r2
 
     login @user
@@ -66,6 +67,7 @@ describe "recording receipt" do
     end
 
     it "allows users to approve all outstanding via sms" do
+      @r2.send_receipt_reminder!
       response = send_text @user, "ok"
 
       expect( response.text ).to match /marked as received/i
@@ -76,6 +78,7 @@ describe "recording receipt" do
     end
 
     it "allows users to flag all outstanding via sms" do
+      @r2.send_receipt_reminder!
       response = send_text @user, "no"
 
       expect( response.text ).to match /flagged for follow-up/i

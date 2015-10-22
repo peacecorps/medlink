@@ -9,6 +9,8 @@ class Response < ActiveRecord::Base
   has_many :orders
   has_many :supplies, through: :orders
 
+  has_many :receipt_reminders
+
   validates :extra_text, length: { maximum: MAX_LENGTH }
 
   def set_text text
@@ -75,6 +77,39 @@ class Response < ActiveRecord::Base
 
   def reordered_at
     replacement.try :created_at
+  end
+
+  def outstanding?
+    !(flagged? || archived?)
+  end
+
+  def needs_receipt_reminder?
+    return false unless outstanding?
+    return false if created_at >= 7.days.ago # Allow some time for items to arrive.
+    return false if created_at < 30.days.ago # _Many_ old orders won't have responses. Don't want to spam folks.
+
+    # No more than once a day
+    last_reminded_at = receipt_reminders.maximum :created_at
+    last_reminded_at.nil? || last_reminded_at < 1.day.ago
+  end
+
+  def send_receipt_reminder!
+    return false unless needs_receipt_reminder?
+
+    slack = Slackbot.new
+    if receipt_reminders.count >= 3
+      flag!
+      slack.message "Flagged response #{id} for manual follow-up"
+      return
+    end
+
+    text = SMS::Condenser.new("sms.response.receipt_reminder", :supply,
+      supplies: supply_names, response_date: created_at.strftime("%B %d")).message
+
+    slack.message "Pinging #{user.email} to acknowledge receipt of response #{id}"
+    if sms = user.send_text(text)
+      receipt_reminders.create!(user: user, message: sms)
+    end
   end
 
 private

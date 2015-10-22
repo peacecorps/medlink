@@ -34,6 +34,8 @@ Medlink::Application.configure do
 
   config.eager_load = false
 
+  config.active_job.queue_adapter = :sidekiq
+
   config.after_initialize do
     Bullet.enable = true
     Bullet.raise  = true

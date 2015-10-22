@@ -12,6 +12,7 @@ class OrderResponder
     response.send!
     response.mark_updated_orders!
     update_waiting! response.user
+    queue_receipt_reminders! response
     if response.auto_archivable?
       response.mark_received! by: responded_by
     end
@@ -29,5 +30,12 @@ class OrderResponder
   def update_waiting! user
     user.update_attributes \
       waiting_since: user.orders.without_responses.minimum(:created_at)
+  end
+
+  def queue_receipt_reminders! response
+    [14, 17, 20, 23].each do |offset|
+      at = response.created_at + offset.days
+      ReceiptReminderJob.set(wait_until: at).perform_later response
+    end
   end
 end
