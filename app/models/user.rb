@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :requests
   has_many :orders
   has_many :responses
+  has_many :receipt_reminders
 
   has_many :phones, dependent: :destroy
   has_many :messages, class_name: "SMS"
@@ -68,7 +69,7 @@ class User < ActiveRecord::Base
 
   def spammy? number, text
     last = messages.newest
-    last && last.text == text && last.number == number && last.outgoing?
+    last && last.text == text && last.number == number && last.outgoing? && last.created_at >= 2.days.ago
   end
 
   def available_supplies
@@ -94,5 +95,16 @@ class User < ActiveRecord::Base
 
   def welcome_video_seen?
     !self.welcome_video_shown_at.nil?
+  end
+
+  def make_sms_request body
+    raise unless Rails.env.development? || Rails.env.test?
+    account = country.twilio_account
+    SMSDispatcher.new(
+      account_sid: account.sid,
+      to:          account.number,
+      from:        primary_phone.number,
+      body:        body
+    ).record_and_respond
   end
 end

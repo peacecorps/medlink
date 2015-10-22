@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020181142) do
+ActiveRecord::Schema.define(version: 20151021225125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,17 @@ ActiveRecord::Schema.define(version: 20151020181142) do
     t.string   "condensed",  limit: 255
     t.string   "send_error"
   end
+
+  create_table "receipt_reminders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "response_id"
+    t.integer  "message_id"
+    t.datetime "created_at",  null: false
+  end
+
+  add_index "receipt_reminders", ["message_id"], name: "index_receipt_reminders_on_message_id", using: :btree
+  add_index "receipt_reminders", ["response_id"], name: "index_receipt_reminders_on_response_id", using: :btree
+  add_index "receipt_reminders", ["user_id"], name: "index_receipt_reminders_on_user_id", using: :btree
 
   create_table "requests", force: :cascade do |t|
     t.datetime "created_at"
@@ -155,6 +166,9 @@ ActiveRecord::Schema.define(version: 20151020181142) do
   add_foreign_key "orders", "requests"
   add_foreign_key "orders", "supplies"
   add_foreign_key "phones", "users"
+  add_foreign_key "receipt_reminders", "messages"
+  add_foreign_key "receipt_reminders", "responses"
+  add_foreign_key "receipt_reminders", "users"
   add_foreign_key "requests", "countries"
   add_foreign_key "requests", "messages"
   add_foreign_key "requests", "responses", column: "reorder_of_id"
