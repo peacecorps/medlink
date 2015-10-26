@@ -50,7 +50,6 @@ group :test do
   gem 'rspec-its'
   gem 'capybara'
   gem 'factory_girl_rails'
-  gem 'sms-spec'
   gem 'database_cleaner'
   gem 'zonebie'
 end

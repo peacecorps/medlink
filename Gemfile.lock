@@ -217,10 +217,6 @@ GEM
       netrc (~> 0.7)
     rollbar (2.4.0)
       multi_json
-    rspec (3.3.0)
-      rspec-core (~> 3.3.0)
-      rspec-expectations (~> 3.3.0)
-      rspec-mocks (~> 3.3.0)
     rspec-core (3.3.2)
       rspec-support (~> 3.3.0)
     rspec-expectations (3.3.1)
@@ -269,8 +265,6 @@ GEM
     skylight (0.8.1)
       activesupport (>= 3.0.0)
     slop (3.6.0)
-    sms-spec (0.1.7)
-      rspec
     spring (1.4.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -346,7 +340,6 @@ DEPENDENCIES
   simplecov
   sinatra
   skylight
-  sms-spec
   spring
   spring-commands-rspec
   twilio-ruby

@@ -20,7 +20,7 @@ describe SMSDispatcher do
     captured = messages.last
 
     expect( recorded.text ).to eq captured.body
-    expect( recorded.number.gsub /\D/, '' ).to include captured.number
+    expect( Phone.condense recorded.number ).to eq Phone.condense(captured.number)
     expect( recorded.number ).to eq phone.number
 
     recorded

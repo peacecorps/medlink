@@ -39,11 +39,9 @@ private
   def send_to_twilio from:, to:, body:
     client.messages.create(from: from, to: to, body: body)
   rescue Twilio::REST::RequestError => e
-    # :nocov:
     Rails.logger.error "Error while texting #{to} - #{e}"
     if p = Phone.lookup(to)
       p.update! send_error: e
     end
-    # :nocov:
   end
 end
