@@ -37,7 +37,7 @@ private
   end
 
   def send_to_twilio from:, to:, body:
-    client.account.sms.messages.create(from: from, to: to, body: body)
+    client.messages.create(from: from, to: to, body: body)
   rescue Twilio::REST::RequestError => e
     # :nocov:
     Rails.logger.error "Error while texting #{to} - #{e}"
