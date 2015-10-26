@@ -11,22 +11,26 @@ require 'csv'
 puts "Creating intial records from seed data:"
 
 CSV.read(Rails.root+"db/supply.csv").each do |name, shortcode|
-  Supply.new(shortcode: shortcode, name: name).save
+  Supply.new(shortcode: shortcode, name: name).save!
 end
 puts "... Loaded #{Supply.count} supplies"
 
+
+tzs = {}
+CSV.read(Rails.root+"db/timezones.csv").each do |country, zone, offset|
+  tzs[country] = zone
+end
+
 File.read(Rails.root+"db/country.csv").each_line do |name|
-  Country.new(name: name.strip).save
+  name.strip!
+  tz = tzs.fetch name
+  Country.new(name: name, time_zone: tz).save!
 end
 puts "... Loaded #{Country.count} countries"
 
 puts "Please run `rake admin:create` if you would like to make an admin account"
 
-Country.find_each do |country|
-  Supply.find_each do |supply|
-   cs = CountrySupply.new
-   cs.country_id = country.id
-   cs.supply_id = supply.id
-   cs.save
-  end
+supplies = Supply.all
+Country.all.each do |country|
+  country.supplies << supplies
 end
