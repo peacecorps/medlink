@@ -15,6 +15,7 @@ class SMSOrderPlacer < SMSResponder
     end
 
     if duplicate
+      Rails.logger.info "Sending response for sms #{sms}, duplicate of #{duplicate}"
       error! "sms.duplicate_order", {
         supplies: supply_names,
         due_date: Request.due_date(duplicate.request.created_at)
