@@ -3,9 +3,7 @@ class Phone < ActiveRecord::Base
 
   before_save { |rec| rec.condensed = Phone.condense rec.number }
 
-  include Concerns::Immutable
-  immutable :number, :condensed
-  validates :condensed, uniqueness: { scope: :user_id }, on: :create
+  validates :condensed, uniqueness: true, on: :create
 
   def has_country_code
     unless number.start_with? '+'
