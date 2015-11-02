@@ -44,7 +44,7 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    @user = User.pcv.find params[:id]
+    @user = User.find params[:id]
     authorize @user
     _attrs = @user.attributes
     if @user.update_attributes user_params
