@@ -99,14 +99,14 @@ class Response < ActiveRecord::Base
     slack = Slackbot.new
     if receipt_reminders.count >= 3
       flag!
-      slack.message "Flagged response #{id} for manual follow-up"
+      slack.message "Flagged response #{id} for manual follow-up after #{receipt_reminders.count} reminders"
       return
     end
 
     text = SMS::Condenser.new("sms.response.receipt_reminder", :supply,
       supplies: supply_names, response_date: created_at.strftime("%B %d")).message
 
-    slack.message "Pinging #{user.email} to acknowledge receipt of response #{id}"
+    Rails.logger.info "Pinging #{user.email} to acknowledge receipt of response #{id}"
     if sms = user.send_text(text)
       receipt_reminders.create!(user: user, message: sms)
     end
