@@ -36,7 +36,7 @@ private
   def response_message type
     orders = Order.where(response: outstanding_response).includes(:supply)
     SMS::Condenser.new("sms.orders_#{type}", :supply,
-      supplies: orders.map { |o| o.supply.name }
+      supplies: orders.map { |o| o.supply.name }.uniq
     ).message
   end
 end
