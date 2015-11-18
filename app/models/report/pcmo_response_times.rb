@@ -1,4 +1,6 @@
 class Report::PcmoResponseTimes < Report
+  decorator OrderResponsePresenter
+
   def initialize orders
     self.rows = orders.includes :country, :supply, :response, :user => :phones
   end

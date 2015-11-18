@@ -1,22 +1,13 @@
+# Report subclasses should set `self.rows` in `initialize`, and define a `format`
+#   method that takes a `row` object and returns a `Hash`
 class Report
   attr_accessor :rows
 
   def to_csv opts={}
     CSV.generate(opts) do |csv|
       csv << columns
-      cleaned_rows.each { |values| csv << values }
+      cleaned_rows.each { |values| csv << values if values.any?(&:present?) }
     end
-  end
-
-  def cleaned_rows
-    rows.find_each.map do |obj|
-      format(obj).values.map { |v| clean v }
-    end.select { |values| values.any? &:present? }
-  end
-
-  def clean value
-    raise "Unconverted ActiveRecord in CSV" if value.is_a?(ActiveRecord::Base)
-    value.to_s.gsub("\n", " ")
   end
 
   private #---------
@@ -28,5 +19,32 @@ class Report
   end
   def columns
     format(NullObject.new).keys
+  end
+
+  def self.decorator klass=nil
+    @decorator = klass ? klass : @decorator
+  end
+
+  def decorator
+    self.class.decorator
+  end
+
+  def decorated_objects
+    rows.find_each.map do |obj|
+      decorator ? decorator.new(obj) : obj
+    end
+  end
+
+  def make_row obj
+    format(obj).values.map { |v| clean v }
+  end
+
+  def clean value
+    raise "Unconverted ActiveRecord in CSV" if value.is_a?(ActiveRecord::Base)
+    value.to_s.gsub("\n", " ")
+  end
+
+  def cleaned_rows
+    decorated_objects.map { |obj| make_row obj }
   end
 end

@@ -21,6 +21,7 @@ gem 'sinatra', require: nil
 
 gem 'kaminari'
 gem 'virtus'
+gem 'draper'
 
 gem 'nested_form'
 
