@@ -6,10 +6,11 @@ class SMS < ActiveRecord::Base
   enum direction: [ :incoming, :outgoing ]
 
   belongs_to :user
+  belongs_to :phone
   belongs_to :twilio_account
   has_one :request, foreign_key: :message_id
 
-  validates_presence_of :twilio_account, :number, :direction
+  validates_presence_of :phone, :twilio_account, :number, :direction
 
   include Concerns::Immutable
   immutable :user_id, :twilio_account_id, :number, :direction, :text

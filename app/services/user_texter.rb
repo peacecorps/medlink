@@ -1,27 +1,21 @@
 class UserTexter
   class Error < StandardError; end
 
-  def initialize user: nil, number: nil, twilio_account: nil, deliverer: nil
-    @user = user || User.find_by_phone_number(number)
-    raise Error, "Must provide either a user or number to text" unless user || number
-
-    @number           = number || user.primary_phone.try(:number)
-    @condensed_number = Phone.condense self.number if self.number
-
-    @twilio    = twilio_account || (user && user.country.twilio_account) || TwilioAccount.first!
+  def initialize phone:, twilio_account: nil, deliverer: nil
+    @phone     = phone
+    @twilio    = twilio_account || default_account!
     @deliverer = deliverer || self.twilio.client.messages.method(:create)
   end
 
   def send message
-    return false unless number
     return false if spammy? message
-    recorded_message = record message
+    sms = record message
     begin
       deliver message
     rescue Twilio::REST::RequestError => e
-      note_delivery_failure e
+      note_delivery_failure sms, e
     end
-    recorded_message
+    sms
   end
 
   def spammy? message
@@ -31,21 +25,31 @@ class UserTexter
 
   protected
 
-  attr_reader :user, :number, :condensed_number, :twilio, :deliverer
+  attr_reader :phone, :twilio, :deliverer
+
+  def user
+    phone.user
+  end
+
+  def account_for_phone
+    phone && phone.user && phone.user.country.twilio_account
+  end
+
+  def default_account!
+    TwilioAccount.first!
+  end
 
   def last_sent_message
-    if user
-      SMS.outgoing.where(user: user).newest
-    else
-      SMS.outgoing.where(number: condensed_number).newest
-    end
+    filter = user ? { user: user } : { phone: phone }
+    SMS.outgoing.where(filter).newest
   end
 
   def record message
     SMS.create!(
       twilio_account: twilio,
       user:           user,
-      number:         condensed_number,
+      phone:          phone,
+      number:         phone.condensed,
       text:           message,
       direction:      :outgoing
     )
@@ -54,15 +58,14 @@ class UserTexter
   def deliver message
     deliverer.(
       from: twilio.number,
-      to:   condensed_number,
+      to:   phone.number,
       body: message
     )
   end
 
-  def note_delivery_failure error
-    Rails.logger.error "Error while texting #{number} - #{error}"
-    if phone = Phone.lookup(number)
-      phone.update! send_error: error
-    end
+  def note_delivery_failure message, error
+    Rails.logger.error "Error while texting #{phone} - #{error}"
+    phone.update!   send_error: error
+    message.update! send_error: error
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021225125) do
+ActiveRecord::Schema.define(version: 20151118162648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,8 +50,11 @@ ActiveRecord::Schema.define(version: 20151021225125) do
     t.integer  "direction"
     t.integer  "user_id"
     t.integer  "twilio_account_id"
+    t.integer  "phone_id",                      null: false
+    t.text     "send_error"
   end
 
+  add_index "messages", ["phone_id"], name: "index_messages_on_phone_id", using: :btree
   add_index "messages", ["twilio_account_id"], name: "index_messages_on_twilio_account_id", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
@@ -70,7 +73,7 @@ ActiveRecord::Schema.define(version: 20151021225125) do
     t.datetime "created_at"
     t.integer  "user_id"
     t.string   "number",     limit: 255
-    t.string   "condensed",  limit: 255
+    t.string   "condensed",              null: false
     t.string   "send_error"
   end
 
@@ -161,6 +164,7 @@ ActiveRecord::Schema.define(version: 20151021225125) do
   add_foreign_key "announcements", "countries"
   add_foreign_key "country_supplies", "countries"
   add_foreign_key "country_supplies", "supplies"
+  add_foreign_key "messages", "phones"
   add_foreign_key "messages", "twilio_accounts"
   add_foreign_key "messages", "users"
   add_foreign_key "orders", "requests"

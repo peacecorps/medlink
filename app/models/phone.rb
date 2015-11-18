@@ -3,6 +3,7 @@ class Phone < ActiveRecord::Base
 
   before_save { |rec| rec.condensed = Phone.condense rec.number }
 
+  # FIXME: number should be immutable entirely, but that doesn't play nice with nested_attributes
   validates :condensed, uniqueness: true, on: :create
 
   def has_country_code
@@ -16,7 +17,9 @@ class Phone < ActiveRecord::Base
     number.gsub /[^+\d]/, ''
   end
 
-  def self.lookup number
-    where(condensed: condense(number)).first
+  def self.for number:
+    where(condensed: condense(number)).first_or_create! do |p|
+      p.number = number
+    end
   end
 end

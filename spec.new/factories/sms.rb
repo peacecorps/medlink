@@ -1,7 +1,9 @@
 FactoryGirl.define do
   factory :sms, class: SMS do
-    text "hello world"
-    direction :incoming
     twilio_account
+    phone
+    number    { phone.condensed }
+    text      "hello world"
+    direction :incoming
   end
 end

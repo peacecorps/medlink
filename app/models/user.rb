@@ -60,7 +60,8 @@ class User < ActiveRecord::Base
   end
 
   def send_text message
-    UserTexter.new(user: self).send message
+    return unless primary_phone
+    UserTexter.new(phone: primary_phone, twilio_account: country.twilio_account).send message
   end
 
   def available_supplies

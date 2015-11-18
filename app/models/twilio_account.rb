@@ -4,9 +4,9 @@ class TwilioAccount < ActiveRecord::Base
   validates :sid, presence: true, uniqueness: true
 
   def send_text to, text
-    UserTexter.new(number: to, twilio_account: self).send text
+    phone = Phone.for number: to
+    UserTexter.new(phone: phone, twilio_account: self).send text
   end
-
 
   # We may pull down production data with live credentials, but want to make sure we
   #  don't inadvertently send texts.

@@ -29,6 +29,7 @@ private
 
   def record_receipt
     @sms = SMS.create! \
+      phone:          phone,
       user:           user,
       twilio_account: twilio,
       number:         from,
@@ -40,11 +41,15 @@ private
     @_twilio ||= TwilioAccount.find_by(sid: account_sid)
   end
 
+  def phone
+    @_phone ||= Phone.for(number: from)
+  end
+
   def user
     @_user ||= if pcv_id_override
       User.find_by_pcv_id pcv_id_override
     else
-      User.find_by_phone_number from
+      phone.user
     end
   end
 
