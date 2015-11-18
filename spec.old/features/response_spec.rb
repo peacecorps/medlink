@@ -46,7 +46,7 @@ describe "responding to orders" do
     expect( Response.last.extra_text ).to match /Extra instructions/
 
     sms = SMS.outgoing.last
-    expect( sms.number ).to eq @user.primary_phone.number
+    expect( sms.number ).to eq Phone.condense(@user.primary_phone.number)
 
     mail = ActionMailer::Base.deliveries.last
     expect( mail.to ).to eq [@user.email]

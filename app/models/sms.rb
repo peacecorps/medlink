@@ -14,16 +14,18 @@ class SMS < ActiveRecord::Base
   include Concerns::Immutable
   immutable :user_id, :twilio_account_id, :number, :direction, :text
 
-  def self.newest
-    order(created_at: :desc).first
+  def duplicates within: nil
+    scope = SMS.incoming.where(text: text, number: number).where.not(id: id)
+    within ? scope.where("created_at >= ?", within.ago) : scope
   end
 
-  def duplicate within:
-    SMS.incoming.
-      where(text: text, number: number).
-      where(["created_at >= ?", within.ago]).
-      where.not(id: id).
-      order(created_at: :desc).
-      first
+  def last_duplicate within: nil
+    duplicates(within: within).newest
+  end
+
+private
+
+  def self.newest
+    order(created_at: :desc).first
   end
 end

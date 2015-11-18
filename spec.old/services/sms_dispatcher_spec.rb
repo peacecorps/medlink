@@ -20,8 +20,8 @@ describe SMSDispatcher do
     captured = messages.last
 
     expect( recorded.text ).to eq captured.body
-    expect( Phone.condense recorded.number ).to eq Phone.condense(captured.number)
-    expect( recorded.number ).to eq phone.number
+    expect( recorded.number ).to eq Phone.condense(captured.number)
+    expect( recorded.number ).to eq Phone.condense(phone.number)
 
     recorded
   end
@@ -54,7 +54,7 @@ describe SMSDispatcher do
     expect( @user.primary_phone ).not_to eq new_phone
 
     resp = response_for new_phone, "help"
-    expect( resp.number ).to eq new_phone.number
+    expect( resp.number ).to eq Phone.condense(new_phone.number)
   end
 
   it "handles unknown phones" do

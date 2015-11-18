@@ -1,47 +1,26 @@
 class TwilioAccount < ActiveRecord::Base
   has_many :messages, class_name: "SMS"
 
-  def self.default
-    where(
-      sid:    ENV.fetch('TWILIO_ACCOUNT_SID'),
-      auth:   ENV.fetch('TWILIO_AUTH'),
-      number: ENV.fetch('TWILIO_PHONE_NUMBER')
-    ).first_or_create!
-  end
+  validates :sid, presence: true, uniqueness: true
 
   def send_text to, text
-    user = User.find_by_phone_number to
+    UserTexter.new(number: to, twilio_account: self).send text
+  end
 
-    sms = messages.create!(
-      user:      user,
-      number:    to,
-      text:      text,
-      direction: :outgoing
-    )
 
-    if Rails.env.development?
-      # :nocov:
-      Rails.logger.info "Sending #{sms.text} to #{to}"
-      # :nocov:
-    else
-      send_to_twilio(from: number, to: Phone.condense(to), body: text)
+  # We may pull down production data with live credentials, but want to make sure we
+  #  don't inadvertently send texts.
+  if Rails.configuration.send_texts
+    def client
+      @_client ||= Twilio::REST::Client.new(sid, auth)
     end
-
-    sms
-  end
-
-private
-
-  def client
-    @_client ||= Twilio::REST::Client.new sid, auth
-  end
-
-  def send_to_twilio from:, to:, body:
-    client.messages.create(from: from, to: to, body: body)
-  rescue Twilio::REST::RequestError => e
-    Rails.logger.error "Error while texting #{to} - #{e}"
-    if p = Phone.lookup(to)
-      p.update! send_error: e
+  else
+    def client
+      @_client ||= Twilio::REST::Client.new(
+        Figaro.env.twilio_test_sid!, Figaro.env.twilio_test_auth!)
+    end
+    def number
+      "+15005550006" # Twilio's valid test number
     end
   end
 end

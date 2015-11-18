@@ -53,7 +53,7 @@ private
   end
 
   def duplicate
-    @_duplicate ||= sms.duplicate within: 1.hour
+    @_duplicate ||= sms.last_duplicate within: 1.hour
   end
 
   def confirmation_message

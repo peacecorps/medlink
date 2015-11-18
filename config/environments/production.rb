@@ -75,4 +75,6 @@ Medlink::Application.configure do
     Bullet.enable  = true
     Bullet.rollbar = true
   end
+
+  config.send_texts = true
 end

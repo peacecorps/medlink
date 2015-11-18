@@ -60,16 +60,7 @@ class User < ActiveRecord::Base
   end
 
   def send_text message
-    twilio = country.twilio_account
-    to     = primary_phone.try :number
-    return unless to
-    return if spammy? to, message
-    twilio.send_text to, message
-  end
-
-  def spammy? number, text
-    last = messages.newest
-    last && last.text == text && last.number == number && last.outgoing? && last.created_at >= 2.days.ago
+    UserTexter.new(user: self).send message
   end
 
   def available_supplies

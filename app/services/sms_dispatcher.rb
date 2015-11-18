@@ -37,7 +37,7 @@ private
   end
 
   def twilio
-    @_twilio ||= TwilioAccount.where(sid: account_sid, number: to).first
+    @_twilio ||= TwilioAccount.find_by(sid: account_sid)
   end
 
   def user

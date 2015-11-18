@@ -37,3 +37,6 @@ coverage
 libpeerconnection.log
 /sandi_meter/*
 #*#
+
+# Ignore application configuration
+/config/application.yml

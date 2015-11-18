@@ -9,7 +9,9 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'twilio-ruby'
 gem 'jquery-placeholder-rails'
+gem 'pry-rails'
 
+gem 'figaro'
 gem 'devise'
 gem 'pundit'
 
@@ -36,7 +38,6 @@ end
 
 group :development, :test do
   gem 'letter_opener'
-  gem 'pry-rails'
 
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -48,6 +49,7 @@ group :test do
 
   gem 'rspec-rails'
   gem 'rspec-its'
+  gem 'rspec-given'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'database_cleaner'

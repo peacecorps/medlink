@@ -7,26 +7,18 @@ class Country < ActiveRecord::Base
 
   belongs_to :twilio_account
 
-  validates :name, presence: true
+  validates_presence_of :name, :twilio_account
   validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }
 
   default_scope -> { order(name: :asc) }
 
   def self.with_orders
     ids = Order.unscoped.uniq.pluck :country_id
-    find(ids).sort_by(&:name)
+    where(id: ids)
   end
 
   def self.choices
     all.map { |c| [c.name, c.id] }
-  end
-
-  def twilio_account
-    if twilio_account_id
-      TwilioAccount.find twilio_account_id
-    else
-      TwilioAccount.default
-    end
   end
 
   def textable_pcvs
