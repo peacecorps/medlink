@@ -14,11 +14,6 @@ class ApplicationController < ActionController::Base
     #   in the process.
     redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
   end
-  rescue_from Pundit::AuthorizationNotPerformedError do |ex|
-    # :nocov:
-    Slackbot.new.message "#{ex.to_s} - #{controller_action_name}"
-    # :nocov:
-  end if Rails.env.production?
 
 private
 
@@ -54,14 +49,10 @@ private
     yield
     duration = Time.now - start
     if duration > 1.second
-      message = "#{controller_action_name} took #{duration} (#{request.path})"
-      # Slackbot.new.message message
+      message = "#{params[:controller]}##{params[:action]} took #{duration} (#{request.path})"
+      Rails.configuration.slackbot.info message if ENV["ALERT_IF_SLOW"]
       Rails.logger.info message
     end
-  end
-
-  def controller_action_name
-    "#{params[:controller]}##{params[:action]}"
   end
   # :nocov:
 end

@@ -96,10 +96,9 @@ class Response < ActiveRecord::Base
   def send_receipt_reminder!
     return false unless needs_receipt_reminder?
 
-    slack = Slackbot.new
     if receipt_reminders.count >= 3
       flag!
-      slack.message "Flagged response #{id} for manual follow-up after #{receipt_reminders.count} reminders"
+      Rails.configuration.slackbot.message "Flagged response #{id} for manual follow-up after #{receipt_reminders.count} reminders"
       return
     end
 

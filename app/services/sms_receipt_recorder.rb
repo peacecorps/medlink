@@ -30,7 +30,7 @@ class SMSReceiptRecorder < SMSResponder
 private
 
   def outstanding_response
-    @_outstanding_reminder ||= user.receipt_reminders.latest.try(:response)
+    @_outstanding_reminder ||= user.receipt_reminders.newest.try(:response)
   end
 
   def response_message type

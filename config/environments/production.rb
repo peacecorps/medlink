@@ -77,4 +77,10 @@ Medlink::Application.configure do
   end
 
   config.send_texts = true
+
+  config.slackbot = Slackbot.new(
+    channel:    "#medlink",
+    username:   "Medlink",
+    icon_emoji: ":hospital:"
+  )
 end

@@ -22,10 +22,4 @@ class SMS < ActiveRecord::Base
   def last_duplicate within: nil
     duplicates(within: within).newest
   end
-
-private
-
-  def self.newest
-    order(created_at: :desc).first
-  end
 end
