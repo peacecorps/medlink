@@ -43,10 +43,6 @@ class User < ActiveRecord::Base
     where(['lower(pcv_id) = ?', str.downcase]).first
   end
 
-  def self.find_by_phone_number number
-    Phone.lookup(number).try :user
-  end
-
   def primary_phone
     @_primary_phone ||= phones.first
   end

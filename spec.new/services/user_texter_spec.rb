@@ -53,8 +53,6 @@ describe UserTexter do
 
     When(:result) { UserTexter.new(phone: phone, deliverer: deliverer).send "ack" }
 
-    # FIXME: should record the error on the SMS object
-    # FIXME: should _not_ count SMSs that errored for spam checks
     Then { SMS.outgoing.newest == result               }
     And  { SMS.outgoing.count == 1                     }
     And  { result.user == phone.user                   }

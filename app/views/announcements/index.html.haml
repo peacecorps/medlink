@@ -15,14 +15,18 @@
         - if current_user.admin?
           %td= announcement.country.name
         %td= announcement.message
-        %td= announcement.preview
+        %td
+          - if announcement.schedule
+            = announcement.schedule.preview
         %td
           - if announcement.last_sent_at
             = short_date announcement.last_sent_at
           - else
             Never
         %td
-          - if announcement.sendable?
+          / FIXME: this business logic should live elsewhere
+          /   see also: periodic_announcement_sender.rb
+          - unless announcement.has_been_sent?(within: 1.day)
             = link_to deliver_announcement_path(announcement), method: :post, class: "btn btn-default" do
               = icon :send
               Send Now

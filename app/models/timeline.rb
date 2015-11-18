@@ -45,9 +45,6 @@ class Timeline
     user.time_zone
   end
 
-  def description_for
-  end
-
   def fetch scope
     scope.where("created_at > ?", duration.ago)
   end

@@ -6,7 +6,7 @@ class Report
   def to_csv opts={}
     CSV.generate(opts) do |csv|
       csv << columns
-      cleaned_rows.each { |values| csv << values if values.any?(&:present?) }
+      formatted_rows.each { |values| csv << values if values.any?(&:present?) }
     end
   end
 
@@ -35,7 +35,7 @@ class Report
     end
   end
 
-  def make_row obj
+  def format_row obj
     format(obj).values.map { |v| clean v }
   end
 
@@ -44,7 +44,7 @@ class Report
     value.to_s.gsub("\n", " ")
   end
 
-  def cleaned_rows
-    decorated_objects.map { |obj| make_row obj }
+  def formatted_rows
+    decorated_objects.map { |obj| format_row obj }
   end
 end
