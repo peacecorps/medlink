@@ -1,16 +1,6 @@
 class DeliveryMethod
   attr_reader :name, :title, :text
 
-  def self.load str
-    return str if str.is_a? self
-    return unless str
-    find { |m| m.name.to_s == str.to_s }
-  end
-
-  def self.dump method
-    method.name if method
-  end
-
   def initialize name, text, opts={}
     @name, @text  = name, text
     @title        = opts[:title] || @name.capitalize
@@ -43,6 +33,16 @@ class DeliveryMethod
 
     def each
       [Delivery, Pickup, Purchase, Denial].each { |m| yield m }
+    end
+
+    def load str
+      return str if str.is_a? self
+      return unless str
+      find { |m| m.name.to_s == str.to_s }
+    end
+
+    def dump method
+      method.name if method
     end
   end
 end

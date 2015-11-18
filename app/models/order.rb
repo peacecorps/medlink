@@ -25,8 +25,8 @@ class Order < ActiveRecord::Base
   end
 
   def delivery_method= method
-    method = DeliveryMethod.find { |m| m.name.to_s == method } unless method.is_a? DeliveryMethod
-    super method
+    m = DeliveryMethod.load method
+    m ? super(m) : raise("Could not coerce '#{method}' to a delivery method")
   end
 
   def denied?
