@@ -10,7 +10,7 @@ describe SMS do
   When(:result) { FactoryGirl.create :sms, text: text, number: number }
 
   Then { result.duplicates.count == 2      }
-  Then { result.last_duplicate   == recent }
-  Then { result.duplicates(within:  1.day).count == 1 }
-  Then { result.duplicates(within: 1.hour).count == 0 }
+  And  { result.last_duplicate   == recent }
+  And  { result.duplicates(within:  1.day).count == 1 }
+  And  { result.duplicates(within: 1.hour).count == 0 }
 end

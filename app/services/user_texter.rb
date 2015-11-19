@@ -31,10 +31,6 @@ class UserTexter
     phone.user
   end
 
-  def account_for_phone
-    phone && phone.user && phone.user.country.twilio_account
-  end
-
   def default_account!
     TwilioAccount.first!
   end

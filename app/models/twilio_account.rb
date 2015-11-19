@@ -8,6 +8,7 @@ class TwilioAccount < ActiveRecord::Base
     UserTexter.new(phone: phone, twilio_account: self).send text
   end
 
+  # :nocov:
   # We may pull down production data with live credentials, but want to make sure we
   #  don't inadvertently send texts.
   if Rails.configuration.send_texts
@@ -23,4 +24,5 @@ class TwilioAccount < ActiveRecord::Base
       "+15005550006" # Twilio's valid test number
     end
   end
+  # :nocov:
 end

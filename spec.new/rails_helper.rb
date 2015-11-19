@@ -50,4 +50,9 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.before :all do
+    # TODO: figure out why some test runs don't clean up after themselves
+    DatabaseCleaner.clean_with :truncation
+  end
 end

@@ -14,6 +14,10 @@ class Schedule
     s.to_json
   end
 
+  def == other
+    other && days == other.days && hour == other.hour
+  end
+
   def preview
     return unless days.any?
     now = Time.now
@@ -21,7 +25,7 @@ class Schedule
     "#{now.strftime("%b")} #{days.to_sentence} at #{hour.to_s.rjust 2, '0'}:00"
   end
 
- private
+private
 
   def schedule_for_month ts
     eom = ts.end_of_month.day + 1

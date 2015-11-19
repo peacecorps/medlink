@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Schedule do
+  after(:all) { Timecop.return }
+
   context "with positive offsets" do
     Given(:schedule) { Schedule.new days: [3, 15, 30], hour: 9 }
 

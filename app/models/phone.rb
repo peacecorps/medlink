@@ -14,12 +14,16 @@ class Phone < ActiveRecord::Base
   validate :has_country_code
 
   def self.condense number
-    number.gsub /[^+\d]/, ''
+    number.gsub(/[^+\d]/, '')
   end
 
   def self.for number:
-    where(condensed: condense(number)).first_or_create! do |p|
-      p.number = number
+    normalized = condense number
+    normalized = "+#{normalized}" unless normalized.start_with? "+"
+    if found = Phone.find_by_condensed(normalized)
+      found
+    else
+      Phone.create! number: number, condensed: normalized
     end
   end
 end
