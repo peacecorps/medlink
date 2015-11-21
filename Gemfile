@@ -6,9 +6,10 @@ gem 'rails'
 
 gem 'pg'
 gem 'jquery-rails'
+# FIXME: remove
 gem 'haml-rails'
+gem 'slim-rails'
 gem 'twilio-ruby'
-gem 'jquery-placeholder-rails'
 gem 'pry-rails'
 
 gem 'figaro'
@@ -23,8 +24,6 @@ gem 'kaminari'
 gem 'virtus'
 gem 'draper'
 
-gem 'nested_form'
-
 gem 'quiet_assets'
 
 gem 'bullet'
@@ -37,7 +36,15 @@ group :assets do
   gem 'uglifier'
 end
 
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
 group :development, :test do
+  gem 'activerecord-import'
+  gem 'named_seeds'
+  gem 'pry-byebug'
   gem 'letter_opener'
 
   gem 'spring'

@@ -1,0 +1,25 @@
+= content_for :page_title do
+  = current_user.pcv? ? "Request Form" : "Place an Order"
+
+= bootstrap_form_for @placer do |f|
+  .row
+    .col-md-6
+      = render partial: 'partials/errors', locals: { object: @placer }
+
+      - if current_user.pcv?
+        = title do
+          = current_user.name
+          small= current_user.pcv_id
+        = f.hidden_field :for_user_id
+
+      - else
+        = f.collection_select :for_volunteer_id, @placer.users, :id, :name, include_blank: true, label: "For Volunteer"
+
+      = f.collection_select :supplies, @placer.available_supplies, :id, :select_display,
+        { label: "Supplies", selected: @placer.supply_ids }, class: "chosen-select", multiple: true
+      / FIXME: it's ⌘ on OSX ...
+      .help-block.no-js Control-click to select multiple
+
+      = f.text_area :text, rows: 3, label: "Special Instructions", placeholder: "Optional: add useful information for your Health Unit (i.e. specific bus lines, pick-up location, dates at site, planned trips etc.)"
+
+  button.btn.btn-primary(type="submit") Submit

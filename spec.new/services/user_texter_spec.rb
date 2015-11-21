@@ -7,7 +7,7 @@ describe UserTexter do
     Given(:phone) { FactoryGirl.create :phone }
     When(:result) { UserTexter.new(phone: phone, deliverer: noop).send "hello" }
 
-    Then { SMS.outgoing.newest == result }
+    Then { result == SMS.outgoing.newest }
     And  { SMS.outgoing.count == 1       }
     And  { result.user == phone.user     }
     And  { result.text == "hello"        }
@@ -21,7 +21,7 @@ describe UserTexter do
     context "- first phone" do
       When(:result) { UserTexter.new(phone: p1, deliverer: noop).send "boop" }
 
-      Then { SMS.outgoing.newest == result }
+      Then { result == SMS.outgoing.newest }
       And  { SMS.outgoing.count == 1       }
       And  { result.user == user           }
       And  { result.number == p1.condensed }
@@ -53,7 +53,7 @@ describe UserTexter do
 
     When(:result) { UserTexter.new(phone: phone, deliverer: deliverer).send "ack" }
 
-    Then { SMS.outgoing.newest == result               }
+    Then { result == SMS.outgoing.newest               }
     And  { SMS.outgoing.count == 1                     }
     And  { result.user == phone.user                   }
     And  { result.number == phone.condensed            }
@@ -62,12 +62,12 @@ describe UserTexter do
   end
 
   context "phone number with no user" do
-    Given(:phone)   { FactoryGirl.create :phone, user: nil }
-    Given!(:twilio) { FactoryGirl.create :twilio_account   }
+    Given(:phone)  { FactoryGirl.create :phone, user: nil }
+    Given(:twilio) { TwilioAccount.first! }
 
     When(:result) { UserTexter.new(phone: phone, deliverer: noop).send "asdf" }
 
-    Then { SMS.outgoing.newest == result    }
+    Then { result == SMS.outgoing.newest    }
     And  { SMS.outgoing.count == 1          }
     And  { result.phone == phone            }
     And  { result.number == phone.condensed }
@@ -76,7 +76,6 @@ describe UserTexter do
   end
 
   context "repeated text to a number" do
-    Given!(:twilio)   { FactoryGirl.create :twilio_account }
     Given(:phone)     { FactoryGirl.create :phone, user: nil }
     Given(:texter)    { UserTexter.new(phone: phone, deliverer: noop) }
     Given!(:previous) { texter.send "spam" }

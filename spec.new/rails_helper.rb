@@ -51,8 +51,12 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  config.before :all do
-    # TODO: figure out why some test runs don't clean up after themselves
-    DatabaseCleaner.clean_with :truncation
+  config.before :suite do
+    NamedSeeds.load_seed unless Country.any?
+
+    # TODO:
+    # * figure out why some test runs don't clean up after themselves
+    # * for some reason, `only` seems to work here, but `except` is being ignored
+    # DatabaseCleaner.clean_with :truncation, except: %w( countries supplies country_supplies twilio_account )
   end
 end

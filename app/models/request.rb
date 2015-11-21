@@ -5,7 +5,6 @@ class Request < ActiveRecord::Base
 
   has_many :orders
   has_many :supplies, through: :orders
-  accepts_nested_attributes_for :orders, allow_destroy: false
 
   belongs_to :reorder_of, class_name: "Response"
 end

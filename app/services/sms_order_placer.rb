@@ -39,13 +39,12 @@ private
   end
 
   def create_orders
-    rc = RequestCreator.new(user, supplies: found_supplies, request: {
-      message_id:        sms.id,
-      user_id:           user.id,
-      text:              parsed.instructions
-    })
-    rc.save
-    sms.update request: rc.request
+    RequestPlacer.new(
+      placed_by:  user,
+      supply_ids: found_supplies.map(&:id),
+      sms:        sms,
+      message:    parsed.instructions
+    ).save
   end
 
   def supply_names
