@@ -10,7 +10,7 @@
         = title do
           = current_user.name
           small= current_user.pcv_id
-        = f.hidden_field :for_volunteer_id
+        = f.hidden_field :user, value: current_user.id
 
       - else
         = f.collection_select :user, @placer.users, :id, :name, include_blank: true, label: "For Volunteer"

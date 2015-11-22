@@ -17,13 +17,14 @@ class User < ActiveRecord::Base
 
   paginates_per 10
 
-  has_many :personal_requests, class_name: "Request"
+  has_many :requests
   has_many :orders
   has_many :responses
   has_many :receipt_reminders
 
   has_many :phones, dependent: :destroy
   has_many :messages, class_name: "SMS"
+
   has_many :submitted_requests, foreign_key: "entered_by", class_name: "Request"
 
   validates_presence_of :country, :location, :first_name, :last_name, :role
@@ -89,14 +90,7 @@ class User < ActiveRecord::Base
     update! active: false
   end
 
-  def make_sms_request body
-    raise unless Rails.env.development? || Rails.env.test?
-    account = country.twilio_account
-    SMSDispatcher.new(
-      account_sid: account.sid,
-      to:          account.number,
-      from:        primary_phone.number,
-      body:        body
-    ).record_and_respond
+  def personal_requests
+    Request.where user_id: id, entered_by: id
   end
 end

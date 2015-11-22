@@ -5,7 +5,7 @@ class RequestPolicy < ApplicationPolicy
 
   def create?
     if user.pcv?
-      record.user_id == user.id && record.entered_by == user.id
+      record.user == user && record.entered_by == user.id
     else
       record.entered_by == user.id
     end

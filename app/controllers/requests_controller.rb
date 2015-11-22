@@ -6,15 +6,16 @@ class RequestsController < ApplicationController
 
   def create
     @placer = RequestForm.new current_user.submitted_requests.new
-      #for_volunteer_id: params[:request][:for_volunteer_id],
-      #supply_ids:       params[:request][:supplies],
-      #message:          params[:request][:text]
 
-    authorize @placer
     if @placer.validate params[:request]
+      # FIXME: we can't authorize until a user is bound, but want to be sure we authorize
+      #   in either branch (but before saving here)
+      authorize @placer
       @placer.save
+      OrderMonitor.new.new_request @placer.model
       redirect_to after_create_path, flash: { success: @placer.success_message }
     else
+      authorize @placer
       render :new
     end
   end

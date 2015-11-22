@@ -1,8 +1,10 @@
 class RequestForm < Reform::Form
+  # TODO: rename `user` to something more descriptive
   property :user
   property :country
   property :entered_by
   property :text
+  property :message
 
   collection :supplies
 
@@ -10,14 +12,14 @@ class RequestForm < Reform::Form
   validates :country, presence: true
   validates :entered_by, presence: true
   validates :supplies, presence: true
-  validate :supplies_are_available
+  validate  :supplies_are_available
 
   def initialize *args
     super
     self.country ||= model.submitter.country
   end
 
-  # FIXME: this seems necessary. Figure out why (and submit PR?).
+  # FIXME: this seems necessary (for bootstrap_form_for?). Figure out why (and submit PR?).
   def self.validators_on name
     validator._validators[name]
   end
@@ -27,14 +29,6 @@ class RequestForm < Reform::Form
   end
   def supplies= ids
     super Supply.where(id: ids)
-  end
-
-  def save
-    super
-
-    model.reload
-    mark_duplicated_orders
-    update_wait_times
   end
 
   def users
@@ -48,16 +42,14 @@ class RequestForm < Reform::Form
   def success_message
     # FIXME: this due logic is duplicated a lot
     due = model.orders.first.due_at.strftime "%B %d"
-    if entered_by == for_volunteer
+    if entered_by == user
       I18n.t! "flash.request.placed", expected_receipt_date: due
     else
-      I18n.t! "flash.request.placed_for", username: for_volunteer.name, expected_receipt_date: due
+      I18n.t! "flash.request.placed_for", username: user.name, expected_receipt_date: due
     end
   end
 
   private
-
-  alias_method :for_volunteer, :user
 
   def supplies_are_available
     unavailable = supplies - available_supplies
@@ -67,18 +59,5 @@ class RequestForm < Reform::Form
     if supplies.none?
       model.errors.add :supplies, "are required"
     end
-  end
-
-  def mark_duplicated_orders
-    for_volunteer.orders.
-      where(response: nil, supply: supplies).
-      where.not(request: model).
-      update_all duplicated_at: model.created_at
-  end
-
-  def update_wait_times
-    for_volunteer.last_requested_at = model.created_at
-    for_volunteer.waiting_since   ||= model.created_at
-    for_volunteer.save!
   end
 end

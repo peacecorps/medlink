@@ -40,12 +40,14 @@ private
   end
 
   def create_orders
-    RequestPlacer.new(
-      placed_by:  user,
-      supply_ids: found_supplies.map(&:id),
-      sms:        sms,
-      message:    parsed.instructions
-    ).save
+    form = RequestForm.new user.personal_requests.new
+    raise "SMS form failed to validate" unless form.validate( # This _should_ be impossible
+      message:  sms,
+      supplies: found_supplies,
+      text:     parsed.instructions
+    )
+    form.save
+    OrderMonitor.new.new_request form.model
   end
 
   def supply_names
