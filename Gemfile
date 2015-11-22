@@ -23,6 +23,7 @@ gem 'sinatra', require: nil
 gem 'kaminari'
 gem 'virtus'
 gem 'draper'
+gem 'reform'
 
 gem 'quiet_assets'
 

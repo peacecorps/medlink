@@ -17,13 +17,14 @@ class User < ActiveRecord::Base
 
   paginates_per 10
 
-  has_many :requests
+  has_many :personal_requests, class_name: "Request"
   has_many :orders
   has_many :responses
   has_many :receipt_reminders
 
   has_many :phones, dependent: :destroy
   has_many :messages, class_name: "SMS"
+  has_many :submitted_requests, foreign_key: "entered_by", class_name: "Request"
 
   validates_presence_of :country, :location, :first_name, :last_name, :role
   validates :pcv_id, presence: true, uniqueness: true, if: :pcv?

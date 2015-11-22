@@ -13,10 +13,10 @@
         = f.hidden_field :for_volunteer_id
 
       - else
-        = f.collection_select :for_volunteer_id, @placer.users, :id, :name, include_blank: true, label: "For Volunteer"
+        = f.collection_select :user, @placer.users, :id, :name, include_blank: true, label: "For Volunteer"
 
       = f.collection_select :supplies, @placer.available_supplies, :id, :select_display,
-        { label: "Supplies", selected: @placer.supply_ids }, class: "chosen-select", multiple: true
+        { label: "Supplies", selected: @placer.supplies.pluck(:id) }, class: "chosen-select", multiple: true
       / FIXME: it's ⌘ on OSX ...
       .help-block.no-js Control-click to select multiple
 

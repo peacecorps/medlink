@@ -112,6 +112,9 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    disposable (0.1.14)
+      representable (>= 2.2.3, < 3.0.0)
+      uber
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -240,6 +243,11 @@ GEM
     redis (3.2.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
+    reform (2.0.5)
+      disposable (~> 0.1.11)
+      uber (~> 0.0.11)
+    representable (2.3.0)
+      uber (~> 0.0.7)
     request_store (1.2.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
@@ -337,6 +345,7 @@ GEM
       multi_json (>= 1.3.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uber (0.0.15)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -395,6 +404,7 @@ DEPENDENCIES
   quiet_assets
   rails
   rails_12factor
+  reform
   rollbar
   rspec-given
   rspec-rails

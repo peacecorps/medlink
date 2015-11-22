@@ -1,18 +1,16 @@
 module Concerns::UserScope
   extend ActiveSupport::Concern
 
-  def ensure_country_id
-    errors.add(:country_id, "is not set") unless country_id == user.country_id
-  end
-
   included do
     include Concerns::Immutable
 
     belongs_to :user
     belongs_to :country
 
-    validates_presence_of :user, :country_id, on: :create
-    validate :ensure_country_id, on: :create
+    validates_presence_of :user, on: :create
+    before_create do
+      self.country_id ||= user.country_id
+    end
 
     immutable :user_id, :country_id
   end
