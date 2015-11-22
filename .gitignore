@@ -40,3 +40,5 @@ libpeerconnection.log
 
 # Ignore application configuration
 /config/application.yml
+
+/fixtures/vcr_cassettes

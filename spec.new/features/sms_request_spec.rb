@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "Ordering via sms" do
-  it "runs end-to-end" do
+  it "runs end-to-end", :vcr do
     phone     = FactoryGirl.create :phone
     volunteer = phone.user
     country   = volunteer.country

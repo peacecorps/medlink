@@ -12,7 +12,7 @@ class SMS::Receiver
       twilio_account: twilio,
       user:           user,
       number:         from,
-      text:           body,
+      text:           body.strip,
       direction:      :incoming
 
     response = begin

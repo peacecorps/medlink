@@ -56,11 +56,12 @@ group :test do
   gem 'simplecov'
 
   gem 'rspec-rails'
-  gem 'rspec-its'
   gem 'rspec-given'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'vcr'
+  gem 'webmock'
   gem 'zonebie'
   gem 'timecop'
 end

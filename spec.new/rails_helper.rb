@@ -27,6 +27,11 @@ require 'rspec/rails'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+VCR.configure do |config|
+  config.cassette_library_dir = "fixtures/vcr_cassettes"
+  config.hook_into :webmock
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -58,5 +63,13 @@ RSpec.configure do |config|
     # * figure out why some test runs don't clean up after themselves
     # * for some reason, `only` seems to work here, but `except` is being ignored
     # DatabaseCleaner.clean_with :truncation, except: %w( countries supplies country_supplies twilio_account )
+  end
+
+  # TODO: many of these tests don't really need to hit Twilio and should probably opt out
+  config.around :each, :vcr do |x|
+    name = x.full_description.gsub /\W+/, '-'
+    VCR.use_cassette name, re_record_interval: 1.week do
+      x.run
+    end
   end
 end

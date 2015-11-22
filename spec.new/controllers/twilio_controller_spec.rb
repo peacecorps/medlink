@@ -4,7 +4,7 @@ describe TwilioController do
   Given(:twilio) { TwilioAccount.first }
   Given(:phone)  { FactoryGirl.create :phone }
 
-  context "with a valid sid" do
+  context "with a valid sid", :vcr do
     When(:result) { post :receive, AccountSid: twilio.sid, From: phone.number, To: twilio.number, Body: "help" }
 
     Then { result.status == 200                                     }
@@ -12,7 +12,7 @@ describe TwilioController do
     And  { SMS.outgoing.last.number == Phone.condense(phone.number) }
   end
 
-  context "with a new phone number" do
+  context "with a new phone number", :vcr do
     Given(:number) { "+1 (555) 555-0123" }
     When(:result) { post :receive, AccountSid: twilio.sid, From: number, To: twilio.number, Body: "help" }
 
