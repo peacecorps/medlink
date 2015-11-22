@@ -8,6 +8,8 @@ require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
+require 'capybara/poltergeist'
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -27,9 +29,12 @@ require 'rspec/rails'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
+Capybara.javascript_driver = :poltergeist
+
 VCR.configure do |config|
   config.cassette_library_dir = "fixtures/vcr_cassettes"
   config.hook_into :webmock
+  config.ignore_localhost = true
 end
 
 RSpec.configure do |config|
@@ -39,7 +44,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  #config.use_transactional_fixtures = true
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -56,12 +61,19 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
+  def clean!
+    # TODO:
+    # * for some reason, `only` seems to work here, but `except` is being ignored
+    to_clean = ActiveRecord::Base.connection.tables - %w( schema_migrations countries supplies country_supplies twilio_accounts )
+    DatabaseCleaner.clean_with :truncation, only: to_clean
+  end
+
   config.before :suite do
+    clean!
     NamedSeeds.load_seed unless Country.any?
 
     # TODO:
     # * figure out why some test runs don't clean up after themselves
-    # * for some reason, `only` seems to work here, but `except` is being ignored
     # DatabaseCleaner.clean_with :truncation, except: %w( countries supplies country_supplies twilio_account )
   end
 
@@ -71,5 +83,22 @@ RSpec.configure do |config|
     VCR.use_cassette name, re_record_interval: 1.week do
       x.run
     end
+  end
+
+  config.around(:each) do |x|
+    if x.metadata[:js]
+      x.run
+      clean!
+    else
+      DatabaseCleaner.strategy = :transaction
+      DatabaseCleaner.start
+      x.run
+      DatabaseCleaner.clean
+    end
+  end
+
+  def screenshot path=nil
+    path ||= "#{ENV['HOME']}/Desktop/screenshot.png"
+    page.save_screenshot path, full: true
   end
 end

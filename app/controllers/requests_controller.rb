@@ -9,7 +9,7 @@ class RequestsController < ApplicationController
       placed_by:        current_user,
       for_volunteer_id: params[:request][:for_volunteer_id],
       supply_ids:       params[:request][:supplies],
-      message:          params[:request][:message]
+      message:          params[:request][:text]
     authorize @placer.request
 
     if @placer.save

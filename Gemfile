@@ -64,6 +64,7 @@ group :test do
   gem 'webmock'
   gem 'zonebie'
   gem 'timecop'
+  gem 'poltergeist'
 end
 
 gem 'newrelic_rpm'

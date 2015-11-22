@@ -1,16 +1,12 @@
 module ApplicationHelper
   def icon name, opts={}
     capture_haml do
-      haml_tag "i", class: "glyphicon glyphicon-#{name} #{opts[:class]}"
+      slim_tag "i", class: "glyphicon glyphicon-#{name} #{opts[:class]}"
     end
   end
 
   def title &block
-    capture_haml do
-      haml_tag ".title" do
-        haml_tag "h2", &block
-      end
-    end
+    "<div class='title'><h2>#{block.call}</h2></div>".html_safe
   end
 
   def back_link title, path

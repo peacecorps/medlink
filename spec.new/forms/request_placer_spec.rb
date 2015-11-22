@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe RequestPlacer do
-  skip "TODO: feature-layer tests for the form js"
-
   Given(:pcv)        { FactoryGirl.create :pcv }
   Given(:pcmo)       { FactoryGirl.create :pcmo, country: pcv.country }
   Given(:supplies)   { pcv.country.supplies.order("random()").first 3 }
