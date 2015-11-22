@@ -43,6 +43,10 @@ private
     Bullet.enable = true
   end
 
+  def validate reform, *args
+    reform.validate(*args).tap { authorize reform }
+  end
+
   # :nocov:
   def alert_if_slow
     start = Time.now

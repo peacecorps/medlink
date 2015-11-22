@@ -1,18 +1,17 @@
 = content_for :page_title do
-  User Management
+  | User Management
 
 .row
   .col-md-6
     = title do
-      Add
-    = render partial: 'form', locals: { user: @user, action: :add } do
-      %button.btn.btn-primary Add User
+      | Add
+    = render partial: 'form', locals: { user: @user, action: :add }
 
   .col-md-5
     = title do
-      Edit
+      | Edit
     = render partial: "edit_widget", locals: { selected: nil }
 
     = title do
-      Bulk Upload
+      | Bulk Upload
     = render partial: 'upload_csv_form', locals: { upload: @upload }

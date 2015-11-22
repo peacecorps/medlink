@@ -6,7 +6,7 @@ describe "Ordering via sms" do
     volunteer = phone.user
     country   = volunteer.country
     twilio    = country.twilio_account
-    supplies  = country.supplies.order("random()").first 3
+    supplies  = country.supplies.random 3
 
     # User orders some supplies
     message = "#{supplies.map(&:shortcode).join ", "} - thanks!"

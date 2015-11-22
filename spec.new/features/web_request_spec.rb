@@ -6,7 +6,7 @@ describe "Ordering via the web" do
     volunteer = phone.user
     country   = volunteer.country
     twilio    = country.twilio_account
-    supplies  = country.supplies.order("random()").first 3
+    supplies  = country.supplies.random 3
 
     volunteer.update! welcome_video_shown_at: 1.day.ago, password: "password"
 

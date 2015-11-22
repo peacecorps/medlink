@@ -12,17 +12,16 @@ class Admin::UsersController < AdminController
   end
 
   def new
-    @user = User.new
+    @user = UserForm.new User.new
     authorize @user
 
     @upload = User::Upload.new(country: current_user.country)
   end
 
   def create
-    @user = UserUpdate.new User.new params: user_params
-    authorize @user
+    @user = UserForm.new User.new
 
-    if @user.save
+    if validate @user, params[:user]
       redirect_to new_admin_user_path, notice: I18n.t!("flash.user.added")
     else
       @upload = User::Upload.new(country: current_user.country)
@@ -30,25 +29,19 @@ class Admin::UsersController < AdminController
     end
   end
 
+  def select
+    redirect_to edit_admin_user_path(params[:edit][:user_id])
+  end
+
   def edit
-    # FIXME: extract action for this redirector
-    if params[:edit]
-      # Need to redirect to set the right path
-      if params[:edit][:user_id].present?
-        redirect_to edit_admin_user_path(params[:edit][:user_id])
-      else
-        redirect_to :back, flash: { notice: "Please select a user to edit" }
-      end
-    else
-      @user = User.find params[:id]
-    end
+    @user = UserForm.new User.find params[:id]
   end
 
   def update
-    @user = UserUpdate.new User.find(params[:id]), params: params
-    authorize @user
+    @user = UserForm.new User.find params[:id]
 
-    if @user.save
+    if validate @user, params[:user]
+      @user.save
       redirect_to new_admin_user_path, @user.flash
     else
       render :edit

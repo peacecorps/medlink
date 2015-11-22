@@ -2,7 +2,7 @@
 - user.phones.new # Ensure we display a blank field
 
 = bootstrap_form_for user, url: url do |f|
-  %fieldset
+  fieldset
     = f.text_field :first_name
     = f.text_field :last_name
     = f.text_field :location, label: "Address / location"
@@ -16,11 +16,17 @@
       = f.label :phones
       - user.phones.each do |phone|
         = f.fields_for phone do |phone_form|
-          - x = link_to "#", class: "js-only btn btn-danger remove" do
+          - x = link_to "#", class: "js-required btn btn-danger remove" do
             = icon :remove
           = phone_form.text_field :number, placeholder: "Phone number must include '+' and the country code", hide_label: true, append: x, name: "phones[][number]"
-      = link_to "#", class: "js-only btn btn-sm add" do
+      = link_to "#", class: "js-required btn btn-sm add" do
         = icon :plus
-        Add Phone
+        | Add Phone
 
-  %button.btn.btn-primary Save
+  / FIXME: appearance here
+  .form-group
+    - if action == :edit
+      button.btn.btn-primary Save
+      = link_to 'Delete User', inactivate_admin_user_path, method: :patch, data: {confirm: "You are about to inactivate this user. Are you sure?"}, class: "btn btn-danger js-required"
+    - else
+      button.btn.btn-primary Create

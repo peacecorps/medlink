@@ -71,6 +71,7 @@ Medlink::Application.routes.draw do
       end
 
       collection do
+        get  :select
         post :upload_csv
         post :set_country
       end

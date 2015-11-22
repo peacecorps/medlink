@@ -1,8 +1,6 @@
 module ApplicationHelper
   def icon name, opts={}
-    capture_haml do
-      slim_tag "i", class: "glyphicon glyphicon-#{name} #{opts[:class]}"
-    end
+    "<i class='glyphicon glypicon-#{name} #{opts[:class]}'></i>".html_safe
   end
 
   def title &block

@@ -3,6 +3,6 @@ FactoryGirl.define do
     request
     user    { request.user }
     country { user.country }
-    supply  { Supply.order("random()").first }
+    supply  { Supply.random 1 }
   end
 end

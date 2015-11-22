@@ -4,8 +4,8 @@ describe SMS::OrderPlacer do
   Given(:twilio)    { TwilioAccount.first! }
   Given(:volunteer) { FactoryGirl.create :pcv }
   Given(:phone)     { FactoryGirl.create :phone, user: volunteer }
-  Given(:supplies)  { volunteer.country.supplies.order("random()") }
-  Given(:supply)    { supplies.first! }
+  Given(:supplies)  { volunteer.country.supplies.random(20) }
+  Given(:supply)    { supplies.first }
 
   context "requires a user" do
     Given(:guest)  { FactoryGirl.create :phone, user: nil }

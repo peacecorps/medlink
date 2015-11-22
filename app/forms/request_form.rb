@@ -19,11 +19,6 @@ class RequestForm < Reform::Form
     self.country ||= model.submitter.country
   end
 
-  # FIXME: this seems necessary (for bootstrap_form_for?). Figure out why (and submit PR?).
-  def self.validators_on name
-    validator._validators[name]
-  end
-
   def user= id
     super User.pcv.find_by(id: id)
   end
