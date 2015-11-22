@@ -26,27 +26,6 @@ describe SMSDispatcher do
     recorded
   end
 
-  it "handles empty messages" do
-    resp = response_for @phone, ""
-    expect( Request.count ).to eq 0
-    expect( resp.text ).to match /resubmit.*in.*format/i
-  end
-
-  it "creates a request for well-formed texts" do
-    incoming = "#{@supply.shortcode} - please and thank you!"
-    resp = response_for @phone, incoming
-
-    req = Request.last
-    expect( req.user ).to eq @user
-    expect( req.message.text ).to eq incoming
-    expect( req.supplies ).to eq [@supply]
-    expect( req.text ).to eq "please and thank you!"
-
-    expect( resp.user ).to eq @user
-    expect( resp.text ).to match /#{@supply.name} \(#{@supply.shortcode}\)/
-    expect( resp.text ).to match /expect a response/i
-  end
-
   it "responds to the right phone" do
     3.times { create :phone, user: @user }
     new_phone = @user.phones.last
@@ -63,15 +42,6 @@ describe SMSDispatcher do
 
     expect( resp.number ).to eq phone.number
     expect( resp.text ).to match /can't find user account/i
-  end
-
-  it "does not create requests for duplicate responses" do
-    msg = "#{@supply.shortcode} - please and thank you!"
-
-    expect { response_for @phone, msg }.to change { Request.count }.by(1)
-    expect { @response = response_for(@phone, msg) }.not_to change { Request.count }
-
-    expect( @response.text ).to match /already received your request/i
   end
 
   it "can look up users by pcv id" do
@@ -98,31 +68,5 @@ describe SMSDispatcher do
     strange_phone = create :phone, user: nil
     resp = response_for strange_phone, "#{@supply.shortcode}"
     expect( resp.text ).to match /can't find user/i
-  end
-
-  it "responds with a help message when the supplies cannot be determined" do
-    resp = response_for @phone, "ZXCV, ASDF"
-    expect( resp.text ).to match /unrecognized supply short codes: ZXCV and ASDF/i
-  end
-
-  it "indicates when supplies are valid but not available in-country" do
-    unavailable = 3.times.map { create :supply }
-    resp = response_for @phone, unavailable.map(&:shortcode).join(", ")
-
-    unavailable.each do |s|
-      expect( resp.text ).to include s.shortcode
-    end
-    expect( resp.text ).to match /not.*offered.*in #{@user.country.name}/i
-    expect( resp.text ).not_to include @user.country.supplies.first.shortcode
-  end
-
-  it "can abridge the confirmation message if it's too long" do
-    n = 12
-    n.times { @user.country.supplies << create(:supply) }
-
-    msg = response_for @phone, Supply.last(n).map(&:shortcode).join(' ')
-
-    expect( msg.text.length ).to be < 160
-    expect( msg.text ).to match /#{n - 1} other/
   end
 end

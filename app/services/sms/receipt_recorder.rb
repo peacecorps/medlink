@@ -17,13 +17,12 @@ class SMS::ReceiptRecorder < SMS::Handler
     end
 
     if intent == :flag
-      message = response_message "flagged"
       outstanding_response.flag!
+      response_message "flagged"
     elsif intent == :approve
-      message = response_message "received"
       outstanding_response.mark_received! by: user
+      response_message "received"
     end
-    send_response message
   end
 
 private

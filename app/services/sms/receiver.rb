@@ -15,9 +15,13 @@ class SMS::Receiver
       text:           body,
       direction:      :incoming
 
-    SMS::Dispatcher.new(twilio: twilio, sms: sms).handler.run!
-  rescue SMS::Handler::PresentableError => e
-    twilio.send_text to: from, text: e.message
+    response = begin
+      SMS::Dispatcher.new(twilio: twilio, sms: sms).handler.run!
+    rescue SMS::Handler::PresentableError => e
+      e.message
+    end
+
+    twilio.send_text to: from, text: response
   end
 
   private

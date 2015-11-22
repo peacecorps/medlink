@@ -19,10 +19,6 @@ class SMS::Handler
 
   attr_reader :twilio, :sms
 
-  def send_response text
-    twilio.send_text to: sms.number, text: text
-  end
-
   def user
     sms.user
   end
@@ -38,5 +34,9 @@ class SMS::Handler
       I18n.t! key, subs
     end
     raise PresentableError, msg
+  end
+
+  def user_required!
+    error! "sms.unrecognized_user" unless user
   end
 end
