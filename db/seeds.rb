@@ -15,7 +15,7 @@ Supply.import [:id, :shortcode, :name], supplies, validate: false
 log " => Loaded #{Supply.count} supplies"
 
 
-twilio = TwilioAccount.create! sid: "5555"
+twilio = TwilioAccount.create! sid: "5555", number: "+15005550006"
 
 tzs = {}
 CSV.read(Rails.root.join "db/timezones.csv").each do |country, zone, offset|

@@ -1,7 +1,7 @@
 - url = action == :edit ? admin_user_path(user) : admin_users_path
 - user.phones.new # Ensure we display a blank field
 
-= bootstrap_nested_form_for user, url: url do |f|
+= bootstrap_form_for user, url: url do |f|
   %fieldset
     = f.text_field :first_name
     = f.text_field :last_name
@@ -12,7 +12,15 @@
     = f.text_field :pcv_id, label: "PCV ID"
     = f.select :role, User.role_names, include_blank: 'Assign Role'
 
-    = render partial: "partials/phone_form.html.haml", locals: { form: f }
+    .phones-form
+      = f.label :phones
+      - user.phones.each do |phone|
+        = f.fields_for phone do |phone_form|
+          - x = link_to "#", class: "js-only btn btn-danger remove" do
+            = icon :remove
+          = phone_form.text_field :number, placeholder: "Phone number must include '+' and the country code", hide_label: true, append: x, name: "phones[][number]"
+      = link_to "#", class: "js-only btn btn-sm add" do
+        = icon :plus
+        Add Phone
 
-    %button.btn.btn-primary(type="submit")
-      = user.persisted? ? "Save User" : "Add User"
+  %button.btn.btn-primary Save

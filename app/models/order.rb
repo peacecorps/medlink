@@ -26,7 +26,8 @@ class Order < ActiveRecord::Base
 
   def delivery_method= method
     m = DeliveryMethod.load method
-    m ? super(m) : raise("Could not coerce '#{method}' to a delivery method")
+    raise "Could not coerce '#{method}' to a delivery method" if method && !m
+    super m
   end
 
   def denied?

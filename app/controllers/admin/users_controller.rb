@@ -19,7 +19,7 @@ class Admin::UsersController < AdminController
   end
 
   def create
-    @user = User.new user_params.merge(password: SecureRandom.hex)
+    @user = UserUpdate.new User.new params: user_params
     authorize @user
 
     if @user.save
@@ -31,6 +31,7 @@ class Admin::UsersController < AdminController
   end
 
   def edit
+    # FIXME: extract action for this redirector
     if params[:edit]
       # Need to redirect to set the right path
       if params[:edit][:user_id].present?
@@ -44,28 +45,21 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    @user = User.find params[:id]
+    @user = UserUpdate.new User.find(params[:id]), params: params
     authorize @user
-    _attrs = @user.attributes
-    if @user.update_attributes user_params
-      diff = User::Change.new _attrs, @user
-      _flash = if diff.changed?
-        { success: I18n.t!("flash.user.changes", changes: diff.summary) }
-      else
-        { notice: I18n.t!("flash.user.no_changes") }
-      end
-      redirect_to new_admin_user_path, flash: _flash
+
+    if @user.save
+      redirect_to new_admin_user_path, @user.flash
     else
       render :edit
     end
   end
 
   def inactivate
-    @user = User.find params[:id]
-    @user.active = false
-    @user.save!
-    _flash = { success: I18n.t!("flash.user.inactive_user", user: @user.name) }
-    redirect_to new_admin_user_path, flash: _flash
+    user = User.find params[:id]
+    authorize user
+    user.inactivate!
+    redirect_to new_admin_user_path, success: I18n.t!("flash.user.inactive_user", user: user.name)
   end
 
   def upload_csv
@@ -81,15 +75,5 @@ class Admin::UsersController < AdminController
       flash[:success] = I18n.t! "flash.csv.valid", users: @upload.rows.count
       redirect_to new_admin_user_path
     end
-  end
-
-  private # ----------
-
-  def user_params
-    p = params.require(:user).permit(:first_name, :last_name, :location,
-      :country_id, :email, :pcv_id, :role, :time_zone,
-      phones_attributes: [:id, :number, :_destroy])
-    p[:phones_attributes].reject! { |_,ps| ps[:number].empty? }
-    p
   end
 end

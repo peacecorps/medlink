@@ -1,10 +1,12 @@
 class Phone < ActiveRecord::Base
   belongs_to :user
+  has_many :messages, class_name: "SMS"
 
   before_save { |rec| rec.condensed = Phone.condense rec.number }
 
-  # FIXME: number should be immutable entirely, but that doesn't play nice with nested_attributes
-  validates :condensed, uniqueness: true, on: :create
+  include Concerns::Immutable
+  validates :condensed, presence: true, uniqueness: true
+  immutable :number, :condensed
 
   def has_country_code
     unless number.start_with? '+'

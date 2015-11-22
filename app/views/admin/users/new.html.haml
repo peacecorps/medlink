@@ -5,7 +5,8 @@
   .col-md-6
     = title do
       Add
-    = render partial: 'form', locals: { user: @user, action: :add }
+    = render partial: 'form', locals: { user: @user, action: :add } do
+      %button.btn.btn-primary Add User
 
   .col-md-5
     = title do

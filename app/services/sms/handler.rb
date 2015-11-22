@@ -1,24 +1,34 @@
-class SMSResponder
+class SMS::Handler
   PresentableError = Class.new StandardError
-
-  attr_reader :twilio, :sms
 
   def initialize twilio:, sms:
     @twilio, @sms = twilio, sms
   end
 
-private
+  # :nocov:
+  def valid?
+    raise NotImplementedError
+  end
+
+  def run!
+    raise NotImplementedError
+  end
+  # :nocov:
+
+  private
+
+  attr_reader :twilio, :sms
+
+  def send_response text
+    twilio.send_text to: sms.number, text: text
+  end
 
   def user
-    @sms.user
+    sms.user
   end
 
   def message
-    @sms.text
-  end
-
-  def from
-    @sms.number
+    sms.text
   end
 
   def error! key, subs={}, opts={}
@@ -28,9 +38,5 @@ private
       I18n.t! key, subs
     end
     raise PresentableError, msg
-  end
-
-  def send_response response
-    twilio.send_text from, response
   end
 end

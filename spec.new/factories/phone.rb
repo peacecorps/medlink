@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :phone do
-    number "+1 (555) 555-5555"
+    sequence(:number) { |n| "+1 (555) 555-#{n.to_s.rjust 4, '7'}" }
+    condensed { Phone.condense(number) }
     user
   end
 end

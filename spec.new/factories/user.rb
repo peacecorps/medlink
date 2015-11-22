@@ -18,8 +18,8 @@ FactoryGirl.define do
     time_zone  { ActiveSupport::TimeZone.all.sample.name }
     location   "A place"
 
-    User.roles.keys.each do |role_name|
-      factory role_name do
+    User.roles.each do |role_name, _|
+      factory role_name.to_sym do
         role role_name
       end
     end

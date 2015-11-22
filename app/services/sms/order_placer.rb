@@ -1,9 +1,9 @@
-class SMSOrderPlacer < SMSResponder
+class SMS::OrderPlacer < SMS::Handler
   def valid?
     true # This is our fallback catch-all handler
   end
 
-  def respond
+  def run!
     if unrecognized_shortcodes.any?
       error! "sms.unrecognized_shortcodes",
         { codes: unrecognized_shortcodes }, condense: :code
@@ -31,7 +31,7 @@ class SMSOrderPlacer < SMSResponder
 private
 
   def parsed
-    @_parsed ||= SMS::Parser.new(message).tap &:run!
+    @_parsed ||= SMS::Parser.new(sms.text).tap &:run!
   rescue SMS::Parser::ParseError => e
     # :nocov:
     error! "sms.unparseable"

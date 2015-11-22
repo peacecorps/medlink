@@ -21,9 +21,9 @@ html lang="en"
     /[if lt IE 8]
       = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
 
-  body
+  body.no-js
     javascript:
-      document.querySelector("body").classList.add("yes-js")
+      document.querySelector("body").className = "yes-js"
     = render 'partials/global_nav'
 
     #page-title

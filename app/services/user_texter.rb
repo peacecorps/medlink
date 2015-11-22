@@ -3,7 +3,7 @@ class UserTexter
 
   def initialize phone:, twilio_account: nil, deliverer: nil
     @phone     = phone
-    @twilio    = twilio_account || default_account!
+    @twilio    = twilio_account || default_account
     @deliverer = deliverer || self.twilio.client.messages.method(:create)
   end
 
@@ -31,7 +31,7 @@ class UserTexter
     phone.user
   end
 
-  def default_account!
+  def default_account
     TwilioAccount.first!
   end
 

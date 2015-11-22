@@ -24,7 +24,6 @@ class User < ActiveRecord::Base
 
   has_many :phones, dependent: :destroy
   has_many :messages, class_name: "SMS"
-  accepts_nested_attributes_for :phones, allow_destroy: true
 
   validates_presence_of :country, :location, :first_name, :last_name, :role
   validates :pcv_id, presence: true, uniqueness: true, if: :pcv?
@@ -83,6 +82,10 @@ class User < ActiveRecord::Base
 
   def welcome_video_seen?
     !self.welcome_video_shown_at.nil?
+  end
+
+  def inactivate!
+    update! active: false
   end
 
   def make_sms_request body

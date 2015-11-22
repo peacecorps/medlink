@@ -3,7 +3,7 @@ class TwilioAccount < ActiveRecord::Base
 
   validates :sid, presence: true, uniqueness: true
 
-  def send_text to, text
+  def send_text to:, text:
     phone = Phone.for number: to
     UserTexter.new(phone: phone, twilio_account: self).send text
   end

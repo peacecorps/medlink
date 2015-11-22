@@ -1,4 +1,4 @@
-class SMSReceiptRecorder < SMSResponder
+class SMS::ReceiptRecorder < SMS::Handler
   def intent
     if ["yes", "y", "got it", "ok", "okay"].include? message.downcase
       :approve
@@ -11,10 +11,9 @@ class SMSReceiptRecorder < SMSResponder
     intent.present?
   end
 
-  def respond
+  def run!
     unless outstanding_response && outstanding_response.outstanding?
-      send_response I18n.t! "sms.no_outstanding_responses"
-      return
+      error! "sms.no_outstanding_responses"
     end
 
     if intent == :flag
