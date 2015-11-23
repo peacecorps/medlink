@@ -17,15 +17,19 @@ class SMS::ReceiptRecorder < SMS::Handler
     end
 
     if intent == :flag
-      outstanding_response.flag!
+      receipt_tracker.flag_for_follow_up by: user
       response_message "flagged"
     elsif intent == :approve
-      outstanding_response.mark_received! by: user
+      receipt_tracker.mark_received by: user
       response_message "received"
     end
   end
 
 private
+
+  def receipt_tracker
+    @_receipt_tracker ||= ReceiptTracker.new(response: outstanding_response)
+  end
 
   def outstanding_response
     @_outstanding_reminder ||= user.receipt_reminders.newest.try(:response)

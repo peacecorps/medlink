@@ -9,13 +9,17 @@ class ResponsesController < ApplicationController
   end
 
   def new
-    authorize :user, :respond?
+    @user = User.find params[:user_id]
+    @response = Response.new user: @user, country: @user.country
+    authorize @response
     @orders  = sort_table @user.orders.without_responses.includes(:supply, request: :reorder_of)
     @history = sort_table @user.orders.with_responses.includes(:supply)
   end
 
   def create
-    authorize :user, :respond?
+    @user = User.find params[:user_id]
+    @response = Response.new user: @user, country: @user.country
+    authorize @response
     if orders = params[:orders]
       OrderResponder.
         new(responded_by: current_user, response: @response).
@@ -55,8 +59,7 @@ class ResponsesController < ApplicationController
 
   def mark_received
     response = Response.find params[:id]
-    authorize response
-    response.mark_received! by: current_user
+    ReceiptTracker.new(response: response).mark_received by: current_user
     if response.user_id != current_user.id
       flash[:notice] = I18n.t!("flash.response.archived")
     end
@@ -65,19 +68,12 @@ class ResponsesController < ApplicationController
 
   def flag
     response = Response.find params[:id]
-    authorize response
-    response.flag!
+    ReceiptTracker.new(response: response).flag_for_follow_up by: current_user
     redirect_to :back
   end
 
 
-  private # -----
-
-  def initialize_response
-    @user = User.find params[:user_id]
-    authorize @user, :respond?
-    @response = Response.new user: @user, country: @user.country
-  end
+  private
 
   def response_params
     params.require(:response).permit :extra_text

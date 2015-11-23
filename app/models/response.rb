@@ -9,6 +9,7 @@ class Response < ActiveRecord::Base
   has_many :orders
   has_many :supplies, through: :orders
 
+  belongs_to :received_by, class_name: "User", foreign_key: "received_by"
   has_many :receipt_reminders
 
   validates :extra_text, length: { maximum: MAX_LENGTH }
@@ -37,15 +38,6 @@ class Response < ActiveRecord::Base
 
   def auto_archivable?
     orders.all? { |o| o.delivery_method && o.delivery_method.auto_archive? }
-  end
-
-  def flag!
-    update! flagged: true
-  end
-
-  def mark_received! by: nil
-    by_id = by ? by.id : user_id
-    update! received_at: Time.now, received_by: by_id, flagged: false
   end
 
   def cancel!

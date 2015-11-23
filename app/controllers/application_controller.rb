@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 private
 
   def sort_table scope, opts={}
-    SortTable.build scope, opts.mege(params: params)
+    SortTable.build scope, opts.merge(params: params)
   end
 
   # Redirects to the login path to allow the flash messages to
