@@ -1,9 +1,9 @@
 class SMS::ReceiptRecorder < SMS::Handler
   def intent
     if ["yes", "y", "got it", "ok", "okay"].include? message.downcase
-      :approve
+      :received
     elsif ["no", "n", "flag"].include? message.downcase
-      :flag
+      :flagged
     end
   end
 
@@ -12,17 +12,17 @@ class SMS::ReceiptRecorder < SMS::Handler
   end
 
   def run!
-    unless outstanding_response && outstanding_response.outstanding?
+    unless relevant_response
       error! "sms.no_outstanding_responses"
     end
 
-    if intent == :flag
+    if intent == :flagged
       receipt_tracker.flag_for_follow_up by: user
-      response_message "flagged"
-    elsif intent == :approve
+    elsif intent == :received
       receipt_tracker.mark_received by: user
-      response_message "received"
     end
+
+    response_message intent
   end
 
 private
@@ -31,14 +31,22 @@ private
     @_receipt_tracker ||= ReceiptTracker.new(response: outstanding_response)
   end
 
-  def outstanding_response
-    @_outstanding_reminder ||= user.receipt_reminders.newest.try(:response)
+  def last_reminder
+    @_last_reminder ||= user.receipt_reminders.newest
+  end
+
+  def relevant_response
+    @_relevant_response ||= user.receipt_reminders.newest.try(:response)
+    return if @_relevant_response.nil? || @_relevant_response.flagged? || @_relevant_response.archived?
+    @_relevant_response
+  end
+
+  def unique_supply_names
+    outstanding_response.supplies.map(&:name).uniq
   end
 
   def response_message type
     orders = Order.where(response: outstanding_response).includes(:supply)
-    SMS::Condenser.new("sms.orders_#{type}", :supply,
-      supplies: orders.map { |o| o.supply.name }.uniq
-    ).message
+    SMS::Condenser.new("sms.orders_#{type}", :supply, supplies: unique_supply_names).message
   end
 end

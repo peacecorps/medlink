@@ -6,7 +6,7 @@ class ActiveRecord::Base
   if Rails.env.test?
     # Convenience method for grabbing seeded data; this isn't performant and shouldn't be used outside test
     def self.random n=1
-      found = order("random()").first n
+      found = all.to_a.sample n
       raise unless found.count == n
       n == 1 ? found.first : found
     end

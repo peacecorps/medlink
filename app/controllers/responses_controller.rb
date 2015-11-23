@@ -27,6 +27,7 @@ class ResponsesController < ApplicationController
       redirect_to manage_orders_path, flash:
         { success: I18n.t!("flash.response.sent", user: @user.name) }
     else
+      @_
       redirect_to manage_orders_path, flash:
         { error: I18n.t!("flash.response.none_selected") }
     end

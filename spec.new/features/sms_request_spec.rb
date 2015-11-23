@@ -20,11 +20,12 @@ describe "Ordering via sms" do
     request = incoming.request
     expect(request.text).to eq "thanks!"
     expect(request.user).to eq volunteer
-    expect(request.supplies).to eq supplies
+    expect(request.supplies.sort).to eq supplies.sort
 
     outgoing = SMS.outgoing.last
     expect(outgoing.number).to eq phone.condensed
-    expect(outgoing.text).to match /Thanks! Your request for #{supplies.first.name}/
+    expect(outgoing.text).to match /Thanks! Your request for/
+    expect(outgoing.text).to match /\([A-Z]{4,5}\) and 2 other/
     expect(outgoing.text).to match /You can expect a response shortly after/
 
     skip "PCMO responds to orders"
