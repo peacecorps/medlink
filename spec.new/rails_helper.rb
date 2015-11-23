@@ -39,6 +39,29 @@ end
 
 Medlink::Application.eager_load!
 
+module ApiHelpers
+  def authed user, &block
+    resp = block.call
+    if resp.status == 401
+      ApiAuth.sign! @request, user.id, user.secret_key
+      block.call
+    else
+      resp
+    end
+  end
+
+  def json
+    @_json ||= JSON.parse(response.body)
+  end
+end
+
+module FeatureHelpers
+  def screenshot path=nil
+    path ||= "#{ENV['HOME']}/Desktop/screenshot.png"
+    page.save_screenshot path, full: true
+  end
+end
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -99,8 +122,6 @@ RSpec.configure do |config|
     end
   end
 
-  def screenshot path=nil
-    path ||= "#{ENV['HOME']}/Desktop/screenshot.png"
-    page.save_screenshot path, full: true
-  end
+  config.include ApiHelpers, type: :controller
+  config.include FeatureHelpers, type: :feature
 end

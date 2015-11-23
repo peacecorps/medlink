@@ -86,4 +86,11 @@ Medlink::Application.routes.draw do
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq', as: 'sidekiq'
   end
+
+  namespace :api do
+    namespace :v1 do
+      post '/login' => 'auth#login'
+      resources :supplies, only: [:index]
+    end
+  end
 end

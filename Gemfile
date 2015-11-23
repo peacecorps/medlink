@@ -9,12 +9,14 @@ gem 'jquery-rails'
 # FIXME: remove
 gem 'haml-rails'
 gem 'slim-rails'
+gem 'jbuilder'
 gem 'twilio-ruby'
 gem 'pry-rails'
 
 gem 'figaro'
 gem 'devise'
 gem 'pundit'
+gem 'api-auth'
 
 gem 'rollbar'
 gem 'sidekiq'

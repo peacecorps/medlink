@@ -93,4 +93,10 @@ class User < ActiveRecord::Base
   def personal_requests
     Request.where user_id: id, entered_by: id
   end
+
+  def ensure_secret_key!
+    unless secret_key.present?
+      update! secret_key: ApiAuth.generate_secret_key
+    end
+  end
 end
