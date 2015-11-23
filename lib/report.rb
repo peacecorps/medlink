@@ -30,7 +30,7 @@ class Report
   end
 
   def decorated_objects
-    rows.find_each.map do |obj|
+    rows.each.map do |obj|
       decorator ? decorator.new(obj) : obj
     end
   end

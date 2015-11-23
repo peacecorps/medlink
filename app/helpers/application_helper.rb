@@ -13,17 +13,6 @@ module ApplicationHelper
     end
   end
 
-  def update_params_link title, param_updates, opts={}
-    updated = params.
-      reject { |k,v| %w(action controller).include? k }.
-      merge param_updates
-    link_to title, opts.merge(params: updated)
-  end
-
-  def sortable_header table, *args
-    update_params_link *table.sorter_for(*args)
-  end
-
   def short_order o
     status = order_status o
     status ? "#{o.supply.name} (#{status})" : o.supply.name

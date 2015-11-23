@@ -37,6 +37,8 @@ VCR.configure do |config|
   config.ignore_localhost = true
 end
 
+Medlink::Application.eager_load!
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"

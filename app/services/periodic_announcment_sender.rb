@@ -13,7 +13,7 @@ class PeriodicAnnouncementSender
   end
 
   def on_schedule
-    announcements.select { |a| scheduled_for_this_hour?(a) && a.has_been_sent?(within: 1.day)
+    announcements.select { |a| scheduled_for_this_hour?(a) && a.has_been_sent?(within: 1.day) }
   end
 
 private

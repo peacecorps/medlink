@@ -1,0 +1,22 @@
+- unless table.total_pages < 2
+  a{name: table.anchor} &nbsp;
+  ul.pager
+    - if table.current_page == 1
+      li.previous.disabled
+        a.disabled &larr; Previous
+    - else
+      li.previous
+        = update_params_link "&larr; Previous".html_safe,
+          { table.page_param => table.current_page - 1 },
+          anchor: table.anchor
+
+    li Page #{table.current_page} of #{table.total_pages}
+
+    - if table.current_page == table.total_pages
+      li.next.disabled
+        a.disabled Next &rarr;
+    - else
+      li.next
+        = update_params_link "Next &rarr;".html_safe,
+          { table.page_param => table.current_page + 1 },
+          anchor: table.anchor
