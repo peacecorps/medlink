@@ -5,8 +5,8 @@ class Api::V1::RequestsController < Api::V1::BaseController
     request.save!
 
     params[:supply_ids].each do |id|
-      supply = Supply.find params[:id]
-      request.supplies << supply
+      supply = Supply.find id
+      request.orders.create! supply: supply, user: current_user
     end
 
     render json: {
