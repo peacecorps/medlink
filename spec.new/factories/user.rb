@@ -12,6 +12,14 @@ FactoryGirl.define do
     location   "A place"
     secret_key "mellon"
 
+    transient do
+      order_count 0
+    end
+
+    after :create do |user, evaluator|
+      create_list :order, evaluator.order_count, user: user
+    end
+
     User.roles.each do |role_name, _|
       factory role_name.to_sym do
         role role_name

@@ -93,6 +93,10 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation, only: to_clean
   end
 
+  def queued job_class
+    ActiveJob::Base.queue_adapter.enqueued_jobs.select { |j| j[:job] == job_class }
+  end
+
   config.before :suite do
     clean!
     NamedSeeds.load_seed unless Country.any?
@@ -120,6 +124,13 @@ RSpec.configure do |config|
       x.run
       DatabaseCleaner.clean
     end
+  end
+
+  config.around :each, :queue_jobs do |x|
+    _old = ActiveJob::Base.queue_adapter
+    ActiveJob::Base.queue_adapter = :test
+    x.run
+    ActiveJob::Base.queue_adapter = _old
   end
 
   config.include ApiHelpers, type: :controller

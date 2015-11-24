@@ -14,21 +14,6 @@ class Response < ActiveRecord::Base
 
   validates :extra_text, length: { maximum: MAX_LENGTH }
 
-  def set_text text
-    self.extra_text = text.slice(0, MAX_LENGTH)
-  end
-
-  def mark_updated_orders!
-    supply_ids = supplies.pluck :id
-    user.orders.where(supply_id: supply_ids, delivery_method: nil).each do |o|
-      o.update_attributes response_id: id
-    end
-  end
-
-  def auto_archivable?
-    orders.all? { |o| o.delivery_method && o.delivery_method.auto_archive? }
-  end
-
   def cancel!
     update! cancelled_at: Time.now
   end

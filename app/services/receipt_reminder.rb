@@ -18,6 +18,7 @@ class ReceiptReminder
       return
     end
 
+    fail "Needs to only include delivered supplies!"
     text = SMS::Condenser.new("sms.response.receipt_reminder", :supply,
       supplies: supply_names, response_date: created_at.strftime("%B %d")).message
 

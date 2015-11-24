@@ -17,13 +17,19 @@ class ResponsesController < ApplicationController
   end
 
   def create
+    @response = ResponseForm.new @user.responses.new
+    if validate(@response, params)
+      OrderResponder.new(fail).run
+    end
+
     @user = User.find params[:user_id]
     @response = Response.new user: @user, country: @user.country
     authorize @response
     if orders = params[:orders]
-      OrderResponder.
+      r = OrderResponder.
         new(responded_by: current_user, response: @response).
         respond response_params, orders
+      authorize r # TODO
       redirect_to manage_orders_path, flash:
         { success: I18n.t!("flash.response.sent", user: @user.name) }
     else

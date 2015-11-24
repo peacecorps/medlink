@@ -20,8 +20,9 @@ describe SMS::OrderPlacer do
 
     When(:result) { SMS::OrderPlacer.new(sms: sms).run! }
 
-    Then { result =~ /#{supply.name} \(#{supply.shortcode}\)/ }
-    And  { result =~ /expect a response/i                     }
+    Then { result =~ /expect a response/i   }
+    And  { result.include? supply.name      }
+    And  { result.include? supply.shortcode }
 
     And  { sms.request.present?                        }
     And  { sms.request.user == volunteer               }

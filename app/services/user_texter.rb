@@ -15,6 +15,7 @@ class UserTexter
     rescue Twilio::REST::RequestError => e
       note_delivery_failure sms, e
     end
+    watch_for_send_volume
     sms
   end
 
@@ -57,6 +58,13 @@ class UserTexter
       to:   phone.number,
       body: message
     )
+  end
+
+  def watch_for_send_volume time: 1.hour
+    sent = phone.messages.outgoing.where("created_at > ?", time.ago).count
+    if sent > 3
+      config.slackbot.info "Warning - #{phone.number} has received #{sent} messages in #{time}."
+    end
   end
 
   def note_delivery_failure message, error

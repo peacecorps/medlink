@@ -25,7 +25,7 @@ describe "Ordering via sms" do
     outgoing = SMS.outgoing.last
     expect(outgoing.number).to eq phone.condensed
     expect(outgoing.text).to match /Thanks! Your request for/
-    expect(outgoing.text).to match /\([A-Z]{4,5}\) and 2 other/
+    expect(outgoing.text).to match /\([A-Z]{4,5}\),? and/
     expect(outgoing.text).to match /You can expect a response shortly after/
 
     skip "PCMO responds to orders"

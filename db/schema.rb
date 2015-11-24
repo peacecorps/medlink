@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151123231826) do
+ActiveRecord::Schema.define(version: 20151124025622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,9 +103,9 @@ ActiveRecord::Schema.define(version: 20151123231826) do
     t.integer  "country_id"
     t.integer  "user_id"
     t.integer  "message_id"
-    t.string   "extra_text",     limit: 255
+    t.text     "extra_text"
     t.datetime "archived_at"
-    t.boolean  "flagged",                    default: false, null: false
+    t.boolean  "flagged",        default: false, null: false
     t.datetime "received_at"
     t.integer  "received_by"
     t.datetime "cancelled_at"

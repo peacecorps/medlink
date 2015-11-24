@@ -40,7 +40,7 @@ private
   end
 
   def response
-    @_response ||= user.receipt_reminders.newest.try(:response)
+    @_response ||= last_reminder.try(:response)
   end
 
   def unique_supply_names
