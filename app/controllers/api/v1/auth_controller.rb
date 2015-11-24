@@ -5,7 +5,7 @@ class Api::V1::AuthController < Api::V1::BaseController
     user = User.find_for_authentication email: params[:email]
     if user.valid_password?(params[:password])
       user.ensure_secret_key!
-      render json: { secret_key: user.secret_key }
+      render json: { id: user.id, secret_key: user.secret_key }
     else
       error "Invalid username or password", status: :unauthorized
     end
