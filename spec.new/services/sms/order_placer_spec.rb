@@ -6,6 +6,8 @@ describe SMS::OrderPlacer do
   Given(:supplies)  { volunteer.country.supplies.random(20) }
   Given(:supply)    { supplies.first }
 
+  Invariant { SMS::OrderPlacer.new(sms: sms).valid? }
+
   context "requires a user" do
     Given(:guest)  { FactoryGirl.create :phone, user: nil }
     Given(:sms)    { FactoryGirl.create :sms, phone: guest, text: "#{supply.shortcode} - please and thank you!" }

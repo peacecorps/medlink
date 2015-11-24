@@ -47,4 +47,17 @@ describe ReceiptTracker do
     And  { response.flagged?   }
     And  { !response.received? }
   end
+
+  context "it can re-order a lost response" do
+    Given(:tracker) { ReceiptTracker.new response: response, approver: pcmo }
+
+    When { response.save! }
+    When(:result) { tracker.reorder }
+
+    Then { result == true                                                }
+    And  { response.replacement                                          }
+    And  { response.replacement.supplies == response.supplies            }
+    And  { volunteer.last_requested_at = response.replacement.created_at }
+    And  { response.cancelled_at.present?                                }
+  end
 end

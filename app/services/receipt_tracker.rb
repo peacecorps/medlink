@@ -15,11 +15,12 @@ class ReceiptTracker
 
   def reorder
     request = response.reorders.new supplies: response.supplies
-    Pundit.authorize! approver, request, :create?
+    request.entered_by = approver.id
+    Pundit.authorize approver, request, :create?
     request.save!
     # FIXME: I shouldn't have had to remember to put this here v
     OrderMonitor.new.new_request request
-    response.update! replacement: rc.request, cancelled_at: rc.request.created_at
+    response.update! replacement: request, cancelled_at: request.created_at
   end
 
   private
