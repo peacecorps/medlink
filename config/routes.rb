@@ -89,7 +89,8 @@ Medlink::Application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      post '/login' => 'auth#login'
+      post '/auth' => 'auth#login'
+      get  '/auth' => 'auth#test'
       resources :supplies, only: [:index]
     end
   end

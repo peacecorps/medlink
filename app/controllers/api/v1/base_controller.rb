@@ -11,7 +11,7 @@ class Api::V1::BaseController < ActionController::Base
   def api_authenticate!
     @current_user = User.find_by_id ApiAuth.access_id request
     unless @current_user && ApiAuth.authentic?(request, @current_user.secret_key)
-      error "You must authorize this request", status: 401
+      error "You must authorize this request", status: :unauthorized
     end
   end
 

@@ -10,6 +10,7 @@ FactoryGirl.define do
     role       :pcv
     time_zone  { ActiveSupport::TimeZone.all.sample.name }
     location   "A place"
+    secret_key "mellon"
 
     User.roles.each do |role_name, _|
       factory role_name.to_sym do

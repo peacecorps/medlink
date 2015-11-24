@@ -40,7 +40,7 @@ end
 Medlink::Application.eager_load!
 
 module ApiHelpers
-  def authed user, &block
+  def authorized user, &block
     resp = block.call
     if resp.status == 401
       ApiAuth.sign! @request, user.id, user.secret_key

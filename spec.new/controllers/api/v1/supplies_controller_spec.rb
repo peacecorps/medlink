@@ -11,12 +11,12 @@ describe Api::V1::SuppliesController do
   end
 
   context "when authed" do
-    Given(:user)    { FactoryGirl.create :user, secret_key: "asdf" }
+    Given(:user)    { FactoryGirl.create :user }
     Given(:country) { user.country }
     Given(:supply)  { country.supplies.random }
     Given!(:gone)   { country.supplies.delete supply }
 
-    When(:result) { authed(user) { get :index } }
+    When(:result) { authorized(user) { get :index } }
 
     Then { result.status == 200 }
     And  { json["supplies"].count == country.supplies.count }
