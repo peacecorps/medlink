@@ -16,7 +16,7 @@ class SMS::Receiver
       direction:      :incoming
 
     response = begin
-      SMS::Dispatcher.new(twilio: twilio, sms: sms).handler.run!
+      SMS::Dispatcher.new(sms: sms).handler.run!
     rescue SMS::Handler::PresentableError => e
       e.message
     end

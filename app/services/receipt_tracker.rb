@@ -1,19 +1,19 @@
 class ReceiptTracker
-  def initialize response:
-    @response = response
+  def initialize response:, approver:
+    @response, @approver = response, approver
   end
 
-  def acknowledge_receipt by:
-    Pundit.authorize by, response, :mark_received?
-    response.update! received_at: Time.now, received_by: by, flagged: false
+  def acknowledge_receipt
+    Pundit.authorize approver, response, :mark_received?
+    response.update! received_at: Time.now, received_by: approver, flagged: false
   end
 
-  def flag_for_follow_up by:
-    Pundit.authorize by, response, :flag?
+  def flag_for_follow_up
+    Pundit.authorize approver, response, :flag?
     response.update! flagged: true
   end
 
   private
 
-  attr_reader :response
+  attr_reader :response, :approver
 end

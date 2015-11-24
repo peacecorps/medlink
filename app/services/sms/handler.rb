@@ -1,8 +1,8 @@
 class SMS::Handler
   PresentableError = Class.new StandardError
 
-  def initialize twilio:, sms:
-    @twilio, @sms = twilio, sms
+  def initialize sms:
+    @sms = sms
   end
 
   # :nocov:
@@ -17,7 +17,7 @@ class SMS::Handler
 
   private
 
-  attr_reader :twilio, :sms
+  attr_reader :sms
 
   def user
     sms.user

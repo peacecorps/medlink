@@ -1,11 +1,15 @@
 require "rails_helper"
 
 describe ReceiptTracker do
-  Given(:response) { FactoryGirl.build :response }
-  Given(:tracker)  { ReceiptTracker.new response: response }
+  Given(:response)  { FactoryGirl.build :response }
+  Given(:volunteer) { response.user }
+  Given(:pcmo)      { FactoryGirl.create :pcmo, country: volunteer.country }
+  Given(:other)     { FactoryGirl.create :pcv, country: response.country }
 
   context "pcv marking receipt" do
-    When(:result) { tracker.acknowledge_receipt by: response.user }
+    Given(:tracker) { ReceiptTracker.new response: response, approver: volunteer }
+
+    When(:result) { tracker.acknowledge_receipt }
 
     Then { result == true                        }
     And  { response.received?                    }
@@ -14,9 +18,9 @@ describe ReceiptTracker do
   end
 
   context "pcmo marking receipt" do
-    Given(:pcmo) { FactoryGirl.create :pcmo, country: response.country }
+    Given(:tracker) { ReceiptTracker.new response: response, approver: pcmo }
 
-    When(:result) { tracker.acknowledge_receipt by: pcmo }
+    When(:result) { tracker.acknowledge_receipt }
 
     Then { result == true                }
     And  { response.received?            }
@@ -25,9 +29,9 @@ describe ReceiptTracker do
   end
 
   context "can't mark others' responses" do
-    Given(:other) { FactoryGirl.create :pcv, country: response.country }
+    Given(:tracker) { ReceiptTracker.new response: response, approver: other }
 
-    When(:result) { tracker.acknowledge_receipt by: other }
+    When(:result) { tracker.acknowledge_receipt }
 
     Then { result == Failure(Pundit::NotAuthorizedError) }
     And  { !response.received?                           }
@@ -35,7 +39,9 @@ describe ReceiptTracker do
   end
 
   context "it can flag for follow up" do
-    When(:result) { tracker.flag_for_follow_up by: response.user }
+    Given(:tracker) { ReceiptTracker.new response: response, approver: volunteer }
+
+    When(:result) { tracker.flag_for_follow_up }
 
     Then { result == true      }
     And  { response.flagged?   }
