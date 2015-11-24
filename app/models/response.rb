@@ -37,4 +37,8 @@ class Response < ActiveRecord::Base
   def reordered_at
     replacement.try :created_at
   end
+
+  def reorders
+    Request.where user: user, country: country, reorder_of_id: id
+  end
 end

@@ -97,6 +97,10 @@ RSpec.configure do |config|
     ActiveJob::Base.queue_adapter.enqueued_jobs.select { |j| j[:job] == job_class }
   end
 
+  def slackbot
+    Rails.configuration.slackbot
+  end
+
   config.before :suite do
     clean!
     NamedSeeds.load_seed unless Country.any?

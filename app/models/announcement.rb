@@ -10,7 +10,7 @@ class Announcement < ActiveRecord::Base
   end
 
   def self.send_scheduled!
-    PeriodicAnnouncementSender.new.send_all
+    PeriodicAnnouncementSender.new(announcements: find_each).send_scheduled
   end
 
   def has_been_sent? within:

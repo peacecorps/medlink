@@ -85,4 +85,16 @@ describe UserTexter do
     Then { result == false }
     And  { texter.spammy? "spam" }
   end
+
+  context "spamming a user" do
+    Given(:phone)  { FactoryGirl.create :phone }
+    Given(:texter) { UserTexter.new(phone: phone, deliverer: noop) }
+
+    When { texter.send "a" }
+    When { texter.send "b" }
+    When { texter.send "c" }
+    When(:result) { texter.send "d" }
+
+    Then { slackbot.messages.last =~ /4 messages/ }
+  end
 end

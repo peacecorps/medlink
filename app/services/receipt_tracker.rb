@@ -13,6 +13,15 @@ class ReceiptTracker
     response.update! flagged: true
   end
 
+  def reorder
+    request = response.reorders.new supplies: response.supplies
+    Pundit.authorize! approver, request, :create?
+    request.save!
+    # FIXME: I shouldn't have had to remember to put this here v
+    OrderMonitor.new.new_request request
+    response.update! replacement: rc.request, cancelled_at: rc.request.created_at
+  end
+
   private
 
   attr_reader :response, :approver

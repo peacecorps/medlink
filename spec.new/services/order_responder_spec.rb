@@ -1,8 +1,9 @@
 require "rails_helper"
 
 describe OrderResponder, :queue_jobs do
-  Given(:volunteer)  { FactoryGirl.create :pcv, order_count: 3 }
-  Given(:orders)     { volunteer.orders }
+  Given(:volunteer)  { FactoryGirl.create :pcv }
+  Given(:supplies)   { Supply.random 3 }
+  Given(:orders)     { supplies.map { |s| FactoryGirl.create :order, supply: s, user: volunteer } }
   Given(:responder)  { OrderResponder.new(volunteer.responses.new) }
 
   Given(:reminders)  { queued PromptForReceiptAcknowledgementJob }

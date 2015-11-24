@@ -54,11 +54,11 @@ class ResponsesController < ApplicationController
   end
   def reorder
     response = Response.find params[:id]
-    authorize response
-    response.reorder! by: current_user
+    ResponseReorderer.new(officer: current_user, response: response).run!
     redirect_to responses_path(redir_params), flash:
       { success: I18n.t!("flash.response.reordered") }
   end
+
   def redir_params
     { responses: params[:responses], page: params[:page] }
   end

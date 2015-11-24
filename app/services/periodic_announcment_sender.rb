@@ -1,10 +1,9 @@
 class PeriodicAnnouncementSender
-  def initialize announcements: nil
-    @now          = Time.now
-    @annoucements = announcements || Announcement.find_each
+  def initialize announcements:
+    @announcements, @now = announcements, Time.now
   end
 
-  def send_all
+  def send_scheduled
     on_schedule.each do |a|
       Rails.configuration.slackbot.info \
         "Auto-sending annoucement #{a.id} to #{a.country.name}: #{a.message}"
@@ -12,15 +11,15 @@ class PeriodicAnnouncementSender
     end
   end
 
-  def on_schedule
-    announcements.select { |a| scheduled_for_this_hour?(a) && a.has_been_sent?(within: 1.day) }
-  end
-
 private
 
-  attr_reader :now
+  attr_reader :announcements, :now
 
   def scheduled_for_this_hour? announcement
-    now.in_zone(announcement.country.time_zone).hour == announcement.schedule.hour
+    now.in_time_zone(announcement.country.time_zone).hour == announcement.schedule.hour
+  end
+
+  def on_schedule
+    announcements.select { |a| scheduled_for_this_hour?(a) && !a.has_been_sent?(within: 22.hours) }
   end
 end

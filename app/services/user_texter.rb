@@ -63,7 +63,7 @@ class UserTexter
   def watch_for_send_volume time: 1.hour
     sent = phone.messages.outgoing.where("created_at > ?", time.ago).count
     if sent > 3
-      config.slackbot.info "Warning - #{phone.number} has received #{sent} messages in #{time}."
+      Rails.configuration.slackbot.info "Warning - #{phone.number} has received #{sent} messages in #{time}."
     end
   end
 

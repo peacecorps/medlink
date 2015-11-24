@@ -44,4 +44,6 @@ Medlink::Application.configure do
     #   hitting the `before_save` in the UserScope concern ...
     Bullet.add_whitelist type: :n_plus_one_query, class_name: "User", association: :country
   end if ENV["BULLET"]
+
+  config.slackbot = Slackbot::Test.new
 end

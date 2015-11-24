@@ -1,4 +1,13 @@
 class Slackbot
+  class Test
+    attr_reader :messages
+
+    def info text, opts={}
+      @messages ||= []
+      @messages.push text
+    end
+  end
+
   attr_reader :subdomain, :token
 
   def initialize opts={}
