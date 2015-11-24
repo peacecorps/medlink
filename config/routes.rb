@@ -91,7 +91,10 @@ Medlink::Application.routes.draw do
     namespace :v1 do
       post '/auth' => 'auth#login'
       get  '/auth' => 'auth#test'
+
       resources :supplies, only: [:index]
+
+      resources :requests, only: [:create]
     end
   end
 end
