@@ -60,6 +60,15 @@ module FeatureHelpers
     path ||= "#{ENV['HOME']}/Desktop/screenshot.png"
     page.save_screenshot path, full: true
   end
+
+  def login_as user
+    visit root_path
+    within ".sign-in" do
+      fill_in "Email", with: user.email
+      fill_in "Password", with: "password"
+      click_on "Sign In"
+    end
+  end
 end
 
 RSpec.configure do |config|

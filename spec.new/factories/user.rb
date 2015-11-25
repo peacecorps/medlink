@@ -1,16 +1,18 @@
 FactoryGirl.define do
   factory :user do
-    country           { Country.random }
-    sequence(:email)  { |n| "user#{n}@example.com" }
-    sequence(:pcv_id) { |n| n }
-    confirmed_at      { rand(1..365).days.ago } # Keep devise from sending email on each create. smh.
-    password   "password"
-    first_name "A"
-    last_name  "Person"
-    role       :pcv
-    time_zone  { ActiveSupport::TimeZone.all.sample.name }
-    location   "A place"
-    secret_key "mellon"
+    country                { Country.random }
+    sequence(:email)       { |n| "user#{n}@example.com" }
+    sequence(:pcv_id)      { |n| n }
+    # Keep devise from sending email on each create. smh.
+    confirmed_at           { rand(2..365).days.ago }
+    time_zone              { ActiveSupport::TimeZone.all.sample.name }
+    password               "password"
+    first_name             "A"
+    last_name              "Person"
+    location               "A place"
+    secret_key             "mellon"
+    welcome_video_shown_at 1.days.ago
+    role                   :pcv
 
     transient do
       order_count 0

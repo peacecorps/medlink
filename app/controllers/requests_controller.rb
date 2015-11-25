@@ -9,14 +9,13 @@ class RequestsController < ApplicationController
 
     if validate @placer, params[:request]
       @placer.save
-      OrderMonitor.new.new_request @placer.model
       redirect_to after_create_path, flash: { success: @placer.success_message }
     else
       render :new
     end
   end
 
-private
+  private
 
   def after_create_path
     if current_user.admin?

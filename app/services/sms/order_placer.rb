@@ -47,7 +47,6 @@ private
       text:     parsed.instructions
     )
     form.save
-    OrderMonitor.new.new_request form.model
   end
 
   def supply_names

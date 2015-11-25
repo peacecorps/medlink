@@ -14,13 +14,12 @@ class ReceiptTracker
   end
 
   def reorder
-    request = response.reorders.new supplies: response.supplies
-    request.entered_by = approver.id
-    Pundit.authorize approver, request, :create?
-    request.save!
-    # FIXME: I shouldn't have had to remember to put this here v
-    OrderMonitor.new.new_request request
-    response.update! replacement: request, cancelled_at: request.created_at
+    form = RequestForm.new response.reorders.new
+    form.supplies   = response.supplies
+    form.entered_by = approver.id
+    Pundit.authorize approver, form, :create?
+    form.save
+    response.update! replacement: form.model, cancelled_at: form.model.created_at
   end
 
   private

@@ -34,6 +34,12 @@ class RequestForm < Reform::Form
     country.supplies
   end
 
+  def save
+    super
+    mark_duplicated_orders
+    update_wait_times
+  end
+
   def success_message
     # FIXME: this due logic is duplicated a lot
     due = model.orders.first.due_at.strftime "%B %d"
@@ -54,5 +60,18 @@ class RequestForm < Reform::Form
     if supplies.none?
       model.errors.add :supplies, "are required"
     end
+  end
+
+  def mark_duplicated_orders
+    user.orders.
+      where(response: nil, supply: model.supplies).
+      where.not(request: model).
+      update_all duplicated_at: model.created_at
+  end
+
+  def update_wait_times
+    user.last_requested_at = model.created_at
+    user.waiting_since   ||= model.created_at
+    user.save!
   end
 end
