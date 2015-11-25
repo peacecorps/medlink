@@ -4,11 +4,8 @@ class Admin::UsersController < AdminController
   around_action :skip_bullet, only: [:create] if Rails.env.test?
 
   def set_country
-    id = params[:country][:country_id]
-    redirect_to :back and return unless id.present?
-    authorize current_user, :update?
-    current_user.update country: Country.find(id)
-    redirect_to :back, notice: I18n.t!("flash.country_selected", country: current_user.country.name)
+    current_user.update country: Country.find(params[:country][:id])
+    redirect_to (params[:next] || :back)
   end
 
   def new

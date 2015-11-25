@@ -1,7 +1,0 @@
-- orders.group_by { |o| o.request_id }.each do |_, os|
-  %dl
-    %dt
-      - time = os.first.created_at.in_time_zone user.time_zone
-      %span= short_date time
-      %small.cell--secondary= time.strftime '%H:%M'
-    %dd= os.map { |o| short_order(o) }.join ', '

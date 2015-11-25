@@ -64,7 +64,15 @@ Medlink::Application.routes.draw do
     end
   end
 
+  resource :country do
+    resources :supplies, only: [:index, :update]
+    resource :roster
+  end
+
   namespace :admin do
+    root  "pages#dashboard"
+    patch "country" => "users#set_country"
+
     resources :users, only: [:new, :create, :edit, :update] do
       member do
         patch :inactivate
@@ -73,7 +81,6 @@ Medlink::Application.routes.draw do
       collection do
         get  :select
         post :upload_csv
-        post :set_country
       end
     end
   end

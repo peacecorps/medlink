@@ -1,0 +1,7 @@
+- if object.errors.any?
+  .alert.alert-danger
+    strong
+      | #{pluralize(object.errors.count, "error")} prohibited this #{object.model_name.singular.downcase} from being submitted:
+    ul
+      - object.errors.full_messages.each do |msg|
+        li= msg

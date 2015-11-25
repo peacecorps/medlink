@@ -24,7 +24,7 @@ html lang="en"
   body.no-js
     javascript:
       document.querySelector("body").className = "yes-js"
-    = render 'partials/global_nav'
+    = render "partials/global_nav"
 
     #page-title
       #page-title-inner
@@ -35,4 +35,4 @@ html lang="en"
       = render "partials/flash"
       = yield
 
-    = render 'partials/google_analytics' if Rails.env.production?
+    = render "partials/google_analytics" if Rails.env.production?

@@ -1,15 +1,21 @@
 module ApplicationHelper
   def icon name, opts={}
-    "<i class='glyphicon glypicon-#{name} #{opts[:class]}'></i>".html_safe
+    klass = ["glyphicon", "glyphicon-#{name}", opts[:class]].compact.join " "
+    content_tag :i, class: klass
   end
 
-  def title &block
-    "<div class='title'><h2>#{block.call}</h2></div>".html_safe
+  def title text=nil
+    content_tag :div, class: "title" do
+      content_tag :h2 do
+        text || yield
+      end
+    end
   end
 
   def back_link title, path
     link_to path, class: "btn btn-default btn-back" do
-      "<i class='glyphicon glyphicon-chevron-left'></i> #{title}".html_safe
+      icon "chevron-left"
+      content_tag :span, title
     end
   end
 
@@ -41,5 +47,9 @@ module ApplicationHelper
     else
       "-"
     end
+  end
+
+  def time_zones
+    ActiveSupport::TimeZone.all
   end
 end

@@ -6,8 +6,6 @@ gem 'rails'
 
 gem 'pg'
 gem 'jquery-rails'
-# FIXME: remove
-gem 'haml-rails'
 gem 'slim-rails'
 gem 'jbuilder'
 gem 'twilio-ruby'

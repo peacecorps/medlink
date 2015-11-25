@@ -1,6 +1,6 @@
 class ActiveRecord::Base
-  def self.newest
-    order(created_at: :desc).first
+  def self.newest n=nil
+    order(created_at: :desc).first n
   end
 
   if Rails.env.test?

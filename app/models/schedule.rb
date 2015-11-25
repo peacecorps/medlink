@@ -25,6 +25,13 @@ class Schedule
     "#{now.strftime("%b")} #{days.to_sentence} at #{hour.to_s.rjust 2, '0'}:00"
   end
 
+  def next_run
+    return unless days.any?
+    now  = Time.now
+    span = schedule_for_month(now) + schedule_for_month(now + 1.month)
+    span.find { |d| d > now }
+  end
+
 private
 
   def schedule_for_month ts

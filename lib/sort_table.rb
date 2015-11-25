@@ -2,15 +2,21 @@
 # * better html (safe) output
 # * threadsafe registry?
 class SortTable < Draper::Decorator
-  Duplicate = Class.new StandardError
+  class Registry
+    Duplicate = Class.new StandardError
+
+    def initialize
+      @registry = {}
+    end
+
+    def build scope, **opts
+      prefix = opts[:prefix]
+      raise Duplicate if @registry.include? prefix
+      @registry[prefix] = SortTable.send :new, scope, opts
+    end
+  end
 
   delegate_all
-
-  def self.build scope, prefix: nil, **opts
-    @_registry ||= {}
-    raise Duplicate, prefix if @_registry.include?(prefix)
-    @_registry[prefix] = new scope, prefix: prefix, **opts
-  end
 
   class << self
     protected :new

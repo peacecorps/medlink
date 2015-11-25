@@ -1,0 +1,80 @@
+= title "Users"
+.row
+  .col-md-6
+    table.table.table-condensed.table-hover
+      tr
+        th PCVs
+        td= User.pcv.count
+      tr
+        th PCMOs
+        td= User.pcmo.count
+  .col-md-6
+    / TODO: extract this as a partial
+    = form_tag admin_country_path, method: :patch do
+      .form-group
+        = collection_select :country, :id, Country.all, :id, :name, {}, class: "form-control"
+      = hidden_field_tag :next, country_roster_path
+      button.btn.btn-default Manage Roster
+
+= title "Orders"
+.row
+  .col-md-6
+    table.table.table-condensed.table-hover
+      tr
+        th Pending
+        td= Order.without_responses.count
+      tr
+        th Responded
+        td= Order.with_responses.count
+      tr
+        th Total
+        td= Order.count
+  .col-md-6
+    = form_tag admin_country_path, method: :patch do
+      .form-group
+        = collection_select :country, :id, Country.all, :id, :name, {}, class: "form-control"
+      = hidden_field_tag :next, manage_orders_path
+      button.btn.btn-default Request Tracker
+
+= title "Messages"
+.row
+  .col-md-6
+    h4
+      | Upcoming Announcements
+      small #{Announcement.scheduled.count} total
+    table.table.table-condensed
+      thead
+        tr
+          th To
+          th At
+          th Message
+      tbody
+        - @upcoming_announcements.each do |ann|
+          tr
+            td= ann.country.name
+            td= ann.schedule.next_run
+            td= ann.message
+    = link_to "Manage", announcements_path, class: "btn btn-default"
+
+  .col-md-6
+    h4
+      | Recent Messages
+      small #{SMS.incoming.count} total
+    table.table.table-condensed
+      thead
+        tr
+          th From
+          th At
+          th Message
+      tbody
+        - @recent_messages.each do |sms|
+          tr
+            td= sms.number
+            td= sms.created_at
+            td= sms.text
+    = link_to "View All", messages_path, class: "btn btn-default"
+
+= title "Reports"
+= link_to "Users", users_reports_path, class: "btn btn-default"
+= link_to "Order History", order_history_reports_path, class: "btn btn-default"
+= link_to "Response Times", pcmo_response_times_reports_path, class: "btn btn-default"

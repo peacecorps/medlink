@@ -1,0 +1,9 @@
+.form-group
+  #phone-fields
+    = form.fields_for :phones do |phone_form|
+      - remove = phone_form.link_to_remove class: "btn btn-danger" do
+        = icon :remove
+      = phone_form.text_field :number, placeholder: "Phone number must include '+' and the country code", append: remove
+  = form.link_to_add :phones, data: { target: "#phone-fields" } do
+    | Add Additional Phone Number
+    = icon :plus

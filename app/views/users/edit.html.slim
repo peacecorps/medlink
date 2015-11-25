@@ -1,0 +1,20 @@
+= content_for :page_title do
+  | Edit Account
+
+.row
+  .col-md-6
+    = bootstrap_form_for @user do |f|
+      = title do
+        = @user.name
+        small= @user.pcv_id
+
+      = f.text_field :first_name
+      = f.text_field :last_name
+      = f.email_field :email
+      = f.text_field :location
+      = f.collection_select :time_zone, time_zones, :name, :name, { include_blank: true }
+      / FIXME
+      /= render partial: "partials/phone_form", locals: { form: f }
+
+      button.btn.btn-primary(type="submit") Save
+      = link_to "Change Password", edit_user_registration_path, class: "btn btn-default"

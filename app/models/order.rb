@@ -13,8 +13,8 @@ class Order < ActiveRecord::Base
   paginates_per 10
   default_scope { order created_at: :desc }
 
-  scope :with_responses, -> { where("response_id IS NOT NULL") }
-  scope :without_responses, -> { where("response_id IS NULL") }
+  scope :with_responses, -> { where.not response_id: nil }
+  scope :without_responses, -> { where response_id: nil }
 
   def due_at
     created_at.at_end_of_month + 3.days

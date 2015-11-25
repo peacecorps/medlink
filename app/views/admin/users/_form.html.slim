@@ -10,7 +10,7 @@
     = f.email_field :email
     = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s, include_blank: true
     = f.text_field :pcv_id, label: "PCV ID"
-    = f.select :role, User.role_names, include_blank: 'Assign Role'
+    = f.select :role, User.role_names, include_blank: "Assign Role"
 
     .phones-form
       = f.label :phones

@@ -3,7 +3,13 @@ class PagesController < ApplicationController
   skip_after_action :verify_authorized
 
   def root
-    redirect_to start_page
+    if current_user.admin?
+      redirect_to admin_root_path
+    elsif current_user.pcmo?
+      redirect_to manage_orders_path
+    else
+      redirect_to new_request_path
+    end
   end
 
   def help
@@ -13,18 +19,6 @@ class PagesController < ApplicationController
       render 'partials/help'
     else
       render 'partials/pcmo_help'
-    end
-  end
-
-private
-
-  def start_page
-    if current_user.admin?
-      new_admin_user_path
-    elsif current_user.pcmo?
-      manage_orders_path
-    else
-      new_request_path
     end
   end
 end

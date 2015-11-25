@@ -1,4 +1,4 @@
-= form_tag select_admin_users_path, class: 'form-inline', method: :get do
+= form_tag select_admin_users_path, class: "form-inline", method: :get do
   .form-group
-    = collection_select :edit, :user_id, policy_scope(User).where(country: current_user.country).order(last_name: :asc), :id, :name, { selected: selected, prompt: 'Select User to edit' }, class: 'form-control'
+    = collection_select :edit, :user_id, policy_scope(User).where(country: current_user.country).order(last_name: :asc), :id, :name, { selected: selected, prompt: "Select User to edit" }, class: "form-control"
   button.btn.btn-primary(type="submit") Edit User
