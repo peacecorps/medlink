@@ -1,0 +1,45 @@
+= form_tag upload_country_roster_path, method: :post, multipart: true do |f|
+  .row
+    .col-md-4
+      .form-group
+        .input-group
+          = file_field :roster, :csv, class: "form-control"
+          span.input-group-btn
+            button.btn.btn-default Upload
+
+= render partial: 'partials/pager', locals: { table: @users }
+
+table.table.table-condensed.table-striped.table-hover
+  thead
+    tr
+      th= @users.header :email
+      th= @users.header :first_name
+      th= @users.header :last_name
+      th= @users.header :role
+      th= @users.header :location
+      th Phone(s)
+      th
+      th
+  tbody
+    - @users.each do |user|
+      - user = RosterUserPresenter.new user
+      tr
+        td= user.email
+        td= user.first_name
+        td= user.last_name
+        td= user.role
+        td= user.location
+        td
+          - if user.phones.any?
+            ul
+              - user.phones.each do |phone|
+                li= phone_link phone
+        td
+          - if policy(user).update?
+            = link_to edit_admin_user_path(user), class: "btn btn-default btn-sm" do
+              | Edit
+        td
+          - if policy(user).inactivate?
+            = link_to inactivate_admin_user_path(user), method: :delete, class: "btn btn-danger btn-sm" do
+              | Delete
+

@@ -39,11 +39,7 @@ Medlink::Application.configure do
   config.after_initialize do
     Bullet.enable = true
     Bullet.raise  = true
-
-    # See e.g. `app/controllers/requests_controller.rb`'s @request.save!
-    #   hitting the `before_save` in the UserScope concern ...
-    Bullet.add_whitelist type: :n_plus_one_query, class_name: "User", association: :country
-  end if ENV["BULLET"]
+  end unless ENV["NO_BULLET"]
 
   config.slackbot = Slackbot::Test.new
 end

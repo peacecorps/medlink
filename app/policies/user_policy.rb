@@ -13,4 +13,8 @@ class UserPolicy < ApplicationPolicy
   def report?
     admin?
   end
+
+  def inactivate?
+    admin? && record != user
+  end
 end

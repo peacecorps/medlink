@@ -22,7 +22,7 @@ nav.navbar.navbar-default role="navigation"
           = form_tag admin_country_path, method: :patch, class: "admin_country_select navbar-form navbar-left" do
             .form-group
               - blank = current_user.country_id ? false : "Select Country"
-              = collection_select :country, :country_id, Country.all, :id, :name,
+              = collection_select :country, :id, Country.all, :id, :name,
                 { include_blank: blank, selected: current_user.country_id },
                 { class: "form-control" }
             .no-js

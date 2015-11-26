@@ -49,7 +49,10 @@ module ApplicationHelper
     end
   end
 
-  def time_zones
-    ActiveSupport::TimeZone.all
+  def update_params_link title, param_updates, opts={}
+    updated = params.
+              reject { |k,v| %w(action controller).include? k  }.
+              merge param_updates
+    link_to title, opts.merge(params: updated)
   end
 end

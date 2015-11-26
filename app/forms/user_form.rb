@@ -7,8 +7,12 @@ class UserForm < Reform::Form
   property :pcv_id
   property :role
   property :time_zone
+  validate :email, :first_name, :last_name, :pcv_id, :role, :location, :time_zone
 
-  collection :phones
+  collection :phones do
+    property :number
+    validate :number
+  end
 
   def initialize *args
     super

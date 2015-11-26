@@ -37,6 +37,10 @@ class SortTable < Draper::Decorator
     "#{model_name}_#{prefix}table"
   end
 
+  def page_param
+    "#{prefix}page"
+  end
+
   def header col, title: nil
     col     = col.to_s
     title ||= col.titleize
@@ -59,10 +63,6 @@ class SortTable < Draper::Decorator
 
   def ordered
     scope.order "#{model.table_name}.#{sort_column} #{sort_direction}"
-  end
-
-  def page_param
-    "#{prefix}page"
   end
 
   def page

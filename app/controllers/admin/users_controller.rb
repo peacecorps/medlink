@@ -49,7 +49,7 @@ class Admin::UsersController < AdminController
     user = User.find params[:id]
     authorize user
     user.inactivate!
-    redirect_to new_admin_user_path, success: I18n.t!("flash.user.inactive_user", user: user.name)
+    redirect_to :back, notice: I18n.t!("flash.user.inactive_user", user: user.name)
   end
 
   def upload_csv

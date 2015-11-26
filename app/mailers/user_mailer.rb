@@ -10,13 +10,13 @@ class UserMailer < Devise::Mailer
 
   private
 
-  def style *args
+  def s *args
     styles = args.reduce({}) do |acc,s|
       acc.merge(s.is_a?(Hash) ? s : send(s))
     end
-    { style: styles.map { |k,v| "#{k}: #{v}" }.join("; ") }
+    styles.map { |k,v| "#{k}: #{v}" }.join("; ")
   end
-  helper_method :style
+  helper_method :s
 
   def header
     { color: "#29a9df" }

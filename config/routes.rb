@@ -66,7 +66,11 @@ Medlink::Application.routes.draw do
 
   resource :country do
     resources :supplies, only: [:index, :update]
-    resource :roster
+    resource :roster, only: [:show, :edit, :update] do
+      collection do
+        post :upload
+      end
+    end
   end
 
   namespace :admin do
@@ -75,12 +79,11 @@ Medlink::Application.routes.draw do
 
     resources :users, only: [:new, :create, :edit, :update] do
       member do
-        patch :inactivate
+        delete :inactivate
       end
 
       collection do
-        get  :select
-        post :upload_csv
+        get :select
       end
     end
   end

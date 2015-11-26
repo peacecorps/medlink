@@ -1,6 +1,34 @@
 class RostersController < ApplicationController
   def show
-    @roster = Roster.new current_user.country
+    roster = Roster.new country: current_user.country, rows: current_user.country.users
+    authorize roster
+    @users = sort_table roster.rows.includes(:phones), per_page: 25
+  end
+
+  def upload
+    upload = current_user.roster_uploads.new \
+      body: params[:roster][:csv].read, country: current_user.country
+    authorize upload, :create?
+    upload.save!
+    redirect_to edit_country_roster_path(upload_id: upload.id)
+  end
+
+  def edit
+    upload  = current_user.country.roster_uploads.find params[:upload_id]
+    @roster = RosterForm.new upload.roster
     authorize @roster
+    @roster.validate({})
+  end
+
+  def update
+    upload  = current_user.country.roster_uploads.find params[:upload_id]
+    @roster = RosterForm.new upload.roster
+    authorize @roster
+    if @roster.validate rows: params[:roster][:rows_attributes].values
+      @roster.save
+      redirect_to country_roster_path
+    else
+      render :edit
+    end
   end
 end

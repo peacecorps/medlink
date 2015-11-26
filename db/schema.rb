@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124025622) do
+ActiveRecord::Schema.define(version: 20151126003333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,18 @@ ActiveRecord::Schema.define(version: 20151124025622) do
     t.integer  "replacement_id"
   end
 
+  create_table "roster_uploads", force: :cascade do |t|
+    t.integer  "uploader_id"
+    t.string   "uri"
+    t.text     "body"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "country_id"
+  end
+
+  add_index "roster_uploads", ["country_id"], name: "index_roster_uploads_on_country_id", using: :btree
+  add_index "roster_uploads", ["uploader_id"], name: "index_roster_uploads_on_uploader_id", using: :btree
+
   create_table "supplies", force: :cascade do |t|
     t.string  "shortcode", limit: 255
     t.string  "name",      limit: 255
@@ -184,4 +196,6 @@ ActiveRecord::Schema.define(version: 20151124025622) do
   add_foreign_key "responses", "requests", column: "replacement_id"
   add_foreign_key "responses", "users"
   add_foreign_key "responses", "users", column: "received_by"
+  add_foreign_key "roster_uploads", "countries"
+  add_foreign_key "roster_uploads", "users", column: "uploader_id"
 end

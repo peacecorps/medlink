@@ -12,22 +12,22 @@ namespace :admin do
     end
 
     password = args[:password] || 'password'
-    pcv_id = rand(1_000_000).to_s
+    pcv_id   = rand(1_000_000).to_s
 
     puts "Creating user '#{email}' with pcv_id '#{pcv_id}' and password '#{password}'"
 
-    user = User.new
-    user.email = email
-    user.pcv_id = pcv_id
-    user.first_name = names.first
-    user.last_name = names.last
-    user.password = user.password_confirmation = password
-    user.country = Country.first || raise("Please generate a country to admin")
-    user.role = 'admin'
-    user.location = 'Buckhead'
-    user.time_zone = "Alaska"
-    user.save!
-
+    country = Country.all.sample
+    user = User.create! \
+      email:        email,
+      pcv_id:       pcv_id,
+      first_name:   names.first,
+      last_name:    names.last,
+      password:     password,
+      country:      country,
+      role:         :admin,
+      location:     "---",
+      time_zone:    country.time_zone,
+      confirmed_at: 1.week.ago
     user.phones.create! number: '+1 404-555-1212'
   end
 

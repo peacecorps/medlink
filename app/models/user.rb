@@ -26,10 +26,11 @@ class User < ActiveRecord::Base
   has_many :messages, class_name: "SMS"
 
   has_many :submitted_requests, foreign_key: "entered_by", class_name: "Request"
+  has_many :roster_uploads, foreign_key: "uploader_id"
 
   validates_presence_of :country, :location, :first_name, :last_name, :role
   validates :pcv_id, presence: true, uniqueness: true, if: :pcv?
-  validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map(&:name) }
+  validates :time_zone, inclusion: { in: Country.time_zones.map(&:name) }
 
   def self.due_cutoff
     now    = Time.now

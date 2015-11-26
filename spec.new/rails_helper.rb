@@ -110,6 +110,10 @@ RSpec.configure do |config|
     Rails.configuration.slackbot
   end
 
+  def mail
+    ActionMailer::Base.deliveries
+  end
+
   config.before :suite do
     clean!
     NamedSeeds.load_seed unless Country.any?
@@ -117,6 +121,10 @@ RSpec.configure do |config|
     # TODO:
     # * figure out why some test runs don't clean up after themselves
     # DatabaseCleaner.clean_with :truncation, except: %w( countries supplies country_supplies twilio_account )
+  end
+
+  config.before :each do
+    ActionMailer::Base.deliveries = []
   end
 
   # TODO: many of these tests don't really need to hit Twilio and should probably opt out
@@ -129,9 +137,8 @@ RSpec.configure do |config|
 
   config.around(:each) do |x|
     if x.metadata[:js]
-      warn "Skipping JS test"
-      #x.run
-      #clean!
+      x.run
+      clean!
     else
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.start

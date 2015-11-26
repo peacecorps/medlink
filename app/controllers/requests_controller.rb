@@ -18,12 +18,6 @@ class RequestsController < ApplicationController
   private
 
   def after_create_path
-    if current_user.admin?
-      new_admin_user_path
-    elsif current_user.pcmo?
-      manage_orders_path
-    else
-      orders_path
-    end
+    current_user.pcv? ? orders_path : root_path
   end
 end
