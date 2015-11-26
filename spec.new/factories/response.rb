@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :response do
     user
-    country { user.country }
+    country    { user.country }
+    extra_text "N.B. - stuff"
 
     transient do
       order_count 1

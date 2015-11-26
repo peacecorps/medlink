@@ -9,5 +9,6 @@ class CountrySMSJob < ApplicationJob
     phones.each do |phone|
       SmsJob.perform_later phone: phone, twilio_account: twilio, message: message
     end
+    true
   end
 end

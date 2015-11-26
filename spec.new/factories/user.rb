@@ -16,10 +16,16 @@ FactoryGirl.define do
 
     transient do
       order_count 0
+      phone_count 0
+    end
+
+    trait :textable do
+      phone_count ||= 1
     end
 
     after :create do |user, evaluator|
       create_list :order, evaluator.order_count, user: user
+      create_list :phone, evaluator.phone_count, user: user
     end
 
     User.roles.each do |role_name, _|

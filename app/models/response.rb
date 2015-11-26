@@ -3,7 +3,7 @@ class Response < ActiveRecord::Base
 
   include Concerns::UserScope
 
-  belongs_to :message
+  belongs_to :message, class_name: "SMS"
   belongs_to :replacement, class_name: "Request"
 
   has_many :orders
@@ -40,5 +40,9 @@ class Response < ActiveRecord::Base
 
   def reorders
     Request.where user: user, country: country, reorder_of_id: id
+  end
+
+  def sms_instructions
+    SmsInstructions.new(orders).to_s
   end
 end

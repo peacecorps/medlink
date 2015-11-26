@@ -1,0 +1,26 @@
+require "rails_helper"
+
+# FIXME: again, this need not make API calls
+describe ResponseSMSJob, :vcr do
+  Given(:textable) { FactoryGirl.create :user, phone_count: 1 }
+
+  context "with no phone" do
+    Given(:response) { FactoryGirl.create :response, order_count: 2 }
+
+    When(:result) { ResponseSMSJob.new.perform response }
+
+    Then { result == false     }
+    And  { SMS.outgoing.empty? }
+  end
+
+  context "with a phone" do
+    Given(:response) { FactoryGirl.create :response, user: textable, order_count: 2 }
+
+    When(:result) { ResponseSMSJob.new.perform response }
+
+    Then { result == true                                                    }
+    And  { SMS.outgoing.exists?                                              }
+    And  { SMS.outgoing.last.user == response.user                           }
+    And  { SMS.outgoing.last.text.include? response.supplies.first.shortcode }
+  end
+end
