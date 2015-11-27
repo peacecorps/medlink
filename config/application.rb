@@ -61,6 +61,8 @@ module Medlink
 
     config.autoload_paths += %W(#{config.root}/lib)
 
+    config.slow_timeout = (ENV["SLOW_TIMEOUT"] || 1).to_f.seconds
+
     config.slackbot = Slackbot::Test.new
     config.pingbot  = Slackbot::Test.new
 

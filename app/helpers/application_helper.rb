@@ -1,7 +1,7 @@
 module ApplicationHelper
   def icon name, opts={}
     klass = ["glyphicon", "glyphicon-#{name}", opts[:class]].compact.join " "
-    content_tag :i, class: klass
+    content_tag :i, "", class: klass
   end
 
   def title text=nil
@@ -14,8 +14,8 @@ module ApplicationHelper
 
   def back_link title, path
     link_to path, class: "btn btn-default btn-back" do
-      icon "chevron-left"
-      content_tag :span, title
+      concat icon("chevron-left")
+      concat content_tag(:span, " #{title}")
     end
   end
 

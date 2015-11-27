@@ -5,16 +5,14 @@
   .col-md-6
     = bootstrap_form_for @user do |f|
       = title do
-        = @user.name
+        = @user.model.name
         small= @user.pcv_id
-
-      = f.text_field :first_name
-      = f.text_field :last_name
-      = f.email_field :email
-      = f.text_field :location
-      = f.collection_select :time_zone, time_zones, :name, :name, { include_blank: true }
-      / FIXME
-      /= render partial: "partials/phone_form", locals: { form: f }
+      fieldset
+        = f.text_field :first_name
+        = f.text_field :last_name
+        = f.text_field :location, label: "Address / location"
+        = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s, include_blank: true
+        = f.text_area :phone_numbers, help: "Including country code; separate multiple numbers with commas"
 
       button.btn.btn-primary(type="submit") Save
       = link_to "Change Password", edit_user_registration_path, class: "btn btn-default"

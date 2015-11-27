@@ -41,6 +41,11 @@ class User < ActiveRecord::Base
   scope :past_due, -> { where ["waiting_since  < ?", due_cutoff] }
   scope :pending,  -> { where ["waiting_since >= ?", due_cutoff] }
 
+  before_validation on: :create do |u|
+    u.time_zone  = u.country.time_zone unless u.time_zone.present?
+    u.password ||= SecureRandom.hex(64)
+  end
+
   def self.find_by_pcv_id str
     where(['lower(pcv_id) = ?', str.downcase]).first
   end

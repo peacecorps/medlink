@@ -9,14 +9,14 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
+    @user = UserForm.new current_user, editor: current_user
     authorize @user
   end
 
   def update
-    @user = current_user
-    authorize @user
-    if @user.update_attributes update_params
+    @user = UserForm.new current_user, editor: current_user
+    if validate @user, params[:user]
+      @user.save
       redirect_to edit_user_path, flash: { success: I18n.t!("flash.user.account_updated") }
     else
       render :edit
@@ -48,14 +48,5 @@ class UsersController < ApplicationController
       user.send_confirmation_instructions
     end
     redirect_to :back, notice: I18n.t!("flash.email.help_sent", email: email)
-  end
-
-  private
-
-  def update_params
-    p = params.require(:user).permit :first_name, :last_name, :email, :location, :time_zone,
-      phones_attributes: [:id, :number, :_destroy]
-    p[:phones_attributes].reject! { |_,ps| ps[:number].empty? } if p[:phones_attributes]
-    p
   end
 end

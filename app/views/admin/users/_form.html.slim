@@ -1,32 +1,18 @@
-- url = action == :edit ? admin_user_path(user) : admin_users_path
-- user.phones.new # Ensure we display a blank field
-
+- url = user.persisted? ? admin_user_path(user) : admin_users_path
 = bootstrap_form_for user, url: url do |f|
   fieldset
     = f.text_field :first_name
     = f.text_field :last_name
     = f.text_field :location, label: "Address / location"
-    = f.collection_select :country_id, Country.all, :id, :name, {include_blank: true}, label: "Country"
-    = f.email_field :email
-    = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s, include_blank: true
+    = f.collection_select :country_id, Country.all, :id, :name, { include_blank: !user.country_id.present? }, label: "Country"
+    - if user.respond_to? :email
+      = f.email_field :email
+    = f.collection_select :time_zone, Country.time_zones, :name, :to_s, include_blank: true
     = f.text_field :pcv_id, label: "PCV ID"
-    = f.select :role, User.role_names, include_blank: "Assign Role"
+    = f.select :role, User.role_names, include_blank: !user.role.present?
+    = f.text_area :phone_numbers, help: "Including country code; separate multiple numbers with commas"
 
-    .phones-form
-      = f.label :phones
-      - user.phones.each do |phone|
-        = f.fields_for phone do |phone_form|
-          - x = link_to "#", class: "js-required btn btn-danger remove" do
-            = icon :remove
-          = phone_form.text_field :number, placeholder: "Phone number must include '+' and the country code", hide_label: true, append: x, name: "phones[][number]"
-      = link_to "#", class: "js-required btn btn-sm add" do
-        = icon :plus
-        | Add Phone
-
-  / FIXME: appearance here
   .form-group
-    - if action == :edit
-      button.btn.btn-primary Save
-      = link_to 'Delete User', inactivate_admin_user_path, method: :patch, data: {confirm: "You are about to inactivate this user. Are you sure?"}, class: "btn btn-danger js-required"
-    - else
-      button.btn.btn-primary Create
+    = f.submit class: "btn btn-primary"
+    - if user.persisted? && policy(user).inactivate?
+      = link_to "Inactivate User", inactivate_admin_user_path, method: :delete, data: { confirm: "You are about to inactivate this user. Are you sure?" }, class: "btn btn-danger pull-right"

@@ -8,27 +8,16 @@ class ApplicationController < ActionController::Base
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
-    # It'd be nice to redirect to the login page in case the user wants to
-    #   sign in with another (authorized) account. Devise redirects logged
-    #   in users away from that page, however, and clobbers the flash message
-    #   in the process.
-    redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
+    redirect_to new_user_session_path, flash: { error: exception }
   end
 
-private
+  private
 
-  def sort_table scope, **opts
-    @_sort_table_registry ||= SortTable::Registry.new
-    @_sort_table_registry.build scope, opts.merge(params: params)
-  end
-
-  # Redirects to the login path to allow the flash messages to
-  #    display for sign_out.
-  def after_sign_out_path_for(resource_or_scope)
+  def after_sign_out_path_for _
     new_user_session_path
   end
 
-  def after_sign_in_path_for(user)
+  def after_sign_in_path_for user
     if user.welcome_video_seen?
       root_path
     else
@@ -36,25 +25,28 @@ private
     end
   end
 
-  def skip_bullet
-    Bullet.enable = false
-    yield
-  ensure
-    Bullet.enable = true
+  def sort_table scope, **opts
+    @_sort_table_registry ||= SortTable::Registry.new
+    @_sort_table_registry.build scope, opts.merge(params: params)
   end
 
   def validate reform, *args
     reform.validate(*args).tap { authorize reform }
   end
 
-  # :nocov:
+  def skip_bullet
+    #Bullet.enable = false
+    yield
+  ensure
+    Bullet.enable = true
+  end
+
   def alert_if_slow
     start = Time.now
     yield
     duration = Time.now - start
-    if duration > 1.second
-      Notifications.send :slow, "#{params[:controller]}##{params[:action]} took #{duration} (#{request.path})"
+    if duration > Rails.configuration.slow_timeout.seconds
+      Notification.send :slow, "#{params[:controller]}##{params[:action]} took #{duration} (#{request.path})"
     end
   end
-  # :nocov:
 end

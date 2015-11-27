@@ -2,6 +2,10 @@ class Phone < ActiveRecord::Base
   belongs_to :user
   has_many :messages, class_name: "SMS"
 
+  before_validation on: :create do |p|
+    p.condensed ||= Phone.condense(p.number)
+  end
+
   include Concerns::Immutable
   validates :condensed, presence: true, uniqueness: true
   immutable :number, :condensed
@@ -25,10 +29,5 @@ class Phone < ActiveRecord::Base
     else
       Phone.create! number: number, condensed: normalized
     end
-  end
-
-  def number= n
-    self.condensed = Phone.condense n
-    super
   end
 end

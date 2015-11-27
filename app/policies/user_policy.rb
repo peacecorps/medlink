@@ -1,6 +1,6 @@
 class UserPolicy < ApplicationPolicy
   def update?
-    super || record == user
+    super || record.id == user.id
   end
 
   def respond?
@@ -15,6 +15,6 @@ class UserPolicy < ApplicationPolicy
   end
 
   def inactivate?
-    admin? && record != user
+    admin? && record.id != user.id
   end
 end

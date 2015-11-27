@@ -1,17 +1,7 @@
 = content_for :page_title do
-  | User Management
+  | New Account
 
 .row
-  .col-md-6
-    = title do
-      | Add
-    = render partial: 'form', locals: { user: @user, action: :add }
+  = back_link "All Volunteers", country_roster_path
 
-  .col-md-5
-    = title do
-      | Edit
-    = render partial: "edit_widget", locals: { selected: nil }
-
-    = title do
-      | Bulk Upload
-    = render partial: 'upload_csv_form', locals: { upload: @upload }
+= render partial: 'form', locals: { user: @user }
