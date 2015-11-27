@@ -1,10 +1,23 @@
 class Slackbot
   class Test
+    include Enumerable
+
     attr_reader :messages
 
+    def initialize
+      @messages = []
+    end
+
     def info text, opts={}
-      @messages ||= []
       @messages.push text
+    end
+
+    def each
+      messages.each { |m| yield m }
+    end
+
+    def last
+      messages.last
     end
   end
 

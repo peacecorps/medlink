@@ -40,6 +40,4 @@ Medlink::Application.configure do
     Bullet.enable = true
     Bullet.raise  = true
   end unless ENV["NO_BULLET"]
-
-  config.slackbot = Slackbot::Test.new
 end

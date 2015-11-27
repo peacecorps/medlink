@@ -1,7 +1,6 @@
 require "rails_helper"
 
-# FIXME: again, this need not make API calls
-describe ResponseSMSJob, :vcr do
+describe ResponseSMSJob do
   Given(:textable) { FactoryGirl.create :user, phone_count: 1 }
 
   context "with no phone" do

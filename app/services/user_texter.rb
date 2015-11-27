@@ -4,7 +4,7 @@ class UserTexter
   def initialize phone:, twilio_account: nil, deliverer: nil
     @phone     = phone
     @twilio    = twilio_account || default_account
-    @deliverer = deliverer || self.twilio.client.messages.method(:create)
+    @deliverer = deliverer || Rails.configuration.sms.method(:deliver)
   end
 
   def send message
@@ -53,22 +53,22 @@ class UserTexter
   end
 
   def deliver message
-    deliverer.(
+    deliverer.(twilio: twilio, sms: {
       from: twilio.number,
       to:   phone.number,
       body: message
-    )
+    })
   end
 
   def watch_for_send_volume time: 1.hour
     sent = phone.messages.outgoing.where("created_at > ?", time.ago).count
     if sent > 3
-      Rails.configuration.slackbot.info "Warning - #{phone.number} has received #{sent} messages in #{time}."
+      Notification.send :spam_warning, "Warning - #{phone.number} has received #{sent} messages in #{time}."
     end
   end
 
   def note_delivery_failure message, error
-    Rails.logger.error "Error while texting #{phone} - #{error}"
+    Notification.send :delivery_failure, "Error while texting #{phone} - #{error}"
     phone.update!   send_error: error
     message.update! send_error: error
   end

@@ -53,9 +53,7 @@ private
     yield
     duration = Time.now - start
     if duration > 1.second
-      message = "#{params[:controller]}##{params[:action]} took #{duration} (#{request.path})"
-      Rails.configuration.slackbot.info message if ENV["ALERT_IF_SLOW"]
-      Rails.logger.info message
+      Notifications.send :slow, "#{params[:controller]}##{params[:action]} took #{duration} (#{request.path})"
     end
   end
   # :nocov:

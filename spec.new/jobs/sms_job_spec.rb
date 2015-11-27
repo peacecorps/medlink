@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe SmsJob, :vcr do # FIXME: these shouldn't need VCR
+describe SmsJob do
   Given(:twilio) { TwilioAccount.random }
 
   context "without a user" do

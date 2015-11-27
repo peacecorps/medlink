@@ -5,7 +5,7 @@ class PeriodicAnnouncementSender
 
   def send_scheduled
     on_schedule.each do |a|
-      Rails.configuration.slackbot.info \
+      Notification.send :announcement_scheduled,
         "Auto-sending annoucement #{a.id} to #{a.country.name}: #{a.message}"
       a.send!
     end

@@ -110,6 +110,10 @@ RSpec.configure do |config|
     Rails.configuration.slackbot
   end
 
+  def pingbot
+    Rails.configuration.pingbot
+  end
+
   def mail
     ActionMailer::Base.deliveries
   end

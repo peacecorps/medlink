@@ -4,6 +4,7 @@ require 'rails/all'
 require 'csv'
 
 require File.expand_path('../../lib/slackbot', __FILE__)
+require File.expand_path('../../app/models/sms/send_config', __FILE__)
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -60,8 +61,10 @@ module Medlink
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    config.send_texts = false
+    config.slackbot = Slackbot::Test.new
+    config.pingbot  = Slackbot::Test.new
 
-    config.slackbot = Slackbot.new
+    config.sms = Sms::SendConfig.new
+    config.sms.method = :store
   end
 end

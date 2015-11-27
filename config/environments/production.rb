@@ -83,4 +83,10 @@ Medlink::Application.configure do
     username:   "Medlink",
     icon_emoji: ":hospital:"
   )
+  config.pingbot = Slackbot.new(
+    channel:    "@james",
+    username:   "Medlink",
+    icon_emoji: ":hospital:"
+  )
+  config.sms.method = :delivery
 end

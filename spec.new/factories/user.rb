@@ -20,7 +20,9 @@ FactoryGirl.define do
     end
 
     trait :textable do
-      phone_count ||= 1
+      after :create do |user|
+        create :phone, user: user
+      end
     end
 
     after :create do |user, evaluator|

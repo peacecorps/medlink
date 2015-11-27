@@ -93,8 +93,8 @@ describe UserTexter do
     When { texter.send "a" }
     When { texter.send "b" }
     When { texter.send "c" }
-    When(:result) { texter.send "d" }
+    When { texter.send "d" }
 
-    Then { slackbot.messages.last =~ /4 messages/ }
+    Then { pingbot.messages.last =~ /4 messages/ }
   end
 end

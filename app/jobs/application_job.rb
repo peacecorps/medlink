@@ -1,7 +1,7 @@
 class ApplicationJob < ActiveJob::Base
   rescue_from StandardError do |error|
     # :nocov:
-    Rails.configuration.slackbot.error "#{self.class}: #{error}" if Rails.env.production?
+    Notification.send :error_in_job, "#{self.class}: #{error}" if Rails.env.production?
     raise error
     # :nocov:
   end

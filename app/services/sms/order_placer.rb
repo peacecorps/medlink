@@ -12,6 +12,7 @@ class SMS::OrderPlacer < SMS::Handler
     user_required!
 
     if unrecognized_shortcodes.any?
+      Notification.send :unrecognized_sms, "#{sms.id}) #{sms.text}"
       error! "sms.unrecognized_shortcodes",
         { codes: unrecognized_shortcodes }, condense: :code
     end
@@ -22,7 +23,6 @@ class SMS::OrderPlacer < SMS::Handler
     end
 
     if duplicate
-      Rails.logger.info "Sending response for sms #{sms}, duplicate of #{duplicate}"
       error! "sms.duplicate_order", {
         supplies: supply_names,
         due_date: due_date(duplicate.request.created_at)
@@ -50,7 +50,7 @@ private
   end
 
   def supply_names
-    @_supply_names ||= found_supplies.map { |s| "#{s.name} (#{s.shortcode})" }
+    @_supply_names ||= found_supplies.map &:select_display
   end
 
   def duplicate
