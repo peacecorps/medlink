@@ -158,6 +158,12 @@ RSpec.configure do |config|
     ActiveJob::Base.queue_adapter = _old
   end
 
+  config.around :each, bullet: false do |x|
+    Bullet.enable = false
+    x.run
+    Bullet.enable = true
+  end
+
   config.include ApiHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
 end

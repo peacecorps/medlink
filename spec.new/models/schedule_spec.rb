@@ -9,11 +9,19 @@ describe Schedule do
     context "full month" do
       When { Timecop.travel Time.parse "2015-04-03" }
       Then { schedule.preview == "Apr 3rd, 15th, and 30th at 09:00" }
+      And  { schedule.next_run == Time.parse("2015-04-03 09:00:00") }
     end
 
     context "short month" do
       When { Timecop.travel Time.parse "1990-02-01" }
       Then { schedule.preview == "Feb 3rd and 15th at 09:00" }
+      And  { schedule.next_run == Time.parse("1990-02-03 09:00:00") }
+    end
+
+    context "at end of month" do
+      When { Timecop.travel Time.parse "1950-05-30 10:00" }
+      Then { schedule.preview == "May 3rd, 15th, and 30th at 09:00" }
+      And  { schedule.next_run == Time.parse("1950-06-03 09:00:00") }
     end
   end
 

@@ -8,17 +8,13 @@ class Announcement < ActiveRecord::Base
     where.not(schedule: nil).select { |a| a.schedule.next_run.present? }
   end
 
-  def self.next count
+  def self.next count=1
     scheduled.min_by(count) { |a| a.schedule.next_run }
   end
 
   def send!
     update! last_sent_at: Time.now
     CountrySMSJob.perform_later country: country, message: message
-  end
-
-  def self.send_scheduled!
-    PeriodicAnnouncementSender.new(announcements: find_each).send_scheduled
   end
 
   def has_been_sent? within:

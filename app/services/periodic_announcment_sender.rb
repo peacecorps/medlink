@@ -1,6 +1,7 @@
 class PeriodicAnnouncementSender
-  def initialize announcements:
-    @announcements, @now = announcements, Time.now
+  def initialize announcements: nil
+    @announcements = announcements || Announcement.find_each
+    @now           = Time.now
   end
 
   def send_scheduled

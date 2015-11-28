@@ -35,4 +35,9 @@ Medlink::Application.configure do
     Bullet.enable = true
     Bullet.raise  = true
   end unless ENV["NO_BULLET"]
+
+  config.pingbot = Slackbot.new \
+    channel:    "#medlink-logs",
+    username:   "Medlink",
+    icon_emoji: ":hospital:"
 end

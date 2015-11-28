@@ -20,38 +20,43 @@ class MessageSearch
   end
 
   def messages
-    in_country direction_filter by_validity
+    # TODO: unless direction == :incoming || validity == :both ... ?
+    valid direct in_country
   end
 
 private
 
-  def by_validity
+  def valid scope
     if validity == :valid
-      SMS.joins("left outer join requests on requests.message_id = messages.id").where("requests.id is not null")
+      scope.
+        joins("left outer join requests on requests.message_id = messages.id").
+        where("requests.id is not null")
     elsif validity == :invalid
-      SMS.joins("left outer join requests on requests.message_id = messages.id").where("requests.id is null")
+      scope.
+        joins("left outer join requests on requests.message_id = messages.id").
+        where("requests.id is null")
     else
-      SMS.all
+      scope
     end
   end
 
-  def direction_filter scope
+  def direct scope
     if direction == :incoming
       scope.incoming
     elsif direction == :outgoing
-      SMS.outgoing # all outgoing messages are valid
+      scope.outgoing
     else
       scope
     end
   end
 
-  def in_country scope
+  def in_country
     if user.pcmo?
-      scope.joins(:user).where(users: { country_id: user.country_id })
+      SMS.joins(:user).where(users: { country_id: user.country_id })
     elsif country_ids.any? &:present?
-      scope.joins(:user).where(users: { country_id: country_ids })
+      SMS.joins(:user).where(users: { country_id: country_ids })
     else
-      scope
+      SMS.all
     end
   end
 end

@@ -9,6 +9,8 @@ class TwilioAccount < ActiveRecord::Base
   end
 
   def client
+    # :nocov:
     @_client ||= Twilio::REST::Client.new(sid, auth)
+    # :nocov:
   end
 end

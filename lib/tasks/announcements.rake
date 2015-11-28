@@ -1,6 +1,6 @@
 namespace :announcements do
   desc "Send all scheduled announcements"
   task :send do
-    Announcement.send_scheduled!
+    PeriodicAnnouncementSender.new.send_scheduled
   end
 end

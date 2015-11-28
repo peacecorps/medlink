@@ -3,7 +3,7 @@ require "rails_helper"
 describe "Ordering via the web" do
   Given(:volunteer) { FactoryGirl.create :pcv }
 
-  it "runs end-to-end", :js do # N.b. the :vcr tag doesn't work because this forks(?)
+  it "runs end-to-end", :js, bullet: false do # N.b. the :vcr tag doesn't work because this forks(?)
     login_as volunteer
 
     chosen_request_box = page.find :xpath, "//input[@value='Select Some Options']"

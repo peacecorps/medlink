@@ -78,15 +78,13 @@ Medlink::Application.configure do
 
   config.send_texts = true
 
-  config.slackbot = Slackbot.new(
+  config.slackbot = Slackbot.new \
     channel:    "#medlink",
     username:   "Medlink",
     icon_emoji: ":hospital:"
-  )
-  config.pingbot = Slackbot.new(
-    channel:    "@james",
+  config.pingbot = Slackbot.new \
+    channel:    "#medlink-logs",
     username:   "Medlink",
     icon_emoji: ":hospital:"
-  )
   config.sms.method = :delivery
 end
