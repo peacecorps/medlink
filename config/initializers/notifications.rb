@@ -42,10 +42,12 @@ Notification = NotificationCenter.configure do |c|
   c.on :flag_for_followup,      &ping
   c.on :spam_warning,           &ping
   c.on :unrecognized_sms,       &ping
+  c.on :sending_response,       &log
   c.on :prompt_for_ack,         &log
   c.on :delivery_failure,       &log
 
   c.unhandled do |key, msg|
-    ping.("Unhandled `#{key}` - '#{msg}'")
+    error = "Unhandled `#{key}` - '#{msg}'"
+    Rails.env.production? ? ping(error) : raise(error)
   end
 end

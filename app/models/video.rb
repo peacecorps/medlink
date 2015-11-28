@@ -1,6 +1,4 @@
 class Video
-  attr_reader :youtube_id
-
   def initialize youtube_id
     @youtube_id = youtube_id
     freeze
@@ -12,4 +10,8 @@ class Video
 
   PCV_WELCOME  = new "qoZvHiSBTAs"
   PCMO_WELCOME = new "4L_XqUhXaMw"
+
+  private
+
+  attr_reader :youtube_id
 end

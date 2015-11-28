@@ -18,31 +18,19 @@ class Response < ActiveRecord::Base
     update! cancelled_at: Time.now
   end
 
-  def received?
-    received_at.present?
-  end
-
   def cancelled?
     cancelled_at.present?
+  end
+
+  def received?
+    received_at.present?
   end
 
   def archived?
     received? || cancelled?
   end
 
-  def reordered?
-    replacement_id.present?
-  end
-
-  def reordered_at
-    replacement.try :created_at
-  end
-
   def reorders
     Request.where user: user, country: country, reorder_of_id: id
-  end
-
-  def sms_instructions
-    SmsInstructions.new(orders).to_s
   end
 end

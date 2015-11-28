@@ -72,4 +72,15 @@ describe SMS::OrderPlacer do
     Then { result.length < 160           }
     And  { result =~ /11 other supplies/ }
   end
+
+  context "test" do
+    Given(:other) { FactoryGirl.create :phone }
+    Given(:sms)   { FactoryGirl.create :sms, phone: other, text: "@#{volunteer.pcv_id} #{supply.shortcode}" }
+
+    When(:result) { SMS::OrderPlacer.new(sms: sms).run! }
+
+    Then { result.include? supply.shortcode  }
+    And  { !result.include? volunteer.pcv_id }
+    And  { sms.request.supplies.count == 1   }
+  end
 end

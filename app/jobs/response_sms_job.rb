@@ -1,9 +1,10 @@
 class ResponseSMSJob < ApplicationJob
   def perform response
-    Rails.logger.info "Sending SMS for response ##{response.id}"
+    Notification.send :sending_response, "Sending SMS for response ##{response.id}"
     user = response.user
     return false unless user.try :textable?
-    sms = user.send_text response.sms_instructions
+    text = ResponseSMSPresenter.new(response).instructions
+    sms  = user.send_text text
     response.update! message: sms
     true
   end

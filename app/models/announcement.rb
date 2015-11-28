@@ -8,7 +8,7 @@ class Announcement < ActiveRecord::Base
     where.not(schedule: nil).select { |a| a.schedule.next_run.present? }
   end
 
-  def self.next count=1
+  def self.next count
     scheduled.min_by(count) { |a| a.schedule.next_run }
   end
 
@@ -19,17 +19,5 @@ class Announcement < ActiveRecord::Base
 
   def has_been_sent? within:
     last_sent_at && last_sent_at > within.ago
-  end
-
-  def reach
-    @_reach ||= country.textable_pcvs.count
-  end
-
-  def days
-    schedule ? schedule.days.join(", ") : ""
-  end
-
-  def hour
-    schedule && schedule.hour
   end
 end

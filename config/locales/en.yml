@@ -53,8 +53,8 @@ en:
     response:
       delivery: "Your request for %{supplies} has been approved for delivery to you."
       pickup: "Your request for %{supplies} has been approved for pickup."
-      purchase: "Sorry, we are unable to fulfill you request for %{supplies}. Please purchase and allow us to reimburse you."
-      denial: "Sorry, we are unable to fulfill you request for %{supplies}. Check email for details"
+      purchase: "Sorry, we are unable to fulfill your request for %{supplies}. Please purchase and allow us to reimburse you."
+      denial: "Sorry, we are unable to fulfill your request for %{supplies}. Check email for details"
       mixed_approval: "Your request for %{supplies} has been approved. Check email for details."
       partial_denial: "Sorry, we are unable to fill your entire order for %{supplies}. Check email for details."
       receipt_reminder: "Did you get your order of %{supplies} that was approved on %{response_date}? Reply w/ Yes or No"

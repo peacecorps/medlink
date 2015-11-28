@@ -1,17 +1,13 @@
-class Response::SmsInstructions
-  def initialize orders
-    @orders = orders.includes :supply
-  end
+class ResponseSMSPresenter < Draper::Decorator
+  delegate_all
 
-  def to_s
+  def instructions
     SMS::Condenser.new("sms.response.#{type}", :supply,
       supplies: supply_names
     ).message
   end
 
   private
-
-  attr_reader :orders
 
   def type
     methods = orders.map(&:delivery_method).uniq
@@ -25,6 +21,6 @@ class Response::SmsInstructions
   end
 
   def supply_names
-     orders.map { |o| o.supply.select_display }.uniq
+    orders.includes(:supply).map { |o| o.supply.select_display }.uniq
   end
 end

@@ -2,11 +2,12 @@ require "rails_helper"
 
 describe Roster do
   Given(:country) { Country.random }
-  Given(:initial) { Roster.from_csv %{
+  Given(:body) { %{
     email,phone,phone2,first_name,last_name,pcv_id,role,location,time_zone
     a@example.com,+1555,,A,User,1,pcv,Place,Fiji
     b@example.com,+1556,+1557,B,User,2,pcv,Place,Fiji
-  }, country: country }
+  } }
+  Given(:initial) { Roster.from_csv body, country: country }
 
   context "loading an initial roster" do
     When(:result) { initial.save }
@@ -35,5 +36,13 @@ describe Roster do
     And  { country.users.find_by(email: "c@example.com").first_name == "C"       }
     And  { mail.count == 1                                                       }
     And  { mail.last.to == ["c@example.com"]                                     }
+  end
+
+  context "loading from upload" do
+    Given(:upload) { FactoryGirl.build :roster_upload, body: body }
+
+    When(:result) { upload.roster }
+
+    Then { result.active_emails == %w(a@example.com b@example.com) }
   end
 end

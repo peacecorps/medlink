@@ -1,14 +1,11 @@
 class SMS::OrderPlacer < SMS::Handler
   def valid?
-    parsed
-    true
-  rescue SMS::Parser::ParseError => e
-    # :nocov:
-    false
-    # :nocov:
+    parse!
+    shortcodes.present?
   end
 
   def run!
+    parse!
     user_required!
 
     if unrecognized_shortcodes.any?
@@ -35,8 +32,12 @@ class SMS::OrderPlacer < SMS::Handler
 
 private
 
-  def parsed
-    @_parsed ||= SMS::Parser.new(sms.text).tap &:run!
+  attr_reader :instructions, :shortcodes
+
+  def parse!
+    return if shortcodes.present?
+    parsed = SMS::Parser.new(sms.text).run!
+    @instructions, @shortcodes = parsed.instructions, parsed.shortcodes
   end
 
   def create_orders
@@ -44,7 +45,7 @@ private
     raise "SMS form failed to validate" unless form.validate( # This _should_ be impossible
       message:  sms,
       supplies: found_supplies,
-      text:     parsed.instructions
+      text:     instructions
     )
     form.save
   end
@@ -62,10 +63,6 @@ private
       supplies: supply_names,
       due_date: due_date(sms.created_at)
     ).message
-  end
-
-  def shortcodes
-    @_shortcodes ||= parsed.shortcodes.map(&:upcase)
   end
 
   def found_supplies
