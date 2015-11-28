@@ -34,6 +34,13 @@ class ApplicationController < ActionController::Base
     reform.validate(*args).tap { authorize reform }
   end
 
+  def save_form reform, *args
+    valid = reform.validate *args
+    authorize reform
+    reform.save if valid
+    valid
+  end
+
   def skip_bullet
     #Bullet.enable = false
     yield

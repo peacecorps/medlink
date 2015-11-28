@@ -1,4 +1,6 @@
-class Api::V1::BaseController < ActionController::Base
+class Api::V1::BaseController < ApplicationController
+  skip_before_action :authenticate_user!
+
   before_action :json_format
   before_action :api_authenticate!
 
@@ -17,5 +19,9 @@ class Api::V1::BaseController < ActionController::Base
 
   def error msg, status: 400
     render json: { error: msg }, status: status
+  end
+
+  def invalid obj
+    render json: { error: "Invalid", failures: obj.errors.full_messages }, status: 422
   end
 end

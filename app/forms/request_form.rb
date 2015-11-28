@@ -11,7 +11,6 @@ class RequestForm < Reform::Form
   validates :user, presence: true
   validates :country, presence: true
   validates :entered_by, presence: true
-  validates :supplies, presence: true
   validate  :supplies_are_available
 
   def initialize *args
@@ -55,10 +54,10 @@ class RequestForm < Reform::Form
   def supplies_are_available
     unavailable = supplies - available_supplies
     if unavailable.any?
-      model.errors.add :supplies, "not available - #{unavailable.map(&:name).to_sentence}"
+      errors.add :supplies, "not available - #{unavailable.map(&:name).to_sentence}"
     end
     if supplies.none?
-      model.errors.add :supplies, "are required"
+      errors.add :supplies, "are required"
     end
   end
 

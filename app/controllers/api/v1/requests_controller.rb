@@ -1,30 +1,14 @@
 class Api::V1::RequestsController < Api::V1::BaseController
   def create
-    request = current_user.requests.new
-    request.text = params[:message]
-    request.save!
-
-    params[:supply_ids].each do |id|
-      supply = Supply.find id
-      request.orders.create! supply: supply, user: current_user
+    @request = RequestForm.new current_user.personal_requests.new
+    if save_form @request, supplies: params[:supply_ids], text: params[:message]
+      render :show
+    else
+      invalid @request
     end
-
-    render json: {
-      request: {
-        created_at: request.created_at,
-        supplies: request.orders.map do |o|
-          {
-            id: o.supply_id,
-            response_id: o.response_id,
-            response_type: o.delivery_method.try(:title),
-            responded_at: o.response.try(:created_at)
-          }
-        end
-      }
-    }
   end
 
   def index
-    render json: { requests: "Not implmemented" }
+    @requests = current_user.requests
   end
 end

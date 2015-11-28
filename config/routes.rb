@@ -106,7 +106,7 @@ Medlink::Application.routes.draw do
 
       resources :supplies, only: [:index]
 
-      resources :requests, only: [:create]
+      resources :requests, only: [:create, :index]
     end
   end
 end

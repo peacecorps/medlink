@@ -37,7 +37,7 @@ VCR.configure do |config|
   config.ignore_localhost = true
 end
 
-Medlink::Application.eager_load!
+Medlink::Application.eager_load! if ENV["COVERAGE"]
 
 module ApiHelpers
   def authorized user, &block
