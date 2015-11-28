@@ -11,10 +11,6 @@ class Supply < ActiveRecord::Base
   validates :shortcode, presence: true, uniqueness: true
   validates :name, presence: true, uniqueness: true
 
-  def self.find_by_shortcode code
-    where(shortcode: code.upcase).first!
-  end
-
   def select_display
     "#{name} (#{shortcode})"
   end

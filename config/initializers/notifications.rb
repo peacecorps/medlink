@@ -40,6 +40,7 @@ Notification = NotificationCenter.configure do |c|
   c.on :announcement_scheduled, &ping
   c.on :error_in_job,           &ping
   c.on :flag_for_followup,      &ping
+  c.on :slow,                   &ping
   c.on :spam_warning,           &ping
   c.on :unrecognized_sms,       &ping
   c.on :sending_response,       &log

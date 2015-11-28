@@ -14,10 +14,6 @@ class Response < ActiveRecord::Base
 
   validates :extra_text, length: { maximum: MAX_LENGTH }
 
-  def cancel!
-    update! cancelled_at: Time.now
-  end
-
   def cancelled?
     cancelled_at.present?
   end

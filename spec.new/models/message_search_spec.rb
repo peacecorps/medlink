@@ -13,6 +13,14 @@ describe MessageSearch do
   Given!(:out1)    { FactoryGirl.create :sms, direction: :outgoing, phone: p1 }
   Given!(:out2)    { FactoryGirl.create :sms, direction: :outgoing, phone: p2 }
 
+  context "choice selections" do
+    When(:result) { MessageSearch.new(user: admin) }
+
+    Then { result.country_choices.count == Country.count          }
+    And  { result.direction_choices == %i(incoming outgoing both) }
+    And  { result.validity_choices == %i(valid invalid both)      }
+  end
+
   context "all invalid" do
     When(:result) { MessageSearch.new(user: admin, validity: :invalid).messages }
 

@@ -11,11 +11,11 @@ class Timeline
     end
 
     def description
-      if type == :sms
-        "Message"
-      else
-        type.to_s.capitalize
-      end
+      {
+        sms:      "Message",
+        request:  "Request",
+        response: "Response"
+      }.fetch type
     end
   end
   include Enumerable

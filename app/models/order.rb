@@ -29,12 +29,4 @@ class Order < ActiveRecord::Base
     raise "Could not coerce '#{method}' to a delivery method" if method && !m
     super m
   end
-
-  def denied?
-    delivery_method == DeliveryMethod::Denial
-  end
-
-  def duplicated?
-    duplicated_at.present?
-  end
 end
