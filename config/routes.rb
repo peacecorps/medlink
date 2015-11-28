@@ -8,8 +8,6 @@ Medlink::Application.routes.draw do
     post  'users/sign_in/help' => 'users#send_login_help', as: 'send_login_help'
   end
 
-  resources :country_supplies, only: [:index, :create]
-
   resource :user, only: [:edit, :update] do
     get   '/welcome/video' => 'users#welcome_video', as: 'welcome_video'
     post  '/welcome' => 'users#confirm_welcome', as: 'welcome_shown'
@@ -65,7 +63,11 @@ Medlink::Application.routes.draw do
   end
 
   resource :country do
-    resources :supplies, only: [:index, :update]
+    resources :supplies, only: [:index], controller: "country_supplies" do
+      member do
+        patch :toggle
+      end
+    end
     resource :roster, only: [:show, :edit, :update] do
       collection do
         post :upload

@@ -1,18 +1,25 @@
-- if @country
-  h2= "Supplies available in #{@country.name}"
-  p
-  - if policy(@country).manage_supplies?
-    = form_tag(:controller => "country_supplies", :action => "create", :method => "post") do
-      - @supplies.each do |s|
-        = hidden_field_tag "#{s.name}", 0
-        = check_box_tag "#{s.name}", 1 , @available.include?(s.id)
-        = label_tag s.name
-        p
-      = submit_tag 'Update', class: 'btn btn-primary', id: 'update-country'
-
-  - else
-    - @supplies.each do |s|
-      - if @available.include?(s.id)
-        = s.name
-- else
-  h2 Select a country to administer
+h2 Supplies Available in #{@country.name}
+table.table.table-striped.table-linked.table-condensed
+  thead
+    tr
+      th Name
+      th Short Code
+      th
+  tbody
+    - @supplies.each do |supply|
+      tr class=("danger" unless @available.include?(supply.id))
+        td
+          -if @available.include?(supply.id)
+            = supply.name
+          -else
+            s= supply.name
+        td
+          span= supply.shortcode
+        td
+          .toggle_orderable_button
+            - if @available.include?(supply.id)
+              = button_to toggle_country_supply_path(supply), method: :patch, class: "btn btn-danger" do
+                = icon :remove
+            - else
+              = button_to toggle_country_supply_path(supply), method: :patch, class: "btn btn-default" do
+                = icon :ok

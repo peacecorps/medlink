@@ -1,5 +1,5 @@
 class SuppliesController < ApplicationController
-  before_action do 
+  before_action do
     authorize :supply, :manage_master_supply_list?
   end
 
@@ -22,7 +22,6 @@ class SuppliesController < ApplicationController
 
   def toggle_orderable
     supply = Supply.unscoped.find params[:id]
-
     supply.toggle!(:orderable)
     redirect_to :back
   end
@@ -32,5 +31,4 @@ class SuppliesController < ApplicationController
   def supplies_params
     params.require(:supply).permit(:shortcode, :name)
   end
-
 end
