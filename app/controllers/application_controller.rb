@@ -30,10 +30,6 @@ class ApplicationController < ActionController::Base
     @_sort_table_registry.build scope, opts.merge(params: params)
   end
 
-  def validate reform, *args
-    reform.validate(*args).tap { authorize reform }
-  end
-
   def save_form reform, *args
     valid = reform.validate *args
     authorize reform

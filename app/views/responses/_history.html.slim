@@ -11,6 +11,7 @@
         th Supply
         th Response
     - history.each do |o|
+      - o = OrderResponsePresenter.new o
       tr
         td
           - if @last_date.to_i != o.created_at.to_i

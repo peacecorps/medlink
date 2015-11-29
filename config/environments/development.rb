@@ -32,8 +32,8 @@ Medlink::Application.configure do
   config.eager_load = false
 
   config.after_initialize do
-    Bullet.enable = true
-    Bullet.raise  = true
+    Bullet.enable     = true
+    Bullet.add_footer = true
   end unless ENV["NO_BULLET"]
 
   config.pingbot = Slackbot.new \

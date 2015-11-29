@@ -15,8 +15,7 @@ class UsersController < ApplicationController
 
   def update
     @user = UserForm.new current_user, editor: current_user
-    if validate @user, params[:user]
-      @user.save
+    if save_form @user, params[:user]
       redirect_to edit_user_path, flash: { success: I18n.t!("flash.user.account_updated") }
     else
       render :edit

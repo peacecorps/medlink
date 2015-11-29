@@ -1,17 +1,26 @@
 class OrderResponder
+  def model_name
+    ActiveModel::Name.new Response
+  end
+
   def initialize response
     @response = response
   end
 
   def run text: nil, selections:
+    return false unless selections
     update_response text: text
-    attach_orders selections: selections
+    attach_orders selections: coerce(selections)
     send_notifications
     mark_updated_orders
     update_wait_times
     queue_receipt_reminders if deliveries_pending?
     check_auto_archive
     response
+  end
+
+  def country_id
+    requester.country_id
   end
 
   private
@@ -30,11 +39,14 @@ class OrderResponder
     response.update! extra_text: text
   end
 
+  def coerce selections
+    selections.map { |k,v| [k.to_s, v] }.to_h
+  end
+
   def attach_orders selections:
-    selections.each do |order, method|
-      order.delivery_method = method
-      order.response = response
-      order.save!
+    Order.find(selections.keys).each do |order|
+      response.orders << order
+      order.update! delivery_method: selections.fetch(order.id.to_s)
     end
   end
 

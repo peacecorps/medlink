@@ -1,4 +1,5 @@
 require 'simplecov'
+
 SimpleCov.start 'rails' do
   add_group "Forms",      "app/forms"
   add_group "Jobs",       "app/jobs"

@@ -1,6 +1,5 @@
-div{ id: table.anchor }
-  = title do
-    = label
+div
+  = title label
   - if table.any?
     = render partial: "partials/pager", locals: { table: table }
     table.table.table-striped.table-hover

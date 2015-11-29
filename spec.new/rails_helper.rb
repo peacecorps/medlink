@@ -62,6 +62,7 @@ module FeatureHelpers
   end
 
   def login_as user
+    page.driver.browser.clear_cookies
     visit root_path
     within ".sign-in" do
       fill_in "Email", with: user.email

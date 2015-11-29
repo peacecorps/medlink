@@ -16,8 +16,7 @@ class Admin::UsersController < AdminController
   def create
     @user = NewUserForm.new current_user.country.users.new, editor: current_user
 
-    if validate @user, params[:user]
-      @user.save
+    if save_form @user, params[:user]
       redirect_to country_roster_path, notice: I18n.t!("flash.user.added")
     else
       render :new
@@ -31,8 +30,7 @@ class Admin::UsersController < AdminController
   def update
     @user = AdminEditUserForm.new User.find(params[:id]), editor: current_user
 
-    if validate @user, params[:user]
-      @user.save
+    if save_form @user, params[:user]
       redirect_to country_roster_path, @user.flash
     else
       render :edit

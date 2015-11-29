@@ -30,7 +30,7 @@ class RequestForm < Reform::Form
   end
 
   def available_supplies
-    country.supplies
+    country.available_supplies
   end
 
   def save
@@ -42,7 +42,7 @@ class RequestForm < Reform::Form
   def success_message
     # FIXME: this due logic is duplicated a lot
     due = model.orders.first.due_at.strftime "%B %d"
-    if entered_by == user
+    if entered_by == user.id
       I18n.t! "flash.request.placed", expected_receipt_date: due
     else
       I18n.t! "flash.request.placed_for", username: user.name, expected_receipt_date: due

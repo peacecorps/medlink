@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   end
 
   def available_supplies
-    country.supplies
+    country.available_supplies
   end
 
   def sms_contact_number

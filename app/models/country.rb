@@ -34,4 +34,8 @@ class Country < ActiveRecord::Base
       join.create!
     end
   end
+
+  def available_supplies
+    supplies.where orderable: true
+  end
 end

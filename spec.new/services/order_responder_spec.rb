@@ -3,7 +3,8 @@ require "rails_helper"
 describe OrderResponder, :queue_jobs do
   Given(:volunteer)  { FactoryGirl.create :pcv }
   Given(:supplies)   { Supply.random 3 }
-  Given(:orders)     { supplies.map { |s| FactoryGirl.create :order, supply: s, user: volunteer } }
+  Given(:orders)     { supplies.map { |s| FactoryGirl.create(:order, supply: s, user: volunteer) } }
+  Given(:order_ids)  { orders.map &:id }
   Given(:responder)  { OrderResponder.new(volunteer.responses.new) }
 
   Given(:reminders)  { queued PromptForReceiptAcknowledgementJob }
@@ -11,7 +12,7 @@ describe OrderResponder, :queue_jobs do
   Given(:future)     { (10.days.from_now.to_i .. 30.days.from_now.to_i) }
 
   context "approval" do
-    Given(:selection) { orders.zip %i(delivery pickup delivery) }
+    Given(:selection) { order_ids.zip %i(delivery pickup delivery) }
 
     When(:result) { responder.run selections: selection }
 
@@ -28,14 +29,14 @@ describe OrderResponder, :queue_jobs do
   end
 
   context "partial approval" do
-    Given(:selection) { { orders[0] => :delivery, orders[2] => :denial } }
+    Given(:selection) { { order_ids[0] => :delivery, order_ids[2] => :denial } }
 
     When(:result) { responder.run text: "N.B.", selections: selection }
 
     Then { result.user == volunteer                              }
     And  { result.extra_text == "N.B."                           }
     And  { result.orders.count == 2                              }
-    And  { !result.orders.include? orders[1]                     }
+    And  { !result.orders.include? order_ids[1]                  }
     And  { result.orders.all? { |o| o.delivery_method.present? } }
     And  { !result.archived?                                     }
 
@@ -46,7 +47,7 @@ describe OrderResponder, :queue_jobs do
   end
 
   context "denial" do
-    Given(:selection) { { orders[1] => :denial } }
+    Given(:selection) { { order_ids[1] => :denial } }
 
     When(:result) { responder.run text: "No!!", selections: selection }
 
@@ -63,7 +64,7 @@ describe OrderResponder, :queue_jobs do
   context "with duplicated orders" do
     Given!(:duplicated) { FactoryGirl.create :order,
       user: volunteer, supply: orders[0].supply, created_at: 2.months.ago }
-    Given(:selections) { { orders[0] => :delivery } }
+    Given(:selections) { { orders[0].id => :delivery } }
 
     When(:result) { responder.run selections: selections }
 
@@ -76,7 +77,7 @@ describe OrderResponder, :queue_jobs do
     Given(:unobtainium) { FactoryGirl.create :supply }
     Given!(:older)      { FactoryGirl.create :order, user: volunteer, created_at: 2.weeks.ago, supply: unobtainium }
 
-    When(:result) { responder.run selections: { oldest => :delivery } }
+    When(:result) { responder.run selections: { oldest.id => :delivery } }
 
     Then { result.orders.include? oldest                      }
     And  { volunteer.reload.waiting_since == older.created_at }

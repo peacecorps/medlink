@@ -1,4 +1,4 @@
-= form_for response, url: user_responses_path(user, response) do |f|
+= form_for [user, response] do |f|
   table.table.table-hover
     thead
       tr
@@ -6,27 +6,27 @@
         th
         th
         - DeliveryMethod.each do |method|
-          th.delivery-method "data-method"=method.name
+          th.delivery-method data-method=method.name
             = method.title
     tbody
       - orders.group_by(&:request).each do |req, os|
+        - req = RequestPresenter.new req
         - os.each_with_index do |order,i|
-          tr "class"=(order.duplicated_at ? "duplicated" : "")
+          tr class=(order.duplicated_at ? "duplicated" : "")
             - if i.zero?
               td.ts(rowspan=os.length)= short_date req.created_at
               td.ts(rowspan=os.length)
-                - if req.reorder_of
-                  - label = "lost package sent #{time_ago_in_words req.reorder_of.created_at} ago"
-                  Replacement of #{link_to label, user_response_path(user, req.reorder_of)}
+                - if req.reordered?
+                  = req.reorder_label
                 - else
                   = req.text
-            %td= order.supply.name
+            td= order.supply.name
             - if order.duplicated_at
-              %td.duplicate-order{colspan: DeliveryMethod.count}
-                Updated on #{short_date order.duplicated_at}
+              td.duplicate-order colspan=DeliveryMethod.count
+                | Updated on #{short_date order.duplicated_at}
             - else
               - DeliveryMethod.each do |method|
-                %td= radio_button_tag "orders[#{order.id}][delivery_method]", method.name
+                td= radio_button_tag "orders[#{order.id}]", method.name, nil, data: { method: method.name }
 
   .form-group
     = f.text_area :extra_text,
@@ -38,22 +38,6 @@
 
   .form-actions
     button.btn.btn-primary(type="submit") Send Response
-    button.btn.btn-default.clear-radios(style="display:none") Reset Selections
+    button.btn.btn-default.clear-radios.js-required Reset Selections
 
     span.pull-right.character-count
-
-
-javascript:
-  $(function() {
-    // Click a column header to select the column
-    $('.delivery-method').click(function() {
-      var val = $(this).data("method");
-      $('#new_response :radio[value='+ val +']').prop('checked', true);
-    });
-
-    // Deselect radio buttons
-    $('.clear-radios').show().click(function() {
-      $('#new_response :radio').prop('checked', false);
-      return false;
-    });
-  })

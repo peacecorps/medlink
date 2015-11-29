@@ -23,9 +23,7 @@ class RostersController < ApplicationController
   def update
     upload  = current_user.country.roster_uploads.find params[:upload_id]
     @roster = RosterForm.new upload.roster
-    authorize @roster
-    if @roster.validate rows: params[:roster][:rows_attributes].values
-      @roster.save
+    if save_form @roster, rows: params[:roster][:rows_attributes].values
       redirect_to country_roster_path
     else
       render :edit

@@ -16,6 +16,17 @@ $ ->
   # Apply chosen boxes
   $(".chosen-select").chosen()
 
+
+  # Radio button grid select helpers
+  $("th.delivery-method").click ->
+    method = $(@).data("method")
+    $(":radio[data-method=#{method}]").prop "checked", true
+
+  $(".clear-radios").click (e) ->
+    e.preventDefault()
+    $(":radio[data-method]").prop "checked", false
+
+
   # "Add another phone" extra input field
   phones_form = $(".phones-form")
   if phones_form.length > 0

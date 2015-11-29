@@ -7,8 +7,7 @@ class RequestsController < ApplicationController
   def create
     @placer = RequestForm.new current_user.submitted_requests.new
 
-    if validate @placer, params[:request]
-      @placer.save
+    if save_form @placer, params[:request]
       redirect_to after_create_path, flash: { success: @placer.success_message }
     else
       render :new

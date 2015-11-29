@@ -13,8 +13,6 @@ class PagesController < ApplicationController
   end
 
   def help
-    # This is a dumb way to get Bullet to stop complaining without disabling it altogether
-    @supplies = Country.find(current_user.country_id).supplies if current_user
     if current_user.nil? || current_user.pcv?
       render 'partials/help'
     else
