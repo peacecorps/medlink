@@ -1,7 +1,4 @@
 class OrdersController < ApplicationController
-  # The response eager-load may not be used if there aren't any responses yet
-  around_action :skip_bullet, only: [:index]
-
   def index
     @timeline = Timeline.new current_user
     authorize @timeline, :show?

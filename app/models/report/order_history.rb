@@ -1,4 +1,8 @@
-class Report::OrderHistory < Report
+class Report::OrderHistory < Report::Base
+  model       Order
+  title       "Order History"
+  description "All past and current orders"
+
   def initialize orders
     self.rows = orders.includes :supply, :response, :user => [:phones, :country]
   end

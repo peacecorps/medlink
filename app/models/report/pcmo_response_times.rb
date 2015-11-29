@@ -1,5 +1,9 @@
-class Report::PcmoResponseTimes < Report
-  decorator OrderResponsePresenter
+class Report::PcmoResponseTimes < Report::Base
+  model       Order
+  decorator   OrderResponsePresenter
+  title       "Responses"
+  description "A summary of PCMO response times" 
+  authorize { |user| user.admin? }
 
   def initialize orders
     self.rows = orders.includes :country, :supply, :response, :user => :phones

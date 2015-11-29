@@ -174,6 +174,13 @@ RSpec.configure do |config|
     Bullet.enable = true
   end
 
+  def with_slow_timeout n
+    _old = Rails.configuration.slow_timeout
+    Rails.configuration.slow_timeout = 0
+    yield
+    Rails.configuration.slow_timeout = _old
+  end
+
   config.include ApiHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
 end

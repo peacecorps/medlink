@@ -27,4 +27,10 @@ describe TwilioController do
     Then { result.status == 400    }
     And  { SMS.outgoing.count == 0 }
   end
+
+  context "alerts if slow", slow_timeout: 0 do
+    When { with_slow_timeout(0) { post :receive } }
+
+    Then { pingbot.last.include? "twilio#receive" }
+  end
 end

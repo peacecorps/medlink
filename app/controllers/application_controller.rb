@@ -8,14 +8,10 @@ class ApplicationController < ActionController::Base
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
-    redirect_to new_user_session_path, flash: { error: exception }
+    redirect_to :back, flash: { error: exception }
   end
 
   private
-
-  def after_sign_out_path_for _
-    new_user_session_path
-  end
 
   def after_sign_in_path_for user
     if Video.new(user).seen?
@@ -35,13 +31,6 @@ class ApplicationController < ActionController::Base
     authorize reform
     reform.save if valid
     valid
-  end
-
-  def skip_bullet
-    #Bullet.enable = false
-    yield
-  ensure
-    Bullet.enable = true
   end
 
   def alert_if_slow

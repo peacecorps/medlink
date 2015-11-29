@@ -49,12 +49,8 @@ Medlink::Application.routes.draw do
     end
   end
 
-  resources :reports, only: [:index] do
-    collection do
-      get :order_history
-      get :users
-      get :pcmo_response_times
-    end
+  resources :reports, only: [:index], param: :name do
+    get :download
   end
 
   resource :country do

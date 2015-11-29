@@ -75,6 +75,5 @@
     = link_to "View All", messages_path, class: "btn btn-default"
 
 = title "Reports"
-= link_to "Users", users_reports_path, class: "btn btn-default"
-= link_to "Order History", order_history_reports_path, class: "btn btn-default"
-= link_to "Response Times", pcmo_response_times_reports_path, class: "btn btn-default"
+- Report.all.each do |report|
+  = link_to report.title, report_download_path(report.title.downcase), class: "btn btn-default"

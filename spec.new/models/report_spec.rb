@@ -12,7 +12,7 @@ class BackwardsDecorator
   end
 end
 
-class ReverseReport < Report
+class ReverseReport < Report::Base
   decorator BackwardsDecorator
 
   def initialize words
