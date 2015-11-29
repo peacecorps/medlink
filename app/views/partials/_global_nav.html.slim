@@ -29,7 +29,7 @@ nav.navbar.navbar-default role="navigation"
               button.btn.btn-default.btn-sm Update
         ul.nav.navbar-right.navbar-nav
           - if current_user.admin?
-            li= link_to 'Users', new_admin_user_path
+            li= link_to 'Users', country_roster_path
             li.dropdown
               a.dropdown-toggle data-toggle="dropdown" href="#" Supplies
               ul.dropdown-menu
