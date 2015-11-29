@@ -1,12 +1,5 @@
 require "rails_helper"
 
-# Make new, invalid announcement
-# Fix validation errors
-# Update announcment to add a schedule, forgetting hour
-# Fix error
-# Deliver
-# Delete
-
 describe "managing announcements" do
   Given(:admin) { FactoryGirl.create :admin }
   Given!(:pcv)  { FactoryGirl.create :pcv }

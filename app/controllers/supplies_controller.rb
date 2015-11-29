@@ -14,6 +14,7 @@ class SuppliesController < ApplicationController
   def create
     @supply = Supply.new(supplies_params)
     if @supply.save
+      # TODO: should this be on or off for countries by default?
       redirect_to supplies_path
     else
       render :new
