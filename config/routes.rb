@@ -8,14 +8,10 @@ Medlink::Application.routes.draw do
     post  'users/sign_in/help' => 'users#send_login_help', as: 'send_login_help'
   end
 
-  resource :user, only: [:edit, :update] do
-    resource :welcome, only: [:show, :update]
-  end
+  resource :welcome, only: [:show, :update]
 
   resources :users, only: [] do
-    member do
-      get :timeline
-    end
+    resource :timeline, only: [:show]
 
     resources :responses, only: [:new, :create, :show] do
       post :archive

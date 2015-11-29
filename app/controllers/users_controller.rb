@@ -8,20 +8,6 @@ class UsersController < ApplicationController
     render template: "timelines/show"
   end
 
-  def edit
-    @user = UserForm.new current_user, editor: current_user
-    authorize @user
-  end
-
-  def update
-    @user = UserForm.new current_user, editor: current_user
-    if save_form @user, params[:user]
-      redirect_to edit_user_path, flash: { success: I18n.t!("flash.user.account_updated") }
-    else
-      render :edit
-    end
-  end
-
   def send_login_help
     email = params[:user][:email]
     unless user = User.find_by_email(email)

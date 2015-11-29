@@ -46,6 +46,7 @@ class Roster
   def persisted?; end
 
   def save
+    # TODO: this clobbers user edits. Do we need to allow PCVs to edit?
     import_new_users
     update_existing_users
     inactivate_removed_pcvs

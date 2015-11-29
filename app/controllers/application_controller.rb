@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     if Video.new(user).seen?
       root_path
     else
-      user_welcome_path
+      welcome_path
     end
   end
 
