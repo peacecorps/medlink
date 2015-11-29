@@ -42,4 +42,12 @@ module ApplicationHelper
               merge param_updates
     link_to title, opts.merge(params: updated)
   end
+
+  def mailto email
+    link_to email, "mailto:#{email}"
+  end
+
+  def tel number
+    link_to number, "tel:#{number}"
+  end
 end

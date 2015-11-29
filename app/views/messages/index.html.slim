@@ -22,11 +22,12 @@
         th
     tbody
       - @messages.each do |message|
+        - message = MessagePresenter.new message # TODO: need a better way to handle kaminari+presenters
         tr
-          td #{short_date message.created_at} @#{message.created_at.strftime "%H:%M"}
-          td= link_to message.user.name, timeline_user_path(message.user) if message.user
-          td= link_to message.user.email, "mailto:#{message.user.email}" if message.user
-          td= link_to message.number, "tel:#{message.number}"
+          td= message.created_at
+          td= message.user_link
+          td= message.email
+          td= message.number
           - if current_user.admin?
-            td= message.user.country.name if message.user
+            td= message.country
           td= message.text
