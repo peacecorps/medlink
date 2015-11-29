@@ -82,6 +82,7 @@ class Roster
     existing_rows.each do |row|
       user = existing_users.fetch row.email
       user.update! row.user_hash
+      row.phone_hashes.each { |data| user.phones.first_or_create! data }
     end
   end
 

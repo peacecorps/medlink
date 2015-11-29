@@ -24,7 +24,7 @@
             = @roster.valid_emails.to_sentence
       - if @roster.removed_emails.any?
         tr
-          th Invalid Users
+          th Inactive Users
           td colspan=@roster.headers.count
             = @roster.removed_emails.to_sentence
 
