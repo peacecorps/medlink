@@ -1,21 +1,19 @@
 class ConfirmationsController < Devise::ConfirmationsController
   def show
     @original_token = params[:confirmation_token]
-    self.resource = resource_class.find_by_confirmation_token Devise.token_generator.
-      digest(self, :confirmation_token, @original_token)
+    self.resource = resource_class.find_by_confirmation_token @original_token
     super if resource.nil? or resource.confirmed?
   end
 
   def confirm
     @original_token = params[resource_name].try(:[], :confirmation_token)
-    digested_token = Devise.token_generator.digest(self, :confirmation_token, @original_token)
-    self.resource = resource_class.find_by_confirmation_token digested_token
+    self.resource = resource_class.find_by_confirmation_token @original_token
     unless resource.nil? || params[resource_name].nil?
       resource.assign_attributes(permitted_params)
     end
 
     if resource && resource.valid?
-      self.resource.confirm!
+      self.resource.confirm
       set_flash_message :notice, :confirmed
       sign_in_and_redirect resource_name, resource
     else

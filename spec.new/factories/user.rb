@@ -25,6 +25,10 @@ FactoryGirl.define do
       end
     end
 
+    trait :unconfirmed do
+      confirmed_at nil
+    end
+
     after :create do |user, evaluator|
       create_list :order, evaluator.order_count, user: user
       create_list :phone, evaluator.phone_count, user: user
