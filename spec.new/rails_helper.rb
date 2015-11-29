@@ -61,8 +61,12 @@ module FeatureHelpers
     page.save_screenshot path, full: true
   end
 
-  def login_as user
+  def logout
     page.driver.browser.clear_cookies
+  end
+
+  def login_as user
+    logout
     visit root_path
     within ".sign-in" do
       fill_in "Email", with: user.email
@@ -101,6 +105,10 @@ RSpec.configure do |config|
     # * for some reason, `only` seems to work here, but `except` is being ignored
     to_clean = ActiveRecord::Base.connection.tables - %w( schema_migrations countries supplies country_supplies twilio_accounts )
     DatabaseCleaner.clean_with :truncation, only: to_clean
+  end
+
+  def s
+    save_and_open_page
   end
 
   def queued job_class

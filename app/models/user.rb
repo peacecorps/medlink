@@ -76,22 +76,6 @@ class User < ActiveRecord::Base
     "#{n[0..-11]} (#{n[-10..-8]}) #{n[-7..-5]}-#{n[-4..-1]}"
   end
 
-  def welcome_video
-    if pcv?
-      Video::PCV_WELCOME
-    else
-      Video::PCMO_WELCOME
-    end
-  end
-
-  def record_welcome!
-    self.update!(welcome_video_shown_at: Time.now)
-  end
-
-  def welcome_video_seen?
-    !self.welcome_video_shown_at.nil?
-  end
-
   def inactivate!
     update! active: false
   end

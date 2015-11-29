@@ -22,18 +22,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def welcome_video
-    @video = current_user.welcome_video
-    authorize @video, :show?
-    render :welcome_video
-  end
-
-  def confirm_welcome
-    current_user.record_welcome!
-    authorize current_user, :update?
-    redirect_to root_path
-  end
-
   def send_login_help
     email = params[:user][:email]
     unless user = User.find_by_email(email)

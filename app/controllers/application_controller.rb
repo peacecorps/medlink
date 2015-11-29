@@ -18,10 +18,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for user
-    if user.welcome_video_seen?
+    if Video.new(user).seen?
       root_path
     else
-      welcome_video_user_path
+      user_welcome_path
     end
   end
 

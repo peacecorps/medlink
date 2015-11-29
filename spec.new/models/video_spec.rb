@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Video, :vcr do
   context "pcv video" do
-    Given(:video) { Video::PCV_WELCOME }
+    Given(:video) { Video.new(FactoryGirl.build :pcv) }
     Given(:path)  { URI "https:" + video.youtube_embed_link }
 
     When(:result) { Net::HTTP.get path }
@@ -11,7 +11,7 @@ describe Video, :vcr do
   end
 
   context "pcmo video" do
-    Given(:video) { Video::PCMO_WELCOME }
+    Given(:video) { Video.new(FactoryGirl.build :pcmo) }
     Given(:path)  { URI "https:" + video.youtube_embed_link }
 
     When(:result) { Net::HTTP.get path }

@@ -9,8 +9,7 @@ Medlink::Application.routes.draw do
   end
 
   resource :user, only: [:edit, :update] do
-    get   '/welcome/video' => 'users#welcome_video', as: 'welcome_video'
-    post  '/welcome' => 'users#confirm_welcome', as: 'welcome_shown'
+    resource :welcome, only: [:show, :update]
   end
 
   resources :users, only: [] do
