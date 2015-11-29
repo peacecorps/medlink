@@ -17,4 +17,8 @@ class UserPolicy < ApplicationPolicy
   def inactivate?
     admin? && record.id != user.id
   end
+
+  def set_country?
+    admin? && record.id == user.id
+  end
 end

@@ -1,5 +1,5 @@
 = title "Users"
-.row
+.row.users
   .col-md-6
     table.table.table-condensed.table-hover
       tr
@@ -10,14 +10,13 @@
         td= User.pcmo.count
   .col-md-6
     / TODO: extract this as a partial
-    = form_tag admin_country_path, method: :patch do
+    = form_tag set_country_path, method: :patch do
       .form-group
         = collection_select :country, :id, Country.all, :id, :name, {selected: current_user.country_id}, class: "form-control"
       = hidden_field_tag :next, country_roster_path
       button.btn.btn-default Manage Users
 
-= title "Orders"
-.row
+.row.orders
   .col-md-6
     table.table.table-condensed.table-hover
       tr
@@ -30,7 +29,7 @@
         th Total
         td= Order.count
   .col-md-6
-    = form_tag admin_country_path, method: :patch do
+    = form_tag set_country_path, method: :patch do
       .form-group
         = collection_select :country, :id, Country.all, :id, :name, {selected: current_user.country_id}, class: "form-control"
       = hidden_field_tag :next, manage_orders_path

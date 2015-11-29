@@ -1,11 +1,11 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate_user!, only: :send_login_help
-  skip_after_action :verify_authorized, only: :send_login_help
+  skip_after_action  :verify_authorized,  only: :send_login_help
 
-  def timeline
-    @timeline = Timeline.new User.find params[:id]
-    authorize @timeline, :show?
-    render template: "timelines/show"
+  def set_country
+    authorize current_user
+    current_user.update country: Country.find(params[:country][:id])
+    redirect_to (params[:next] || :back)
   end
 
   def send_login_help

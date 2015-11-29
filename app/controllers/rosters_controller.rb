@@ -1,6 +1,6 @@
 class RostersController < ApplicationController
   def show
-    roster = Roster.new country: current_user.country, rows: current_user.country.users
+    roster = Roster.new country: current_user.country, rows: current_user.country.users.non_admins
     authorize roster
     @users = sort_table roster.rows.includes(:phones), per_page: 25
   end

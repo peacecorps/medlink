@@ -1,9 +1,4 @@
 class Admin::UsersController < AdminController
-  def set_country
-    current_user.update country: Country.find(params[:country][:id])
-    redirect_to (params[:next] || :back)
-  end
-
   def select
     redirect_to edit_admin_user_path(params[:edit][:user_id])
   end
@@ -15,7 +10,6 @@ class Admin::UsersController < AdminController
 
   def create
     @user = NewUserForm.new current_user.country.users.new, editor: current_user
-
     if save_form @user, params[:user]
       redirect_to country_roster_path, notice: I18n.t!("flash.user.added")
     else
@@ -29,7 +23,6 @@ class Admin::UsersController < AdminController
 
   def update
     @user = AdminEditUserForm.new User.find(params[:id]), editor: current_user
-
     if save_form @user, params[:user]
       redirect_to country_roster_path, @user.flash
     else
@@ -41,6 +34,6 @@ class Admin::UsersController < AdminController
     user = User.find params[:id]
     authorize user
     user.inactivate!
-    redirect_to :back, notice: I18n.t!("flash.user.inactive_user", user: user.name)
+    redirect_to country_roster_path, notice: I18n.t!("flash.user.inactive_user", user: user.name)
   end
 end

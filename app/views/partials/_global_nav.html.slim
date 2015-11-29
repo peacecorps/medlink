@@ -19,7 +19,7 @@ nav.navbar.navbar-default role="navigation"
       / Collect the nav links, forms, and other content for toggling
       #main-navigation.collapse.navbar-collapse
         - if current_user.try :admin?
-          = form_tag admin_country_path, method: :patch, class: "auto-select navbar-form navbar-left" do
+          = form_tag set_country_path, method: :patch, class: "auto-select navbar-form navbar-left" do
             .form-group
               - blank = current_user.country_id ? false : "Select Country"
               = collection_select :country, :id, Country.all, :id, :name,

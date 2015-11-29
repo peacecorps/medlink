@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
     r = r.downcase if r.respond_to?(:downcase)
     super r
   end
+  scope :non_admins, -> { where.not(role: User.roles[:admin]) }
 
   belongs_to :country
 

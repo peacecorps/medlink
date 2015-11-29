@@ -18,6 +18,7 @@ Medlink::Application.routes.draw do
       post :unarchive
     end
   end
+  patch "/user/country" => "users#set_country", as: :set_country
 
   resources :messages, only: [:index]
   resources :announcements, except: [:show] do
@@ -53,7 +54,7 @@ Medlink::Application.routes.draw do
     get :download
   end
 
-  resource :country do
+  resource :country, only: [:update] do
     resources :supplies, only: [:index], controller: "country_supplies" do
       member do
         patch :toggle
@@ -68,7 +69,6 @@ Medlink::Application.routes.draw do
 
   namespace :admin do
     root  "pages#dashboard"
-    patch "country" => "users#set_country"
 
     resources :users, only: [:new, :create, :edit, :update] do
       member do
