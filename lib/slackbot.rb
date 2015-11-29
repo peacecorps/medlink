@@ -36,7 +36,7 @@ class Slackbot
   def info text, opts={}
     if configured?
       opts[:text] = text
-      call "chat.postMessage", @defaults.merge(opts)
+      Thread.new { call "chat.postMessage", @defaults.merge(opts) }
     else
       Rails.logger.info "Slackbot: #{text} #{opts}"
     end

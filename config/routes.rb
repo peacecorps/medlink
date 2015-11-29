@@ -25,7 +25,7 @@ Medlink::Application.routes.draw do
   end
 
   resources :messages, only: [:index]
-  resources :announcements do
+  resources :announcements, except: [:show] do
     member do
       post :deliver
     end

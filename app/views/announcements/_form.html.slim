@@ -9,13 +9,13 @@
     .help-block.character-count
     = f.primary
   .col-md-4
-    - if current_user.admin?
+    - if policy(announcement).schedule?
       = f.collection_select :country_id, Country.all, :id, :name
       = f.text_field :days, placeholder: "e.g. 3,-7"
-      = f.select :hour, (0..23).map { |i| [i.to_s.rjust(2, "0"), i] }, include_blank: true
-      - if announcement.schedule
-        .help-block Sent on #{announcement.schedule.preview}
+      = f.select :hour, announcement.hour_choices, include_blank: !announcement.hour.present?
+      - if announcement.preview
+        .help-block Sent on #{announcement.preview}
     - elsif announcement.schedule
       h3 Scheduled Message
-      p This message will be sent automatically every month - this month on #{announcement.schedule.preview}.
+      p This message will be sent automatically every month - this month on #{announcement.preview}.
       p Please #{link_to "contact support", "mailto:support@pcmedlink.org"} to alter this schedule.

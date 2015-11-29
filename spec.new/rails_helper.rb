@@ -124,6 +124,7 @@ RSpec.configure do |config|
     NamedSeeds.load_seed unless Country.any?
 
     # TODO:
+    # * pre-load an admin, and a pcmo and pcv(?) per-country
     # * figure out why some test runs don't clean up after themselves
     # DatabaseCleaner.clean_with :truncation, except: %w( countries supplies country_supplies twilio_account )
   end

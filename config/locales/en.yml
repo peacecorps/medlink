@@ -38,6 +38,7 @@ en:
       sent: "Message sent to %{volunteer_count} volunteers"
       created: "Announcement created"
       updated: "Announcement updated"
+      deleted: "Announcement deleted"
 
   sms:
     unexpected_error: "Sorry! Something went wrong. An administrator has been notified."

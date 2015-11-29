@@ -4,6 +4,8 @@ class Announcement < ActiveRecord::Base
 
   serialize :schedule, Schedule
 
+  default_scope -> { where deleted_at: nil }
+
   def self.scheduled
     where.not(schedule: nil).select { |a| a.schedule.next_run.present? }
   end
@@ -19,5 +21,9 @@ class Announcement < ActiveRecord::Base
 
   def has_been_sent? within:
     last_sent_at && last_sent_at > within.ago
+  end
+
+  def hide
+    update! deleted_at: Time.now
   end
 end

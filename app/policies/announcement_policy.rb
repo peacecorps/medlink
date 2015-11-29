@@ -6,4 +6,12 @@ class AnnouncementPolicy < ApplicationPolicy
   def deliver?
     country_admin?
   end
+
+  def destroy?
+    admin?
+  end
+
+  def schedule?
+    admin?
+  end
 end

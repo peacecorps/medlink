@@ -1,15 +1,43 @@
 class AnnouncementPresenter < Draper::Decorator
-  delegate_all
+  decorates Announcement
+  delegate :message, :send!
+
+  def self.reaches
+    # This over-counts (as some volunteers may not have phones), but 1) is more performant and
+    #   2) we don't really mind if people over-estimate how many people they're pinging
+    @_reaches ||= User.pcv.group(:country_id).count
+  end
+
+  def country
+    model.country.name
+  end
 
   def reach
-    @_reach ||= country.textable_pcvs.count
+    self.class.reaches[model.country_id] || 0
   end
 
-  def days
-    schedule ? schedule.days.join(", ") : ""
+  def preview
+    model.schedule.preview if model.schedule
   end
 
-  def hour
-    schedule && schedule.hour
+  def last_sent
+    if model.last_sent_at
+      h.short_date model.last_sent_at
+    else
+      "Never"
+    end
+  end
+
+  def send_button
+    opts = { method: :post, class: "btn btn-default" }
+    if model.has_been_sent? within: 1.day
+      opts.merge! disabled: "disabled", title: "Announcement has been sent too recently to re-send"
+    end
+
+    h.link_to h.deliver_announcement_path(model), opts do
+      [
+        h.icon(:send),
+        h.content_tag("small", "to #{reach} volunteers") ].join.html_safe
+    end
   end
 end
