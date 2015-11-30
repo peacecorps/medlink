@@ -29,6 +29,11 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation, only: to_clean
   end
 
+  def same_time t1, t2
+    # DB round-trips may lose some precision; ignore that
+    t1.to_f.round(3) == t2.to_f.round(3)
+  end
+
   config.before :suite do
     clean!
     NamedSeeds.load_seed unless Country.any?

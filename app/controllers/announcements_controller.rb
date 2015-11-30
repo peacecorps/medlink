@@ -1,7 +1,10 @@
 class AnnouncementsController < ApplicationController
   def index
-    @announcements = AnnouncementPresenter.decorate_collection \
-      policy_scope(Announcement).order(last_sent_at: :desc).includes(:country)
+    reaches = AnnouncementReachCache.new
+    @announcements = policy_scope(Announcement).
+       order(last_sent_at: :desc).
+       includes(:country).
+       map { |ann| AnnouncementPresenter.new ann, reaches: reaches }
   end
 
   def new

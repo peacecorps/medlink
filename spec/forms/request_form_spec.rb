@@ -71,9 +71,9 @@ RSpec.describe RequestForm do
     When          { old.validate(supplies: supply_ids.sample(2)) && old.save }
     When(:result) { form.validate(supplies: supply_ids) && form.save && form.model }
 
-    Then { result.user.last_requested_at == result.created_at }
-    And  { result.user.waiting_since == old.model.created_at  }
-    And  { result.created_at != old.model.created_at          }
-    And  { old.model.orders.all? { |o| o.duplicated_at }      }
+    Then { same_time result.user.last_requested_at, result.created_at }
+    And  { same_time result.user.waiting_since, old.model.created_at  }
+    And  { result.created_at != old.model.created_at                  }
+    And  { old.model.orders.all? { |o| o.duplicated_at }              }
   end
 end

@@ -79,7 +79,7 @@ RSpec.describe OrderResponder, :queue_jobs do
 
     When(:result) { responder.run selections: { oldest.id => :delivery } }
 
-    Then { result.orders.include? oldest                      }
-    And  { volunteer.reload.waiting_since == older.created_at }
+    Then { result.orders.include? oldest                              }
+    And  { same_time volunteer.reload.waiting_since, older.created_at }
   end
 end

@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe AnnouncementPresenter do
+  before(:all) { Timecop.return }
+
   context "with a schedule" do
     Given(:schedule)     { Schedule.new days: [1,5], hour: 10 }
     Given(:announcement) { FactoryGirl.build :announcement, id: 1, schedule: schedule, last_sent_at: Time.new(2015, 11, 01) }

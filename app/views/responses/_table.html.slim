@@ -29,7 +29,6 @@ table.table.table-striped.table-hover
                     = group.created_at
               tbody
                 - group.each do |order, _|
-                  - order = OrderResponsePresenter.new order
                   tr
                     td= order.supply
                     td= order.status
