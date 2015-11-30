@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ReceiptAckPrompt do
+RSpec.describe ReceiptAckPrompt do
   Given(:bob)    { FactoryGirl.create :pcv, :textable }
   Given(:prompt) { ReceiptAckPrompt.new response }
 

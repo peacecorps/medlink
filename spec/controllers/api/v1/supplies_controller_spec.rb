@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Api::V1::SuppliesController do
+RSpec.describe Api::V1::SuppliesController do
   render_views
 
   context "when unauthed" do

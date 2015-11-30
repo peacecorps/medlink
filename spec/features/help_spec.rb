@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "help page" do
+RSpec.describe "help page" do
   Given(:country) { Country.random }
   Given(:pcv)     { FactoryGirl.create :pcv, country: country }
   Given(:pcmo)    { FactoryGirl.create :pcmo, country: country }

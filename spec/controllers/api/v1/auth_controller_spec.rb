@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Api::V1::AuthController do
+RSpec.describe Api::V1::AuthController do
   render_views
 
   Given(:pcv) { FactoryGirl.create :pcv }

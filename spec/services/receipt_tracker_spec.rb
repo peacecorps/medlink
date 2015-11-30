@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ReceiptTracker do
+RSpec.describe ReceiptTracker do
   Given(:response)  { FactoryGirl.build :response }
   Given(:volunteer) { response.user }
   Given(:pcmo)      { FactoryGirl.create :pcmo, country: volunteer.country }

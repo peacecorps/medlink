@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe CountrySMSJob, :queue_jobs do
+RSpec.describe CountrySMSJob, :queue_jobs do
   Given(:twilio)  { TwilioAccount.random }
   Given(:country) { Country.random }
   Given(:message) { "A towel is about the most massively useful thing a volunteer can have" }

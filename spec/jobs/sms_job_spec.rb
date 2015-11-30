@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe SmsJob do
+RSpec.describe SmsJob do
   Given(:twilio) { TwilioAccount.random }
 
   context "without a user" do

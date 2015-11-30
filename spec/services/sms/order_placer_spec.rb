@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe SMS::OrderPlacer do
+RSpec.describe SMS::OrderPlacer do
   Given(:volunteer) { FactoryGirl.create :pcv }
   Given(:phone)     { FactoryGirl.create :phone, user: volunteer }
   Given(:supplies)  { volunteer.country.supplies.random(20) }

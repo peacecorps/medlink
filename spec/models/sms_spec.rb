@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe SMS do
+RSpec.describe SMS do
   Given(:text)    { "is this thing on?" }
   Given(:number)  { "555" }
   Given!(:old)    { FactoryGirl.create :sms, text: text, number: number, created_at: 1.month.ago }

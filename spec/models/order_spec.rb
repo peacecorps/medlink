@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Order do
+RSpec.describe Order do
   context "serializing delivery methods" do
     Given(:order) { FactoryGirl.create :order, delivery_method: nil }
     When(:result) { order.update! delivery_method: :pickup }

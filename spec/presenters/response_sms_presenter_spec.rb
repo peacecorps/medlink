@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ResponseSMSPresenter do
+RSpec.describe ResponseSMSPresenter do
   Invariant { result.length <= 160                                  }
   Invariant { response.supplies.find { |s| result.include? s.name } }
 

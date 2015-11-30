@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Schedule do
+RSpec.describe Schedule do
   after(:all) { Timecop.return }
 
   context "with positive offsets" do

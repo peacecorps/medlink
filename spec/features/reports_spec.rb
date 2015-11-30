@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "downloading reports" do
+RSpec.describe "downloading reports" do
   Given(:admin)     { FactoryGirl.create :admin }
   Given(:pcmo)      { FactoryGirl.create :pcmo }
   Given(:elsewhere) { Country.where.not(id: [admin.country_id, pcmo.country_id]).first! }

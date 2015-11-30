@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-describe UserTexter do
-  Given(:noop) { ->(m) { nil } }
+RSpec.describe UserTexter do
+  Given(:noop) { ->(_) { nil } }
 
   context "user with one phone" do
     Given(:phone) { FactoryGirl.create :phone }
@@ -48,7 +48,7 @@ describe UserTexter do
   end
 
   context "invalid phones are recorded" do
-    Given(:deliverer) { ->(m) { raise Twilio::REST::RequestError, "Invalid number" } }
+    Given(:deliverer) { ->(_) { raise Twilio::REST::RequestError, "Invalid number" } }
     Given(:phone)     { FactoryGirl.create :phone }
 
     When(:result) { UserTexter.new(phone: phone, deliverer: deliverer).send "ack" }

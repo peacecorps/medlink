@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe ResponseSMSJob do
+RSpec.describe ResponseSMSJob do
   Given(:textable) { FactoryGirl.create :user, phone_count: 1 }
 
   context "with no phone" do

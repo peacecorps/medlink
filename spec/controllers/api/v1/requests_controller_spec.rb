@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Api::V1::RequestsController do
+RSpec.describe Api::V1::RequestsController do
   render_views
 
   Given(:volunteer)  { FactoryGirl.create :pcv }

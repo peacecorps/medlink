@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Roster do
+RSpec.describe Roster do
   Given(:country) { Country.random }
   Given(:body) { %{
     email,phone,phone2,first_name,last_name,pcv_id,role,location,time_zone

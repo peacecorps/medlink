@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe SMS::Condenser do
+RSpec.describe SMS::Condenser do
   context "with a very long template" do
     Given(:country)  { "x" * 180 }
     Given(:codes) { %w(foo bar baz) * 20 }

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe MessageSearch do
+RSpec.describe MessageSearch do
   Given(:p1) { FactoryGirl.create :phone }
   Given(:p2) { FactoryGirl.create :phone }
 

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe OrderResponder, :queue_jobs do
+RSpec.describe OrderResponder, :queue_jobs do
   Given(:volunteer)  { FactoryGirl.create :pcv }
   Given(:supplies)   { Supply.random 3 }
   Given(:orders)     { supplies.map { |s| FactoryGirl.create(:order, supply: s, user: volunteer) } }

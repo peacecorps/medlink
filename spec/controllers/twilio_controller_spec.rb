@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe TwilioController do
+RSpec.describe TwilioController do
   Given(:twilio) { TwilioAccount.first }
   Given(:phone)  { FactoryGirl.create :phone }
 

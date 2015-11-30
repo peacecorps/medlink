@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Announcement do
+RSpec.describe Announcement do
   context "serialization" do
     Given(:schedule)   { Schedule.new days: [5,15], hour: 9 }
     Given(:serialized) { FactoryGirl.create :announcement, schedule: schedule }

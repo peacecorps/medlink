@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe SMS::ReceiptRecorder do
+RSpec.describe SMS::ReceiptRecorder do
   Given(:volunteer) { FactoryGirl.create :pcv }
   Given(:phone)     { FactoryGirl.create :phone, user: volunteer }
   Given(:response)  { FactoryGirl.create :response, order_count: 2, user: volunteer }

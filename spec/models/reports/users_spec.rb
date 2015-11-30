@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Report::Users do
+RSpec.describe Report::Users do
   Given!(:p1) { FactoryGirl.create :phone }
   Given!(:p2) { FactoryGirl.create :phone }
 

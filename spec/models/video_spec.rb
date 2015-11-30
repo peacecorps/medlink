@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Video, :vcr do
+RSpec.describe Video, :vcr do
   context "pcv video" do
     Given(:video) { Video.new(FactoryGirl.build :pcv) }
     Given(:path)  { URI "https:" + video.youtube_embed_link }

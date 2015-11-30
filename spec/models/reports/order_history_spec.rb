@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Report::OrderHistory do
+RSpec.describe Report::OrderHistory do
   Given!(:r1) { FactoryGirl.create :response }
   Given!(:r2) { FactoryGirl.create :response }
 

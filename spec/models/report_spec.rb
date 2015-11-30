@@ -25,7 +25,7 @@ class ReverseReport < Report::Base
 end
 
 
-describe Report do
+RSpec.describe Report do
   Given(:report) { ReverseReport.new %w(correct horse battery staple) }
   When(:result)  { CSV.parse report.to_csv, headers: true }
 

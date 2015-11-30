@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe Phone do
+RSpec.describe Phone do
   Given!(:phone) { Phone.for number: "+1 (234) 567-8900" }
 
   context "finding with original number" do

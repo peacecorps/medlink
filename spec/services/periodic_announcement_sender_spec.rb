@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe PeriodicAnnouncementSender, :queue_jobs do
+RSpec.describe PeriodicAnnouncementSender, :queue_jobs do
   Given(:at10) { Schedule.new days: [1,5,10], hour: 10 }
   Given(:mali) { FactoryGirl.build :announcement, country: Country.find_by(name: "Mali"), schedule: at10 }
   Given(:fiji) { FactoryGirl.build :announcement, country: Country.find_by(name: "Fiji"), schedule: at10 }
