@@ -1,10 +1,14 @@
 json.request do
   json.created_at @request.model.created_at
   json.supplies @request.model.orders.includes(:response) do |order|
-    json.id            order.supply_id
-    # TODO: this should probably be a nested response
-    json.response_id   order.response_id
-    json.response_type order.delivery_method.try(:title)
-    json.responded_at  order.response.try(:created_at)
+    json.id order.supply_id
+    if order.response_id
+      json.response do
+        json.(order.response, :id, :created_at)
+        json.type order.delivery_method.title
+      end
+    else
+      json.response nil
+    end
   end
 end
