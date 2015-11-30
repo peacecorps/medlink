@@ -4,7 +4,7 @@ RSpec.describe "Ordering via the web", :queue_jobs do
   Given(:volunteer) { FactoryGirl.create :pcv }
   Given(:pcmo)      { FactoryGirl.create :pcmo, country: volunteer.country }
 
-  it "runs end-to-end", :js, bullet: false do # N.b. the :vcr tag doesn't work because this forks(?)
+  it "runs end-to-end", :js do # N.b. the :vcr tag doesn't work because this forks(?)
     # Volunteer makes request
     login_as volunteer
 
@@ -32,8 +32,18 @@ RSpec.describe "Ordering via the web", :queue_jobs do
     expect(page).to have_content "Your response has been sent"
     expect(queued(ActionMailer::DeliveryJob).count).to eq 1
 
-    skip "user indicates receipt of supplies"
-    skip "PCMO sees supplies received"
+    # PCV indicates receipt
+    # TODO: this should be a reminder on the home page
+    login_as volunteer
+    click_on "Request History"
+    find(:xpath, "//a[@title='Mark as received']").trigger "click"
+
+    # PCMO sees receipt
+    login_as pcmo
+    visit responses_path
+    expect(page).not_to have_content volunteer.email
+    click_on "Archived"
+    expect(page).to have_content volunteer.email
   end
 
   it "re-displays request form with validation failures" do
