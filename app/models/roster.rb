@@ -44,6 +44,7 @@ class Roster
   end
 
   def persisted?; end
+  def inspect; "Roster(#{country.name}: #{rows.count} rows)"; end
 
   def save
     # TODO: this clobbers user edits. Do we need to allow PCVs to edit?
@@ -54,7 +55,7 @@ class Roster
   end
 
   def removed_pcvs
-    @_removed_pcvs ||= country.users.pcv.where(email: removed_emails.to_a)
+    country.users.pcv.where(email: removed_emails.to_a)
   end
 
   def active_emails

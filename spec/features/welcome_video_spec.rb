@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Welcome video" do
+RSpec.describe "Welcome video" do
   Given(:pcv) { FactoryGirl.create :pcv, welcome_video_shown_at: nil }
 
   it "shows the welcome video" do

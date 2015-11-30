@@ -16,10 +16,6 @@ class Order < ActiveRecord::Base
   scope :with_responses, -> { where.not response_id: nil }
   scope :without_responses, -> { where response_id: nil }
 
-  def due_at
-    created_at.at_end_of_month + 3.days
-  end
-
   def responded_at
     response && response.created_at
   end

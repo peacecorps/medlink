@@ -6,7 +6,7 @@ class RequestForm < Reform::Form
   property :text
   property :message
 
-  collection :supplies
+  property :supplies, virtual: true
 
   validates :user, presence: true
   validates :country, presence: true
@@ -15,7 +15,8 @@ class RequestForm < Reform::Form
 
   def initialize *args
     super
-    self.country ||= model.submitter.country
+    self.country  ||= model.submitter.country
+    self.supplies ||= []
   end
 
   def user= id
@@ -34,18 +35,17 @@ class RequestForm < Reform::Form
   end
 
   def save
+    attach_supplies
     super
     mark_duplicated_orders
     update_wait_times
   end
 
   def success_message
-    # FIXME: this due logic is duplicated a lot
-    due = model.orders.first.due_at.strftime "%B %d"
     if entered_by == user.id
-      I18n.t! "flash.request.placed", expected_receipt_date: due
+      I18n.t! "flash.request.placed", expected_receipt_date: DueDate.new(model)
     else
-      I18n.t! "flash.request.placed_for", username: user.name, expected_receipt_date: due
+      I18n.t! "flash.request.placed_for", username: user.name, expected_receipt_date: DueDate.new(model)
     end
   end
 
@@ -58,6 +58,12 @@ class RequestForm < Reform::Form
     end
     if supplies.none?
       errors.add :supplies, "are required"
+    end
+  end
+
+  def attach_supplies
+    supplies.each do |s|
+      model.orders.new user: user, supply: s
     end
   end
 

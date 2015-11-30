@@ -1,12 +1,17 @@
 class UserForm < Reform::Form
+  property :submitter, virtual: true
+  property :phone_numbers, virtual: true
   property :first_name
   property :last_name
   property :role
   property :location
   property :time_zone
+  property :country_id
+  property :pcv_id
 
-  validates :first_name, :last_name, :role, :location, presence: true
+  validates :first_name, :last_name, :role, :location, :country_id, :pcv_id, presence: true
   validate :check_phone_numbers
+  validate :admins_cant_demote_themselves
 
   collection :phones do
     property :number
@@ -23,14 +28,9 @@ class UserForm < Reform::Form
     ::ActiveModel::Name.new User
   end
 
-  def initialize user, editor:
-    Pundit.authorize editor, user, :update?
-    super user
-  end
-
-  def validate params
-    self.phone_numbers = params[:phone_numbers]
-    super params
+  def initialize *args
+    super
+    Pundit.authorize submitter, model, :update?
   end
 
   def flash
@@ -49,22 +49,17 @@ class UserForm < Reform::Form
     self.phones = numbers.split(/[,\n]/).map { |n| Phone.new number: n.strip }
   end
 
-  def pcv_id
-    model.pcv_id
-  end
-
-  def save
-    super
-    # FIXME: I _really_ don't like that this can pass validations and then fail to save
-    #   Need to find a better way to represent this
-    model.save!
-  end
-
   private
 
   def check_phone_numbers
     phone_errors = phones.map { |p| p.errors[:number] }.flatten.uniq
-    errors[:phone_numbers] = phone_errors if phone_errors.any?
+    errors.add :phone_numbers, phone_errors.first if phone_errors.any?
+  end
+
+  def admins_cant_demote_themselves
+    if submitter == model && submitter.admin? && role != :admin
+      errors.add :role, "can't demote yourself"
+    end
   end
 
   def changed_fields
@@ -72,7 +67,7 @@ class UserForm < Reform::Form
   end
 
   def change_summary
-    changed_fields.map { |k| "#{k}=[#{new_value_for k}]" }.join "; "
+    changed_fields.map { |k| "#{k}=#{new_value_for k}" }.join "; "
   end
 
   def new_value_for key

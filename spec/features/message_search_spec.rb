@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "searching for messages" do
+RSpec.describe "searching for messages" do
   Given(:admin) { FactoryGirl.create :admin }
 
   it "lets admins search" do

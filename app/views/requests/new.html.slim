@@ -1,10 +1,10 @@
 = content_for :page_title do
   = current_user.pcv? ? "Request Form" : "Place an Order"
 
-= bootstrap_form_for @placer do |f|
+= bootstrap_form_for @request do |f|
   .row
     .col-md-6
-      = render partial: 'partials/errors', locals: { object: @placer }
+      = render partial: 'partials/errors', locals: { object: @request }
 
       - if current_user.pcv?
         = title do
@@ -13,10 +13,10 @@
         = f.hidden_field :user, value: current_user.id
 
       - else
-        = f.collection_select :user, @placer.users, :id, :name, include_blank: true, label: "For Volunteer"
+        = f.collection_select :user, @request.users, :id, :name, include_blank: true, label: "For Volunteer"
 
-      = f.collection_select :supplies, @placer.available_supplies, :id, :select_display,
-        { label: "Supplies", selected: @placer.supplies.pluck(:id) }, class: "chosen-select", multiple: true
+      = f.collection_select :supplies, @request.available_supplies, :id, :select_display,
+        { label: "Supplies", selected: @request.supplies.pluck(:id) }, class: "chosen-select", multiple: true
       / FIXME: it's ⌘ on OSX ...
       .help-block.no-js Control-click to select multiple
 

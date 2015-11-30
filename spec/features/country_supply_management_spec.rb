@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "managing country supplies" do
+RSpec.describe "managing country supplies" do
   Given(:pcmo)    { FactoryGirl.create :pcmo }
   Given(:country) { pcmo.country }
   Given(:supply)  { country.available_supplies.random }

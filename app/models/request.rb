@@ -8,9 +8,4 @@ class Request < ActiveRecord::Base
   has_many :supplies, through: :orders
 
   belongs_to :reorder_of, class_name: "Response"
-
-  def supplies= supplies
-    raise if orders.any?
-    supplies.each { |s| orders.new user: user, supply: s }
-  end
 end

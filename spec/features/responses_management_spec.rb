@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "managing responses" do
+RSpec.describe "managing responses" do
   it "lets pcmos track responses" do
     pcmo = FactoryGirl.create :pcmo
     e1, e2, e3, e4 = 4.times.map { FactoryGirl.create(:response, country: pcmo.country).user.email }

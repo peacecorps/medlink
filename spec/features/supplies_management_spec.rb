@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "managing master supply list" do
+RSpec.describe "managing master supply list" do
   Given(:admin) { FactoryGirl.create :admin }
 
   it "can do all the CRUD" do

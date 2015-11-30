@@ -1,9 +1,7 @@
 class NewUserForm < UserForm
   property :email
-  property :country_id
-  property :pcv_id
 
-  validates :email, :country_id, :pcv_id, presence: true
+  validates :email, presence: true
   validate :unique_email
 
   def unique_email

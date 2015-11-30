@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "managing users" do
+RSpec.describe "managing users" do
   Given(:admin) { FactoryGirl.create :admin }
 
   it "lets admins do all the CRUD" do

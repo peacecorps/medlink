@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Ordering via the web", :queue_jobs do
+RSpec.describe "Ordering via the web", :queue_jobs do
   Given(:volunteer) { FactoryGirl.create :pcv }
   Given(:pcmo)      { FactoryGirl.create :pcmo, country: volunteer.country }
 

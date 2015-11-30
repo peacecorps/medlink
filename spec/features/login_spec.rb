@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "login emails" do
+RSpec.describe "login emails" do
   it "can request confirmation help" do
     pcv = FactoryGirl.create :pcv, :unconfirmed
     mail.clear

@@ -2,9 +2,10 @@ class OrderResponsePresenter < Draper::Decorator
   delegate_all
 
   def how_past_due
+    due    = DueDate.new(model).due
     finish = responded_at || Time.now
-    return unless finish > due_at
-    h.distance_of_time_in_words finish, due_at
+    return unless finish > due
+    h.distance_of_time_in_words finish, due
   end
 
   def response_time

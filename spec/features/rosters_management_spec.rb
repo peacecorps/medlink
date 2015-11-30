@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "managing a roster" do
+RSpec.describe "managing a roster" do
   Given(:admin)   { FactoryGirl.create :admin }
   Given(:country) { admin.country }
   Given!(:a)      { FactoryGirl.create :pcv, email: "a@example.com", country: country }

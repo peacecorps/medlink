@@ -1,17 +1,13 @@
 class UserPolicy < ApplicationPolicy
   def update?
-    super || record.id == user.id
+    admin? || country_pcmo?
   end
 
   def respond?
+    return true if user.admin?
+    return false unless user.pcmo?
     # A headless policy is asking if we can respond to _some_ user
-    admin? || \
-    (user.pcmo? && record == :user) || \
-    country_pcmo?
-  end
-
-  def report?
-    admin?
+    record == :user || record.country_id == user.country_id
   end
 
   def inactivate?

@@ -22,7 +22,7 @@ class SMS::OrderPlacer < SMS::Handler
     if duplicate
       error! "sms.duplicate_order", {
         supplies: supply_names,
-        due_date: due_date(duplicate.request.created_at)
+        due_date: DueDate.new(duplicate.request)
       }, condense: :supply
     end
 
@@ -61,7 +61,7 @@ private
   def confirmation_message
     SMS::Condenser.new("sms.confirmation", :supply,
       supplies: supply_names,
-      due_date: due_date(sms.created_at)
+      due_date: DueDate.new(sms)
     ).message
   end
 
@@ -75,10 +75,5 @@ private
 
   def unavailable_supplies
     shortcodes - user.country.supplies.map(&:shortcode)
-  end
-
-  # FIXME: this should be unified(?) with `Order#due_at`
-  def due_date created_at
-    created_at.at_beginning_of_month.next_month.strftime "%B %d"
   end
 end

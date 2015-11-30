@@ -9,6 +9,7 @@ class AnnouncementForm < Reform::Form
   validates :country_id, presence: true
   validates :message, presence: true
   validate :no_partial_schedule
+  validate :only_admins_schedule
 
   def days
     schedule.days.join ", " if schedule
@@ -46,6 +47,12 @@ class AnnouncementForm < Reform::Form
   def no_partial_schedule
     if schedule.days.any? && !schedule.hour.present?
       errors.add :hour, "required for scheduled announcements"
+    end
+  end
+
+  def only_admins_schedule
+    if schedule.days.any? && !announcer.admin?
+      errors.add :days, "only admins can schedule repeated announcements"
     end
   end
 end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "managing announcements" do
+RSpec.describe "managing announcements" do
   Given(:admin) { FactoryGirl.create :admin }
   Given!(:pcv)  { FactoryGirl.create :pcv }
 

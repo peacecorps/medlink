@@ -4,12 +4,12 @@ class Admin::UsersController < AdminController
   end
 
   def new
-    @user = NewUserForm.new current_user.country.users.new, editor: current_user
+    @user = NewUserForm.new current_user.country.users.new, submitter: current_user
     authorize @user
   end
 
   def create
-    @user = NewUserForm.new current_user.country.users.new, editor: current_user
+    @user = NewUserForm.new current_user.country.users.new, submitter: current_user
     if save_form @user, params[:user]
       redirect_to country_roster_path, notice: I18n.t!("flash.user.added")
     else
@@ -18,11 +18,11 @@ class Admin::UsersController < AdminController
   end
 
   def edit
-    @user = AdminEditUserForm.new User.find(params[:id]), editor: current_user
+    @user = UserForm.new User.find(params[:id]), submitter: current_user
   end
 
   def update
-    @user = AdminEditUserForm.new User.find(params[:id]), editor: current_user
+    @user = UserForm.new User.find(params[:id]), submitter: current_user
     if save_form @user, params[:user]
       redirect_to country_roster_path, @user.flash
     else

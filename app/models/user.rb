@@ -33,14 +33,8 @@ class User < ActiveRecord::Base
   validates :pcv_id, presence: true, uniqueness: true, if: :pcv?
   validates :time_zone, inclusion: { in: Country.time_zones.map(&:name) }
 
-  def self.due_cutoff
-    now    = Time.now
-    oldest = now.at_beginning_of_month
-    now.day < 3 ? oldest - 1.month : oldest
-  end
-
-  scope :past_due, -> { where ["waiting_since  < ?", due_cutoff] }
-  scope :pending,  -> { where ["waiting_since >= ?", due_cutoff] }
+  scope :past_due, -> { where ["waiting_since  < ?", DueDate.cutoff] }
+  scope :pending,  -> { where ["waiting_since >= ?", DueDate.cutoff] }
 
   before_validation on: :create do |u|
     u.time_zone  = u.country.time_zone unless u.time_zone.present?

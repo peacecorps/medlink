@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "Ordering via sms" do
+RSpec.describe "Ordering via sms" do
   it "runs end-to-end", :vcr do
     phone     = FactoryGirl.create :phone
     volunteer = phone.user
