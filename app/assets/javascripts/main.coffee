@@ -41,3 +41,9 @@ $ ->
     $(".phones-form .add").click (e) ->
       e.preventDefault()
       template.clone().insertBefore @
+
+  roster_uploader = $("#roster_upload_form")
+  roster_uploader.S3Uploader()
+
+  roster_uploader.bind "ajax:success", (e, data) ->
+    window.location = "/country/roster/edit?upload_id=" + data.upload_id

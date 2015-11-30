@@ -7,4 +7,8 @@ class RosterUpload < ActiveRecord::Base
   def roster
     @_roster ||= Roster.from_csv(body, country: country)
   end
+
+  def fetched?
+    body.present?
+  end
 end

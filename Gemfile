@@ -30,6 +30,7 @@ gem 'quiet_assets'
 gem 'bullet'
 
 gem 'bootstrap_form'
+gem 's3_direct_upload'
 
 group :assets do
   gem 'sass-rails'

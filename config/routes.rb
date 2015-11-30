@@ -61,6 +61,7 @@ Medlink::Application.routes.draw do
     resource :roster, only: [:show, :edit, :update] do
       collection do
         post :upload
+        get  :poll
       end
     end
   end
