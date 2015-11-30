@@ -16,14 +16,6 @@ class GroupedOrdersPresenter
       @orders.count
     end
 
-    def label
-      if request.reordered?
-        request.reorder_label
-      else
-        request.text
-      end
-    end
-
     def created_at
       tags \
         short_date(request.created_at, request.user.time_zone),

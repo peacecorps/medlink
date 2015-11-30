@@ -11,8 +11,4 @@ class RosterUserPresenter < ApplicationPresenter
       "Admin"
     end
   end
-
-  def phone_list
-    list_of phones.map { |p| h.phone_link(p) }
-  end
 end
