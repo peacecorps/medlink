@@ -8,23 +8,9 @@ class SMS::OrderPlacer < SMS::Handler
     parse!
     user_required!
 
-    if unrecognized_shortcodes.any?
-      Notification.send :unrecognized_sms, "#{sms.id}) #{sms.text}"
-      error! "sms.unrecognized_shortcodes",
-        { codes: unrecognized_shortcodes }, condense: :code
-    end
-
-    if unavailable_supplies.any?
-      error! "sms.invalid_for_country",
-        { codes: unavailable_supplies, country: user.country.name}, condense: :code
-    end
-
-    if duplicate
-      error! "sms.duplicate_order", {
-        supplies: supply_names,
-        due_date: DueDate.new(duplicate.request)
-      }, condense: :supply
-    end
+    check_for_unrecognized
+    check_for_unavailable
+    check_for_duplicate
 
     create_orders
     confirmation_message
@@ -38,6 +24,27 @@ private
     return if shortcodes.present?
     parsed = SMS::Parser.new(sms.text).run!
     @instructions, @shortcodes = parsed.instructions, parsed.shortcodes
+  end
+
+  def check_for_unrecognized
+    return unless unrecognized_shortcodes.any?
+    Notification.send :unrecognized_sms, "#{sms.id}) #{sms.text}"
+    error! "sms.unrecognized_shortcodes",
+           { codes: unrecognized_shortcodes }, condense: :code
+  end
+
+  def check_for_unavailable
+    return unless unavailable_supplies.any?
+    error! "sms.invalid_for_country",
+           { codes: unavailable_supplies, country: user.country.name}, condense: :code
+  end
+
+  def check_for_duplicate
+    return unless duplicate
+    error! "sms.duplicate_order", {
+      supplies: supply_names,
+      due_date: DueDate.new(duplicate.request)
+    }, condense: :supply
   end
 
   def create_orders

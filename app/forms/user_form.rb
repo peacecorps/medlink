@@ -63,7 +63,7 @@ class UserForm < Reform::Form
   end
 
   def changed_fields
-    changed.select { |k,v| v }.keys - %w( country_id )
+    changed.select { |_,v| v }.keys - %w( country_id )
   end
 
   def change_summary

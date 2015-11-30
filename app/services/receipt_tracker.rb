@@ -15,10 +15,8 @@ class ReceiptTracker
 
   def reorder
     Pundit.authorize approver, response, :reorder?
-    form = RequestForm.new response.reorders.new
-    form.supplies   = response.supplies
-    form.entered_by = approver.id
-    Pundit.authorize approver, form, :create?
+    form = RequestForm.new response.reorders.new,
+      supplies: response.supplies, entered_by: approver.id
     form.save
     response.update! replacement: form.model, cancelled_at: form.model.created_at
   end

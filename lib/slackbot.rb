@@ -8,7 +8,7 @@ class Slackbot
       @messages = []
     end
 
-    def info text, opts={}
+    def info text, _opts={}
       @messages.push text
     end
 

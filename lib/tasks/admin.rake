@@ -37,9 +37,10 @@ namespace :admin do
   end
 
   task :claim, [:password] => :environment do |_, args|
-    email, first, last = git_data
+    email = git_data.first
 
+    password = args[:password] || "password"
     u = User.where(email: email).first!
-    u.update! role: :admin, password: :password
+    u.update! role: :admin, password: password
   end
 end

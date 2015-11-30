@@ -48,7 +48,6 @@ private
   end
 
   def response_message type
-    orders = Order.where(response: response).includes(:supply)
     SMS::Condenser.new("sms.orders_#{type}", :supply, supplies: unique_supply_names).message
   end
 end

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def set_country
     authorize current_user
     current_user.update country: Country.find(params[:country][:id])
-    redirect_to (params[:next] || :back)
+    redirect_to(params[:next] || :back)
   end
 
   def send_login_help

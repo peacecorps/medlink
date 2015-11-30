@@ -43,7 +43,7 @@ class Report::Base
   # This is a hack to get the column names even if we don't have any
   #   rows to print out. It may be too clever, but it is at least localized.
   class NullObject
-    def method_missing(*args, &block); self; end
+    def method_missing(*_); self; end
   end
   def columns
     format(NullObject.new).keys
