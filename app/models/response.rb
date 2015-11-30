@@ -99,7 +99,7 @@ class Response < ActiveRecord::Base
     slack = Slackbot.new
     if receipt_reminders.count >= 3
       flag!
-      slack.message "Flagged response #{id} for manual follow-up after #{receipt_reminders.count} reminders"
+      slack.message "Flagged response #{id} for manual follow-up after #{receipt_reminders.count} reminders" if ENV["NOTIFY_ON_AUTO_FLAG"]
       return
     end
 
