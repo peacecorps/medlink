@@ -50,4 +50,12 @@ module ApplicationHelper
   def tel number
     link_to number, "tel:#{number}"
   end
+
+  # TODO: refactor to use this
+  def icon_btn icon_name, text, path, opts={}
+    opts[:class] = "btn btn-#{opts[:class] || 'default'}"
+    link_to path, opts do
+      [ icon(icon_name), text ].join.html_safe
+    end
+  end
 end

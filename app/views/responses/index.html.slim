@@ -10,8 +10,7 @@
 
     - if @responses.any?
       = render partial: "partials/pager", locals: { table: @responses }
-      table.table.table-striped.table-hover
-        = render partial: "table", locals: { table: @responses }
+      = render partial: "table", locals: { table: @responses }
     - else
       .well
         No responses

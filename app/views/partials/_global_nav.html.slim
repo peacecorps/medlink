@@ -41,7 +41,7 @@ nav.navbar.navbar-default role="navigation"
 
           - if current_user.pcv?
             li= link_to 'Place a Request', new_request_path
-            li= link_to 'Request History', orders_path
+            li= link_to 'Request History', timeline_path
 
           - else
             li= link_to 'Requests', manage_orders_path

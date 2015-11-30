@@ -20,7 +20,7 @@ class ResponsesController < ApplicationController
       redirect_to manage_orders_path, flash:
         { success: I18n.t!("flash.response.sent", user: user.name) }
     else
-      redirect_to manage_orders_path, flash: { error: I18n.t!("flash.response.none_selected") }
+      redirect_to :back, flash: { error: I18n.t!("flash.response.none_selected") }
     end
   end
 
@@ -44,13 +44,15 @@ class ResponsesController < ApplicationController
   end
   def reorder
     response = Response.find params[:id]
-    ResponseReorderer.new(officer: current_user, response: response).run!
+    authorize response
+    ReceiptTracker.new(response: response, approver: current_user).reorder
     redirect_to responses_path(redir_params), flash:
       { success: I18n.t!("flash.response.reordered") }
   end
   def mark_received
     response = Response.find params[:id]
-    ReceiptTracker.new(response: response).mark_received by: current_user
+    authorize response
+    ReceiptTracker.new(response: response, approver: current_user).acknowledge_receipt
     unless response.user == current_user
       flash[:notice] = I18n.t!("flash.response.archived")
     end
@@ -58,8 +60,9 @@ class ResponsesController < ApplicationController
   end
   def flag
     response = Response.find params[:id]
-    ReceiptTracker.new(response: response).flag_for_follow_up by: current_user
-    redirect_to :back
+    authorize response
+    ReceiptTracker.new(response: response, approver: current_user).flag_for_follow_up
+    redirect_to :back, notice: I18n.t!("flash.response.flagged")
   end
 
 

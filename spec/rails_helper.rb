@@ -127,6 +127,10 @@ RSpec.configure do |config|
     ActionMailer::Base.deliveries
   end
 
+  def flash
+    page.find ".flash"
+  end
+
   config.before :suite do
     clean!
     NamedSeeds.load_seed unless Country.any?

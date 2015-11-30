@@ -17,6 +17,6 @@ class RequestsController < ApplicationController
   private
 
   def after_create_path
-    current_user.pcv? ? orders_path : root_path
+    current_user.pcv? ? timeline_path : root_path
   end
 end

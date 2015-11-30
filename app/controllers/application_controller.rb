@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
-    redirect_to :back, flash: { error: exception }
+    # TODO: what should we actually do here?
+    render text: "Not Authorized", status: 403
   end
 
   private

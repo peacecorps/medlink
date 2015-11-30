@@ -11,14 +11,12 @@ Medlink::Application.routes.draw do
   resource :welcome, only: [:show, :update]
 
   resources :users, only: [] do
-    resource :timeline, only: [:show]
-
-    resources :responses, only: [:new, :create, :show] do
-      post :archive
-      post :unarchive
-    end
+    resource  :timeline, only: [:show]
+    resources :responses, only: [:new, :create]
   end
-  patch "/user/country" => "users#set_country", as: :set_country
+  patch "/user/country"  => "users#set_country", as: :set_country
+
+  resource :timeline, only: [:show]
 
   resources :messages, only: [:index]
   resources :announcements, except: [:show] do
@@ -35,13 +33,13 @@ Medlink::Application.routes.draw do
     end
   end
 
-  resources :orders, only: [:index] do
+  resources :orders, only: [] do
     collection do
       get :manage
     end
   end
 
-  resources :responses, only: [:index] do
+  resources :responses, only: [:index, :show] do
     member do
       post :mark_received
       post :flag

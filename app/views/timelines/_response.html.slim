@@ -10,10 +10,10 @@ table.table.table-striped.table-hover.table-condensed id="response-#{response.id
             = link_to flag_response_path(response), class: "btn btn-#{response.flagged? ? 'danger' : 'default'}", title: "Flag for follow-up", disabled: response.received?, method: :post do
               = icon :flag
   tbody
-    - response.orders.reject(&:duplicated?).each do |order|
+    - response.orders.map { |o| OrderResponsePresenter.new(o) }.reject(&:duplicated?).each do |order|
       tr
         td= order.supply.name
-        td= order_status order
+        td= order.status
 
 - if response.extra_text.present?
   pre= response.extra_text

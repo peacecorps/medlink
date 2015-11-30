@@ -1,10 +1,4 @@
 class OrdersController < ApplicationController
-  def index
-    @timeline = Timeline.new current_user
-    authorize @timeline, :show?
-    render "timelines/show"
-  end
-
   def manage
     authorize :user, :respond?
     users = current_user.country.users

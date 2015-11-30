@@ -14,6 +14,7 @@ en:
       cancelled: "Response has been cancelled."
       reordered: "Response has been cancelled and reordered."
       none_selected: "No response selected."
+      flagged: "Response flagged for follow-up from your PCMO."
 
     user:
       added: "Success! You have added a new user to PC Medlink"

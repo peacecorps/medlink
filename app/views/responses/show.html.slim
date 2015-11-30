@@ -17,6 +17,7 @@
     tbody
       - @response.orders.includes(:request, :supply).group_by { |o| o.request }.each do |req, os|
         - os.each_with_index do |order,i|
+          - order = OrderResponsePresenter.new order
           tr
             - if i.zero?
               td.ts(rowspan=os.length)= short_date req.created_at

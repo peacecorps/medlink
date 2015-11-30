@@ -42,4 +42,11 @@ describe "Ordering via the web", :queue_jobs do
     click_on "Submit"
     expect(page).to have_css ".has-error"
   end
+
+  it "doesn't allow volunteers to approve" do
+    login_as volunteer
+
+    visit new_user_response_path(volunteer)
+    expect(page).to have_content "Not Authorized"
+  end
 end
