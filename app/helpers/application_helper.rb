@@ -30,7 +30,7 @@ module ApplicationHelper
 
   def phone_link phone
     if phone
-      link_to phone.number, "tel:#{phone.number}"
+      link_to phone.number, tel(phone.number)
     else
       "-"
     end
@@ -55,7 +55,7 @@ module ApplicationHelper
   def icon_btn icon_name, text, path, opts={}
     opts[:class] = "btn btn-#{opts[:class] || 'default'}"
     link_to path, opts do
-      [ icon(icon_name), text ].join.html_safe
+      [ icon(icon_name), text ].join(" ").html_safe
     end
   end
 end

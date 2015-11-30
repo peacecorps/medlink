@@ -39,7 +39,7 @@ RSpec.describe "managing users" do
     expect(row).to have_content "Updated"
 
     row.click_on "Edit"
-    select "First Updated", from: "edit_user_id"
+    select "First Updated", from: "_user_id"
     click_on "Select"
 
     expect(page).to have_content "Edit Account"

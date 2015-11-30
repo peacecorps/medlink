@@ -19,14 +19,9 @@ table.table.table-striped.table-hover
         td= announcement.message
         td= announcement.preview
         td= announcement.last_sent
-        td
-          = link_to edit_announcement_path(announcement), class: "btn btn-default" do
-            = icon :edit
-            ' 
-            | Edit
+        td= icon_btn :edit, "Edit", edit_announcement_path(announcement)
         td= announcement.send_button
         td
           - if policy(announcement).destroy?
-            = link_to announcement_path(announcement), method: :delete, class: "btn btn-danger" do
-              = icon :remove
+            = icon_btn :remove, "", announcement_path(announcement), method: :delete, class: "danger"
 

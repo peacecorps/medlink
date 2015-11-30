@@ -1,6 +1,6 @@
 class Admin::UsersController < AdminController
   def select
-    redirect_to edit_admin_user_path(params[:edit][:user_id])
+    redirect_to edit_admin_user_path(params[:user_id])
   end
 
   def new
