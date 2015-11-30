@@ -855,18 +855,18 @@ Lint/AmbiguousOperator:
                  Checks for ambiguous operators in the first argument of a
                  method invocation without parentheses.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#parens-as-args'
-  Enabled: true
+  Enabled: false
 
 Lint/AmbiguousRegexpLiteral:
   Description: >-
                  Checks for ambiguous regexp literals in the first argument of
                  a method invocation without parenthesis.
-  Enabled: true
+  Enabled: false
 
 Lint/AssignmentInCondition:
   Description: "Don't use assignment in conditions."
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#safe-assignment-in-condition'
-  Enabled: true
+  Enabled: false
 
 Lint/BlockAlignment:
   Description: 'Align block ends correctly.'

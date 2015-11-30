@@ -38,7 +38,7 @@ class GroupedOrdersPresenter
       group_by(&:request).
       sort_by { |request, _| request.created_at }.
       reverse.
-      map { |req, orders| Group.new(req, orders) }
+      map { |req, os| Group.new(req, os) }
   end
 
   def each_group
