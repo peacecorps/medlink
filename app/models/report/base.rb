@@ -69,7 +69,7 @@ class Report::Base
 
   def clean value
     raise "Unconverted ActiveRecord in CSV" if value.is_a?(ActiveRecord::Base)
-    value.to_s.gsub("\n", " ")
+    value.to_s.tr("\n", " ")
   end
 
   def formatted_rows

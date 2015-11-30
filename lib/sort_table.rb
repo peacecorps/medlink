@@ -9,10 +9,9 @@ class SortTable < Draper::Decorator
       @registry = {}
     end
 
-    def build scope, **opts
-      prefix = opts[:prefix]
+    def build prefix, params
       raise Duplicate if @registry.include? prefix
-      @registry[prefix] = SortTable.send :new, scope, opts
+      @registry[prefix] = SortTable.send(:new, prefix, params) { |t| yield t }
     end
   end
 
@@ -22,16 +21,19 @@ class SortTable < Draper::Decorator
     protected :new
   end
 
-  def initialize scope, params:, prefix: nil, default: nil, sort_model: nil, per_page: nil, presenter: nil
-    @scope     = scope
-    @params    = params.clone.reject { |k| %w( action controller ).include?(k) }
-    @prefix    = prefix ? "#{prefix}_" : ""
-    @default   = default || { id: :asc }
-    @model     = sort_model || @scope.model
-    @per_page  = per_page
-    @presenter = presenter
+  attr_writer :default, :per_page, :presenter, :scope, :sort_model
+
+  def initialize prefix, params
+    @prefix = prefix ? "#{prefix}_" : ""
+    @params = params.clone.reject { |k| %w( action controller ).include?(k) }
+
+    @default  = { id: :asc }
+    @per_page = 10
+
+    yield self
 
     super page
+    freeze
   end
 
   def anchor
@@ -63,7 +65,7 @@ class SortTable < Draper::Decorator
   attr_reader :scope, :model, :prefix, :params, :per_page, :default
 
   def ordered
-    scope.order "#{model.table_name}.#{sort_column} #{sort_direction}"
+    scope.order "#{sort_model.table_name}.#{sort_column} #{sort_direction}"
   end
 
   def page
@@ -71,11 +73,11 @@ class SortTable < Draper::Decorator
   end
 
   def model_name
-    model.model_name.singular
+    sort_model.model_name.singular
   end
 
   def allowed_columns
-    model.column_names
+    sort_model.column_names
   end
 
   def sort_column
@@ -86,5 +88,9 @@ class SortTable < Draper::Decorator
   def sort_direction
     given = params["#{prefix}direction"]
     %w(asc desc).include?(given) ? given.to_sym : default.values.first
+  end
+
+  def sort_model
+    @sort_model || @scope.model
   end
 end

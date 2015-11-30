@@ -2,7 +2,11 @@ class RostersController < ApplicationController
   def show
     roster = Roster.new country: current_user.country, rows: current_user.country.users.non_admins
     authorize roster
-    @users = sort_table roster.rows.includes(:phones), per_page: 25, presenter: RosterUserPresenter
+    @users = sort_table do |t|
+      t.scope     = roster.rows.includes(:phones)
+      t.per_page  = 25
+      t.presenter = RosterUserPresenter
+    end
   end
 
   def upload

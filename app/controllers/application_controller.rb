@@ -22,9 +22,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def sort_table scope, **opts
+  def sort_table prefix=nil
     @_sort_table_registry ||= SortTable::Registry.new
-    @_sort_table_registry.build scope, opts.merge(params: params)
+    @_sort_table_registry.build(prefix, params) { |t| yield t }
   end
 
   def save_form reform, *args

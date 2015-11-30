@@ -8,8 +8,9 @@ class Timeline
   end
 
   def each
-    (requests + responses + messages).sort_by(&:created_at).reverse.
-      each { |e| yield presenter_for e }
+    (requests + responses + messages).
+      sort_by(&:created_at).
+      reverse_each { |e| yield presenter_for e }
   end
 
   def requests

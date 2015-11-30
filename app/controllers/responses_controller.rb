@@ -1,16 +1,22 @@
 class ResponsesController < ApplicationController
   def index
     authorize :user, :respond?
-    @responses = sort_table archived(accessible_responses), sort_model: User, per_page: 10
+    @responses = sort_table do |t|
+      t.scope      = archived(accessible_responses)
+      t.sort_model = User
+      t.per_page   = 10
+    end
   end
 
   def new
     @user     = User.find params[:user_id]
     @response = Response.new user: @user, country: @user.country
     authorize @response
-    @history = sort_table @user.orders.with_responses.includes(:supply)
-    @orders  = GroupedOrdersPresenter.new \
-                 @user.orders.without_responses.includes(:supply, request: :reorder_of)
+    @history = sort_table do |t|
+      t.scope = @user.orders.with_responses.includes(:supply)
+    end
+    @orders = GroupedOrdersPresenter.new \
+      @user.orders.without_responses.includes(:supply, request: :reorder_of)
   end
 
   def create
