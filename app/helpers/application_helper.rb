@@ -21,6 +21,7 @@ module ApplicationHelper
 
   def short_date date, zone=nil
     date = date.in_time_zone zone if zone
+    # TODO: ordinalize date?
     if date.year == Time.now.year
       date.strftime "%B %d" # January 01
     else

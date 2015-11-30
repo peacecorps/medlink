@@ -3,6 +3,7 @@ class AnnouncementPresenter < Draper::Decorator
   delegate :message, :send!
 
   def self.reaches
+    # FIXME: this needs to be a per-request cached value _only_
     # This over-counts (as some volunteers may not have phones), but 1) is more performant and
     #   2) we don't really mind if people over-estimate how many people they're pinging
     @_reaches ||= User.pcv.group(:country_id).count

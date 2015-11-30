@@ -18,7 +18,7 @@ class OrderResponsePresenter < Draper::Decorator
   end
 
   def denied?
-    delivery_method == :denial
+    delivery_method == DeliveryMethod::Denial
   end
 
   def status

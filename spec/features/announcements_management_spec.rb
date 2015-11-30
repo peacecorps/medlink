@@ -1,10 +1,10 @@
 require "rails_helper"
 
 RSpec.describe "managing announcements" do
-  Given(:admin) { FactoryGirl.create :admin }
-  Given!(:pcv)  { FactoryGirl.create :pcv }
-
   it "can do all the CRUD" do
+    pcv   = FactoryGirl.create :pcv
+    admin = FactoryGirl.create :admin
+
     login_as admin
 
     # Create
