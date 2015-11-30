@@ -22,7 +22,7 @@
             - if i.zero?
               td.ts(rowspan=os.length)= short_date req.created_at
               td(rowspan=os.length)= req.text
-            td= order.supply.name
+            td= order.supply
             - if order.duplicated_at
               td.duplicate-order(colspan=DeliveryMethod.count)
                 Updated on #{short_date order.duplicated_at}

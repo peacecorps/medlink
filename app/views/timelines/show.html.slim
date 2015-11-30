@@ -8,7 +8,7 @@
     .row(class=event.type)
       .col-md-2
         h2
-          = short_date event.item.created_at, @timeline.time_zone
+          = event.created_at @timeline.time_zone
           small= event.description
       .col-md-10
-        = render partial: "timelines/#{event.type}", locals: { event.type => event.item }
+        = render partial: "timelines/#{event.type}", locals: { event.type => event }

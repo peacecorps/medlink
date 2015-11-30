@@ -30,11 +30,7 @@ module ApplicationHelper
   end
 
   def phone_link phone
-    if phone
-      link_to phone.number, tel(phone.number)
-    else
-      "-"
-    end
+    phone ? tel(phone.number) : "-"
   end
 
   def update_params_link title, param_updates, opts={}

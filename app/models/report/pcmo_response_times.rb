@@ -10,7 +10,6 @@ class Report::PcmoResponseTimes < Report::Base
   end
 
   def format order
-    supply  = order.supply
     country = order.country
     user    = order.user
     phone   = user.primary_phone
@@ -24,7 +23,7 @@ class Report::PcmoResponseTimes < Report::Base
       "Last name"     => user.last_name,
       "Email"         => user.email,
       "Phone"         => phone.try(:number),
-      "Supply Type"   => supply.name,
+      "Supply Type"   => order.supply,
       "Location"      => user.location,
       "Country"       => country.name,
       "Response Days" => order.response_time,

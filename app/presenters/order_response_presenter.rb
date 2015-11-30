@@ -29,7 +29,21 @@ class OrderResponsePresenter < Draper::Decorator
     end
   end
 
+  def supply
+    model.supply.name
+  end
+
   def name_with_status
-    status ? "#{supply.name} (#{status})" : supply.name
+    status ? "#{supply} (#{status})" : supply
+  end
+
+  def timeline_link
+    return unless response_id
+    h.link_to "##{TimelineResponsePresenter.anchor response_id}" do
+      [
+        delivery_method.try(:title),
+        h.content_tag(:small, "#{h.time_ago_in_words responded_at} ago")
+      ].join(" ").html_safe
+    end
   end
 end

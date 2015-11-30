@@ -34,7 +34,7 @@ table.table.table-striped.table-hover
                 - orders.each do |order|
                   - order = OrderResponsePresenter.new order
                   tr
-                    td= order.supply.name
+                    td= order.supply
                     td= order.status
         td
           .btn-group-vertical

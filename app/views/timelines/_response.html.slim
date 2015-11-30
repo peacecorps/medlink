@@ -1,18 +1,16 @@
-table.table.table-striped.table-hover.table-condensed id="response-#{response.id}"
+table.table.table-striped.table-hover.table-condensed id=response.anchor
   thead
     tr
       th
       th
         - if policy(response).mark_received?
           .btn-group
-            = link_to mark_received_response_path(response), class: "btn btn-#{response.received? ? 'success' : 'default'}", title: "Mark as received", disabled: response.received?, method: :post do
-              = icon :ok
-            = link_to flag_response_path(response), class: "btn btn-#{response.flagged? ? 'danger' : 'default'}", title: "Flag for follow-up", disabled: response.received?, method: :post do
-              = icon :flag
+            = response.received_btn
+            = response.flag_btn
   tbody
-    - response.orders.map { |o| OrderResponsePresenter.new(o) }.reject(&:duplicated?).each do |order|
+    - response.unique_orders.map do |order|
       tr
-        td= order.supply.name
+        td= order.supply
         td= order.status
 
 - if response.extra_text.present?
