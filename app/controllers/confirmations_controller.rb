@@ -6,24 +6,21 @@ class ConfirmationsController < Devise::ConfirmationsController
   end
 
   def confirm
-    @original_token = params[resource_name].try(:[], :confirmation_token)
-    self.resource = resource_class.find_by_confirmation_token @original_token
-    unless resource.nil? || params[resource_name].nil?
-      resource.assign_attributes(permitted_params)
-    end
+    @original_token = params[:user].try(:[], :confirmation_token)
+    confirmer = Confirmer.new token: @original_token
 
-    if resource && resource.valid?
-      self.resource.confirm
+    if confirmer.run permitted_params
       set_flash_message :notice, :confirmed
-      sign_in_and_redirect resource_name, resource
+      sign_in_and_redirect :user, confirmer.user
     else
+      self.resource = confirmer.user
       render action: :show
     end
   end
 
- private
+  private
 
-   def permitted_params
-     params.require(resource_name).permit(:confirmation_token, :password, :password_confirmation)
-   end
+  def permitted_params
+    params.require(resource_name).permit(:confirmation_token, :password, :password_confirmation)
+  end
 end
