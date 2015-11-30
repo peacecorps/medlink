@@ -1,4 +1,4 @@
-class AnnouncementPresenter < Draper::Decorator
+class AnnouncementPresenter < ApplicationPresenter
   decorates Announcement
   delegate :message, :send!
 
@@ -23,7 +23,7 @@ class AnnouncementPresenter < Draper::Decorator
 
   def last_sent
     if model.last_sent_at
-      h.short_date model.last_sent_at
+      short_date model.last_sent_at
     else
       "Never"
     end
@@ -36,9 +36,9 @@ class AnnouncementPresenter < Draper::Decorator
     end
 
     h.link_to h.deliver_announcement_path(model), opts do
-      [
+      tags \
         h.icon(:send),
-        h.content_tag("small", "to #{reach} volunteers") ].join.html_safe
+        h.content_tag("small", "to #{reach} volunteers")
     end
   end
 end

@@ -21,21 +21,18 @@ table.table.table-striped.table-hover
         td= mailto r.user.email
         td= phone_link r.user.primary_phone
         td
-          - groups = r.orders.group_by(&:request_id).sort_by { |_, os| os.first.created_at }.reverse
-          - groups.each do |_, orders|
+          - GroupedOrdersPresenter.new(r.orders).each_group do |group|
             table.table
               thead
                 tr
                   th colspan=2
-                    - time = orders.first.created_at.in_time_zone r.user.time_zone
-                    = short_date time
-                    small= time.strftime "%H:%M"
+                    = group.created_at
               tbody
-                - orders.each do |order|
+                - group.each do |order, _|
                   - order = OrderResponsePresenter.new order
                   tr
                     td= order.supply
                     td= order.status
         td
           .btn-group-vertical
-            = render partial: "action_buttons", locals: { response: r }
+            = render partial: "action_buttons", locals: { response: ResponsePresenter.new(r) }

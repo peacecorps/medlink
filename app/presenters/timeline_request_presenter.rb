@@ -1,4 +1,4 @@
-class TimelineRequestPresenter < Draper::Decorator
+class TimelineRequestPresenter < ApplicationPresenter
   delegate :text
 
   def type
@@ -10,7 +10,7 @@ class TimelineRequestPresenter < Draper::Decorator
   end
 
   def created_at time_zone
-    h.short_date model.created_at, time_zone
+    short_date model.created_at, time_zone
   end
 
   def orders

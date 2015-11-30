@@ -16,7 +16,7 @@
         td
           - if @last_date.to_i != o.created_at.to_i
             = @last_date = o.created_at
-        td= o.supply.name
+        td= o.supply
         td
           - if o.duplicated?
             = icon :minus

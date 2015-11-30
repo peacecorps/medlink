@@ -1,8 +1,8 @@
-class CountrySuppliesPresenter < Draper::Decorator
+class CountrySuppliesPresenter < ApplicationPresenter
   decorates Country
   delegate :id, :name
 
-  class SupplyPresenter < Draper::Decorator
+  class SupplyPresenter < ApplicationPresenter
     delegate :id, :shortcode
 
     def initialize supply, available

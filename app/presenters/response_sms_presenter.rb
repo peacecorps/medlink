@@ -1,4 +1,4 @@
-class ResponseSMSPresenter < Draper::Decorator
+class ResponseSMSPresenter < ApplicationPresenter
   delegate_all
 
   def instructions

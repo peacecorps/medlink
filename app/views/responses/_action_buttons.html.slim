@@ -1,16 +1,6 @@
 = icon_btn :search, "History", user_timeline_path(response.user)
 - if response.archived?
-  = link_to response_path(response), class: "btn btn-default" do
-    - if response.received?
-      | Received
-      small on #{short_date response.received_at}
-    - if response.reordered?
-      | Reordered
-      small on #{short_date response.reordered_at}
-    - elsif response.cancelled?
-      | Cancelled
-      small on #{short_date response.cancelled_at}
-
+  = response.status_btn
 - else
   = icon_btn :ok, "Received", mark_received_response_path(response), method: :post
   = icon_btn :remove, "Cancel", cancel_response_path(response), method: :post

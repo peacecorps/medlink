@@ -22,13 +22,14 @@ class SortTable < Draper::Decorator
     protected :new
   end
 
-  def initialize scope, params:, prefix: nil, default: nil, sort_model: nil, per_page: nil
-    @scope    = scope
-    @params   = params.clone.reject { |k| %w( action controller ).include?(k) }
-    @prefix   = prefix ? "#{prefix}_" : ""
-    @default  = default || { id: :asc }
-    @model    = sort_model || @scope.model
-    @per_page = per_page
+  def initialize scope, params:, prefix: nil, default: nil, sort_model: nil, per_page: nil, presenter: nil
+    @scope     = scope
+    @params    = params.clone.reject { |k| %w( action controller ).include?(k) }
+    @prefix    = prefix ? "#{prefix}_" : ""
+    @default   = default || { id: :asc }
+    @model     = sort_model || @scope.model
+    @per_page  = per_page
+    @presenter = presenter
 
     super page
   end

@@ -8,8 +8,9 @@ class ResponsesController < ApplicationController
     @user     = User.find params[:user_id]
     @response = Response.new user: @user, country: @user.country
     authorize @response
-    @orders  = sort_table @user.orders.without_responses.includes(:supply, request: :reorder_of), prefix: "orders"
-    @history = sort_table @user.orders.with_responses.includes(:supply), prefix: "history"
+    @history = sort_table @user.orders.with_responses.includes(:supply)
+    @orders  = GroupedOrdersPresenter.new \
+                 @user.orders.without_responses.includes(:supply, request: :reorder_of)
   end
 
   def create
@@ -69,7 +70,8 @@ class ResponsesController < ApplicationController
   private
 
   def accessible_responses
-    current_user.country.responses.includes(user: :phones, orders: :supply)
+    # TODO: ew ...
+    current_user.country.responses.includes(user: :phones, orders: [:supply, {request: :user}])
   end
 
   def archived responses

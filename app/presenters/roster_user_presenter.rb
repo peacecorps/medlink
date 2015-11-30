@@ -1,4 +1,4 @@
-class RosterUserPresenter < Draper::Decorator
+class RosterUserPresenter < ApplicationPresenter
   decorates User
   delegate_all
 
@@ -10,5 +10,9 @@ class RosterUserPresenter < Draper::Decorator
     else
       "Admin"
     end
+  end
+
+  def phone_list
+    list_of phones.map { |p| h.phone_link(p) }
   end
 end

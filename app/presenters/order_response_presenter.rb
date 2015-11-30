@@ -1,4 +1,4 @@
-class OrderResponsePresenter < Draper::Decorator
+class OrderResponsePresenter < ApplicationPresenter
   delegate_all
 
   def how_past_due
@@ -40,10 +40,9 @@ class OrderResponsePresenter < Draper::Decorator
   def timeline_link
     return unless response_id
     h.link_to "##{TimelineResponsePresenter.anchor response_id}" do
-      [
+      tags \
         delivery_method.try(:title),
         h.content_tag(:small, "#{h.time_ago_in_words responded_at} ago")
-      ].join(" ").html_safe
     end
   end
 end

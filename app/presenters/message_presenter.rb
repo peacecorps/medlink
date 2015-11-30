@@ -1,8 +1,8 @@
-class MessagePresenter < Draper::Decorator
+class MessagePresenter < ApplicationPresenter
   delegate :text
 
   def created_at
-    "#{h.short_date model.created_at} @#{model.created_at.strftime '%H:%M'}"
+    "#{short_date model.created_at} @#{model.created_at.strftime '%H:%M'}"
   end
 
   def user_link

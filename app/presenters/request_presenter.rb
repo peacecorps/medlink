@@ -1,4 +1,4 @@
-class RequestPresenter < Draper::Decorator
+class RequestPresenter < ApplicationPresenter
   delegate_all
 
   def reordered?

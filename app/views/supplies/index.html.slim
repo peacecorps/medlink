@@ -9,18 +9,6 @@ table.table.table-striped.table-linked.table-condensed
   tbody
     - @supplies.each do |supply|
       tr class=("danger" if !supply.orderable?)
-        td
-          -if supply.orderable?
-            = supply.name
-          -else
-            s= supply.name
-        td
-          span= supply.shortcode
-        td
-          .toggle_orderable_button
-            - if supply.orderable?
-              = button_to toggle_orderable_supply_path(supply), method: :patch, class: "btn btn-danger" do
-                = icon :remove
-            - else
-              = button_to toggle_orderable_supply_path(supply), method: :patch, class: "btn btn-default" do
-                = icon :ok
+        td= supply.name
+        td= supply.shortcode
+        td= supply.global_toggle_btn

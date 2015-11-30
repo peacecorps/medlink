@@ -1,4 +1,4 @@
-class TimelineResponsePresenter < Draper::Decorator
+class TimelineResponsePresenter < ApplicationPresenter
   decorates Response
   delegate :user_id, :extra_text
 
@@ -15,7 +15,7 @@ class TimelineResponsePresenter < Draper::Decorator
   end
 
   def created_at time_zone
-    h.short_date model.created_at, time_zone
+    short_date model.created_at, time_zone
   end
 
   def anchor
