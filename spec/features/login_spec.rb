@@ -52,8 +52,6 @@ describe "login emails" do
   end
 
   it "can fail to find emails" do
-    mail.clear
-
     visit root_path
     within ".help" do
       fill_in "Email", with: "not_a_real_email@example.com"
