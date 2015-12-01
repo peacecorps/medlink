@@ -78,6 +78,8 @@ Medlink::Application.configure do
 
   config.send_texts = true
 
+  slack_name = ENV["SLACK_BOT_NAME"] || "Medlink"
+
   config.slackbot = Slackbot.new \
     channel:    "#medlink",
     username:   "Medlink",
