@@ -34,6 +34,11 @@ RSpec.configure do |config|
     t1.to_f.round(3) == t2.to_f.round(3)
   end
 
+  def p
+    # Pry inside a Given-When chain, and don't re-run the assertion
+    Then { binding.pry; true }
+  end
+
   config.before :suite do
     clean!
     NamedSeeds.load_seed unless Country.any?
