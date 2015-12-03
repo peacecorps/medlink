@@ -31,7 +31,8 @@ RSpec.describe "managing responses" do
   end
 
   it "lets pcvs flag responses" do
-    pcv      = FactoryGirl.create :pcv
+    sms      = FactoryGirl.create :sms
+    pcv      = sms.user
     response = FactoryGirl.create :response, user: pcv
 
     login_as pcv

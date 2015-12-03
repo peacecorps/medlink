@@ -19,10 +19,30 @@ RSpec.describe "managing a roster" do
     expect(page).to have_content "a@example.com"
     expect(page).to have_content "b@example.com"
 
-    # TODO: this should be some sort of S3 upload
-    roster = RosterUpload.create! uploader: admin, body: body, country: country
-    visit edit_country_roster_path(upload_id: roster.id)
+    # Upload comes in from a client-side S3 upload
+    response = page.driver.post "/country/roster/upload", file: "https://example.com/roster.csv"
+    expect(response.status).to eq 200
+    json = JSON.parse response.body
+    expect(json["status"]).to eq "ok"
 
+    upload = RosterUpload.find json["upload_id"]
+
+    # Poll while we fetch from S3
+    visit edit_country_roster_path(upload_id: upload.id)
+    response = page.driver.get "/country/roster/edit", upload_id: upload.id
+    expect(page).to have_content "Fetching"
+
+    visit poll_country_roster_path(upload_id: upload.id)
+    json = JSON.parse page.body
+    expect(json["ready"]).to eq false
+
+    upload.update! body: body
+    visit poll_country_roster_path(upload_id: upload.id)
+    json = JSON.parse page.body
+    expect(json["ready"]).to eq true
+
+    # See the fetched content
+    visit edit_country_roster_path(upload_id: upload.id)
     expect(find_all(".has-error").first).to have_content "can't be blank"
     expect(find "tr", text: "Valid Users").to have_content "a@example.com"
     expect(find "tr", text: "Inactive Users").to have_content "b@example.com"

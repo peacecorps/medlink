@@ -28,7 +28,7 @@ class SortTable < Draper::Decorator
     @params = params.clone.reject { |k| %w( action controller ).include?(k) }
 
     @default  = { id: :asc }
-    @per_page = 10
+    @per_page = params[:per_page] ? [params[:per_page].to_i, 50].min : 10
 
     yield self
 

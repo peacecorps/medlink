@@ -16,6 +16,16 @@ RSpec.describe RequestPresenter do
 
     When(:result) { RequestPresenter.new request }
 
-    Then { !result.reordered? }
+    Then { !result.reordered?          }
+    And  { result.text == request.text }
+  end
+
+  context "describing reorders" do
+    Given(:response) { FactoryGirl.create :response }
+    Given(:reorder)  { FactoryGirl.build :request, reorder_of: response }
+
+    When(:result) { RequestPresenter.new reorder }
+
+    Then { result.text.start_with? "Replacement of" }
   end
 end

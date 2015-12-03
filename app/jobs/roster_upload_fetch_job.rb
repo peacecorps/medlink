@@ -7,9 +7,9 @@ class RosterUploadFetchJob < ApplicationJob
     if res.code == "200"
       upload.update! body: res.body
     else
-      msg = "Failed to pull uploaded CSV #{upload.id} / #{upload.path} (#{res.code})"
+      msg = "Failed to pull uploaded CSV #{upload.id} / #{upload.uri} (#{res.code})"
       Rails.configuration.slackbot.info msg
-      fail msg
+      raise RosterUpload::FetchFailed, msg
     end
   end
 end

@@ -17,9 +17,9 @@ RSpec.describe ResponseSMSJob do
 
     When(:result) { ResponseSMSJob.new.perform response }
 
-    Then { result == true                                                    }
-    And  { SMS.outgoing.exists?                                              }
-    And  { SMS.outgoing.last.user == response.user                           }
-    And  { SMS.outgoing.last.text.include? response.supplies.first.shortcode }
+    Then { result == true                                                                     }
+    And  { SMS.outgoing.exists?                                                               }
+    And  { SMS.outgoing.last.user == response.user                                            }
+    And  { response.supplies.pluck(:shortcode).any? { |c| SMS.outgoing.last.text.include? c } }
   end
 end

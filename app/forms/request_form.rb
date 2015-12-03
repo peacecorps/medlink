@@ -22,6 +22,9 @@ class RequestForm < Reform::Form
   def user= id
     super User.pcv.find_by(id: id)
   end
+  def user_id
+    user.id
+  end
   def supplies= ids
     super Supply.where(id: ids)
   end

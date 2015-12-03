@@ -1,21 +1,13 @@
-= s3_uploader_form id: "roster_upload_form", callback_url: upload_country_roster_path do
-  = file_field_tag :file, multiple: true
-  button Go!
-hr
-
-= form_tag upload_country_roster_path, method: :post, multipart: true do |f|
-  .row
-    .col-md-4
-      - if policy(:roster).create?
-        .form-group
-          .input-group
-            = file_field :roster, :csv, class: "form-control"
-            span.input-group-btn
-              button.btn.btn-default Upload
-    .col-md-4
-    .col-md-4
-      - if policy(:user).create?
-        = link_to "New User", new_admin_user_path, class: "btn btn-default pull-right"
+.row
+  .col-md-4
+    - if policy(:roster).create?
+      .js-required
+        = s3_uploader_form id: "roster_upload_form", callback_url: upload_country_roster_path do
+          = file_field_tag :file, multiple: true, class: "form-control"
+  .col-md-4
+  .col-md-4
+    - if policy(:user).create?
+      = link_to "New User", new_admin_user_path, class: "btn btn-default pull-right"
 
 = render partial: 'partials/pager', locals: { table: @users }
 

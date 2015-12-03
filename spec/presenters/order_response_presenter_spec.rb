@@ -4,12 +4,12 @@ RSpec.describe OrderResponsePresenter do
   Given(:response) { FactoryGirl.create :response }
 
   context "old order" do
-    Given(:order) { FactoryGirl.build :order, response: response, created_at: 2.months.ago, delivery_method: :denial }
+    Given(:order) { FactoryGirl.build :order, response: response, created_at: 2.years.ago, delivery_method: :denial }
 
     When(:result) { OrderResponsePresenter.new order }
 
-    Then { result.how_past_due == "about 2 months"                    }
-    And  { result.response_time == "2 months"                         }
+    Then { result.how_past_due == "almost 2 years"                    }
+    And  { result.response_time == "about 2 years"                    }
     And  { !result.duplicated?                                        }
     And  { result.denied?                                             }
     And  { result.name_with_status == "#{order.supply.name} (Denial)" }
