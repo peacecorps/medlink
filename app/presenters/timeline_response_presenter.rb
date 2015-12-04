@@ -22,20 +22,24 @@ class TimelineResponsePresenter < ApplicationPresenter
     self.class.anchor model.id
   end
 
-  def received_btn
-    klass = model.received? ? :success : :default
-    h.icon_btn :ok, "", h.mark_received_response_path(model),
+  def received_btn klass: nil, text: ""
+    klass ||= model.received? ? :success : :default
+    h.icon_btn :ok, text, h.mark_received_response_path(model),
       class: klass, title: "Mark as received", disabled: response.received?, method: :post
   end
 
-  def flag_btn
-    klass = model.flagged? ? :danger : :default
-    h.icon_btn :flag, "", h.flag_response_path(model),
+  def flag_btn klass: nil, text: ""
+    klass ||= model.flagged? ? :danger : :default
+    h.icon_btn :flag, text, h.flag_response_path(model),
       class: klass, title: "Flag for follow-up", disabled: response.received?, method: :post
   end
 
   def unique_orders
     orders.reject &:duplicated?
+  end
+
+  def delivered_supplies
+    model.supplies.where(orders: { delivery_method: DeliveryMethod::Delivery })
   end
 
   private

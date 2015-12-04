@@ -60,7 +60,6 @@ RSpec.configure do |config|
   end
 
   config.order = :random
-  Kernel.srand config.seed
 
   # Allows RSpec to persist some state between runs in order to support
   # the `--only-failures` and `--next-failure` CLI options.

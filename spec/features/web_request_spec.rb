@@ -20,7 +20,6 @@ RSpec.describe "Ordering via the web", :queue_jobs do
     expect(page).to have_content "Your order has been sent"
     expect(page).to have_content "Pls"
 
-
     # PCMO approves it
     login_as pcmo
 
@@ -33,10 +32,20 @@ RSpec.describe "Ordering via the web", :queue_jobs do
     expect(queued(ActionMailer::DeliveryJob).count).to eq 1
 
     # PCV indicates receipt
-    # TODO: this should be a reminder on the home page
     login_as volunteer
-    click_on "Request History"
-    find(:xpath, "//a[@title='Mark as received']").trigger "click"
+    expect(page).not_to have_content "Sunscreen"
+    expect(page).not_to have_content "Got It"
+
+    Timecop.travel 15.days.from_now
+    FactoryGirl.create :receipt_reminder, user: volunteer, response: Response.last
+
+    visit root_path
+    expect(page).to have_content "Sunscreen"
+    click_on "Got It"
+
+    visit timeline_path
+    flag = find(:xpath, "//a[@title='Mark as received']")
+    expect(flag["disabled"]).to eq "disabled"
 
     # PCMO sees receipt
     login_as pcmo

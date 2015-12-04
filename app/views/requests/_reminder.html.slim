@@ -1,0 +1,13 @@
+h3 Have You Received ...
+p this response, sent #{reminder.age} ago?
+table.table.table-condensed
+  - reminder.response.delivered_supplies.each do |supply|
+    tr
+      td= supply.name
+      td= supply.shortcode
+  - if reminder.response.extra_text
+    tr
+     td colspan=2
+       = reminder.response.extra_text
+= reminder.response.received_btn text: "Got It", klass: "success"
+= reminder.response.flag_btn text: "Nope", klass: "danger pull-right"
