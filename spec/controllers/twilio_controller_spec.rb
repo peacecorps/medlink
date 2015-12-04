@@ -1,54 +1,40 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe TwilioController do
-  def request user, body
-    post :receive, AccountSid: @twilio.sid,
-      To:   @twilio.number,
-      From: user.primary_phone.number,
-      Body: body
+RSpec.describe TwilioController do
+  Given(:twilio) { TwilioAccount.first }
+  Given(:phone)  { FactoryGirl.create :phone }
+
+  context "with a valid sid" do
+    When(:result) { post :receive, AccountSid: twilio.sid, From: phone.number, To: twilio.number, Body: "help" }
+
+    Then { result.status == 200                                     }
+    And  { SMS.outgoing.count == 1                                  }
+    And  { SMS.outgoing.last.number == Phone.condense(phone.number) }
   end
 
-  before :each do
-    @twilio = TwilioAccount.default
-    @twilio.save!
+  context "with a new phone number" do
+    Given(:number) { "+1 (555) 555-0123" }
+    When(:result) { post :receive, AccountSid: twilio.sid, From: number, To: twilio.number, Body: "help" }
 
-    @user = create :user, pcv_id: 'asdf'
-    create :phone, user: @user
-    %w(Sup wit dat).each do |n|
-      @supply = create :supply, name: n, shortcode: n
-      @user.country.supplies << @supply
+    Then { result.status == 200                               }
+    And  { SMS.outgoing.count == 1                            }
+    And  { SMS.outgoing.last.number == Phone.condense(number) }
+  end
+
+  context "with an invalid sid" do
+    When(:result) { post :receive, AccountSid: "1234", From: phone.number, To: twilio.number, Body: "help" }
+
+    Then { result.status == 400    }
+    And  { SMS.outgoing.count == 0 }
+  end
+
+  context "alerts if slow" do
+    before(:all) do
+      @timeout, Rails.configuration.slow_timeout = Rails.configuration.slow_timeout, 0
     end
-  end
+    after(:all) { Rails.configuration.slow_timeout = @timeout }
 
-  it "can create multiple orders from an incoming text" do
-    body = "Sup wit - Please"
-    request @user, body
-
-    expect( SMS.incoming.last.text ).to eq body
-    expect( @user.orders.map { |o| o.supply.name }.sort ).to eq %w(Sup wit)
-    expect( SMS.outgoing.last.text ).to match /request.*received/i
-  end
-
-  it "responds with error messages when something is wrong" do
-    body = "Bro - do you even liftM?"
-    request @user, body
-
-    expect( SMS.incoming.last.text ).to eq body
-    expect( Order.count ).to be 0
-    expect( SMS.outgoing.last.text ).to match /Unrecognized supply/
-  end
-
-  it "rejects duplicate messages" do
-    2.times { request @user, "Sup" }
-
-    expect( Order.count ).to eq 1
-    expect( SMS.outgoing.last.text ).to match /already received/
-  end
-
-  it "verifies that messages came from Twilio" do
-    post :receive,
-      From: @user.primary_phone.number,
-      Body: "Sup"
-    expect( response.status ).to eq 400
+    When { post :receive }
+    Then { pingbot.last.include? "twilio#receive" }
   end
 end

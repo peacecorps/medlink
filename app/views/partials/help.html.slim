@@ -1,0 +1,42 @@
+p PC Medlink is an automated communication system that makes it easier for Peace Corps Volunteers to request non-prescription medical supplies from the Peace Corps Health Unit.
+
+= title "Ordering Supplies"
+h3 Through the Web
+p Log on to pcmedlink.org. Choose the items you would like to order. Add any special instructions. Hit Submit.
+
+h3 Through SMS
+p Send an SMS to #{current_user ? current_user.sms_contact_number : "your assigned SMS contact number"} with the supply short codes of the items you would like and any special instructions. You should format your message like this:
+
+pre Supply Short Code 1, Supply Short Code 2, Supply Short Code 3 - Special Instructions
+
+p Note that you can order a single item or multiple items in the same SMS message by simply adding additional short codes separated by commas. You can also add special instructions to your order by including a dash "-" after your last supply short code and before your message.
+
+p If your request is received without errors, you will receive a confirmation that the system received the request. Once your order is processed by the health unit you will receive a response via text and e-mail with the details of how you will receive approved items.
+
+- if current_user
+  = render "partials/supply_table"
+
+
+= title "FAQ"
+
+h3 Can I order refills of my prescription medications through PC Medlink?
+p No, PC Medlink is designed for approved non-prescription medical supplies only. For any medications that are not available over the counter you will need to contact your health unit directly.
+
+h3 When and how will I hear back about my request?
+p All orders placed by a Volunteer will be processed as one order during the first week of the following month. At that time you will receive a response via SMS message and e-mail with instructions on how you will receive your supplies.
+
+h3 I received an error what do I do?
+p If your error message does not include any additional instructions please contact your health unit by phone for help.
+
+h4 Errors due to incorrect typing
+p If you receive a message that indicates that something is invalid, for example your PCV ID, you may have either typed in the wrong characters or the wrong description. In either case you should resubmit your entire order.
+
+h4 Duplicate Requests for Same Medication
+If you request the same medication more than once within the same month you will receive an automated system response that the order was already received.
+
+h4 Network Connectivity
+If you do not receive any confirmation within 24 hours of your request it may not have been received due to poor network connectivity. It is recommended that you resubmit your order.
+
+= title "Application Errors"
+
+p If you find an error with the site, please send an e-mail describing the steps to reproduce the problem to the #{link_to "support mailing list", "mailto:support@pcmedlink.org"}.

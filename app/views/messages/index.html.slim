@@ -1,0 +1,33 @@
+.col-md-3
+  = bootstrap_form_for @search, url: messages_path, method: :get do |f|
+    = f.collection_select :direction, @search.direction_choices, :to_s, :capitalize
+    = f.collection_select :validity, @search.validity_choices, :to_s, :capitalize
+    - if current_user.admin?
+      = f.collection_select :country_ids, @search.country_choices, :id, :name, {label: "Country"}, multiple: true, size: 15
+    button.btn.btn-primary Search
+
+.col-md-9
+  - if @messages.any?
+    = render partial: "partials/pager", locals: { table: @messages }
+
+  table#messages.table.table-striped
+    thead
+      tr
+        th= @messages.header :created_at, title: "Date"
+        th User
+        th Email
+        th Number
+        - if current_user.admin?
+          th Country
+        th
+    tbody
+      - @messages.each do |message|
+        - message = MessagePresenter.new message # TODO: need a better way to handle kaminari+presenters
+        tr
+          td= message.created_at
+          td= message.user_link
+          td= message.email
+          td= message.number
+          - if current_user.admin?
+            td= message.country
+          td= message.text

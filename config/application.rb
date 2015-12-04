@@ -3,6 +3,9 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 require 'csv'
 
+require File.expand_path('../../lib/slackbot', __FILE__)
+require File.expand_path('../../app/models/sms/send_config', __FILE__)
+
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   Bundler.require(*Rails.groups(:assets => %w(development test)))
@@ -54,11 +57,16 @@ module Medlink
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    # IPs whitelisted to log in as admins
-    config.allowed_ips = ['127.0.0.1']
-
     I18n.config.enforce_available_locales = false
 
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.slow_timeout = (ENV["SLOW_TIMEOUT"] || 1).to_f.seconds
+
+    config.slackbot = Slackbot::Test.new
+    config.pingbot  = Slackbot::Test.new
+
+    config.sms = Sms::SendConfig.new
+    config.sms.method = :store
   end
 end

@@ -1,11 +1,20 @@
-RSpec.configure do |config|
-  config.before :each do
-    ActionMailer::Base.deliveries.clear
+module MailHelpers
+  def slackbot
+    Rails.configuration.slackbot
   end
 
-  config.include(Module.new do
-    def sent_mail
-      ActionMailer::Base.deliveries
-    end
-  end)
+  def pingbot
+    Rails.configuration.pingbot
+  end
+
+  def mail
+    ActionMailer::Base.deliveries
+  end
+end
+
+RSpec.configure do |config|
+  config.include MailHelpers
+  config.before :each do
+    ActionMailer::Base.deliveries = []
+  end
 end

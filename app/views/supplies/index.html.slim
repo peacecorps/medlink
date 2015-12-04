@@ -1,0 +1,14 @@
+= link_to "Add New Supply", new_supply_path, class: "btn btn-default"
+
+table.table.table-striped.table-linked.table-condensed
+  thead
+    tr
+      th Name
+      th Short Code
+      th
+  tbody
+    - @supplies.each do |supply|
+      tr class=("danger" if !supply.orderable?)
+        td= supply.name
+        td= supply.shortcode
+        td= supply.global_toggle_btn

@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
     r = r.downcase if r.respond_to?(:downcase)
     super r
   end
+  scope :non_admins, -> { where.not(role: User.roles[:admin]) }
 
   belongs_to :country
 
@@ -24,27 +25,20 @@ class User < ActiveRecord::Base
 
   has_many :phones, dependent: :destroy
   has_many :messages, class_name: "SMS"
-  accepts_nested_attributes_for :phones, allow_destroy: true
+
+  has_many :submitted_requests, foreign_key: "entered_by", class_name: "Request"
+  has_many :roster_uploads, foreign_key: "uploader_id"
 
   validates_presence_of :country, :location, :first_name, :last_name, :role
   validates :pcv_id, presence: true, uniqueness: true, if: :pcv?
-  validates :time_zone, inclusion: {in: ActiveSupport::TimeZone.all.map(&:name) }
+  validates :time_zone, inclusion: { in: Country.time_zones.map(&:name) }
 
-  def self.due_cutoff
-    now    = Time.now
-    oldest = now.at_beginning_of_month
-    now.day < 3 ? oldest - 1.month : oldest
-  end
+  scope :past_due, -> { where ["waiting_since  < ?", DueDate.cutoff] }
+  scope :pending,  -> { where ["waiting_since >= ?", DueDate.cutoff] }
 
-  scope :past_due, -> { where ["waiting_since  < ?", due_cutoff] }
-  scope :pending,  -> { where ["waiting_since >= ?", due_cutoff] }
-
-  def self.find_by_pcv_id str
-    where(['lower(pcv_id) = ?', str.downcase]).first
-  end
-
-  def self.find_by_phone_number number
-    Phone.lookup(number).try :user
+  before_validation on: :create do |u|
+    u.time_zone  = u.country.time_zone unless u.time_zone.present?
+    u.password ||= SecureRandom.hex(64)
   end
 
   def primary_phone
@@ -60,20 +54,12 @@ class User < ActiveRecord::Base
   end
 
   def send_text message
-    twilio = country.twilio_account
-    to     = primary_phone.try :number
-    return unless to
-    return if spammy? to, message
-    twilio.send_text to, message
-  end
-
-  def spammy? number, text
-    last = messages.newest
-    last && last.text == text && last.number == number && last.outgoing? && last.created_at >= 2.days.ago
+    return unless primary_phone
+    UserTexter.new(phone: primary_phone, twilio_account: country.twilio_account).send message
   end
 
   def available_supplies
-    country.supplies
+    country.available_supplies
   end
 
   def sms_contact_number
@@ -81,30 +67,15 @@ class User < ActiveRecord::Base
     "#{n[0..-11]} (#{n[-10..-8]}) #{n[-7..-5]}-#{n[-4..-1]}"
   end
 
-  def welcome_video
-    if pcv?
-      Video::PCV_WELCOME
-    else
-      Video::PCMO_WELCOME
-    end
+  def inactivate!
+    update! active: false
   end
 
-  def record_welcome!
-    self.update!(welcome_video_shown_at: Time.now)
+  def personal_requests
+    Request.where user_id: id, entered_by: id
   end
 
-  def welcome_video_seen?
-    !self.welcome_video_shown_at.nil?
-  end
-
-  def make_sms_request body
-    raise unless Rails.env.development? || Rails.env.test?
-    account = country.twilio_account
-    SMSDispatcher.new(
-      account_sid: account.sid,
-      to:          account.number,
-      from:        primary_phone.number,
-      body:        body
-    ).record_and_respond
+  def ensure_secret_key!
+    update! secret_key: ApiAuth.generate_secret_key unless secret_key.present?
   end
 end

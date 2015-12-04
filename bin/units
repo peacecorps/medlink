@@ -1,0 +1,2 @@
+#!/bin/bash
+COVERAGE=true UNITS=true ./bin/rspec ./spec/controllers ./spec/forms ./spec/jobs ./spec/lib ./spec/models ./spec/presenters ./spec/services

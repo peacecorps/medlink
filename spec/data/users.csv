@@ -1,5 +1,0 @@
-email,phone,phone2,first_name,last_name,pcv_id,role,location,time_zone
-a@example.com,+11111111,,A,Person,123,pcv,A Place,UTC
-b@example.com,+1 (222) 222-2222,+1 333-3333,B,Person,456,pcv,B Place,UTC
-c@example.com,,,C,Person,789,pcv,C Place,UTC
-d@example.com,,,Error,Person,,,,

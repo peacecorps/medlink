@@ -1,0 +1,23 @@
+= content_for :page_title do
+  | Reports
+
+= title "Available Reports"
+
+p Each link below downloads a .csv file that contains all the data from the launch of the site to the present day
+
+.row
+  .col-md-6
+    table.table.table-hover
+      thead
+        tr
+          th
+          th Description
+      tbody
+        - @reports.each do |report|
+          - if policy(report).download?
+            tr
+              td= link_to report_download_path(report.title.downcase), class: "btn btn-primary" do
+                = icon :download
+                ' 
+                = report.title
+              td= report.description

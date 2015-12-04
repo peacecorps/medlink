@@ -1,0 +1,47 @@
+p PC Medlink is an automated communication system that makes it easier for Peace Corps Volunteers to request non-prescription medical supplies from the Peace Corps Health Unit.
+
+= title "Processing Volunteer Orders"
+
+h3 Responding to a request
+
+ol
+  li In the #{link_to "Request Manager", manage_orders_path}, click on the row of the request you would like to respond to.
+  li
+    ' Choose a response for each item in the order by selecting the buttons to the right.
+    i
+      ' (Note: Clicking on the words at the top of the column selects that response for all items in the order.)
+  li Add a message to the text box with any particular information you would like the volunteer to know.
+  li Hit Send Response.
+
+p Once you have responded, the order moves from the Request Manager to the Response tracker.
+
+h3 View your responses
+
+ol
+  li In the #{link_to "Response Tracker", responses_path}, click on the row of the response you would like to view.
+  li You will see the original order and the response given by the health unit.
+  li Chose the archive button to hide the item from the Response Tracker.
+
+= render partial: "partials/supply_table"
+
+
+= title "FAQ"
+
+h3 How do I view my archived responses?
+p From the #{link_to "Response Tracker", responses_path} page, select either Archived of All from the buttons at the top of table.
+
+h3 What does the volunteer receive when I send a response from the Request Manager?
+p The volunteer will automatically receive both an email and a SMS message to their phone with the details of your response.
+
+h3 Can I place an order on behalf of a volunteer?
+p Yes. From the #{link_to "Request Manager", manage_orders_path} page, choose the "Place a Request" button from the title banner. This will take you to the "Place an Order" page where you can select the volunteer and the supplies you would like to request.
+
+h3 How do I change my password?
+p Select the gear icon from the upper right corner. From the menu you will find a change password option.
+
+h3 How do I run an order history report?
+p Click on the "#{link_to "Reports", reports_path}" option in the upper right of the screen. From this page you can click on the "Order History" button to download a spreadsheet of all previous orders.
+
+= title "Application Errors"
+
+p If you find an error with the site, please send an e-mail describing the steps to reproduce the problem to the #{link_to "support mailing list", "mailto:support@pcmedlink.org"}.

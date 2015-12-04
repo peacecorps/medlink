@@ -1,0 +1,20 @@
+div
+  = title label
+  - if table.any?
+    = render partial: "partials/pager", locals: { table: table }
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th= table.header :first_name
+          th= table.header :last_name
+          th= table.header :location
+          th= table.header :last_requested_at, title: "Requests"
+      tbody
+        - table.each do |user|
+          tr.link.order data-link=new_user_response_path(user)
+            td= user.first_name
+            td= user.last_name
+            td= user.location
+            td= render partial: "partials/group", locals: { user: user, orders: user.orders.without_responses }
+  - else
+    .well No orders

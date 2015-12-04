@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021225125) do
+ActiveRecord::Schema.define(version: 20151129165235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20151021225125) do
     t.datetime "last_sent_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.datetime "deleted_at"
   end
 
   add_index "announcements", ["country_id"], name: "index_announcements_on_country_id", using: :btree
@@ -50,8 +51,11 @@ ActiveRecord::Schema.define(version: 20151021225125) do
     t.integer  "direction"
     t.integer  "user_id"
     t.integer  "twilio_account_id"
+    t.integer  "phone_id",                      null: false
+    t.text     "send_error"
   end
 
+  add_index "messages", ["phone_id"], name: "index_messages_on_phone_id", using: :btree
   add_index "messages", ["twilio_account_id"], name: "index_messages_on_twilio_account_id", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
@@ -70,7 +74,7 @@ ActiveRecord::Schema.define(version: 20151021225125) do
     t.datetime "created_at"
     t.integer  "user_id"
     t.string   "number",     limit: 255
-    t.string   "condensed",  limit: 255
+    t.string   "condensed",              null: false
     t.string   "send_error"
   end
 
@@ -100,14 +104,26 @@ ActiveRecord::Schema.define(version: 20151021225125) do
     t.integer  "country_id"
     t.integer  "user_id"
     t.integer  "message_id"
-    t.string   "extra_text",     limit: 255
+    t.text     "extra_text"
     t.datetime "archived_at"
-    t.boolean  "flagged",                    default: false, null: false
+    t.boolean  "flagged",        default: false, null: false
     t.datetime "received_at"
     t.integer  "received_by"
     t.datetime "cancelled_at"
     t.integer  "replacement_id"
   end
+
+  create_table "roster_uploads", force: :cascade do |t|
+    t.integer  "uploader_id"
+    t.string   "uri"
+    t.text     "body"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "country_id"
+  end
+
+  add_index "roster_uploads", ["country_id"], name: "index_roster_uploads_on_country_id", using: :btree
+  add_index "roster_uploads", ["uploader_id"], name: "index_roster_uploads_on_uploader_id", using: :btree
 
   create_table "supplies", force: :cascade do |t|
     t.string  "shortcode", limit: 255
@@ -152,6 +168,7 @@ ActiveRecord::Schema.define(version: 20151021225125) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.boolean  "active",                             default: true
+    t.string   "secret_key"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -159,8 +176,10 @@ ActiveRecord::Schema.define(version: 20151021225125) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "announcements", "countries"
+  add_foreign_key "countries", "twilio_accounts"
   add_foreign_key "country_supplies", "countries"
   add_foreign_key "country_supplies", "supplies"
+  add_foreign_key "messages", "phones"
   add_foreign_key "messages", "twilio_accounts"
   add_foreign_key "messages", "users"
   add_foreign_key "orders", "requests"
@@ -178,4 +197,6 @@ ActiveRecord::Schema.define(version: 20151021225125) do
   add_foreign_key "responses", "requests", column: "replacement_id"
   add_foreign_key "responses", "users"
   add_foreign_key "responses", "users", column: "received_by"
+  add_foreign_key "roster_uploads", "countries"
+  add_foreign_key "roster_uploads", "users", column: "uploader_id"
 end

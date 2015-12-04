@@ -1,0 +1,7 @@
+= icon_btn :search, "History", user_timeline_path(response.user)
+- if response.archived?
+  = response.status_btn
+- else
+  = icon_btn :ok, "Received", mark_received_response_path(response), method: :post
+  = icon_btn :remove, "Cancel", cancel_response_path(response), method: :post
+  = icon_btn :repeat, "Reorder", reorder_response_path(response), method: :post

@@ -1,0 +1,6 @@
+= form_tag set_country_path, method: :patch do
+  .form-group
+    = collection_select :country, :id, Country.all, :id, :name, {selected: current_user.country_id}, class: "form-control"
+  = hidden_field_tag :next, redirect
+  button.btn.btn-default= label
+  = yield

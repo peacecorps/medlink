@@ -32,15 +32,12 @@ Medlink::Application.configure do
   config.eager_load = false
 
   config.after_initialize do
-    Bullet.enable = true
-    Bullet.raise  = true
-  end if ENV["BULLET"]
-end
+    Bullet.enable     = true
+    Bullet.add_footer = true
+  end unless ENV["NO_BULLET"]
 
-# Stub out the Twilio Client
-%w(ACCOUNT_SID AUTH PHONE_NUMBER).each { |k| ENV["TWILIO_#{k}"] ||= "*****" }
-class Twilio::REST::ListResource
-  def create msg
-    Rails.logger.info "Should send SMS: #{msg}"
-  end
+  config.pingbot = Slackbot.new \
+    channel:    "#medlink-logs",
+    username:   "Medlink",
+    icon_emoji: ":hospital:"
 end

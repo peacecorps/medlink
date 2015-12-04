@@ -1,13 +1,14 @@
 class CountrySMSJob < ApplicationJob
-  def perform country, message
-    users = country.textable_pcvs
-    Slackbot.new.message "Sending #{message} to #{users.count} users in #{country.name}"
-    users.each do |user|
-      begin
-        user.send_text message
-      rescue StandardError => e
-        Slackbot.new.message "Could not send to #{user} - #{e} (#{self})"
-      end
+  def perform country:, message:
+    phones = country.users.pcv.includes(:phones).map { |u| u.primary_phone }.compact
+
+    Notification.send :sending_country_sms,
+      "Sending #{message} to #{phones.count} users in #{country.name}"
+
+    twilio = country.twilio_account
+    phones.each do |phone|
+      SmsJob.perform_later phone: phone, twilio_account: twilio, message: message
     end
+    true
   end
 end

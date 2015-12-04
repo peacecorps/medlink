@@ -1,0 +1,27 @@
+= link_to "New Announcement", new_announcement_path, class: "btn btn-default pull-right"
+
+table.table.table-striped.table-hover
+  thead
+    tr
+      - if current_user.admin?
+        th Country
+      th Message
+      th Schedule
+      th Last Sent
+      th
+      th
+      th
+  tbody
+    - @announcements.each do |announcement|
+      tr
+        - if current_user.admin?
+          td= announcement.country
+        td= announcement.message
+        td= announcement.preview
+        td= announcement.last_sent
+        td= icon_btn :edit, "Edit", edit_announcement_path(announcement)
+        td= announcement.send_button
+        td
+          - if policy(announcement).destroy?
+            = icon_btn :remove, "", announcement_path(announcement), method: :delete, class: "danger"
+

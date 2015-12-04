@@ -1,0 +1,20 @@
+p Fetching uploaded CSV. Please wait ...
+
+javascript:
+  $(function() {
+    var id = #{params[:upload_id]};
+    var check = function() {
+      $.ajax("/country/roster/poll", {
+        data: {
+          upload_id: id
+        },
+        success: function(data) {
+          if (data.ready) {
+            window.location = "/country/roster/edit?upload_id=" + id;
+          }
+        }
+      })
+    }
+
+    setInterval(check, 2000)
+  })

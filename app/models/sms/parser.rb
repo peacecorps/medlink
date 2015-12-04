@@ -1,26 +1,21 @@
 class SMS
+  Parsed = Struct.new :instructions, :shortcodes
+
   class Parser
-    ParseError = Class.new(StandardError)
-
-    attr_reader :pcv_id, :shortcodes, :instructions
-
     def initialize text
-      @text, @shortcodes = text, []
+      @text = text
     end
 
     def run!
       return unless @text.present?
 
-      pref, @instructions = @text.split(/[^\w\s,@]/, 2).map &:strip
+      pref, instructions = @text.split(/[^\w\s,@]/, 2).map &:strip
       toks = pref.split /[,\s]+/
+      return unless toks.any?
 
-      if toks.first.start_with? "@"
-        @pcv_id = toks.shift[1..-1]
-      end
+      toks.shift if toks.first.start_with? "@"
 
-      @shortcodes = toks
-    rescue => e
-      raise ParseError, e
+      Parsed.new instructions, toks.map(&:upcase)
     end
   end
 end

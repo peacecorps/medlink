@@ -1,10 +1,10 @@
 class SuppliesController < ApplicationController
-  before_action do 
+  before_action do
     authorize :supply, :manage_master_supply_list?
   end
 
   def index
-    @supplies = Supply.unscoped.all.order name: :asc
+    @supplies = SupplyPresenter.decorate_collection Supply.all.order name: :asc
   end
 
   def new
@@ -12,8 +12,9 @@ class SuppliesController < ApplicationController
   end
 
   def create
-    @supply = Supply.new(supplies_params)
+    @supply = Supply.new(params.require(:supply).permit :shortcode, :name)
     if @supply.save
+      # TODO: should this be on or off for countries by default?
       redirect_to supplies_path
     else
       render :new
@@ -21,16 +22,8 @@ class SuppliesController < ApplicationController
   end
 
   def toggle_orderable
-    supply = Supply.unscoped.find params[:id]
-
+    supply = Supply.find params[:id]
     supply.toggle!(:orderable)
     redirect_to :back
   end
-
-  private
-
-  def supplies_params
-    params.require(:supply).permit(:shortcode, :name)
-  end
-
 end

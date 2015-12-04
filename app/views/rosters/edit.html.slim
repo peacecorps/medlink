@@ -1,0 +1,31 @@
+= bootstrap_form_for @roster, url: country_roster_path, method: :patch do |f|
+  = hidden_field_tag :upload_id, params[:upload_id]
+
+  - if @roster.errors.any?
+    .alert.alert-danger
+      h4 Please correct the following errors
+  table.table.table-hover
+    thead
+      th
+      - @roster.headers.each do |h|
+        th= h.titleize
+    tbody
+      - @roster.rows.each_with_index do |user,i|
+        = f.fields_for :rows, user do |user_fields|
+          tr class=(user.errors.any? ? "" : "ok")
+            td
+            - @roster.headers.each do |h|
+              td= user_fields.text_field h, hide_label: true, placeholder: h
+
+      - if @roster.valid_emails.any?
+        tr
+          th Valid Users
+          td colspan=@roster.headers.count
+            = @roster.valid_emails.to_sentence
+      - if @roster.removed_emails.any?
+        tr
+          th Inactive Users
+          td colspan=@roster.headers.count
+            = @roster.removed_emails.to_sentence
+
+  button.btn.btn-primary Save

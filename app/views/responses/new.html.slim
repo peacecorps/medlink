@@ -1,0 +1,11 @@
+= back_link "Back to all Orders", manage_orders_path
+
+= render partial: 'partials/errors', locals: { object: @response }
+
+.order
+  = render partial: "user_detail", locals: { user: @user }
+  = render partial: "form", locals: { user: @user, response: @response, orders: @orders }
+
+hr
+
+= render partial: "history", locals: { user: @user, history: @history }

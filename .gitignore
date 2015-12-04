@@ -37,3 +37,9 @@ coverage
 libpeerconnection.log
 /sandi_meter/*
 #*#
+
+# Ignore application configuration
+/config/application.yml
+
+/fixtures/vcr_cassettes
+/spec/examples.txt

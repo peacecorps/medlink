@@ -4,7 +4,7 @@ class ResponsePolicy < ApplicationPolicy
   end
 
   def flag?
-    record.user_id == user.id
+    admin? || record.user_id == user.id
   end
 
   def cancel?

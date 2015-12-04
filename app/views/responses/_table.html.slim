@@ -1,0 +1,37 @@
+table.table.table-striped.table-hover
+  thead
+    tr
+      th
+      th= table.header(:first_name)
+      th= table.header(:last_name)
+      th= table.header(:location)
+      th= table.header(:email)
+      th Phone
+      th= table.header(:last_requested_at, title: "Requests")
+      th
+  tbody
+    - table.each do |r|
+      tr.order.link data-link=response_path(r) class=(r.flagged? ? "danger" : "")
+        td
+          - if r.flagged?
+            = icon :flag, class: :danger
+        td= r.user.first_name
+        td= r.user.last_name
+        td= r.user.location
+        td= mailto r.user.email
+        td= phone_link r.user.primary_phone
+        td
+          - GroupedOrdersPresenter.new(r.orders).each_group do |group|
+            table.table
+              thead
+                tr
+                  th colspan=2
+                    = group.created_at
+              tbody
+                - group.each do |order, _|
+                  tr
+                    td= order.supply
+                    td= order.status
+        td
+          .btn-group-vertical
+            = render partial: "action_buttons", locals: { response: ResponsePresenter.new(r) }

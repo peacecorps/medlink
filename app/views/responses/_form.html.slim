@@ -1,0 +1,37 @@
+= form_for [user, response] do |f|
+  table.table.table-hover
+    thead
+      tr
+        th
+        th
+        th
+        - DeliveryMethod.each do |method|
+          th.delivery-method data-method=method.name
+            = method.title
+    tbody
+      - orders.each_group do |group|
+        - group.each do |order, index|
+          tr class=(order.duplicated? ? "duplicated" : "")
+            - if index.zero?
+              td.ts rowspan=group.size = group.request.created_at
+              td.ts rowspan=group.size = group.request.text
+            td= order.supply
+            - if order.duplicated?
+              td.duplicate_order colspan=DeliveryMethod.count = order.duplicate_label
+            - else
+              - DeliveryMethod.each do |method|
+                td= radio_button_tag "orders[#{order.id}]", method.name, nil, data: { method: method.name }
+
+  .form-group
+    = f.text_area :extra_text,
+      size:        "40x4",
+      maxlength:   160,
+      class:       "form-control input-xlarge",
+      data:        { "character-count" => 160 },
+      placeholder: "Extra information (e.g. delivery date, pickup instructions)"
+
+  .form-actions
+    button.btn.btn-primary(type="submit") Send Response
+    button.btn.btn-default.clear-radios.js-required Reset Selections
+
+    span.pull-right.character-count

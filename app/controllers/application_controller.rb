@@ -8,60 +8,38 @@ class ApplicationController < ActionController::Base
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
-    # It'd be nice to redirect to the login page in case the user wants to
-    #   sign in with another (authorized) account. Devise redirects logged
-    #   in users away from that page, however, and clobbers the flash message
-    #   in the process.
-    redirect_to root_path, flash: { error: I18n.t!("flash.auth.general") }
-  end
-  rescue_from Pundit::AuthorizationNotPerformedError do |ex|
-    # :nocov:
-    Slackbot.new.message "#{ex.to_s} - #{controller_action_name}"
-    # :nocov:
-  end if Rails.env.production?
-
-private
-
-  def sort_table scope, opts={}
-    opts[:params] = params
-    SortTable.new scope, opts
+    # TODO: what should we actually do here?
+    render text: "Not Authorized", status: 403
   end
 
-  # Redirects to the login path to allow the flash messages to
-  #    display for sign_out.
-  def after_sign_out_path_for(resource_or_scope)
-    new_user_session_path
-  end
+  private
 
-  def after_sign_in_path_for(user)
-    if user.welcome_video_seen?
+  def after_sign_in_path_for user
+    if Video.new(user).seen?
       root_path
     else
-      welcome_video_user_path
+      welcome_path
     end
   end
 
-  def skip_bullet
-    Bullet.enable = false
-    yield
-  ensure
-    Bullet.enable = true
+  def sort_table prefix=nil
+    @_sort_table_registry ||= SortTable::Registry.new
+    @_sort_table_registry.build(prefix, params) { |t| yield t }
   end
 
-  # :nocov:
+  def save_form reform, *args
+    valid = reform.validate *args
+    authorize reform
+    reform.save if valid
+    valid
+  end
+
   def alert_if_slow
     start = Time.now
     yield
     duration = Time.now - start
-    if duration > 1.second
-      message = "#{controller_action_name} took #{duration} (#{request.path})"
-      # Slackbot.new.message message
-      Rails.logger.info message
+    if duration > Rails.configuration.slow_timeout.seconds
+      Notification.send :slow, "#{params[:controller]}##{params[:action]} took #{duration} (#{request.path})"
     end
   end
-
-  def controller_action_name
-    "#{params[:controller]}##{params[:action]}"
-  end
-  # :nocov:
 end

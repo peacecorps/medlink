@@ -1,0 +1,36 @@
+img src="http://pcmedlink.org/logo_50.gif" style="float: left"
+h1 style=s(:header, "float" => "left", "margin-left" => "20px") PC Medlink
+hr style=s(clear: :both)
+
+h2 style=s(:header) Hello #{@response.user.name},
+
+p We have processed your requested medical supplies, and this completes your order. Below you will find instructions and information about your order.
+
+h3 style=s(:header) Order Details
+hr
+
+table
+  thead
+    tr
+      th Supply
+      th
+      th Response
+  tbody
+    - @orders.each do |order|
+      tr
+        td= order.supply.shortcode
+        td= order.supply.name
+        td= order.delivery_method.title
+
+h4 style=s(:header) Notes
+p
+  - if @response.extra_text.present?
+    = @response.extra_text
+  - else
+    i (None)
+
+hr
+
+p To review previous orders go to #{link_to "https://pcmedlink.org", timeline_url}
+
+p If you need further assistance, or wish to request other medications not listed on PCMedlink please contact your Health Unit directly.

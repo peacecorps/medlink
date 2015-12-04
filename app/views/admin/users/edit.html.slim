@@ -1,0 +1,11 @@
+= content_for :page_title do
+  | Edit Account
+
+.row
+  .col-md-3
+    = back_link "All Volunteers", country_roster_path
+  .col-md-5
+  .col-md-4
+    = render partial: "edit_widget", locals: { selected: @user.id }
+
+= render partial: 'form', locals: { user: @user }

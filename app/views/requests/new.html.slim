@@ -1,0 +1,31 @@
+= content_for :page_title do
+  = current_user.pcv? ? "Request Form" : "Place an Order"
+
+= bootstrap_form_for @request do |f|
+  .row
+    - reminder = UserReminderPresenter.new current_user
+    - if reminder.expected?
+      .col-md-4
+        .well
+          = render partial: 'reminder', locals: { reminder: reminder }
+
+    .col-md-6
+      = render partial: 'partials/errors', locals: { object: @request }
+
+      - if current_user.pcv?
+        = title do
+          = current_user.name
+          small= current_user.pcv_id
+        = f.hidden_field :user, value: current_user.id
+
+      - else
+        = f.collection_select :user, @request.users, :id, :name, include_blank: true, label: "For Volunteer"
+
+      = f.collection_select :supplies, @request.available_supplies, :id, :select_display,
+        { label: "Supplies", selected: @request.supplies.pluck(:id) }, class: "chosen-select", multiple: true
+      / FIXME: it's ⌘ on OSX ...
+      .help-block.no-js Control-click to select multiple
+
+      = f.text_area :text, rows: 3, label: "Special Instructions", placeholder: "Optional: add useful information for your Health Unit (i.e. specific bus lines, pick-up location, dates at site, planned trips etc.)"
+
+      button.btn.btn-primary(type="submit") Submit

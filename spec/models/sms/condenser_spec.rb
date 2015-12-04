@@ -1,16 +1,13 @@
 require "spec_helper"
 
-describe SMS::Condenser do
-  it "can handle waaaay too long messages" do
-    I18n.backend.store_translations :en,
-      long: "#{'x' * 70} %{names} #{'x' * 70}"
+RSpec.describe SMS::Condenser do
+  context "with a very long template" do
+    Given(:country)  { "x" * 180 }
+    Given(:codes) { %w(foo bar baz) * 20 }
 
-    msg = SMS::Condenser.new(:long, :name,
-      names: %w(a b c d e).map { |c| c * 50 }
-    ).message
+    When(:result) { SMS::Condenser.new("sms.invalid_for_country", :code, codes: codes, country: country).message }
 
-    expect( msg.length ).to be > 160
-    expect( msg.length ).to be < 320
-    expect( msg ).to match /a and 4 other names/i
+    Then { (160 .. 320).cover? result.length }
+    And  { result.include? "59"              }
   end
 end

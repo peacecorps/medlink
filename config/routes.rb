@@ -8,26 +8,18 @@ Medlink::Application.routes.draw do
     post  'users/sign_in/help' => 'users#send_login_help', as: 'send_login_help'
   end
 
-  resources :country_supplies, only: [:index, :create]
-
-  resource :user, only: [:edit, :update] do
-    get   '/welcome/video' => 'users#welcome_video', as: 'welcome_video'
-    post  '/welcome' => 'users#confirm_welcome', as: 'welcome_shown'
-  end
+  resource :welcome, only: [:show, :update]
 
   resources :users, only: [] do
-    member do
-      get :timeline
-    end
-
-    resources :responses, only: [:new, :create, :show] do
-      post :archive
-      post :unarchive
-    end
+    resource  :timeline, only: [:show]
+    resources :responses, only: [:new, :create]
   end
+  patch "/user/country"  => "users#set_country", as: :set_country
+
+  resource :timeline, only: [:show]
 
   resources :messages, only: [:index]
-  resources :announcements do
+  resources :announcements, except: [:show] do
     member do
       post :deliver
     end
@@ -41,13 +33,13 @@ Medlink::Application.routes.draw do
     end
   end
 
-  resources :orders, only: [:index] do
+  resources :orders, only: [] do
     collection do
       get :manage
     end
   end
 
-  resources :responses, only: [:index] do
+  resources :responses, only: [:index, :show] do
     member do
       post :mark_received
       post :flag
@@ -56,23 +48,35 @@ Medlink::Application.routes.draw do
     end
   end
 
-  resources :reports, only: [:index] do
-    collection do
-      get :order_history
-      get :users
-      get :pcmo_response_times
+  resources :reports, only: [:index], param: :name do
+    get :download
+  end
+
+  resource :country, only: [:update] do
+    resources :supplies, only: [:index], controller: "country_supplies" do
+      member do
+        patch :toggle
+      end
+    end
+
+    resource :roster, only: [:show, :edit, :update] do
+      collection do
+        post :upload
+        get  :poll
+      end
     end
   end
 
   namespace :admin do
+    root  "pages#dashboard"
+
     resources :users, only: [:new, :create, :edit, :update] do
       member do
-        patch :inactivate
+        delete :inactivate
       end
 
       collection do
-        post :upload_csv
-        post :set_country
+        get :select
       end
     end
   end
@@ -84,5 +88,16 @@ Medlink::Application.routes.draw do
 
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq', as: 'sidekiq'
+  end
+
+  namespace :api do
+    namespace :v1 do
+      post '/auth' => 'auth#login'
+      get  '/auth' => 'auth#test'
+
+      resources :supplies, only: [:index]
+
+      resources :requests, only: [:create, :index]
+    end
   end
 end

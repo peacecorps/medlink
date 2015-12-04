@@ -1,91 +1,63 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe "Logging in" do
-  before :each do
-    @user = create :user
-  end
-
-  it "does not appear to be logged in initially" do
-    visit root_path
-    expect( page ).to have_content "Sign In"
-  end
-
-  it "can log in with the helper routine" do
-    login @user
-    visit root_path
-    expect( page ).to have_content "Sign Out"
-  end
-
-  it "can log in and out manually" do
-    visit new_user_session_path
-    within ".sign-in" do
-      fill_in :user_email, with: @user.email
-      fill_in :user_password, with: @user.password
-      click_on "Sign In"
-    end
-    click_on "Sign Out"
-    expect( alert.text ).to match /signed out/i
-  end
-
-  describe "changing password" do
-    before :each do
-      login @user
-      visit edit_user_registration_path
-      fill_in :user_current_password, with: @user.password
-      fill_in :user_password, with: "new-password"
-    end
-
-    it "can successfully update" do
-      fill_in :user_password_confirmation, with: "new-password"
-      click_on "Update"
-      expect( alert.text ).to match /updated/i
-    end
-
-    it "can fail to update" do
-      fill_in :user_password_confirmation, with: "nw-password"
-      click_on "Update"
-      expect( page.text ).to match /doesn't match/i
-    end
-  end
-
-  it "can send password resets" do
-    @user.update confirmed_at: 1.week.ago
+RSpec.describe "login emails" do
+  it "can request confirmation help" do
+    pcv = FactoryGirl.create :pcv, :unconfirmed
+    mail.clear
 
     visit root_path
     within ".help" do
-      fill_in "Email", with: @user.email
-      click_on "Send Help Email"
+      fill_in "Email", with: pcv.email
     end
+    click_on "Send Help Email"
 
-    expect( alert ).to have_content "Email sent to #{@user.email}"
+    m = mail.last
+    expect(m.to).to eq [pcv.email]
 
-    mail = sent_mail.last
-    expect( mail.to ).to eq [@user.email]
-    expect( mail.to_s ).to match /Change my password/
+    reset = m.to_s =~ /(\/users\/confirmation[^\s"]+)/ && $1
+    expect(reset).to be_present
+    visit reset
+
+    expect(page).to have_content "I hereby authorize"
+    click_on "Confirm"
+
+    expect(page).to have_validation_error "Password", "can't be blank"
+
+    fill_in "Password", with: "password"
+    fill_in "Password confirmation", with: "password"
+    click_on "Confirm"
+
+    expect(page).to have_content "Request Form"
   end
 
-  it "can send confirmation emails" do
-    @user.update confirmed_at: nil
+  it "can request password reset emails" do
+    pcv = FactoryGirl.create :pcv
+    mail.clear
 
     visit root_path
     within ".help" do
-      fill_in "Email", with: @user.email
-      click_on "Send Help Email"
+      fill_in "Email", with: pcv.email
     end
+    click_on "Send Help Email"
+    m = mail.last
 
-    expect( alert ).to have_content "Email sent to #{@user.email}"
+    expect(m.to).to eq [pcv.email]
+    expect(m.to_s).not_to match /(\/users\/confirmation[^\s"]+)/
 
-    mail = sent_mail.last
-    expect( mail.to ).to eq [@user.email]
-    expect( mail.to_s ).to match /Welcome, #{@user.name}/
+    reset = m.to_s =~ /(\/users\/password[^\s"]+)/ && $1
+    expect(reset).to be_present
+
+    visit reset
+    expect(page).to have_content "Confirm New Password"
   end
 
-  it "can fail to find users" do
+  it "can fail to find emails" do
     visit root_path
     within ".help" do
-      fill_in "Email", with: "not_a_user@example.com"
-      click_on "Send Help Email"
+      fill_in "Email", with: "not_a_real_email@example.com"
     end
-    expect( alert.text ).to eq "No account found for not_a_user@example.com"
+    click_on "Send Help Email"
+    expect(mail).to be_empty
+    expect(flash).to have_content "No account found"
   end
 end

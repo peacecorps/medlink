@@ -1,8 +1,7 @@
 RSpec.configure do |config|
-  config.before :each, no_bullet: true do
+  config.around :each, bullet: false do |x|
     Bullet.enable = false
-  end
-  config.after :each, no_bullet: true do
+    x.run
     Bullet.enable = true
   end
 end

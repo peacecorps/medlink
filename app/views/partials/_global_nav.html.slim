@@ -1,0 +1,58 @@
+nav.navbar.navbar-default role="navigation"
+  .container
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header
+      - if current_user
+        button.navbar-toggle data-target="#main-navigation" data-toggle="collapse" type="button"
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+      a.navbar-brand href=root_path
+        img src="/logo_50.gif"
+        span PC Medlink
+        - if current_user && !current_user.admin?
+          small= current_user.country.name
+
+
+    - if current_user
+      / Collect the nav links, forms, and other content for toggling
+      #main-navigation.collapse.navbar-collapse
+        - if current_user.try :admin?
+          = form_tag set_country_path, method: :patch, class: "auto-select navbar-form navbar-left" do
+            .form-group
+              - blank = current_user.country_id ? false : "Select Country"
+              = collection_select :country, :id, Country.all, :id, :name,
+                { include_blank: blank, selected: current_user.country_id },
+                { class: "form-control" }
+            .no-js
+              button.btn.btn-default.btn-sm Update
+        ul.nav.navbar-right.navbar-nav
+          - if current_user.admin?
+            li= link_to 'Users', country_roster_path
+            li.dropdown
+              a.dropdown-toggle data-toggle="dropdown" href="#" Supplies
+              ul.dropdown-menu
+                li= link_to 'Country Supplies', country_supplies_path
+                li= link_to 'Master Supply List', supplies_path
+
+          - if current_user.pcmo?
+            li= link_to 'Supplies', country_supplies_path
+
+          - if current_user.pcv?
+            li= link_to 'Place a Request', new_request_path
+            li= link_to 'Request History', timeline_path
+
+          - else
+            li= link_to 'Requests', manage_orders_path
+            li= link_to 'Responses', responses_path
+            li= link_to 'Reports', reports_path
+            / Inline the gear menu when collapsed
+            = render partial: "partials/gear_dropdown", locals: { klass: "collapsed-only" }
+
+          / Gear dropdown menu for wide resolutions
+          li.uncollapsed.dropdown
+            a.dropdown-toggle data-toggle="dropdown" href="#"
+              i.fa.fa-cog
+            ul.dropdown-menu
+              = render partial: "partials/gear_dropdown", locals: { klass: "" }

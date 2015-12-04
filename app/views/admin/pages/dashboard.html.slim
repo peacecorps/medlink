@@ -1,0 +1,69 @@
+= title "Users"
+.row.users
+  .col-md-6
+    table.table.table-condensed.table-hover
+      tr
+        th PCVs
+        td= User.pcv.count
+      tr
+        th PCMOs
+        td= User.pcmo.count
+  .col-md-6
+    = render "set_country", redirect: country_roster_path, label: "Manage Users"
+
+.row.orders
+  .col-md-6
+    table.table.table-condensed.table-hover
+      tr
+        th Pending
+        td= Order.without_responses.count
+      tr
+        th Responded
+        td= Order.with_responses.count
+      tr
+        th Total
+        td= Order.count
+  .col-md-6
+    = render "set_country", redirect: manage_orders_path, label: "Request Tracker"
+
+= title "Messages"
+.row
+  .col-md-6
+    h4
+      | Upcoming Announcements
+      small #{Announcement.scheduled.count} total
+    table.table.table-condensed
+      thead
+        tr
+          th To
+          th At
+          th Message
+      tbody
+        - @upcoming_announcements.each do |ann|
+          tr
+            td= ann.country.name
+            td= ann.schedule.next_run
+            td= ann.message
+    = link_to "Manage", announcements_path, class: "btn btn-default"
+
+  .col-md-6
+    h4
+      | Recent Messages
+      small #{SMS.incoming.count} total
+    table.table.table-condensed
+      thead
+        tr
+          th From
+          th At
+          th Message
+      tbody
+        - @recent_messages.each do |sms|
+          tr
+            td= sms.number
+            td= sms.created_at
+            td= sms.text
+    = link_to "View All", messages_path, class: "btn btn-default"
+
+= title "Reports"
+- Report.all.each do |report|
+  = link_to report.title, report_download_path(report.title.downcase), class: "btn btn-default"

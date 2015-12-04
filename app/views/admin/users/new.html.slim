@@ -1,0 +1,7 @@
+= content_for :page_title do
+  | New Account
+
+.row
+  = back_link "All Volunteers", country_roster_path
+
+= render partial: 'form', locals: { user: @user }

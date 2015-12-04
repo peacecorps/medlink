@@ -1,0 +1,9 @@
+h1= link_to user.name, user_timeline_path(user)
+p
+  = icon "globe"
+  ' &nbsp;
+  = "#{user.location}, #{user.country.name}"
+  ' &nbsp;
+  = icon "phone-alt"
+  ' &nbsp;
+  = phone_link user.primary_phone

@@ -1,4 +1,9 @@
-class Report::Users < Report
+class Report::Users < Report::Base
+  model       User
+  title       "Users"
+  description "Users and their information"
+  authorize { |user| user.admin? }
+
   def initialize users
     self.rows = users.includes :phones, :country
   end

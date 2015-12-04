@@ -1,17 +1,20 @@
 class AnnouncementsController < ApplicationController
   def index
-    @announcements = policy_scope(Announcement).order(last_sent_at: :desc).includes(:country)
+    reaches = AnnouncementReachCache.new
+    @announcements = policy_scope(Announcement).
+       order(last_sent_at: :desc).
+       includes(:country).
+       map { |ann| AnnouncementPresenter.new ann, reaches: reaches }
   end
 
   def new
-    @announcement = Announcement.new country: current_user.country
+    @announcement = AnnouncementForm.new Announcement.new country: current_user.country
     authorize @announcement
   end
 
   def create
-    @announcement = Announcement.new announcement_params
-    authorize @announcement
-    if @announcement.save
+    @announcement = AnnouncementForm.new Announcement.new country: current_user.country
+    if save_form @announcement, params[:announcement]
       redirect_to announcements_path, notice: I18n.t!("flash.announcement.created")
     else
       render :new
@@ -19,14 +22,13 @@ class AnnouncementsController < ApplicationController
   end
 
   def edit
-    @announcement = Announcement.find params[:id]
+    @announcement = AnnouncementForm.new Announcement.find(params[:id]), announcer: current_user
     authorize @announcement
   end
 
   def update
-    @announcement = Announcement.find params[:id]
-    authorize @announcement
-    if @announcement.update announcement_params
+    @announcement = AnnouncementForm.new Announcement.find(params[:id]), announcer: current_user
+    if save_form @announcement, params[:announcement]
       redirect_to announcements_path, notice: I18n.t!("flash.announcement.updated")
     else
       render :edit
@@ -34,27 +36,16 @@ class AnnouncementsController < ApplicationController
   end
 
   def deliver
-    announcement = Announcement.find params[:id]
+    announcement = AnnouncementPresenter.new Announcement.find params[:id]
     authorize announcement
     announcement.send!
     redirect_to :back, notice: I18n.t!("flash.announcement.sent", volunteer_count: announcement.reach)
   end
 
-private
-
-  def announcement_params
-    p = params[:announcement]
-    if current_user.admin?
-      {
-        country_id: p[:country_id],
-        message:    p[:message],
-        schedule: Schedule.new(
-          days: p[:days].split(",").map(&:strip),
-          hour: p[:hour]
-        )
-      }
-    else
-      { country_id: current_user.country_id, message: p[:message] }
-    end
+  def destroy
+    announcement = Announcement.find params[:id]
+    authorize announcement
+    announcement.hide
+    redirect_to :back, notice: I18n.t!("flash.announcement.deleted")
   end
 end

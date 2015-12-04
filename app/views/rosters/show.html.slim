@@ -1,0 +1,43 @@
+.row
+  .col-md-4
+    - if policy(:roster).create?
+      .js-required
+        = s3_uploader_form id: "roster_upload_form", callback_url: upload_country_roster_path do
+          = file_field_tag :file, multiple: true, class: "form-control"
+  .col-md-4
+  .col-md-4
+    - if policy(:user).create?
+      = link_to "New User", new_admin_user_path, class: "btn btn-default pull-right"
+
+= render partial: 'partials/pager', locals: { table: @users }
+
+table.table.table-condensed.table-striped.table-hover
+  thead
+    tr
+      th= @users.header :email
+      th= @users.header :first_name
+      th= @users.header :last_name
+      th= @users.header :role
+      th= @users.header :location
+      th Phone(s)
+      th
+  tbody
+    - @users.each do |user|
+      / TODO: get kaminari playing nice with decorators
+      - user = RosterUserPresenter.new user
+      tr
+        td= user.email
+        td= user.first_name
+        td= user.last_name
+        td= user.role
+        td= user.location
+        td
+          - if user.phones.any?
+            ul
+              - user.phones.each do |phone|
+                li= phone_link phone
+        td
+          - if policy(user).update?
+            = link_to edit_admin_user_path(user), class: "btn btn-default btn-sm" do
+              | Edit
+

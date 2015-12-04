@@ -1,0 +1,17 @@
+table.table.table-striped.table-hover.table-condensed id=response.anchor
+  thead
+    tr
+      th
+      th
+        - if policy(response).mark_received?
+          .btn-group
+            = response.received_btn
+            = response.flag_btn
+  tbody
+    - response.unique_orders.map do |order|
+      tr
+        td= order.supply
+        td= order.status
+
+- if response.extra_text.present?
+  pre= response.extra_text

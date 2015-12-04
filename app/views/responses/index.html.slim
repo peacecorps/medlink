@@ -1,0 +1,16 @@
+= content_for :page_title do
+  | Response Tracker
+
+- if current_user.country_id
+  #response-tracker
+    .btn-group
+      - %w(unarchived all archived).each do |t|
+        - status = t == (params[:responses]||"unarchived") ? "btn-primary" : "btn-default"
+        = link_to t.capitalize, {responses: t, page: params[:page]}, class: "btn #{status}"
+
+    - if @responses.any?
+      = render partial: "partials/pager", locals: { table: @responses }
+      = render partial: "table", locals: { table: @responses }
+    - else
+      .well
+        No responses

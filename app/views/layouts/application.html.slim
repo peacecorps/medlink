@@ -1,0 +1,38 @@
+doctype html
+html lang="en"
+  head
+    meta charset="utf-8"
+    meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"
+    meta name="viewport" content="width=device-width, initial-scale=1.0"
+
+    link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet"
+    link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.min.css" rel="stylesheet"
+    link href="http://assets.peacecorps.gov/images/global/favicon.ico" rel="shortcut icon"
+
+    = javascript_include_tag "application"
+    script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"
+
+    title= content_for?(:title) ? yield(:title) : "PC Medlink"
+    = csrf_meta_tags
+
+    - %w( Droid+Sans:400,700 Droid+Serif Boogaloo Economica:700,400italic ).each do |font|
+      = stylesheet_link_tag "//fonts.googleapis.com/css?family=#{font}"
+    = stylesheet_link_tag "application", :media => "all"
+    /[if lt IE 8]
+      = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
+
+  body.no-js
+    javascript:
+      document.querySelector("body").className = "yes-js"
+    = render "partials/global_nav"
+
+    #page-title
+      #page-title-inner
+        .container
+          h2= content_for :page_title
+
+    .container
+      = render "partials/flash"
+      = yield
+
+    = render "partials/google_analytics" if Rails.env.production?

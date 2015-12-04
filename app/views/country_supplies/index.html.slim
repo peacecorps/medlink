@@ -1,0 +1,13 @@
+h2 Supplies Available in #{@country.name}
+table.table.table-striped.table-linked.table-condensed
+  thead
+    tr
+      th Name
+      th Short Code
+      th
+  tbody
+    - @country.supplies.each do |supply|
+      tr class=("danger" unless supply.available?)
+        td= supply.name
+        td= supply.shortcode
+        td= supply.toggle_button

@@ -1,0 +1,9 @@
+- if request.orders.any?
+  table.table.table-striped.table-hover.table-condensed
+    tbody
+      - request.orders.each do |order|
+        tr
+          td= order.supply
+          td= order.timeline_link
+- if request.text.present?
+  pre= request.text

@@ -1,0 +1,7 @@
+li(class=klass)= link_to 'Help', help_path
+- if policy(:announcement).index?
+  li(class=klass)= link_to 'Announcements', announcements_path
+- if policy(:message).index?
+  li(class=klass)= link_to 'Message History', messages_path
+li(class=klass)= link_to 'Change Password', edit_user_registration_path
+li(class=klass)= link_to 'Sign Out', destroy_user_session_path, method: :delete

@@ -1,54 +1,44 @@
-require 'spec_helper'
+require "rails_helper"
 
-describe "Message search" do
-  before :each do
-    @pcmo = create :pcmo
+RSpec.describe "searching for messages" do
+  Given(:admin) { FactoryGirl.create :admin }
 
-    @supply = create :supply
-    @pcmo.country.supplies << @supply
+  it "lets admins search" do
+    sms = FactoryGirl.create :sms, direction: :incoming, text: "blerg"
 
-    u1, u2 = 2.times.map { create :user, country: @pcmo.country }
-    u3 = create :user
-    @other_country = u3.country
-
-    send_text u1, "help"
-    send_text u2, @supply.shortcode
-    send_text u3, "wat"
-  end
-
-  it "allows pcmos to see messages in their country" do
-    login @pcmo
+    login_as admin
     visit messages_path
+    expect(page).to have_content "blerg"
 
-    expect( all("#messages tbody tr").count ).to eq 2
-    expect( page ).to have_content "help"
-    expect( page ).not_to have_content "wat"
-
-    select "Both", from: "Direction"
-    click_on "Search"
-    expect( all("#messages tbody tr").count ).to eq 4
-  end
-
-  it "allows admins to search across countries" do
-    admin = create :admin
-    login admin
-    visit messages_path
-
-    expect( all("#messages tbody tr").count ).to eq 3
-    expect( page ).to have_content @supply.shortcode
-
+    # Search for incoming invalid
     select "Invalid", from: "Validity"
     click_on "Search"
-    expect( all("#messages tbody tr").count ).to eq 2
-    expect( page ).not_to have_content @supply.shortcode
+    expect(page).to have_content "blerg"
 
-    select "Valid", from: "Validity"
-    select @other_country.name, from: "Country"
+    # Search for different country
+    other = Country.where.not(id: sms.user.country.id).random
+    select other.name, from: "Country"
     click_on "Search"
-    expect( all("#messages tbody tr").count ).to eq 0
+    expect(page).not_to have_content "blerg"
+  end
 
-    select "Outgoing", from: "Direction"
-    click_on "Search"
-    expect( all("#messages tbody tr").count ).to eq 1
+  it "uses the sort table" do
+    5.times { |n| FactoryGirl.create :sms, direction: :incoming, created_at: n.weeks.ago }
+
+    login_as admin
+    visit messages_path per_page: 2
+
+    rows = page.find_all "#messages tbody tr"
+    p1 = rows.first.text
+    expect(rows.count).to eq 2
+
+    click_on "Next"
+    expect(page.find_all("#messages tbody tr").count).to eq 2
+
+    click_on "Next"
+    expect(page.find_all("#messages tbody tr").count).to eq 1
+
+    click_on "Date"
+    expect(page.find("#messages tbody tr").text).to eq p1
   end
 end

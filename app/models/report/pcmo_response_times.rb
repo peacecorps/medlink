@@ -1,10 +1,15 @@
-class Report::PcmoResponseTimes < Report
+class Report::PcmoResponseTimes < Report::Base
+  model       Order
+  decorator   OrderResponsePresenter
+  title       "Responses"
+  description "A summary of PCMO response times" 
+  authorize { |user| user.admin? }
+
   def initialize orders
     self.rows = orders.includes :country, :supply, :response, :user => :phones
   end
 
   def format order
-    supply  = order.supply
     country = order.country
     user    = order.user
     phone   = user.primary_phone
@@ -18,7 +23,7 @@ class Report::PcmoResponseTimes < Report
       "Last name"     => user.last_name,
       "Email"         => user.email,
       "Phone"         => phone.try(:number),
-      "Supply Type"   => supply.name,
+      "Supply Type"   => order.supply,
       "Location"      => user.location,
       "Country"       => country.name,
       "Response Days" => order.response_time,

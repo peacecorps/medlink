@@ -6,12 +6,15 @@ gem 'rails'
 
 gem 'pg'
 gem 'jquery-rails'
-gem 'haml-rails'
+gem 'slim-rails'
+gem 'jbuilder'
 gem 'twilio-ruby'
-gem 'jquery-placeholder-rails'
+gem 'pry-rails'
 
+gem 'figaro'
 gem 'devise'
 gem 'pundit'
+gem 'api-auth'
 
 gem 'rollbar'
 gem 'sidekiq'
@@ -19,14 +22,15 @@ gem 'sinatra', require: nil
 
 gem 'kaminari'
 gem 'virtus'
-
-gem 'nested_form'
+gem 'draper'
+gem 'reform'
 
 gem 'quiet_assets'
 
 gem 'bullet'
 
 gem 'bootstrap_form'
+gem 's3_direct_upload'
 
 group :assets do
   gem 'sass-rails'
@@ -34,9 +38,16 @@ group :assets do
   gem 'uglifier'
 end
 
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
 group :development, :test do
+  gem 'activerecord-import'
+  gem 'named_seeds'
+  gem 'pry-byebug'
   gem 'letter_opener'
-  gem 'pry-rails'
 
   gem 'spring'
   gem 'spring-commands-rspec'
@@ -44,14 +55,18 @@ end
 
 group :test do
   gem 'coveralls', require: false
-  gem 'simplecov'
+  gem 'simplecov', require: false
 
   gem 'rspec-rails'
-  gem 'rspec-its'
+  gem 'rspec-given'
   gem 'capybara'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
+  gem 'vcr'
+  gem 'webmock'
   gem 'zonebie'
+  gem 'timecop'
+  gem 'poltergeist'
 end
 
 gem 'newrelic_rpm'

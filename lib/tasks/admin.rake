@@ -1,8 +1,6 @@
 namespace :admin do
-
-  desc "Creates an admin user from your git config (password optional)"
-  task :create, [:password] => :environment do |_, args|
-
+  def git_data
+    raise if Rails.env.production?
     raise 'Please install and configure git' unless system 'which git >/dev/null'
 
     email = `git config user.email`.strip
@@ -11,24 +9,38 @@ namespace :admin do
       raise 'Please configure your git user name and email. See the README for more information'
     end
 
+    [email, names.first, names.last]
+  end
+
+  desc "Creates an admin user from your git config (password optional)"
+  task :create, [:password] => :environment do |_, args|
+    email, first, last = git_data
+
     password = args[:password] || 'password'
-    pcv_id = rand(1_000_000).to_s
+    pcv_id   = rand(1_000_000).to_s
 
     puts "Creating user '#{email}' with pcv_id '#{pcv_id}' and password '#{password}'"
 
-    user = User.new
-    user.email = email
-    user.pcv_id = pcv_id
-    user.first_name = names.first
-    user.last_name = names.last
-    user.password = user.password_confirmation = password
-    user.country = Country.first || raise("Please generate a country to admin")
-    user.role = 'admin'
-    user.location = 'Buckhead'
-    user.time_zone = "Alaska"
-    user.save!
-
+    country = Country.all.sample
+    user = User.create! \
+      email:        email,
+      pcv_id:       pcv_id,
+      first_name:   first,
+      last_name:    last,
+      password:     password,
+      country:      country,
+      role:         :admin,
+      location:     "---",
+      time_zone:    country.time_zone,
+      confirmed_at: 1.week.ago
     user.phones.create! number: '+1 404-555-1212'
   end
 
+  task :claim, [:password] => :environment do |_, args|
+    email = git_data.first
+
+    password = args[:password] || "password"
+    u = User.where(email: email).first!
+    u.update! role: :admin, password: password
+  end
 end
