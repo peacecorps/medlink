@@ -1,9 +1,0 @@
-
-es:
-  order:
-    confirmation: "Su pedido ha sido recibido. Detalles de cómo será completado vendrán en las próximas 24 horas por correo electrónico o por mensaje de texto."
-    unparseable: "Su pedido no ha sido enviado. Por favor, re-envíelo en este Formato: PCVID, nombre corto del suministro, lugar."
-    unrecognized_pcvid: "PCVID Inválido: Su pedido no ha sido enviado porque el PCVID era incorrecto. Por favor, re-envíelo en este Formato: PCVID, nombre corto del suministro, lugar."
-    unrecognized_shortcode: "Nombre corto del suministro incorrecto: Su pedido no ha sido enviado porque el nombre del suministro era incorrecto. "
-    invalid_location: "Lugar inválido: Su pedido no ha sido enviado porque el lugar era incorrecto. Por favor, re-envíelo en este Formato: PCVID, nombre corto del suministro, lugar."
-    duplicate_order: "Ya hemos recibido su pedido. Por favor, evite enviar múltiples pedidos."
