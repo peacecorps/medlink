@@ -10,19 +10,8 @@ class UserForm < Reform::Form
   property :pcv_id
 
   validates :first_name, :last_name, :role, :location, :country_id, :pcv_id, presence: true
-  validate :check_phone_numbers
   validate :admins_cant_demote_themselves
-
-  collection :phones do
-    property :number
-    validate :has_country_code
-
-    def has_country_code
-      unless number.start_with? '+'
-        errors.add :number, "should include a country code (e.g. +1 for the US)"
-      end
-    end
-  end
+  validate :check_phone_form
 
   def model_name
     ::ActiveModel::Name.new User
@@ -30,11 +19,12 @@ class UserForm < Reform::Form
 
   def initialize *args
     super
+    @phone_form = PhoneSyncForm.new model
     Pundit.authorize submitter, model, :update?
   end
 
   def flash
-    if changed?
+    if change_summary.present?
       { notice: I18n.t!("flash.user.changes", changes: change_summary) }
     else
       { alert: I18n.t!("flash.user.no_changes") }
@@ -42,18 +32,23 @@ class UserForm < Reform::Form
   end
 
   def phone_numbers
-    phones.map(&:number).compact.join ", "
+    @phone_form.to_s
+  end
+  def phone_numbers= numbers
+    @phone_form.validate numbers: numbers
   end
 
-  def phone_numbers= numbers
-    self.phones = numbers.split(/[,\n]/).map { |n| Phone.new number: n.strip }
+  def save
+    super
+    @phone_form.save
   end
 
   private
 
-  def check_phone_numbers
-    phone_errors = phones.map { |p| p.errors[:number] }.flatten.uniq
-    errors.add :phone_numbers, phone_errors.first if phone_errors.any?
+  def check_phone_form
+    @phone_form.errors[:numbers].each do |e|
+      errors.add :phone_numbers, e
+    end
   end
 
   def admins_cant_demote_themselves
@@ -63,14 +58,11 @@ class UserForm < Reform::Form
   end
 
   def changed_fields
-    changed.select { |_,v| v }.keys - %w( country_id )
+    base = changed.select { |_,v| v }.keys - %w( country_id )
+    @phone_form.changed? ? base + %w( phone_numbers ) : base
   end
 
   def change_summary
-    changed_fields.map { |k| "#{k}=#{new_value_for k}" }.join "; "
-  end
-
-  def new_value_for key
-    key == "phones" ? phone_numbers : send(key)
+    changed_fields.map { |k| "#{k}=#{send k}" }.join "; "
   end
 end

@@ -22,8 +22,8 @@ RSpec.describe UserForm do
   context "valid phones" do
     When(:result) { form.validate phone_numbers: "+1234, +5678" }
 
-    Then { result == true                              }
-    And  { form.flash[:notice].include? "phones=+1234" }
+    Then { result == true                                     }
+    And  { form.flash[:notice].include? "phone_numbers=+1234" }
   end
 
   context "no changes" do
