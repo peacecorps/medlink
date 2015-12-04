@@ -29,6 +29,10 @@ class OrderResponsePresenter < ApplicationPresenter
     end
   end
 
+  def duplicate_label
+    "Updated on #{short_date duplicated_at}"
+  end
+
   def supply
     model.supply.name
   end

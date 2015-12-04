@@ -17,7 +17,7 @@
               td.ts rowspan=group.size = group.request.text
             td= order.supply
             - if order.duplicated?
-              td.duplicate_order colspan=DeliveryMethod.count = order.update
+              td.duplicate_order colspan=DeliveryMethod.count = order.duplicate_label
             - else
               - DeliveryMethod.each do |method|
                 td= radio_button_tag "orders[#{order.id}]", method.name, nil, data: { method: method.name }

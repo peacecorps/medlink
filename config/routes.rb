@@ -58,6 +58,7 @@ Medlink::Application.routes.draw do
         patch :toggle
       end
     end
+
     resource :roster, only: [:show, :edit, :update] do
       collection do
         post :upload
