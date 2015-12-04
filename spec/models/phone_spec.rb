@@ -27,6 +27,11 @@ RSpec.describe Phone do
   context "creating a malformed number" do
     # TODO: do we actually need this? Or should we automatically add + / check the number?
     When(:result) { Phone.create! number: "1234" }
-    Then { expect(result).to have_failed(ActiveRecord::RecordInvalid, /country code/i) }
+    Then { result == Failure(ActiveRecord::RecordInvalid, /country code/i) }
+  end
+
+  context "when changing number" do
+    When(:result) { phone.update! number: "+999" }
+    Then { result == Failure(ActiveRecord::RecordInvalid, /immutable/i) }
   end
 end

@@ -41,10 +41,6 @@ class User < ActiveRecord::Base
     u.password ||= SecureRandom.hex(64)
   end
 
-  def self.find_by_pcv_id str
-    where(['lower(pcv_id) = ?', str.downcase]).first
-  end
-
   def primary_phone
     @_primary_phone ||= phones.first
   end
@@ -80,8 +76,6 @@ class User < ActiveRecord::Base
   end
 
   def ensure_secret_key!
-    unless secret_key.present?
-      update! secret_key: ApiAuth.generate_secret_key
-    end
+    update! secret_key: ApiAuth.generate_secret_key unless secret_key.present?
   end
 end

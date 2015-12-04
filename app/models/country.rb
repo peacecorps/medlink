@@ -17,15 +17,6 @@ class Country < ActiveRecord::Base
   end
   validates :time_zone, inclusion: { in: time_zones.map(&:name) }
 
-  def self.with_orders
-    ids = Order.unscoped.uniq.pluck :country_id
-    where(id: ids)
-  end
-
-  def textable_pcvs
-    @_textable_pcvs ||= users.pcv.includes(:phones).select(&:textable?)
-  end
-
   def toggle_supply supply
     join = country_supplies.where(supply_id: supply.id)
     if join.exists?

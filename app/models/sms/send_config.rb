@@ -1,24 +1,14 @@
 module Sms
   class SendConfig
-    include Enumerable
-
-    def initialize
-      @stored = []
-    end
-
-    def each
-      @stored.each { |m| yield m }
-    end
-
-    def clear
-      @stored.clear
-    end
+    attr_reader :last
 
     def deliver sms:, twilio: nil
       if @method == :deliver
+        # :nocov:
         twilio.client.messages.create sms
+        # :nocov:
       else
-        @stored.push sms
+        @last = sms
       end
     end
 

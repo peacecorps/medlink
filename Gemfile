@@ -55,7 +55,7 @@ end
 
 group :test do
   gem 'coveralls', require: false
-  gem 'simplecov'
+  gem 'simplecov', require: false
 
   gem 'rspec-rails'
   gem 'rspec-given'
