@@ -33,6 +33,15 @@ RSpec.describe UserForm do
     And  { form.flash[:alert] == "No changes made" }
   end
 
+  context "country change" do
+    Given(:newland) { FactoryGirl.create :country }
+
+    When(:result) { form.validate country_id: newland.id }
+
+    Then { result == true                                         }
+    And  { form.flash[:notice].include? "country=#{newland.name}" }
+  end
+
   context "invalid demotion" do
     Given(:form) { UserForm.new admin, submitter: admin }
 

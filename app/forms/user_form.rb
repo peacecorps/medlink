@@ -58,11 +58,23 @@ class UserForm < Reform::Form
   end
 
   def changed_fields
-    base = changed.select { |_,v| v }.keys - %w( country_id )
+    base = changed.select { |_,v| v }.keys
     @phone_form.changed? ? base + %w( phone_numbers ) : base
   end
 
   def change_summary
-    changed_fields.map { |k| "#{k}=#{send k}" }.join "; "
+    changed_fields.map { |k| summarize k }.join "; "
+  end
+
+  def country_name
+    Country.find(country_id).name
+  end
+
+  def summarize key
+    if key == "country_id"
+      "country=#{country_name}"
+    else
+      "#{key}=#{send key}"
+    end
   end
 end
