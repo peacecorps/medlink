@@ -6,7 +6,7 @@ rvm:
 script:
 - RAILS_ENV=test COVERAGE=true bundle exec rake db:setup spec
 env:
--s3_access_key_id=xxx s3_secret_access_key=xxx s3_bucket_name=xxx 
+- s3_access_key_id=xxx s3_secret_access_key=xxx s3_bucket_name=xxx 
 branches:
   only:
   - master
