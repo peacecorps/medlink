@@ -1,0 +1,6 @@
+th ng-click="toggleSort('#{field}')" class="sortHeader"
+  ' #{label}
+  span ng-show="sort === '#{field}' && reverse === false"
+    = icon "chevron-down"
+  span ng-show="sort === '#{field}' && reverse === true"
+    = icon "chevron-up"

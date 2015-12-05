@@ -15,7 +15,15 @@ namespace :phones do
           found.phone_number.present?
           csv << [p.id, p.condensed, found.phone_number, nil]
         rescue Twilio::REST::RequestError => e
-          csv << [p.id, p.condensed, nil, e]
+          if e.message =~ /was not found/
+            csv << [p.id, p.condensed, nil, e]
+          elsif e.message =~ /Bad request/
+            puts "Hitting errors ... waiting a minute"
+            sleep 60
+            retry
+          else
+            raise
+          end
         end
       end
     end

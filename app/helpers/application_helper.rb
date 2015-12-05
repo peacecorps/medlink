@@ -55,4 +55,9 @@ module ApplicationHelper
       [ icon(icon_name), text ].join(" ").html_safe
     end
   end
+
+  def sort field, label: nil
+    label ||= field.to_s.titleize
+    render partial: "partials/sort_header", locals: { field: field, label: label }
+  end
 end

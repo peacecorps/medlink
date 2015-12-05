@@ -62,6 +62,10 @@ class Roster
     rows.map &:email
   end
 
+  def country_id
+    country.id
+  end
+
   private
 
   def new_rows

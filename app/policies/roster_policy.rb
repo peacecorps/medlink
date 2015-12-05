@@ -1,5 +1,16 @@
 class RosterPolicy < ApplicationPolicy
+  def create?
+    user.admin?
+  end
+
   def show?
-    user.admin? || (user.pcmo? && user.country == record.country)
+    if user.admin?
+      true
+    elsif user.pcmo?
+      record == :roster || record.country_id == user.country_id
+    else
+      false
+    end
   end
 end
+

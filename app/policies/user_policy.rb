@@ -3,6 +3,10 @@ class UserPolicy < ApplicationPolicy
     admin? || country_pcmo?
   end
 
+  def create?
+    admin?
+  end
+
   def respond?
     return true if user.admin?
     return false unless user.pcmo?

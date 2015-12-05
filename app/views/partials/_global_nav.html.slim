@@ -28,14 +28,15 @@ nav.navbar.navbar-default role="navigation"
             .no-js
               button.btn.btn-default.btn-sm Update
         ul.nav.navbar-right.navbar-nav
-          - if current_user.admin?
+          - if policy(:roster).show?
             li= link_to 'Users', country_roster_path
+
+          - if current_user.admin?
             li.dropdown
               a.dropdown-toggle data-toggle="dropdown" href="#" Supplies
               ul.dropdown-menu
                 li= link_to 'Country Supplies', country_supplies_path
                 li= link_to 'Master Supply List', supplies_path
-
           - if current_user.pcmo?
             li= link_to 'Supplies', country_supplies_path
 

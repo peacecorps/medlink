@@ -1,4 +1,4 @@
-class Admin::UsersController < AdminController
+class Admin::UsersController < ApplicationController
   def select
     redirect_to edit_admin_user_path(params[:user_id])
   end
@@ -19,6 +19,7 @@ class Admin::UsersController < AdminController
 
   def edit
     @user = UserForm.new User.find(params[:id]), submitter: current_user
+    authorize @user
   end
 
   def update
