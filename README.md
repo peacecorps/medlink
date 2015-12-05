@@ -48,7 +48,7 @@ Integration.
 **If you find a problem with the software**
 
 Please create an email describing the steps to reproduce the software
-problem and email it to [support mailing list](support@pcmedlink.org).
+problem and email it to [support mailing list](mailto:support@pcmedlink.org).
 
 
 ## Contributors
