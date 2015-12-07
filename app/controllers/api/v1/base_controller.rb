@@ -1,5 +1,6 @@
 class Api::V1::BaseController < ApplicationController
   skip_before_action :authenticate_user!
+  skip_before_action :verify_authenticity_token
 
   before_action :json_format
   before_action :api_authenticate!
