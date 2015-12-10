@@ -101,6 +101,13 @@ Medlink::Application.routes.draw do
       resources :requests, only: [:create, :index]
 
       resources :users, only: [:index]
+
+      resources :responses, only: [] do
+        member do
+          post :mark_received
+          post :flag
+        end
+      end
     end
   end
 end
