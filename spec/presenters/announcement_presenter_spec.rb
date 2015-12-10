@@ -5,8 +5,11 @@ RSpec.describe AnnouncementPresenter do
 
   context "with a schedule" do
     Given(:schedule)     { Schedule.new days: [1,5], hour: 10 }
-    Given(:announcement) { FactoryGirl.build :announcement, id: 1, schedule: schedule, last_sent_at: Time.new(2015, 11, 01) }
-    Given!(:pcv) { FactoryGirl.create :pcv, country: announcement.country }
+    Given(:country)      { Country.random }
+    Given(:time_zone)    { ActiveSupport::TimeZone[country.time_zone] }
+    Given(:last_send)    { time_zone.parse "2015-11-01" }
+    Given(:announcement) { FactoryGirl.build :announcement, id: 1, country: country, schedule: schedule, last_sent_at: last_send }
+    Given!(:pcv) { FactoryGirl.create :pcv, country: country }
 
     When(:result) { AnnouncementPresenter.new announcement }
 

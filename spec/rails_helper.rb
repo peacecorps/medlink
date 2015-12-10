@@ -31,6 +31,8 @@ Capybara.javascript_driver = :poltergeist
 
 Medlink::Application.eager_load! if ENV["COVERAGE"]
 
+Zonebie.set_random_timezone
+
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!

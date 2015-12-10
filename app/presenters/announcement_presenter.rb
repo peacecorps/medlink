@@ -21,7 +21,7 @@ class AnnouncementPresenter < ApplicationPresenter
 
   def last_sent
     if model.last_sent_at
-      short_date model.last_sent_at
+      short_date model.last_sent_at, model.country.time_zone
     else
       "Never"
     end

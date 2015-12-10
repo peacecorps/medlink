@@ -5,7 +5,8 @@ RSpec.describe MessagePresenter do
 
   When(:result) { MessagePresenter.new message }
 
-  Then { result.created_at == "June 12, 1990 @08:34"                    }
+  # TODO - this should expect and use a time zone
+  Then { result.created_at =~ /June 12, 1990 @..:34/                    }
   And  { result.user_link.include? "/users/#{message.user_id}/timeline" }
   And  { result.email.include? "mailto:#{message.user.email}"           }
   And  { result.number.include? "tel:#{message.phone.condensed}"        }
