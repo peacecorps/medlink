@@ -1,5 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/PeaceCorps/medlink.png)](https://codeclimate.com/github/PeaceCorps/medlink)
-[![Build Status](https://travis-ci.org/PeaceCorps/medlink.png?branch=master)](https://travis-ci.org/PeaceCorps/medlink)
+[![Build Status](https://travis-ci.org/peacecorps/medlink.svg?branch=master)](https://travis-ci.org/peacecorps/medlink)
 [![Coverage Status](https://coveralls.io/repos/PeaceCorps/medlink/badge.png?branch=master)](https://coveralls.io/r/PeaceCorps/medlink?branch=master)
 
 ## PC Medlink - Peace Corps Medical Supplies
