@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  default_scope { where(active: true) }
+  scope :active, -> { where active: true }
 
   enum role: [ :pcv, :pcmo, :admin ]
   def self.role_names
@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
     r = r.downcase if r.respond_to?(:downcase)
     super r
   end
-  scope :non_admins, -> { where.not(role: User.roles[:admin]) }
 
   belongs_to :country
 
@@ -69,6 +68,10 @@ class User < ActiveRecord::Base
 
   def inactivate!
     update! active: false
+  end
+
+  def activate!
+    update! active: true
   end
 
   def personal_requests

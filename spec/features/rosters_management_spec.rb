@@ -16,8 +16,6 @@ RSpec.describe "managing a roster" do
 
     a; b # TODO: why isn't this eager-creating?
     visit country_roster_path
-    expect(page).to have_content "a@example.com"
-    expect(page).to have_content "b@example.com"
 
     # Upload comes in from a client-side S3 upload
     response = page.driver.post "/country/roster/upload", file: "https://example.com/roster.csv"
@@ -55,16 +53,19 @@ RSpec.describe "managing a roster" do
     click_on "Save"
     expect(page).not_to have_css ".has-error"
 
-    a = find "tr", text: "a@example.com"
-    expect(a).to have_content "999"
-    expect(a).to have_content "+1555"
+    a = User.find_by_email "a@example.com"
+    expect(a).to be_active
+    expect(a.pcv_id).to eq "999"
+    expect(a.phones.first.number).to eq "+1555"
 
-    expect(page).not_to have_content "b@example.com"
+    b = User.find_by_email "b@example.com"
+    expect(b).not_to be_active
 
-    c = find "tr", text: "c@example.com"
-    expect(c).to have_content "Last"
-    expect(c).to have_content "1000"
-    expect(c).to have_content "+1557"
+    c = User.find_by_email "c@example.com"
+    expect(c).to be_active
+    expect(c.last_name).to eq "Last"
+    expect(c.pcv_id).to eq "1000"
+    expect(c.phones.last.number).to eq "+1557"
 
     expect(mail.map &:to).to eq [["c@example.com"]]
   end

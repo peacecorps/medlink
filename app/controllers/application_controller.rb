@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
+  before_action :json_format, if: :api_controller?
   before_action :authenticate_user!
   after_action :verify_authorized, except: :index, unless: :devise_controller?
 
@@ -41,5 +42,13 @@ class ApplicationController < ActionController::Base
     if duration > Rails.configuration.slow_timeout.seconds
       Notification.send :slow, "#{params[:controller]}##{params[:action]} took #{duration} (#{request.path})"
     end
+  end
+
+  def api_controller?
+    false
+  end
+
+  def json_format
+    request.format = :json
   end
 end

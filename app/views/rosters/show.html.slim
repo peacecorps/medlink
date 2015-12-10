@@ -1,14 +1,17 @@
-div ng-controller="countryRosterController"
-  .row
-    .col-md-4
-      input ng-model="filter" placholder="Filter results" class="form-control"
-    .col-md-4
-      - if policy(:user).create?
-        = link_to "New User", new_admin_user_path, class: "btn btn-default pull-right"
+div ng-app="medlink" ng-controller="countryRosterController"
+  .row.sorttable-controls
     .col-md-4
       - if policy(:roster).create?
         = s3_uploader_form id: "roster_upload_form", callback_url: upload_country_roster_path do
           = file_field_tag :file, multiple: true, class: "form-control"
+    .col-md-4
+      - if policy(:user).create?
+        = link_to "New User", new_admin_user_path, class: "btn btn-default pull-right"
+    .col-md-4
+      .input-group
+        input ng-model="filter" placeholder="Filter results" class="form-control"
+        span.input-group-addon
+          = icon :search
 
   .row
     table.table.table-condensed.table-striped.table-hover
@@ -22,7 +25,7 @@ div ng-controller="countryRosterController"
           th Phone(s)
           th
       tbody
-        tr ng-repeat="user in users | filter:filter | orderBy:sort:reverse"
+        tr ng-repeat="user in users | fallbackFilter:filter | orderBy:sort:reverse" ng-class="user.active ? '' : 'danger'"
           td= "{{user.email}}"
           td= "{{user.first_name}}"
           td= "{{user.last_name}}"

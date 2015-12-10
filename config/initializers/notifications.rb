@@ -37,6 +37,7 @@ Notification = NotificationCenter.configure do |c|
   log   = ->(msg) { Rails.logger.info msg                 }
 
   c.on :sending_country_sms,    &slack
+  c.on :user_activated,         &slack
   c.on :announcement_scheduled, &ping
   c.on :error_in_job,           &ping
   c.on :flag_for_followup,      &ping

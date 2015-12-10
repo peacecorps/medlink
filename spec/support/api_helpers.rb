@@ -1,12 +1,8 @@
 module ApiHelpers
   def authorized user, &block
-    resp = block.call
-    if resp.status == 401
-      ApiAuth.sign! @request, user.id, user.secret_key
-      block.call
-    else
-      resp
-    end
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in user
+    block.call
   end
 
   def json
@@ -15,5 +11,6 @@ module ApiHelpers
 end
 
 RSpec.configure do |config|
+  config.include Devise::TestHelpers, type: :controller
   config.include ApiHelpers, type: :controller
 end

@@ -1,8 +1,6 @@
 class RostersController < ApplicationController
   def show
-    @roster = Roster.new country: current_user.country, \
-                         rows:    current_user.country.users.non_admins.includes(:phones)
-    authorize @roster
+    authorize :roster, :show?
   end
 
   def upload

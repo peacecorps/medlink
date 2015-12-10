@@ -7,7 +7,7 @@ RSpec.describe Api::V1::SuppliesController do
     When(:result) { get :index }
 
     Then { result.status == 401 }
-    And  { json["error"] =~ /auth/ }
+    And  { json["error"] =~ /auth/i }
   end
 
   context "when authed" do

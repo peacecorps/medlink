@@ -30,7 +30,7 @@ RSpec.describe Roster do
     When(:result) { updated.save }
 
     Then { result == true                                                        }
-    And  { country.users.pcv.count == 2                                          }
+    And  { country.users.pcv.active.count == 2                                   }
     And  { country.users.find_by(email: "a@example.com").location == "New Place" }
     And  { !country.users.unscoped.find_by(email: "b@example.com").active?       }
     And  { country.users.find_by(email: "c@example.com").first_name == "C"       }

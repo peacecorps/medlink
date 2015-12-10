@@ -8,8 +8,8 @@ RSpec.describe Api::V1::AuthController do
   context "testing unauthed" do
     When(:result) { get :test }
 
-    Then { result.status == 401    }
-    And  { json["error"] =~ /auth/ }
+    Then { result.status == 401     }
+    And  { json["error"] =~ /auth/i }
   end
 
   context "testing authed" do

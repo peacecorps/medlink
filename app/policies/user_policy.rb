@@ -18,6 +18,10 @@ class UserPolicy < ApplicationPolicy
     admin? && record.id != user.id
   end
 
+  def activate?
+    admin? || country_pcmo?
+  end
+
   def set_country?
     admin? && record.id == user.id
   end

@@ -43,6 +43,10 @@ class UserForm < Reform::Form
     @phone_form.save
   end
 
+  def active?
+    model.active?
+  end
+
   private
 
   def check_phone_form

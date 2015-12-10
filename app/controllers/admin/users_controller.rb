@@ -1,6 +1,7 @@
 class Admin::UsersController < ApplicationController
   def select
-    redirect_to edit_admin_user_path(params[:user_id])
+    authorize :user, :edit?
+    redirect_to edit_admin_user_path(params[:user][:id])
   end
 
   def new
@@ -36,5 +37,13 @@ class Admin::UsersController < ApplicationController
     authorize user
     user.inactivate!
     redirect_to country_roster_path, notice: I18n.t!("flash.user.inactive_user", user: user.name)
+  end
+
+  def activate
+    user = User.find params[:id]
+    authorize user
+    Notification.send :user_activated, "#{user.email} re-activated by #{current_user.email}"
+    user.activate!
+    redirect_to country_roster_path, notice: I18n.t!("flash.user.active_user", user: user.name)
   end
 end

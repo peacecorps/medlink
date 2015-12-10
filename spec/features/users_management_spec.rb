@@ -23,9 +23,8 @@ RSpec.describe "managing users" do
     fill_in "Email", with: "new_user@example.com"
     click_on "Create User"
 
-    row = find "tr", text: "new_user@example.com"
-    expect(row).to have_content "+15552"
-    row.click_on "Edit"
+    user = User.find_by_email "new_user@example.com"
+    visit edit_admin_user_path(user)
 
     expect(page).not_to have_content "Email"
     fill_in "Last name", with: ""
@@ -35,11 +34,10 @@ RSpec.describe "managing users" do
     fill_in "Last name", with: "Updated"
     click_on "Update User"
 
-    row = find "tr", text: "new_user@example.com"
-    expect(row).to have_content "Updated"
+    expect(user.reload.last_name).to eq "Updated"
 
-    row.click_on "Edit"
-    select "First Updated", from: "_user_id"
+    visit edit_admin_user_path(user)
+    select "First Updated", from: "user_id"
     click_on "Select"
 
     expect(page).to have_content "Edit Account"

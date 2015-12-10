@@ -17,6 +17,10 @@ class Roster
     new country: country, rows: rows.map { |r| Row.new r.to_hash }
   end
 
+  def self.for_user user
+    new country: user.country, rows: user.country.users
+  end
+
   class Row
     include Virtus.model
     Roster.headers.each do |header|

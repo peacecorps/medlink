@@ -17,26 +17,4 @@
 //= require chosen.jquery
 //= require s3_direct_upload
 //= require main
-
-angular.module("medlink", []).
-
-controller("countryRosterController", ["$scope", "$http", function($scope, $http) {
-    $scope.filter  = ""
-
-    $scope.toggleSort = function(field) {
-        if ($scope.sort === field) {
-            $scope.reverse = !$scope.reverse
-        } else {
-            $scope.sort    = field
-            $scope.reverse = false
-        }
-    }
-
-    $scope.toggleSort("last_name")
-
-    var url = window.location.origin + window.location.pathname
-    $http.get(url + ".json").success(function(data) {
-        console.log(data)
-        $scope.users = data.users
-    })
-}])
+//= require_tree .

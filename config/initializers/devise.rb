@@ -1,3 +1,28 @@
+class ApiAuthStrategy < Devise::Strategies::Base
+  def valid?
+    ApiAuth.access_id(request).present?
+  end
+
+  def authenticate!
+    user = User.find_by_id ApiAuth.access_id request
+    if user && ApiAuth.authentic?(request, user.secret_key)
+      success! user
+    else
+      fail! "You must authorize this request"
+    end
+  end
+end
+
+class JSONAuthFailure < Devise::FailureApp
+  def respond
+    return super unless request.format == :json or request.content_type == 'application/json'
+
+    self.status        = 401
+    self.content_type  = "application/json"
+    self.response_body = { error: "Authentication required" }.to_json
+  end
+end
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -229,6 +254,11 @@ Devise.setup do |config|
   #   manager.intercept_401 = false
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
+  config.warden do |manager|
+    manager.strategies.add :api_auth, ApiAuthStrategy
+    manager.default_strategies(scope: :user).unshift :api_auth
+    manager.failure_app = JSONAuthFailure
+  end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine

@@ -26,8 +26,8 @@ RSpec.describe "downloading reports" do
     login_as pcmo
     visit reports_path
 
-    expect(page).not_to have_content "Users"
-    expect(page).not_to have_content "PCMO response times"
+    expect(main_body).not_to have_content "Users"
+    expect(main_body).not_to have_content "PCMO response times"
     click_on "Order History"
 
     csv = CSV.parse page.body, headers: true

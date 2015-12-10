@@ -22,6 +22,10 @@ module FeatureHelpers
     page.find ".flash"
   end
 
+  def main_body
+    page.find ".main_body"
+  end
+
   def s
     save_and_open_page
   end

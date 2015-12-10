@@ -23,7 +23,7 @@ html lang="en"
     /[if lt IE 8]
       = stylesheet_link_tag "font-awesome-ie7.min.css", media: "all"
 
-  body.no-js ng-app="medlink"
+  body.no-js
     javascript:
       document.querySelector("body").className = "yes-js"
     = render "partials/global_nav"
@@ -33,7 +33,7 @@ html lang="en"
         .container
           h2= content_for :page_title
 
-    .container
+    .container.main_body
       = render "partials/flash"
       = yield
 

@@ -72,6 +72,7 @@ Medlink::Application.routes.draw do
 
     resources :users, only: [:new, :create, :edit, :update] do
       member do
+        post   :activate
         delete :inactivate
       end
 
@@ -98,6 +99,8 @@ Medlink::Application.routes.draw do
       resources :supplies, only: [:index]
 
       resources :requests, only: [:create, :index]
+
+      resources :users, only: [:index]
     end
   end
 end

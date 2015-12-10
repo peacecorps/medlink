@@ -1,5 +1,5 @@
 class Api::V1::AuthController < Api::V1::BaseController
-  skip_before_action :api_authenticate!, only: [:login]
+  skip_before_action :authenticate_user!, only: [:login]
   skip_after_action  :verify_authorized
 
   def login

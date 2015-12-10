@@ -1,3 +1,7 @@
+- unless user.active?
+  .alert.alert-danger
+    p This user is marked as inactive. If this is an error, #{link_to "click here", activate_admin_user_path(user), method: :post} to reactivate them.
+
 - url = user.persisted? ? admin_user_path(user) : admin_users_path
 = bootstrap_form_for user, url: url do |f|
   fieldset
