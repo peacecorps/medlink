@@ -1,7 +1,7 @@
-class Api::V1::RequestsController < Api::V1::BaseController
-  def approve
+class Api::V1::ResponsesController < Api::V1::BaseController
+  def mark_received
     response = Response.find params[:id]
-    authorize response, :mark_received?
+    authorize response
     ReceiptTracker.new(response: response, approver: current_user).acknowledge_receipt
     head :ok
   end
