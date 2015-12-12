@@ -1,8 +1,8 @@
 class SMS::ReceiptRecorder < SMS::Handler
   def intent
-    if ["yes", "y", "got it", "ok", "okay"].include? stripped
+    if ["yes", "y", "got it","got it!", "ok", "okay", "yes!", "yes.", "si", "si!", "-yes", "I recieved my medicine", "yes. Thanks!", "yes. Thank you.", "yes. Thank you!", "yes and thank you", "yes and thank you!", "yea", "yeah", "hi, yes!", "hi, yes!", "yes:)", "yes :)", "Yes, thanks for checking!", "Yes I did!", "Got it :) Thanks!", "yes i did. thanks", "Yes (received order)"].include? stripped
       :received
-    elsif ["no", "n", "nope", "flag"].include? stripped
+    elsif ["no", "no!", "n", "nope", "flag", "not yet", "not yet."].include? stripped
       :flagged
     end
   end
