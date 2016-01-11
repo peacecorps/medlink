@@ -37,7 +37,7 @@ RSpec.describe "managing announcements" do
 
     # Send
     click_on "to 1 volunteers"
-    expect(page).to have_content Time.now.in_time_zone(admin.country.time_zone).strftime("%B %d")
+    expect(flash).to have_content "Message sent to 1 volunteers"
 
     # Delete
     find(".btn-danger").click

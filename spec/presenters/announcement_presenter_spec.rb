@@ -16,7 +16,7 @@ RSpec.describe AnnouncementPresenter do
     Then { result.country == announcement.country.name }
     And  { result.reach == 1                           }
     And  { result.preview.include? "1st"               }
-    And  { result.last_sent == "November 01"           }
+    And  { result.last_sent.start_with? "November 01"  }
     And  { !result.send_button.include? "disabled"     }
   end
 

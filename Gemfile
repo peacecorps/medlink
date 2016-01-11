@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.2.2'
 
-gem 'rails'
+gem 'rails', '~> 4.2.5'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -23,7 +23,7 @@ gem 'sinatra', require: nil
 gem 'kaminari'
 gem 'virtus'
 gem 'draper'
-gem 'reform'
+gem 'reform', '2.0.5' # FIXME: upgrading breaks `validators_on`
 
 gem 'quiet_assets'
 
