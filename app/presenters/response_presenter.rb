@@ -1,5 +1,6 @@
 class ResponsePresenter < ApplicationPresenter
-  delegate :user, :archived?
+  decorates Response
+  delegate :user, :archived?, :country_id, :orders, :extra_text
 
   def status_btn
     h.link_to h.response_path(model), class: "btn btn-default" do
