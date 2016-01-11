@@ -12,9 +12,10 @@ class ConfirmationsController < Devise::ConfirmationsController
     if confirmer.run permitted_params
       set_flash_message :notice, :confirmed
       sign_in_and_redirect :user, confirmer.user
-    else
-      self.resource = confirmer.user
+    elsif self.resource = confirmer.user
       render action: :show
+    else
+      redirect_to root_path, flash: { error: I18n.t!("flash.user.confirmation_invalid") }
     end
   end
 
