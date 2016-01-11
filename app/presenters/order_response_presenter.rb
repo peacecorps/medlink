@@ -2,7 +2,7 @@ class OrderResponsePresenter < ApplicationPresenter
   delegate_all
 
   def how_past_due
-    due    = DueDate.new(model).due
+    due    = DueDate.new(model).past_due
     finish = responded_at || Time.now
     return unless finish > due
     h.distance_of_time_in_words finish, due

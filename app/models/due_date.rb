@@ -10,7 +10,11 @@ class DueDate
   end
 
   def due
-    @obj.created_at.at_beginning_of_month.next_month + 3.days
+    @obj.created_at.at_beginning_of_month.next_month
+  end
+
+  def past_due
+    due + 3.days
   end
 
   def to_s
