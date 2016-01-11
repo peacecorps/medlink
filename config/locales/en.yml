@@ -22,6 +22,7 @@ en:
       no_changes: "No changes made"
       account_updated: "Your account has been updated"
       none_selected: "Please select a user to edit"
+      active_user: "Success! %{user}'s account has been marked as active"
       inactive_user: "Success! %{user}'s account has been marked as inactive"
 
     csv:
