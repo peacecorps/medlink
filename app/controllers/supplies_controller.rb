@@ -24,6 +24,6 @@ class SuppliesController < ApplicationController
   def toggle_orderable
     supply = Supply.find params[:id]
     supply.toggle!(:orderable)
-    redirect_to :back
+    redirect_to supplies_path anchor: "supply_#{supply.shortcode}"
   end
 end
