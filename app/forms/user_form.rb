@@ -9,7 +9,8 @@ class UserForm < Reform::Form
   property :country_id
   property :pcv_id
 
-  validates :first_name, :last_name, :role, :location, :country_id, :pcv_id, presence: true
+  validates :first_name, :last_name, :role, :location, :country_id, presence: true
+  validates :pcv_id, presence: true, if: :pcv?
   validate :admins_cant_demote_themselves
   validate :check_phone_form
 
@@ -80,5 +81,9 @@ class UserForm < Reform::Form
     else
       "#{key}=#{send key}"
     end
+  end
+
+  def pcv?
+    role.to_s.downcase == "pcv"
   end
 end
