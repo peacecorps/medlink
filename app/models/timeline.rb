@@ -27,6 +27,10 @@ class Timeline
     user.time_zone
   end
 
+  def country_id
+    @user.country_id
+  end
+
   private
 
   def fetch scope
