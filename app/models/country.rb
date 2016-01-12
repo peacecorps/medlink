@@ -17,8 +17,8 @@ class Country < ActiveRecord::Base
   end
   validates :time_zone, inclusion: { in: time_zones.map(&:name) }
 
-  def toggle_supply supply
-    join = country_supplies.where(supply_id: supply.id)
+  def toggle_supply supply_id
+    join = country_supplies.where(supply_id: supply_id)
     if join.exists?
       join.delete_all
     else

@@ -7,6 +7,7 @@ class Supply < ActiveRecord::Base
   before_create { self.shortcode = shortcode.upcase }
 
   default_scope { order name: :asc }
+  scope :globally_available, -> { where orderable: true }
 
   validates :shortcode, presence: true, uniqueness: true
   validates :name, presence: true, uniqueness: true

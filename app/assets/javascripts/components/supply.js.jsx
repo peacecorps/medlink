@@ -11,11 +11,18 @@ this.Supply = React.createClass({
         return base + (this.state.orderable ? "danger" : "default")
     },
     toggle: function() {
-        this.setState({orderable: !this.state.orderable})
-        $.ajax("/supplies/" + this.props.supply.id + "/toggle_orderable", {
-            method: "PATCH"
+        var o = this.state.orderable
+        this.setState({orderable: !o})
+
+        $.ajax(this.props.toggleUrl, {
+            method: "PATCH",
+            error: () => {
+                // TODO: add descriptive notification
+                this.setState({orderable: o})
+            }
         })
     },
+
     render: function() {
         return (
             <tr className={this.state.orderable ? "" : "danger"}>

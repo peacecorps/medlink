@@ -7,7 +7,7 @@ class CountrySuppliesController < ApplicationController
   def toggle
     country = current_user.country
     authorize country, :manage_supplies?
-    country.toggle_supply Supply.find params[:id]
-    redirect_to :back
+    country.toggle_supply params[:id]
+    head :ok
   end
 end

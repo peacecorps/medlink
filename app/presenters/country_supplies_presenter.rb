@@ -5,34 +5,18 @@ class CountrySuppliesPresenter < ApplicationPresenter
   class SupplyPresenter < ApplicationPresenter
     delegate :id, :shortcode
 
-    def initialize supply, available
+    def initialize supply, orderable
       super supply
-      @available = available
+      @orderable = orderable
     end
 
-    def available?
-      @available
-    end
-
-    def name
-      if available?
-        h.content_tag "span", model.name
-      else
-        h.content_tag "s", model.name
-      end
-    end
-
-    def toggle_button
-      klass, icon = available? ? [:danger, :remove] : [:default, :ok]
-      h.button_to h.toggle_country_supply_path(model), method: :patch,
-                  class: "btn btn-#{klass} .toggle_orderable_supply" do
-        h.icon icon
-      end
+    def as_json *_
+      model.as_json.merge orderable: @orderable
     end
   end
 
   def supplies
-    @_supplies ||= Supply.all.map { |s| SupplyPresenter.new s, available?(s) }
+    @_supplies ||= Supply.globally_available.map { |s| SupplyPresenter.new s, available?(s) }
   end
 
   private

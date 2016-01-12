@@ -1,13 +1,9 @@
-this.Supplies = React.createClass({
+// TODO: unify this with the global supply list component
+this.CountrySupplies = React.createClass({
     getInitialState: function() {
         return { supplies: this.props.supplies }
     },
-    newRecord: function(supply) {
-        var s = this.state.supplies.slice()
-        s.push(supply)
-        this.setState({supplies: s})
-    },
-    toggleUrl: function(supply) { return "/supplies/" + supply.id + "/toggle_orderable" },
+    toggleUrl: function(supply) { return "/country/supplies/" + supply.id + "/toggle" },
 
     render: function() {
         return (
@@ -23,7 +19,6 @@ this.Supplies = React.createClass({
                     {this.state.supplies.map((supply) => {
                          return (<Supply key={supply.id} supply={supply} toggleUrl={this.toggleUrl(supply)}/>)
                     })}
-                    <SupplyForm newRecord={this.newRecord}/>
                 </tbody>
             </table>
         )
