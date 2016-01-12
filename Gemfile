@@ -5,9 +5,10 @@ ruby '2.2.2'
 gem 'rails', '~> 4.2.5'
 
 gem 'pg'
-gem 'jquery-rails'
 gem 'slim-rails'
 gem 'jbuilder'
+gem 'jquery-rails'
+gem 'react-rails', '~> 1.5'
 gem 'twilio-ruby'
 gem 'pry-rails'
 

@@ -4,26 +4,22 @@ class SuppliesController < ApplicationController
   end
 
   def index
-    @supplies = SupplyPresenter.decorate_collection Supply.all.order name: :asc
-  end
-
-  def new
-    @supply = Supply.new
+    @supplies = Supply.all.order(name: :asc)
   end
 
   def create
-    @supply = Supply.new(params.require(:supply).permit :shortcode, :name)
-    if @supply.save
+    supply = Supply.new(params.require(:supply).permit :shortcode, :name)
+    if supply.save
       # TODO: should this be on or off for countries by default?
-      redirect_to supplies_path
+      render json: supply
     else
-      render :new
+      head :invalid
     end
   end
 
   def toggle_orderable
     supply = Supply.find params[:id]
     supply.toggle!(:orderable)
-    redirect_to supplies_path anchor: "supply_#{supply.shortcode}"
+    head :ok
   end
 end

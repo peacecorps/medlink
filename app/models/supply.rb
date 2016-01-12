@@ -4,7 +4,7 @@ class Supply < ActiveRecord::Base
   has_many :country_supplies
   has_many :countries, through: :country_supplies
 
-  before_save { self.shortcode = shortcode.upcase }
+  before_create { self.shortcode = shortcode.upcase }
 
   default_scope { order name: :asc }
 

@@ -27,7 +27,7 @@ Medlink::Application.routes.draw do
 
   resources :requests, only: [:new, :create]
 
-  resources :supplies, only: [:index, :new, :create] do
+  resources :supplies, only: [:index, :create] do
     member do
       patch :toggle_orderable
     end
