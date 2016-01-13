@@ -1,39 +1,41 @@
-div ng-app="medlink" ng-controller="countryRosterController"
-  .row.sorttable-controls
-    .col-md-4
-      - if policy(:roster).create?
-        = s3_uploader_form id: "roster_upload_form", callback_url: upload_country_roster_path do
-          = file_field_tag :file, multiple: true, class: "form-control"
-    .col-md-4
-      - if policy(:user).create?
-        = link_to "New User", new_admin_user_path, class: "btn btn-default pull-right"
-    .col-md-4
-      .input-group
-        input ng-model="filter" placeholder="Filter results" class="form-control"
-        span.input-group-addon
-          = icon :search
+= react_component "Roster"
 
-  .row
-    table.table.table-condensed.table-striped.table-hover
-      thead
-        tr
-          = sort :email
-          = sort :first_name
-          = sort :last_name
-          = sort :role
-          = sort :location
-          th Phone(s)
-          th
-      tbody
-        tr ng-repeat="user in users | fallbackFilter:filter | orderBy:sort:reverse" ng-class="user.active ? '' : 'danger'"
-          td= "{{user.email}}"
-          td= "{{user.first_name}}"
-          td= "{{user.last_name}}"
-          td= "{{user.role}}"
-          td= "{{user.location}}"
-          td
-            ul
-              li ng-repeat="phone in user.phones"
-                a href="tel:{{phone}}" = "{{phone}}"
-          td
-            a.btn.btn-default.btn-sm href="/admin/users/{{user.id}}/edit" Edit
+/ div ng-app="medlink" ng-controller="countryRosterController"
+/   .row.sorttable-controls
+/     .col-md-4
+/       - if policy(:roster).create?
+/         = s3_uploader_form id: "roster_upload_form", callback_url: upload_country_roster_path do
+/           = file_field_tag :file, multiple: true, class: "form-control"
+/     .col-md-4
+/       - if policy(:user).create?
+/         = link_to "New User", new_admin_user_path, class: "btn btn-default pull-right"
+/     .col-md-4
+/       .input-group
+/         input ng-model="filter" placeholder="Filter results" class="form-control"
+/         span.input-group-addon
+/           = icon :search
+/
+/   .row
+/     table.table.table-condensed.table-striped.table-hover
+/       thead
+/         tr
+/           = sort :email
+/           = sort :first_name
+/           = sort :last_name
+/           = sort :role
+/           = sort :location
+/           th Phone(s)
+/           th
+/       tbody
+/         tr ng-repeat="user in users | fallbackFilter:filter | orderBy:sort:reverse" ng-class="user.active ? '' : 'danger'"
+/           td= "{{user.email}}"
+/           td= "{{user.first_name}}"
+/           td= "{{user.last_name}}"
+/           td= "{{user.role}}"
+/           td= "{{user.location}}"
+/           td
+/             ul
+/               li ng-repeat="phone in user.phones"
+/                 a href="tel:{{phone}}" = "{{phone}}"
+/           td
+/             a.btn.btn-default.btn-sm href="/admin/users/{{user.id}}/edit" Edit

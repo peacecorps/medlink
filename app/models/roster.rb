@@ -18,7 +18,8 @@ class Roster
   end
 
   def self.for_user user
-    rows = user.admin? ? User : user.country.users
+    # rows = user.admin? ? User : user.country.users
+    rows = user.country.users
     new country: user.country, rows: rows
   end
 
