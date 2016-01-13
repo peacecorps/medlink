@@ -1,5 +1,5 @@
 class Response < ActiveRecord::Base
-  MAX_LENGTH = 160
+  MAX_LENGTH = 250
 
   include Concerns::UserScope
 
