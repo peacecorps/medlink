@@ -7,8 +7,9 @@ class UserReminderPresenter < ApplicationPresenter
 
   def expected?
     response && \
-      response.model.created_at < 2.weeks.ago && \
-      response.delivered_supplies.any?
+    response.model.created_at < 2.weeks.ago && \
+    !response.model.received? && \
+    response.delivered_supplies.any?
   end
 
   def age
