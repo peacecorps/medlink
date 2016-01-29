@@ -2,6 +2,7 @@ class RosterForm < Reform::Form
   property :country
 
   validate :country
+  validate :recognized_headers
 
   class RowForm < Reform::Form
     property :email
@@ -29,5 +30,13 @@ class RosterForm < Reform::Form
 
   def valid_emails
     rows.reject { |r| r.errors.any? }.map &:email
+  end
+
+  private
+
+  def recognized_headers
+    if model.extra_columns.any?
+      errors.add :headers, "Unrecognized headers: #{model.extra_columns.to_sentence}"
+    end
   end
 end

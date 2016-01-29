@@ -38,6 +38,6 @@ Medlink::Application.configure do
 
   config.pingbot = Slackbot.new \
     channel:    "#medlink-logs",
-    username:   "Medlink",
+    username:   "Medlink [DEV]",
     icon_emoji: ":hospital:"
 end

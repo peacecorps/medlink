@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
     yield
     duration = Time.now - start
     if duration > Rails.configuration.slow_timeout.seconds
-      Notification.send :slow, "#{params[:controller]}##{params[:action]} took #{duration} (#{request.path})"
+      Notification.send :slow, "#{params[:controller]}##{params[:action]} took #{duration} for user #{current_user.try(:id) || '??'} (#{request.path})"
     end
   end
 

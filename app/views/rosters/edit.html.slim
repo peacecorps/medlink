@@ -4,6 +4,10 @@
   - if @roster.errors.any?
     .alert.alert-danger
       h4 Please correct the following errors
+      - if @roster.errors[:headers]
+        - @roster.errors[:headers].each do |err|
+          = err
+        p Allowed headers are: #{@roster.headers.to_sentence}
   table.table.table-hover
     thead
       th

@@ -1,10 +1,9 @@
 class Roster
-  UnrecognizedHeader = Class.new StandardError
-
   include ActiveModel::Model
   include Virtus.model
   attribute :country
   attribute :rows
+  attribute :extra_columns
 
   def self.headers
     %w(email phone phone2 first_name last_name pcv_id role location time_zone)
@@ -13,8 +12,7 @@ class Roster
   def self.from_csv csv, country:
     rows = CSV.parse csv.strip, headers: true, converters: ->(f) { f ? f.strip : nil }
     unrecognized = rows.headers - headers
-    raise UnrecognizedHeader, unrecognized.to_sentence if unrecognized.any?
-    new country: country, rows: rows.map { |r| Row.new r.to_hash }
+    new country: country, rows: rows.map { |r| Row.new r.to_hash }, extra_columns: unrecognized
   end
 
   def self.for_user user
