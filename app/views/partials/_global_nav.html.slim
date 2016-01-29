@@ -48,9 +48,9 @@ nav.navbar.navbar-default role="navigation"
             li= link_to 'Requests', manage_orders_path
             li= link_to 'Responses', responses_path
             li= link_to 'Reports', reports_path
-            / Inline the gear menu when collapsed
-            = render partial: "partials/gear_dropdown", locals: { klass: "collapsed-only" }
 
+          / Inline the gear menu when collapsed
+          = render partial: "partials/gear_dropdown", locals: { klass: "collapsed-only" }
           / Gear dropdown menu for wide resolutions
           li.uncollapsed.dropdown
             a.dropdown-toggle data-toggle="dropdown" href="#"
