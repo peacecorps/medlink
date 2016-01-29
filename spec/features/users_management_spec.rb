@@ -32,9 +32,31 @@ RSpec.describe "managing users" do
 
     expect(page).to have_validation_error "Last name", "can't be blank"
     fill_in "Last name", with: "Updated"
+    fill_in "Phone numbers", with: "+15551, +15553"
     click_on "Update User"
 
-    expect(user.reload.last_name).to eq "Updated"
+    expect(flash).to have_content "last_name=Updated"
+    expect(flash).to have_content "phone_numbers=+15551, +15553"
+    expect(flash).not_to have_content "country"
+
+    visit edit_admin_user_path(user)
+    within ".edit_user" do
+      select "Tonga", from: "Country"
+    end
+    click_on "Update User"
+
+    expect(flash).to have_content "country=Tonga"
+    expect(flash).not_to have_content "phone_numbers="
+
+    user.reload
+    expect(user.last_name).to eq "Updated"
+    expect(user.country.name).to eq "Tonga"
+
+    visit edit_admin_user_path(user)
+    within ".edit_user" do
+      select "Togo", from: "Country"
+    end
+    click_on "Update User"
 
     visit edit_admin_user_path(user)
     select "First Updated", from: "user_id"

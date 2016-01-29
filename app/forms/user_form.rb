@@ -24,6 +24,7 @@ class UserForm < Reform::Form
     super
     @phone_form = PhoneSyncForm.new model
     Pundit.authorize submitter, model, :update?
+    @_country_id = country_id
   end
 
   def flash
@@ -38,6 +39,7 @@ class UserForm < Reform::Form
     @phone_form.to_s
   end
   def phone_numbers= numbers
+    @phones_changed = (numbers != phone_numbers)
     @phone_form.validate numbers: numbers
   end
 
@@ -74,7 +76,11 @@ class UserForm < Reform::Form
 
   def changed_fields
     base = changed.select { |_,v| v }.keys
-    @phone_form.changed? ? base + %w( phone_numbers ) : base
+    base.delete "country_id"
+    # Reform's `changed` tracking leaves something to be desired ...
+    base.push "phone_numbers" if @phones_changed
+    base.push "country_id" if @_country_id.to_s != country_id.to_s
+    base
   end
 
   def change_summary
