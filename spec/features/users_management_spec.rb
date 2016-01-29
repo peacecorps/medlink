@@ -26,7 +26,7 @@ RSpec.describe "managing users" do
     user = User.find_by_email "new_user@example.com"
     visit edit_admin_user_path(user)
 
-    expect(page).not_to have_content "Email"
+    expect(page).not_to have_content "can't be blank"
     fill_in "Last name", with: ""
     click_on "Update User"
 

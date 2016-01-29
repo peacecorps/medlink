@@ -1,6 +1,7 @@
 class UserForm < Reform::Form
   property :submitter, virtual: true
   property :phone_numbers, virtual: true
+  property :email
   property :first_name
   property :last_name
   property :role
@@ -9,10 +10,11 @@ class UserForm < Reform::Form
   property :country_id
   property :pcv_id
 
-  validates :first_name, :last_name, :role, :location, :country_id, presence: true
+  validates :email, :first_name, :last_name, :role, :location, :country_id, presence: true
   validates :pcv_id, presence: true, if: :pcv?
   validate :admins_cant_demote_themselves
   validate :check_phone_form
+  validate :email_is_available
 
   def model_name
     ::ActiveModel::Name.new User
@@ -42,6 +44,8 @@ class UserForm < Reform::Form
   def save
     super
     @phone_form.save
+    Notification.send :updated_user,
+      "#{model.email} (##{model.id}) has been updated - #{change_summary}"
   end
 
   def active?
@@ -59,6 +63,12 @@ class UserForm < Reform::Form
   def admins_cant_demote_themselves
     if submitter == model && submitter.admin? && role != :admin
       errors.add :role, "can't demote yourself"
+    end
+  end
+
+  def email_is_available
+    if User.where(email: email).where.not(id: model.id).exists?
+      errors.add :email, "is already in use"
     end
   end
 

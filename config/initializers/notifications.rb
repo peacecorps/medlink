@@ -45,6 +45,7 @@ Notification = NotificationCenter.configure do |c|
   c.on :slow,                     &ping
   c.on :spam_warning,             &ping
   c.on :unrecognized_sms,         &ping
+  c.on :updated_user,             &ping
   c.on :sending_response,         &log
   c.on :prompt_for_ack,           &log
   c.on :delivery_failure,         &log

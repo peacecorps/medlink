@@ -19,7 +19,7 @@ RSpec.describe NewUserForm do
 
     When(:result) { form.validate attrs.merge(email: saved.email) }
 
-    Then { result == false                             }
-    And  { form.errors[:email] == ["is already taken"] }
+    Then { result == false                              }
+    And  { form.errors[:email] == ["is already in use"] }
   end
 end
