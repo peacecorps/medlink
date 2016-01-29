@@ -42,7 +42,7 @@ class PhoneSyncForm < Reform::Form
   end
 
   def numbers_arent_taken
-    taken = Phone.where(condensed: condensed).where.not user: [model, nil]
+    taken = Phone.conflicts user: model, condensed: condensed
     if taken.any?
       errors.add :numbers, "phone numbers are already in use: #{taken.pluck(:number).join ', '}"
     end

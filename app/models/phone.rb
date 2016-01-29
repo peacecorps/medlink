@@ -7,7 +7,7 @@ class Phone < ActiveRecord::Base
   end
 
   include Concerns::Immutable
-  validates :condensed, presence: true, uniqueness: true
+  validates :condensed, presence: true, uniqueness: true, on: :create
   immutable :number, :condensed
 
   def has_country_code
@@ -29,5 +29,11 @@ class Phone < ActiveRecord::Base
     else
       Phone.create! number: number, condensed: normalized
     end
+  end
+
+  def self.conflicts condensed:, user:
+    Phone.includes(:user).
+      where.not(user_id: [user.id, nil]).
+      where(condensed: condensed, users: { active: true })
   end
 end
