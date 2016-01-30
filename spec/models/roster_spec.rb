@@ -12,10 +12,11 @@ RSpec.describe Roster do
   context "loading an initial roster" do
     When(:result) { initial.save }
 
-    Then { result == true                                            }
-    And  { country.users.pcv.count == 2                              }
-    And  { Phone.count == 3                                          }
-    And  { mail.map(&:to).flatten == country.users.pcv.pluck(:email) }
+    Then { result == true               }
+    And  { country.users.pcv.count == 2 }
+    And  { Phone.count == 3             }
+    And  { mail.map(&:to).flatten.sort ==
+             country.users.pcv.pluck(:email).sort }
   end
 
   context "updating an existing roster" do
