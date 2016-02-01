@@ -4,7 +4,7 @@ class Api::V1::AuthController < Api::V1::BaseController
 
   def login
     user = User.find_for_authentication email: params[:email]
-    if user.valid_password?(params[:password])
+    if user && user.valid_password?(params[:password])
       user.ensure_secret_key!
       render json: { id: user.id, secret_key: user.secret_key }
     else
