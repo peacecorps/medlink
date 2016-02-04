@@ -28,7 +28,7 @@ private
 
   def check_for_unrecognized
     return unless unrecognized_shortcodes.any?
-    Notification.send :unrecognized_sms, "#{sms.id}) #{sms.text}"
+    Notification.send :unrecognized_sms, "Unhandled SMS (##{sms.id}): `#{sms.text}`"
     error! "sms.unrecognized_shortcodes",
            { codes: unrecognized_shortcodes }, condense: :code
   end
