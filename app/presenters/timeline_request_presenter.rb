@@ -1,5 +1,5 @@
 class TimelineRequestPresenter < ApplicationPresenter
-  delegate :text
+  delegate :country_id, :text
 
   def type
     :request

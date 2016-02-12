@@ -1,5 +1,5 @@
 class TimelineMessagePresenter < ApplicationPresenter
-  delegate :text
+  delegate :country_id, :text
 
   def type
     :sms

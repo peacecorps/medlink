@@ -1,6 +1,6 @@
 class TimelineResponsePresenter < ApplicationPresenter
   decorates Response
-  delegate :user_id, :extra_text
+  delegate :country_id, :user_id, :extra_text
 
   def self.anchor id
     "response-#{id}"
