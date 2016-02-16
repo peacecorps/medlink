@@ -76,7 +76,7 @@ Medlink::Application.configure do
     Bullet.rollbar = true
   end
 
-  config.send_texts = true
+  config.sms.method = :delivery
 
   slack_name = ENV["SLACK_BOT_NAME"] || "Medlink"
 
@@ -88,5 +88,4 @@ Medlink::Application.configure do
     channel:    "#medlink-logs",
     username:   "Medlink",
     icon_emoji: ":hospital:"
-  config.sms.method = :delivery
 end

@@ -2,8 +2,11 @@ module Sms
   class SendConfig
     attr_reader :last
 
+    STORE    = :store
+    DELIVERY = :delivery
+
     def deliver sms:, twilio: nil
-      if @method == :deliver
+      if @method == DELIVERY
         # :nocov:
         twilio.client.messages.create sms
         # :nocov:
@@ -13,7 +16,11 @@ module Sms
     end
 
     def method= m
-      @method = m.to_sym
+      if [STORE, DELIVERY].include? m.to_sym
+        @method = m.to_sym
+      else
+        raise "Unknown delivery method: `#{method}`"
+      end
     end
   end
 end
