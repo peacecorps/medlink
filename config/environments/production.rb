@@ -82,10 +82,10 @@ Medlink::Application.configure do
 
   config.slackbot = Slackbot.new \
     channel:    "#medlink",
-    username:   "Medlink",
+    username:   slack_name,
     icon_emoji: ":hospital:"
   config.pingbot = Slackbot.new \
     channel:    "#medlink-logs",
-    username:   "Medlink",
+    username:   slack_name,
     icon_emoji: ":hospital:"
 end

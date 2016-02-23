@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   after_action :verify_authorized, except: :index, unless: :devise_controller?
 
-  around_action :alert_if_slow
+  if Rails.env.production?
+    around_action :alert_if_slow
+  end
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
