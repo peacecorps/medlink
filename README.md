@@ -21,10 +21,34 @@ To get started with a local copy of the project, run
 ```bash
 $ git clone git@github.com:PeaceCorps/medlink.git
 $ bundle --without production
-$ rake db:setup
+```
+You'll want to set up Figaro now
+
+Run this command:
+```bash
+$ rails generate figaro:install
 ```
 
-*Optional* admin setup. Make sure git is [configured](https://help.github.com/articles/set-up-git) globally as this becomes your admin username. 
+This creates a commented config/application.yml file and ignores it in your .gitignore. Add the S3 configurations in this file like below. You can leave leave the strings empty if you don't want to use uploads.
+
+```
+development:
+  s3_access_key_id: "yourid"
+  s3_secret_access_key: "yourkey"
+  s3_bucket_name: "yourbucket"
+
+test:
+  s3_access_key_id: "yourid"
+  s3_secret_access_key: "yourkey"
+  s3_bucket_name: "yourbucket"
+```
+
+From here you can get yoru database setup:
+
+```bash
+$ rake db:setup
+```
+*Optional* admin setup. Make sure git is [configured](https://help.github.com/articles/set-up-git) globally as this becomes your admin username.
 
 ```bash
 $ rake admin:create
