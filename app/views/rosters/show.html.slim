@@ -6,7 +6,7 @@ div ng-app="medlink" ng-controller="countryRosterController"
           = file_field_tag :file, multiple: true, class: "form-control"
     .col-md-4
       - if policy(:user).create?
-        = link_to "New User", new_admin_user_path, class: "btn btn-default pull-right"
+        = link_to "New User", new_admin_user_path, class: "btn btn-default"
     .col-md-4
       .input-group
         input ng-model="filter" placeholder="Filter results" class="form-control"
