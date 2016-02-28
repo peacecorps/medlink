@@ -6,7 +6,7 @@ json.requests @requests.includes orders: :response do |request|
     if order.response_id
       json.response do
         json.(order.response, :id, :created_at)
-        json.type order.delivery_method.title
+        json.type order.delivery_method.try(:title)
       end
     else
       json.response nil
