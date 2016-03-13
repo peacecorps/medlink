@@ -15,7 +15,10 @@ json.supplies request.orders.includes(:response) do |order|
       end
     end
 
-    if response.received?
+    if order.delivery_method == DeliveryMethod::Denial
+      json.status "denied"
+      json.denied_at response.received_at
+    elsif response.received?
       json.status "received"
       json.received_at response.received_at
     elsif response.flagged?
