@@ -1,10 +1,11 @@
 class Api::V1::RequestsController < Api::V1::BaseController
   def create
-    @request = RequestForm.new current_user.personal_requests.new
-    if save_form @request, supplies: params[:supply_ids], text: params[:message]
+    form = RequestForm.new current_user.personal_requests.new
+    if save_form form, supplies: params[:supply_ids], text: params[:message]
+      @request = form.model
       render :show
     else
-      invalid @request
+      invalid form
     end
   end
 
