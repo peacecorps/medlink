@@ -1,9 +1,14 @@
 class SMS::ReceiptRecorder < SMS::Handler
+  Received = :received
+  Flagged  = :flagged
+
   def intent
     if ["yes", "y", "got it","got it!", "ok", "okay", "yes!", "yes.", "si", "si!", "-yes", "I recieved my medicine", "yes. Thanks!", "yes. Thank you.", "yes. Thank you!", "yes and thank you", "yes and thank you!", "yea", "yeah", "hi, yes!", "hi, yes!", "yes:)", "yes :)", "Yes, thanks for checking!", "Yes I did!", "Got it :) Thanks!", "yes i did. thanks", "Yes (received order)"].include? stripped
-      :received
+      Received
+    elsif stripped =~ /^yes/i
+      Received
     elsif ["no", "no!", "n", "nope", "flag", "not yet", "not yet."].include? stripped
-      :flagged
+      Flagged
     end
   end
 
@@ -12,15 +17,15 @@ class SMS::ReceiptRecorder < SMS::Handler
   end
 
   def run!
-    if response.nil? || response.flagged? || response.archived?
+    if user.nil? || response.nil? || response.flagged? || response.archived?
       Notification.send :invalid_response_receipt,
         "Could not process sms '#{sms.id}' for response '#{response.try :id}'"
       error! "sms.no_outstanding_responses"
     end
 
-    if intent == :flagged
+    if intent == Flagged
       receipt_tracker.flag_for_follow_up
-    elsif intent == :received
+    elsif intent == Received
       receipt_tracker.acknowledge_receipt
     end
 
