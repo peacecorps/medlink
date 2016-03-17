@@ -19,7 +19,7 @@ class SMS::ReceiptRecorder < SMS::Handler
   def run!
     if user.nil? || response.nil? || response.flagged? || response.archived?
       Notification.send :invalid_response_receipt,
-        "Could not process sms '#{sms.id}' for response '#{response.try :id}'"
+        "Could not process sms ##{sms.id} (#{stripped}) for response ##{response.try :id}"
       error! "sms.no_outstanding_responses"
     end
 
