@@ -44,6 +44,11 @@ class User < ActiveRecord::Base
     @_primary_phone ||= phones.first
   end
 
+  def claim_phone_number number
+    p = Phone.for number: number
+    p.update! user: self
+  end
+
   def name
     "#{first_name} #{last_name}".strip
   end

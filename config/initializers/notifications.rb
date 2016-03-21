@@ -36,19 +36,20 @@ Notification = NotificationCenter.configure do |c|
   ping  = ->(msg) { Rails.configuration.pingbot.info msg  }
   log   = ->(msg) { Rails.logger.info msg                 }
 
-  c.on :sending_country_sms,      &slack
-  c.on :user_activated,           &slack
-  c.on :invalid_response_receipt, &slack
-  c.on :announcement_scheduled,   &ping
-  c.on :error_in_job,             &ping
-  c.on :flag_for_followup,        &ping
-  c.on :slow,                     &ping
-  c.on :spam_warning,             &ping
-  c.on :unrecognized_sms,         &ping
-  c.on :updated_user,             &ping
-  c.on :sending_response,         &log
-  c.on :prompt_for_ack,           &log
-  c.on :delivery_failure,         &log
+  c.on :sending_country_sms,       &slack
+  c.on :user_activated,            &slack
+  c.on :invalid_response_receipt,  &slack
+  c.on :invalid_roster_upload_row, &slack
+  c.on :announcement_scheduled,    &ping
+  c.on :error_in_job,              &ping
+  c.on :flag_for_followup,         &ping
+  c.on :slow,                      &ping
+  c.on :spam_warning,              &ping
+  c.on :unrecognized_sms,          &ping
+  c.on :updated_user,              &ping
+  c.on :sending_response,          &log
+  c.on :prompt_for_ack,            &log
+  c.on :delivery_failure,          &log
 
   c.unhandled do |key, msg|
     error = "Unhandled `#{key}` - '#{msg}'"

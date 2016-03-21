@@ -29,6 +29,10 @@ class Roster
     def persisted?; end
     def save; end
 
+    def email
+      super.strip.downcase
+    end
+
     def user_hash
       {
         email:      email,
@@ -41,8 +45,8 @@ class Roster
       }
     end
 
-    def phone_hashes
-      [phone, phone2].select(&:present?).map { |number| { number: number } }
+    def phone_numbers
+      [phone, phone2].select(&:present?)
     end
   end
 
@@ -81,17 +85,26 @@ class Roster
 
   def import_new_users
     new_rows.each do |row|
-      user = country.users.create! row.user_hash.merge password: Devise.friendly_token
-      row.phone_hashes.each { |data| user.phones.create! data }
-      user
+      begin
+        user = country.users.create! row.user_hash.merge password: Devise.friendly_token
+        row.phone_numbers.each { |number| user.claim_phone_number number }
+      rescue => e
+        Notification.send :invalid_roster_upload_row,
+          "Failed to create from upload row #{row.user_hash}: #{e}"
+      end
     end
   end
 
   def update_existing_users
     existing_rows.each do |row|
       user = existing_users.fetch row.email
-      user.update! row.user_hash
-      row.phone_hashes.each { |data| user.phones.first_or_create! data }
+      begin
+        user.update! row.user_hash
+        row.phone_numbers.each { |number| user.claim_phone_number number }
+      rescue => e
+        Notification.send :invalid_roster_upload_row,
+          "Failed to update from upload row #{row.user_hash}: #{e}"
+      end
     end
   end
 
