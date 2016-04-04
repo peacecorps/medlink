@@ -39,7 +39,7 @@ Notification = NotificationCenter.configure do |c|
   c.on :sending_country_sms,       &slack
   c.on :user_activated,            &slack
   c.on :invalid_response_receipt,  &slack
-  c.on :invalid_roster_upload_row, &slack
+  c.on :invalid_roster_upload_row, &ping
   c.on :announcement_scheduled,    &ping
   c.on :error_in_job,              &ping
   c.on :flag_for_followup,         &ping
