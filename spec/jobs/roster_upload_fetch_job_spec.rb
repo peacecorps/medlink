@@ -18,6 +18,5 @@ RSpec.describe RosterUploadFetchJob do
     Then { result == Failure(RosterUpload::FetchFailed, /#{roster.id}/) }
     And  { !roster.body.present?                                        }
     And  { !roster.fetched?                                             }
-    And  { slackbot.messages.last =~ /upload/                           }
   end
 end
