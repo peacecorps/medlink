@@ -8,10 +8,11 @@ json.supplies request.orders.includes(:response) do |order|
   if order.response_id
     json.response do
       json.(order.response, :id, :created_at)
+      json.extra_information response.extra_text
       if order.duplicated_at
         json.type "duplicate"
       else
-        json.type order.delivery_method.title
+        json.type order.delivery_method.name
       end
     end
 
