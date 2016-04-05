@@ -9,6 +9,13 @@ namespace :report do
     File.write report.filename, report.to_csv
     puts "Done"
   end
+
+  desc "Upload named report"
+  task :upload, [:name] => :environment do |_,args|
+    name = args[:name] || ENV["NAME"]
+    ReportUploader.new(name).run!
+    puts "Done"
+  end
 end
 
 task :report => ["report:run"]

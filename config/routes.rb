@@ -86,6 +86,7 @@ Medlink::Application.routes.draw do
   root to: 'pages#root'
 
   post '/medrequest' => 'twilio#receive'
+  post '/slack'      => 'slack#command'
 
   authenticate :user, lambda { |u| u.admin? } do
     mount Sidekiq::Web => '/sidekiq', as: 'sidekiq'
