@@ -59,8 +59,6 @@ Medlink::Application.routes.draw do
       end
     end
 
-    get '/roster2' => 'rosters#new_show'
-
     resource :roster, only: [:show, :edit, :update] do
       collection do
         post :upload
@@ -97,6 +95,10 @@ Medlink::Application.routes.draw do
     namespace :v1 do
       post '/auth' => 'auth#login'
       get  '/auth' => 'auth#test'
+
+      resources :countries, only: [] do
+        resources :users, only: [:index]
+      end
 
       resources :supplies, only: [:index] do
         collection do

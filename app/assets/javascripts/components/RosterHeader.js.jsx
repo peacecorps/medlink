@@ -18,6 +18,7 @@ window.RosterHeader = React.createClass({
             {header("first_name", "First Name")}
             {header("last_name", "Last Name")}
             {header("role", "Role")}
+            {header("pcv_id", "PCV ID")}
             {header("location", "Location")}
             {header("phones", "Phones")}
             <th></th>

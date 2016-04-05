@@ -26,23 +26,22 @@ window.Roster = React.createClass({
             sortColumn:               'last_name',
             sortDirection:            'asc',
             searchFilter:             '',
-            editingUser:              null,
-            editingFieldName:         null,
-            currentlyFetchingCountry: null
+            currentlyFetchingCountry: null,
+            truncating:               (this.props.countriesToLoad.length > 1)
         }
     },
 
     // Fetching user data from server
     componentWillMount: function() {
-        this.fetchNextCountry(this.props.countries)
+        this.fetchNextCountry(this.props.countriesToLoad.slice())
     },
     fetchNextCountry: function(countries) {
         const next = countries.shift()
         if (next) {
             this.setState({ currentlyFetchingCountry: next.name })
-            $.ajax(`/api/v1/users?country_id=${next.id}`, {
+            $.ajax(`/api/v1/countries/${next.id}/users`, {
                 success: (data) => {
-                    this.loadUsers(data.users)
+                    this.loadUsers(next.name, data.users)
                     this.fetchNextCountry(countries)
                 }
             })
@@ -50,9 +49,11 @@ window.Roster = React.createClass({
             this.setState({ currentlyFetchingCountry: null })
         }
     },
-    loadUsers: function(newUsers) {
+    loadUsers: function(country, newUsers) {
         const users = Object.assign({}, this.state.users)
-        newUsers.forEach(u => users[u.id] = u)
+        newUsers.forEach(u =>
+            users[u.id] = Object.assign({country: country}, u)
+        )
         this.setState({ users: users })
     },
 
@@ -84,42 +85,34 @@ window.Roster = React.createClass({
         const sorted = array.sort((a,b) => {
             return a[sortKey] < b[sortKey] ? -1 : 1
         })
-        return this.state.sortDirection == 'asc' ? sorted.reverse() : sorted
+        return this.state.sortDirection == 'desc' ? sorted.reverse() : sorted
     },
     results: function() {
         return this.sort(this.filteredUsers())
     },
+    truncatedResults: function() {
+        const results = this.results()
+        if (this.state.truncating) {
+            return [results.slice(0, 50), results.length]
+        } else {
+            return [results, results.length]
+        }
+    },
 
     // Editing and updating records
-    onSelect: function(user, field) {
-        this.setState({ editingUser: user, editingFieldName: field })
-    },
-    getValue: function(user, field) {
-        return this.state.users[''+user.id][field]
-    },
-    setValue: function(user, field, value) {
+    replaceUser: function(user) {
         const users = Object.assign({}, this.state.users)
-        users[''+user.id][field] = value
+        users[''+user.id] = user
         this.setState({ users: users })
     },
-    stopEditing: function() {
-        this.setState({ editingUser: null, editingFieldName: null })
-    },
-    submitChange: function(user, field, value) {
-        const oldValue = this.getValue(user, field)
-        if (value === oldValue) {
-            this.stopEditing()
-            return
-        }
+    saveChanges: function(user, changes) {
+        if (Object.keys(changes).length === 0) { return }
 
-        this.setValue(user, field, value)
-
-        const data = {}
-        data[field] = value
+        this.replaceUser(Object.assign({}, user, changes))
 
         $.ajax(`/api/v1/users/${user.id}`, {
             method:  `PATCH`,
-            data:    { user: data },
+            data:    { user: changes },
             success: () => {},
             error:   (request, e) => {
                 const errors = JSON.parse(request.responseText).errors
@@ -127,19 +120,20 @@ window.Roster = React.createClass({
                     message: errors,
                     type:    "error"
                 })
-                this.setValue(user, field, oldValue)
+                this.replaceUser(user)
             }
         })
-        this.stopEditing()
     },
 
     // Rendering
     render: function() {
-        const results   = this.results()
-        const displayed = results.slice(0, 50)
+        const truncatedResults = this.truncatedResults()
+        const displayed        = truncatedResults[0]
+        const totalCount       = truncatedResults[1]
 
         return (<main>
             <div className="row sorttable-controls">
+                {this.props.children}
                 <div className="col-md-4">
                     <RosterFilter onChange={this.handleFilterChange}/>
                 </div>
@@ -159,15 +153,12 @@ window.Roster = React.createClass({
                             <RosterRow
                                 key          = {user.id}
                                 user         = {user}
-                                editingUser  = {this.state.editingUser === user}
-                                editingField = {this.state.editingFieldName}
-                                onSelect     = {this.onSelect}
-                                submitChange = {this.submitChange}
+                                saveChanges  = {this.saveChanges}
                             />
                         )}
                     </tbody>
                 </table>
-                <TruncationWarning displayedCount={displayed.length} totalCount={results.length}/>
+                <TruncationWarning displayedCount={displayed.length} totalCount={totalCount}/>
             </div>
         </main>)
     }

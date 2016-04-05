@@ -1,9 +1,6 @@
 class RostersController < ApplicationController
   def show
-    authorize :roster, :show?
-  end
-
-  def new_show
+    @countries = current_user.countries_managed_by_priority
     authorize :roster, :show?
   end
 

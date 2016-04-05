@@ -86,4 +86,20 @@ class User < ActiveRecord::Base
   def ensure_secret_key!
     update! secret_key: ApiAuth.generate_secret_key unless secret_key.present?
   end
+
+  def countries_managed_by_priority
+    if admin?
+      Country.all.to_a.sort do |a,b|
+        if a.id == country_id
+          -1
+        elsif b.id == country_id
+          1
+        else
+          a.name <=> b.name
+        end
+      end
+    else
+      [country]
+    end
+  end
 end

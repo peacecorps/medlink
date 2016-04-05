@@ -1,45 +1,80 @@
 window.RosterRow = React.createClass({
     propTypes: {
         user: React.PropTypes.object.isRequired,
-        editingUser: React.PropTypes.bool.isRequired,
-        editingField: React.PropTypes.string,
-        onSelect: React.PropTypes.func.isRequired,
-        submitChange: React.PropTypes.func.isRequired
+        saveChanges: React.PropTypes.func.isRequired,
+    },
+    getInitialState: function() {
+        return { editing: false, changes: {} }
+    },
+    handleStart: function() {
+        this.setState({ editing: true })
+    },
+    handleCancel: function(e) {
+        e.preventDefault()
+        this.setState({ editing: false })
+    },
+    handleSave: function() {
+        this.props.saveChanges(this.props.user, this.state.changes)
+        this.setState({ editing: false, changes: {} })
+    },
+    handleChange: function(name) {
+        return (value) => {
+            const changes = this.state.changes
+            changes[name] = value
+            this.setState({ changes: changes })
+        }
     },
     render: function() {
-        const { user, editingUser, editingField, onSelect, submitChange } = this.props
+        const { user, saveChanges } = this.props
 
-        const makeField = (name) => {
-            const editing = editingUser && name === editingField
+        const makeField = (name, renderer) => {
+            let value = this.state.changes[name]
+            if (value === undefined) { value = user[name] }
 
-            return <RosterField
-                       user         = {user}
-                       name         = {name}
-                       editing      = {editing}
-                       onSelect     = {onSelect}
-                       submitChange = {submitChange}
-                   />
+            return <td><RosterField
+                value    = {value}
+                editing  = {this.state.editing}
+                onChange = {this.handleChange(name)}
+                renderer = {renderer}
+            /></td>
         }
 
         return <tr>
             {makeField("email")}
             {makeField("first_name")}
             {makeField("last_name")}
-            <td>{user.role}</td>
+            {makeField("role", RoleField)}
+            {makeField("pcv_id")}
             {makeField("location")}
-            <td>
-                <ul>
-                    {user.phones.map((p,i) =>
-                        <li key={`${user.id}:${i}:${p}`}><a href={`tel:${p}`}>{p}</a></li>
-                    )}
-                </ul>
-            </td>
-            <td>
-                <a
-                    href={`/admin/users/{user.id}/edit`}
-                    className="btn btn-default btn-sm"
-                    target="_blank">Edit</a>
-            </td>
+            {makeField("phones", PhonesField)}
+            <EditButtons
+                userId   = {user.id}
+                editing  = {this.state.editing}
+                onStart  = {this.handleStart}
+                onCancel = {this.handleCancel}
+                onSave   = {this.handleSave}
+            />
         </tr>
     }
 })
+
+const EditButtons = ({ userId, editing, onStart, onSave, onCancel }) => {
+    if (editing) {
+        return <td>
+            <a className="btn btn-primary btn-sm"
+                onClick={onSave}>Save</a>
+            {' '}
+            <a className="btn btn-default btn-sm"
+                onClick={onCancel}>Cancel</a>
+        </td>
+    } else {
+        return <td>
+            <a className="btn btn-default btn-sm"
+                onClick={onStart}>Edit</a>
+            {' '}
+            <a href={`/admin/users/${userId}/edit`}
+                className="btn btn-default btn-sm"
+                target="_blank">View</a>
+        </td>
+    }
+}

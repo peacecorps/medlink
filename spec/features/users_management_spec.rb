@@ -10,7 +10,13 @@ RSpec.describe "managing users" do
       click_on "Manage Users"
     end
 
-    click_on "New User"
+    # FIXME: this is an artifact of the awkward way we're nesting
+    #   non-React contents inside the React Roster component, causing
+    #   it to be double-rendered on the page.
+    #   Once the upload is consistent, we should replace this with the
+    #   more natural `click_on "New User"`
+    button = find_all("a", text: "New User").first
+    button.click
     fill_in "First name", with: "First"
     fill_in "Last name", with: "Last"
     fill_in "Address / location", with: "Place"
