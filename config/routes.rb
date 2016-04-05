@@ -98,7 +98,11 @@ Medlink::Application.routes.draw do
       post '/auth' => 'auth#login'
       get  '/auth' => 'auth#test'
 
-      resources :supplies, only: [:index]
+      resources :supplies, only: [:index] do
+        collection do
+          get '/all' => 'supplies#master_list'
+        end
+      end
 
       resources :requests, only: [:create, :index]
 
