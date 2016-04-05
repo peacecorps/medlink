@@ -16,5 +16,7 @@
 //= require messenger-theme-future
 //= require chosen.jquery
 //= require s3_direct_upload
+//= require react
+//= require react_ujs
 //= require main
 //= require_tree .

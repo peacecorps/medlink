@@ -32,6 +32,8 @@ gem 'bullet'
 gem 'bootstrap_form'
 gem 's3_direct_upload'
 
+gem 'react-rails'
+
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'

@@ -1,0 +1,19 @@
+/ TODO:
+/ * Reactify these
+/ * Clean up country id selection, controller logic
+.row.sorttable-controls
+  .col-md-4
+    - if policy(:roster).create?
+      = s3_uploader_form id: "roster_upload_form", callback_url: upload_country_roster_path do
+        = file_field_tag :file, multiple: true, class: "form-control"
+  .col-md-4
+    - if policy(:user).create?
+      = link_to "New User", new_admin_user_path, class: "btn btn-default"
+
+- if current_user.admin?
+  - countries = Country.all.to_a
+  - countries.delete current_user.country
+  - countries.unshift current_user.country
+- else
+  - countries = [current_user.country]
+= react_component 'Roster', countries: countries

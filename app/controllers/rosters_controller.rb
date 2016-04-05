@@ -3,6 +3,10 @@ class RostersController < ApplicationController
     authorize :roster, :show?
   end
 
+  def new_show
+    authorize :roster, :show?
+  end
+
   def upload
     upload = current_user.roster_uploads.new \
       uri: params[:file], country: current_user.country

@@ -59,6 +59,8 @@ Medlink::Application.routes.draw do
       end
     end
 
+    get '/roster2' => 'rosters#new_show'
+
     resource :roster, only: [:show, :edit, :update] do
       collection do
         post :upload
@@ -100,7 +102,7 @@ Medlink::Application.routes.draw do
 
       resources :requests, only: [:create, :index]
 
-      resources :users, only: [:index]
+      resources :users, only: [:index, :update]
 
       resources :responses, only: [] do
         member do
