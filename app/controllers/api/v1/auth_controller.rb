@@ -1,5 +1,5 @@
 class Api::V1::AuthController < Api::V1::BaseController
-  skip_before_action :authenticate_user!, only: [:login]
+  skip_before_action :authenticate_user!, only: [:login, :phone_login]
   skip_after_action  :verify_authorized
 
   def login
@@ -12,7 +12,22 @@ class Api::V1::AuthController < Api::V1::BaseController
     end
   end
 
+  def phone_login
+    p = Phone.find_by condensed: "+#{params[:number]}"
+    if p && p.user_id && valid_bot_token?
+      p.user.ensure_secret_key!
+      render json: { id: p.user_id, secret_key: p.user.secret_key }
+    end
+  end
+
   def test
     @user = current_user
+  end
+
+  private
+
+  def valid_bot_token?
+    ActiveSupport::SecurityUtils.secure_compare \
+      Figaro.env.telegram_bot_token!, params[:token]
   end
 end

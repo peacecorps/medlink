@@ -102,4 +102,8 @@ class User < ActiveRecord::Base
       [country]
     end
   end
+
+  def outstanding_orders
+    orders.without_responses
+  end
 end

@@ -94,8 +94,9 @@ Medlink::Application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      post '/auth' => 'auth#login'
-      get  '/auth' => 'auth#test'
+      post '/auth'       => 'auth#login'
+      post '/auth/phone' => 'auth#phone_login'
+      get  '/auth'       => 'auth#test'
 
       resources :countries, only: [] do
         resources :users, only: [:index]
@@ -106,6 +107,8 @@ Medlink::Application.routes.draw do
           get '/all' => 'supplies#master_list'
         end
       end
+
+      resources :orders, only: [:index]
 
       resources :requests, only: [:create, :index]
 
