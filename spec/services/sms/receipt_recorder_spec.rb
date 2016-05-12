@@ -35,7 +35,8 @@ RSpec.describe SMS::ReceiptRecorder do
     When          { response.update! received_at: 2.hours.ago }
     When(:result) { handler.run! }
 
-    Then { result == Failure(SMS::Handler::PresentableError, /can't find/) }
+    Then { result =~ /your orders for.*marked as received/i }
+    And  { response.reload.received?                        }
   end
 
   context "double confirming" do
@@ -45,7 +46,7 @@ RSpec.describe SMS::ReceiptRecorder do
     When          { response.update! received_at: 2.hours.ago }
     When(:result) { handler.run! }
 
-    Then { result == Failure(SMS::Handler::PresentableError, /can't find/) }
-    And  { !response.reload.flagged?                                       }
+    Then { result =~ /your orders for.*flagged/i }
+    And  { response.reload.flagged?              }
   end
 end

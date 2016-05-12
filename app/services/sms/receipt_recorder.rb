@@ -17,10 +17,19 @@ class SMS::ReceiptRecorder < SMS::Handler
   end
 
   def run!
-    if user.nil? || response.nil? || response.flagged? || response.archived?
+    if user.nil?
       Notification.send :invalid_response_receipt,
-        "Could not process sms ##{sms.id} (#{stripped}) for response ##{response.try :id}"
+        "Could not process sms ##{sms.id} (#{stripped}) - no user recognized"
       error! "sms.no_outstanding_responses"
+    elsif response.nil?
+      Notification.send :invalid_response_receipt,
+        "Could not process sms ##{sms.id} (#{stripped}) - no responses found"
+      error! "sms.no_outstanding_responses"
+    elsif response.flagged? || response.archived?
+      # This isn't necessarily an error, but we probably want to know if
+      # it's happening
+      Notification.send :invalid_response_receipt,
+        "Re-processing sms ##{sms.id} (#{stripped}) - response _was_ flagged:#{response.flagged?} / archived:#{response.archived?}"
     end
 
     if intent == Flagged
@@ -43,7 +52,7 @@ private
   end
 
   def last_reminder
-    @_last_reminder ||= user.receipt_reminders.newest
+    @_last_reminder ||= user.try(:receipt_reminders).try(:newest)
   end
 
   def response

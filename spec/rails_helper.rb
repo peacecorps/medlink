@@ -1,17 +1,15 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
 
-if ENV["COVERAGE"]
-  require "simplecov"
-  SimpleCov.start 'rails' do
-    add_group "Forms",      "app/forms"
-    add_group "Jobs",       "app/jobs"
-    add_group "Policies",   "app/policies"
-    add_group "Presenters", "app/presenters"
-    add_group "Services",   "app/services"
+require "simplecov"
+SimpleCov.start 'rails' do
+  add_group "Forms",      "app/forms"
+  add_group "Jobs",       "app/jobs"
+  add_group "Policies",   "app/policies"
+  add_group "Presenters", "app/presenters"
+  add_group "Services",   "app/services"
 
-    add_filter "/lib/slackbot"
-  end
+  add_filter "/lib/slackbot"
 end
 
 require File.expand_path('../../config/environment', __FILE__)
