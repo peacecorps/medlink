@@ -1,6 +1,6 @@
 class AnnouncementPresenter < ApplicationPresenter
   decorates Announcement
-  delegate :message, :send!
+  delegate :message, :send!, :country_id
 
   def initialize country, reaches: nil
     @reaches = reaches
