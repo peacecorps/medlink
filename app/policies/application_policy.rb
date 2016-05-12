@@ -59,6 +59,8 @@ class ApplicationPolicy
         scope.all
       elsif user.pcmo?
         scope.where(country_id: user.country_id)
+      else
+        scope.none
       end
     end
   end
