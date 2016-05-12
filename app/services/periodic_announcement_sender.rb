@@ -17,6 +17,7 @@ private
   attr_reader :announcements, :now
 
   def scheduled_for_this_hour? announcement
+    return false unless announcement.schedule
     now.in_time_zone(announcement.country.time_zone).hour == announcement.schedule.hour
   end
 
