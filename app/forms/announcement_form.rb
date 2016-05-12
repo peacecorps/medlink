@@ -1,5 +1,5 @@
 class AnnouncementForm < Reform::Form
-  property :announcer, virtual: true
+  property :announcer, virtual: true, presence: true
   property :days, virtual: true
   property :hour, virtual: true
   property :message
@@ -51,7 +51,7 @@ class AnnouncementForm < Reform::Form
   end
 
   def only_admins_schedule
-    if schedule.days.any? && !announcer.admin?
+    if !announcer.admin? && schedule.days.any?
       errors.add :days, "only admins can schedule repeated announcements"
     end
   end

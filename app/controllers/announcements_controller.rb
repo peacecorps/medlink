@@ -8,12 +8,14 @@ class AnnouncementsController < ApplicationController
   end
 
   def new
-    @announcement = AnnouncementForm.new Announcement.new country: current_user.country
+    ann = Announcement.new country: current_user.country
+    @announcement = AnnouncementForm.new ann, announcer: current_user
     authorize @announcement
   end
 
   def create
-    @announcement = AnnouncementForm.new Announcement.new country: current_user.country
+    ann = Announcement.new country: current_user.country
+    @announcement = AnnouncementForm.new ann, announcer: current_user
     if save_form @announcement, params[:announcement]
       redirect_to announcements_path, notice: I18n.t!("flash.announcement.created")
     else
