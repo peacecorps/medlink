@@ -17,8 +17,9 @@ private
   attr_reader :announcements, :now
 
   def scheduled_for_this_hour? announcement
-    return false unless announcement.schedule
-    now.in_time_zone(announcement.country.time_zone).hour == announcement.schedule.hour
+    return false unless schedule = announcement.schedule
+    now_zone = now.in_time_zone announcement.country.time_zone
+    now_zone.hour == schedule.hour && schedule.days.include?(now_zone.day)
   end
 
   def on_schedule
