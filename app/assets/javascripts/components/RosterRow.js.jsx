@@ -75,6 +75,10 @@ const EditButtons = ({ userId, editing, onStart, onSave, onCancel }) => {
             <a href={`/admin/users/${userId}/edit`}
                 className="btn btn-default btn-sm"
                 target="_blank">View</a>
+            {' '}
+            <a href={`/users/${userId}/timeline`}
+                className="btn btn-default btn-sm"
+                target="_blank">Timeline</a>
         </td>
     }
 }
