@@ -4,10 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :json_format, if: :api_controller?
   before_action :authenticate_user!
   after_action :verify_authorized, except: :index, unless: :devise_controller?
-
-  unless Rails.env.development?
-    around_action :alert_if_slow
-  end
+  around_action :alert_if_slow
 
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
@@ -38,12 +35,11 @@ class ApplicationController < ActionController::Base
   end
 
   def alert_if_slow
-    start = Time.now
-    yield
-    duration = Time.now - start
-    if duration > Rails.configuration.slow_timeout.seconds
-      Notification.send :slow, "`#{params[:controller]}##{params[:action]}` took #{duration} for user #{current_user.try(:id) || '??'} (`#{request.path}`)"
-    end
+    Rails.configuration.container.resolve(:slow_request_notifier).call(
+      action: "#{params[:controller]}##{params[:action]}",
+      path:   request.path,
+      user:   current_user
+    ) { yield }
   end
 
   def api_controller?

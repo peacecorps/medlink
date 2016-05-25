@@ -27,14 +27,4 @@ RSpec.describe TwilioController do
     Then { result.status == 400    }
     And  { SMS.outgoing.count == 0 }
   end
-
-  context "alerts if slow" do
-    before(:all) do
-      @timeout, Rails.configuration.slow_timeout = Rails.configuration.slow_timeout, 0
-    end
-    after(:all) { Rails.configuration.slow_timeout = @timeout }
-
-    When { post :receive }
-    Then { pingbot.last.include? "twilio#receive" }
-  end
 end

@@ -88,4 +88,8 @@ Medlink::Application.configure do
     channel:    "#medlink-logs",
     username:   slack_name,
     icon_emoji: ":hospital:"
+
+  config.container.register :slow_request_notifier, -> {
+    SlowRequestNotifier.build notifier: config.container.resolve(:notifier)
+  }
 end

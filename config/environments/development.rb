@@ -40,4 +40,6 @@ Medlink::Application.configure do
     channel:    "#medlink-logs",
     username:   "Medlink [DEV]",
     icon_emoji: ":computer:"
+
+  config.container.register :slow_request_notifier, ->{ NoOp }
 end

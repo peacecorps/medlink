@@ -13,6 +13,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+NoOp = ->(*args, &block) { block.call if block }
+
 module Medlink
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -61,7 +63,9 @@ module Medlink
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    config.slow_timeout = (ENV["SLOW_TIMEOUT"] || 1).to_f.seconds
+    config.container = Dry::Container.new.tap do |container|
+      container.register :notifier, ->{ Notification }
+    end
 
     config.slackbot = Slackbot::Test.new
     config.pingbot  = Slackbot::Test.new

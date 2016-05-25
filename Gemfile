@@ -36,6 +36,8 @@ gem 'aws-sdk'
 
 gem 'react-rails'
 
+gem 'dry-container'
+
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'

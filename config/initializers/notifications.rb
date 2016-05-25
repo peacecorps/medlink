@@ -24,6 +24,7 @@ class NotificationCenter
       unhandlers.each { |h| h.call key, msg }
     end
   end
+  alias_method :call, :send
 
   private
 

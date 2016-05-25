@@ -52,7 +52,7 @@ RSpec.configure do |config|
     t1.to_f.round(3) == t2.to_f.round(3)
   end
 
-  def p
+  def Pry
     # Pry inside a Given-When chain, and don't re-run the assertion
     Then { binding.pry; true }
   end
