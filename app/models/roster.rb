@@ -30,7 +30,8 @@ class Roster
     def save; end
 
     def email
-      super.strip.downcase
+      s = super
+      s && s.strip.downcase
     end
 
     def user_hash
