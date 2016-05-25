@@ -3,7 +3,7 @@ class SMS::ReceiptRecorder < SMS::Handler
   Flagged  = :flagged
 
   def intent
-    if ["yes", "y", "got it","got it!", "ok", "okay", "yes!", "yes.", "si", "si!", "-yes", "I recieved my medicine", "yes. Thanks!", "yes. Thank you.", "yes. Thank you!", "yes and thank you", "yes and thank you!", "yea", "yeah", "hi, yes!", "hi, yes!", "yes:)", "yes :)", "Yes, thanks for checking!", "Yes I did!", "Got it :) Thanks!", "yes i did. thanks", "Yes (received order)"].include? stripped
+    if ["yes", "y", "got it","got it!", "ok", "okay", "yes!", "yes.", "si", "si!", "-yes", "I recieved my medicine", "yes. Thanks!", "yes. Thank you.", "yes. Thank you!", "yes and thank you", "yes and thank you!", "yea", "yeah", "hi, yes!", "hi, yes!", "yes:)", "yes :)", "Yes, thanks for checking!", "Yes I did!", "Got it :) Thanks!", "yes i did. thanks", "Yes (received order)", "yep"].include? stripped
       Received
     elsif stripped =~ /^yes/i
       Received
