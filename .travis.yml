@@ -2,9 +2,9 @@ language: ruby
 bundler_args: --without development production
 sudo: false
 rvm:
-- 2.2.4
+- 2.3.1
 script:
-- DISPLAY=:99.0 RAILS_ENV=test COVERAGE=true bundle exec rake db:setup spec
+- RAILS_ENV=test COVERAGE=true bundle exec rake db:setup spec
 env:
 - s3_access_key_id=xxx s3_secret_access_key=xxx s3_bucket_name=xxx 
 branches:

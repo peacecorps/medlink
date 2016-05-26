@@ -5,6 +5,8 @@ RSpec.describe "Ordering via the web", :queue_jobs do
   Given(:pcmo)      { FactoryGirl.create :pcmo, country: volunteer.country }
 
   it "runs end-to-end", :js do # N.b. the :vcr tag doesn't work because this forks(?)
+    skip
+
     # Volunteer makes request
     login_as volunteer
 
