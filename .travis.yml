@@ -4,7 +4,7 @@ sudo: false
 rvm:
 - 2.2.4
 script:
-- RAILS_ENV=test COVERAGE=true bundle exec rake db:setup spec
+- DISPLAY=:99.0 RAILS_ENV=test COVERAGE=true bundle exec rake db:setup spec
 env:
 - s3_access_key_id=xxx s3_secret_access_key=xxx s3_bucket_name=xxx 
 branches:

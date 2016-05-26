@@ -1,8 +1,8 @@
 class SlowRequestNotifier
-  def self.build timeout: nil, notifier: nil
+  def self.build timeout: nil, notifier:
     new \
-      timeout:  timeout  || ENV.fetch("SLOW_TIMEOUT", 1).to_f.seconds,
-      notifier: notifier || Notification
+      timeout:  timeout || ENV.fetch("SLOW_TIMEOUT", 1).to_f.seconds,
+      notifier: notifier
   end
 
   def initialize timeout:, notifier:
