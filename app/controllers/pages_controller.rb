@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_filter :authenticate_user!, only: :help
+  skip_before_filter :authenticate_user!, only: [:help, :letsencrypt]
   skip_after_action :verify_authorized
 
   def root
@@ -17,6 +17,15 @@ class PagesController < ApplicationController
       render 'partials/help'
     else
       render 'partials/pcmo_help'
+    end
+  end
+
+  def letsencrypt
+    key = ENV["LETSENCRYPT_CHALLENGE_KEY"]
+    if key && key.start_with?(params[:id] + ".")
+      render text: ENV["LETSENCRYPT_CHALLENGE_KEY"]
+    else
+      head :ok
     end
   end
 end

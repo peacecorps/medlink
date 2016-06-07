@@ -83,6 +83,7 @@ Medlink::Application.routes.draw do
   end
 
   get '/help' => 'pages#help'
+  get '/.well-known/acme-challenge/:id' => 'pages#letsencrypt'
   root to: 'pages#root'
 
   post '/medrequest' => 'twilio#receive'
