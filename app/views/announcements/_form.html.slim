@@ -15,7 +15,11 @@
       = f.select :hour, announcement.hour_choices, include_blank: !announcement.hour.present?
       - if announcement.preview
         .help-block Sent on #{announcement.preview}
-    - elsif announcement.schedule
+    - elsif announcement.preview
       h3 Scheduled Message
       p This message will be sent automatically every month - this month on #{announcement.preview}.
       p Please #{link_to "contact support", "mailto:support@pcmedlink.org"} to alter this schedule.
+    - else
+      h3
+      p Would you like to make this a reocurring message?
+      p Please #{link_to "contact support", "mailto:support@ocmedlink.org"} to set your announcement schedule
