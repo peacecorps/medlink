@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151129165235) do
+ActiveRecord::Schema.define(version: 20160701002441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,15 @@ ActiveRecord::Schema.define(version: 20151129165235) do
 
   add_index "country_supplies", ["country_id"], name: "index_country_supplies_on_country_id", using: :btree
   add_index "country_supplies", ["supply_id"], name: "index_country_supplies_on_supply_id", using: :btree
+
+  create_table "encrypt_challenges", force: :cascade do |t|
+    t.string   "pre",        null: false
+    t.string   "post",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "encrypt_challenges", ["pre"], name: "index_encrypt_challenges_on_pre", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.datetime "created_at"

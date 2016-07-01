@@ -21,11 +21,7 @@ class PagesController < ApplicationController
   end
 
   def letsencrypt
-    key = ENV["LETSENCRYPT_CHALLENGE_KEY"]
-    if key && key.start_with?(params[:id] + ".")
-      render text: ENV["LETSENCRYPT_CHALLENGE_KEY"]
-    else
-      head :ok
-    end
+    c = EncryptChallenge.recent.find_by! pre: params[:id]
+    render text: c.full
   end
 end
