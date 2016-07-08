@@ -5,7 +5,7 @@ RSpec.describe SlowRequestNotifier do
   Given(:monitor) {
     SlowRequestNotifier.build \
       timeout: 0.01,
-      notifier: ->(n) { notifications.push n }
+      notifier: ->(key, msg) { notifications.push msg }
   }
 
   context "quick request" do

@@ -2,7 +2,12 @@
 ENV['RAILS_ENV'] ||= 'test'
 
 require "simplecov"
-SimpleCov.start 'rails' do
+require "coveralls"
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new \
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+
+SimpleCov.start "rails" do
   add_group "Forms",      "app/forms"
   add_group "Jobs",       "app/jobs"
   add_group "Policies",   "app/policies"
