@@ -1,4 +1,4 @@
-class Phone < ActiveRecord::Base
+class Phone < ApplicationRecord
   belongs_to :user
   has_many :messages, class_name: "SMS"
 

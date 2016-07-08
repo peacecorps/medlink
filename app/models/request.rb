@@ -1,4 +1,4 @@
-class Request < ActiveRecord::Base
+class Request < ApplicationRecord
   include Concerns::UserScope
 
   belongs_to :message, class_name: "SMS"

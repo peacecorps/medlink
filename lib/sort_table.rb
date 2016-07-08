@@ -56,8 +56,9 @@ class SortTable < Draper::Decorator
       dir = :asc
     end
 
-    p = params.merge "#{prefix}sort" => col, "#{prefix}direction" => dir
-    "<a class='#{klass}' href='?#{p.to_query}##{anchor}'>#{title}</a>".html_safe
+    p     = params.merge "#{prefix}sort" => col, "#{prefix}direction" => dir
+    query = p.permit!.to_h.to_param
+    "<a class='#{klass}' href='?#{query}##{anchor}'>#{title}</a>".html_safe
   end
 
   private

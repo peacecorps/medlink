@@ -1,4 +1,4 @@
-class Country < ActiveRecord::Base
+class Country < ApplicationRecord
   has_many :users
   has_many :orders
   has_many :responses

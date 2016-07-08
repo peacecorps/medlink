@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   rescue_from Pundit::NotAuthorizedError do |exception|
     # TODO: what should we actually do here?
-    render text: "Not Authorized", status: 403
+    render plain: "Not Authorized", status: 403
   end
 
   private

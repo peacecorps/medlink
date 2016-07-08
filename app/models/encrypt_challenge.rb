@@ -1,4 +1,4 @@
-class EncryptChallenge < ActiveRecord::Base
+class EncryptChallenge < ApplicationRecord
   validates_presence_of :pre, :post
   validates_uniqueness_of :pre
 

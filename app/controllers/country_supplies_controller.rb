@@ -8,6 +8,6 @@ class CountrySuppliesController < ApplicationController
     country = current_user.country
     authorize country, :manage_supplies?
     country.toggle_supply Supply.find params[:id]
-    redirect_to :back
+    redirect_back fallback_location: country_supplies_path
   end
 end

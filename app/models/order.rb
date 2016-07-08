@@ -1,4 +1,4 @@
-class Order < ActiveRecord::Base
+class Order < ApplicationRecord
   include Concerns::UserScope
 
   belongs_to :supply

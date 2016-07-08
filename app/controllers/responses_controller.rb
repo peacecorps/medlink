@@ -23,11 +23,11 @@ class ResponsesController < ApplicationController
     user      = User.find params[:user_id]
     responder = OrderResponder.new(user.responses.new)
     authorize responder
-    if responder.run text: params[:response][:extra_text], selections: params[:orders]
+    if responder.run create_params
       redirect_to manage_orders_path, flash:
         { success: I18n.t!("flash.response.sent", user: user.name) }
     else
-      redirect_to :back, flash: { error: I18n.t!("flash.response.none_selected") }
+      redirect_back fallback_location: new_user_response_path(user), flash: { error: I18n.t!("flash.response.none_selected") }
     end
   end
 
@@ -63,13 +63,13 @@ class ResponsesController < ApplicationController
     unless response.user == current_user
       flash[:notice] = I18n.t!("flash.response.archived")
     end
-    redirect_to :back
+    redirect_back fallback_location: responses_path
   end
   def flag
     response = Response.find params[:id]
     authorize response
     ReceiptTracker.new(response: response, approver: current_user).flag_for_follow_up
-    redirect_to :back, notice: I18n.t!("flash.response.flagged")
+    redirect_back fallback_location: response_path, notice: I18n.t!("flash.response.flagged")
   end
 
 
@@ -78,6 +78,11 @@ class ResponsesController < ApplicationController
   def accessible_responses
     # TODO: ew ...
     current_user.country.responses.includes(user: :phones, orders: [:supply, {request: :user}])
+  end
+
+  def create_params
+    selections = params.fetch(:orders, {}).transform_keys(&:to_i).to_unsafe_h
+    { text: params.require(:response)[:extra_text], selections: selections }
   end
 
   def archived responses

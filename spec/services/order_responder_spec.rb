@@ -12,7 +12,7 @@ RSpec.describe OrderResponder, :queue_jobs do
   Given(:future)     { (10.days.from_now.to_i .. 30.days.from_now.to_i) }
 
   context "approval" do
-    Given(:selection) { order_ids.zip %i(delivery pickup delivery) }
+    Given(:selection) { order_ids.zip(%i(delivery pickup delivery)).to_h }
 
     When(:result) { responder.run selections: selection }
 

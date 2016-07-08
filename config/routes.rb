@@ -1,4 +1,5 @@
 require 'sidekiq/web'
+
 Medlink::Application.routes.draw do
   devise_for :users, controllers: { confirmations: "confirmations" }, skip: [:registrations]
   as :user do

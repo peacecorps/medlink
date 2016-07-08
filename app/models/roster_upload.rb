@@ -1,4 +1,4 @@
-class RosterUpload < ActiveRecord::Base
+class RosterUpload < ApplicationRecord
   FetchFailed = Class.new StandardError
 
   belongs_to :uploader, class_name: "User"

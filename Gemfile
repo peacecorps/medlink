@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
-gem 'rails', '~> 4.2.6'
+gem 'rails', '~> 5.0.0'
 
 gem 'pg'
 gem 'jquery-rails'
@@ -18,14 +18,15 @@ gem 'api-auth'
 
 gem 'rollbar'
 gem 'sidekiq'
-gem 'sinatra', require: nil
+gem 'sinatra', require: nil, github: 'sinatra' # 'til Sidekiq resolves the rack/showexceptions require for Rails 5
 
 gem 'kaminari'
 gem 'virtus'
-gem 'draper'
-gem 'reform', '2.0.5' # FIXME: upgrading breaks `validators_on`
+gem 'reform', '2.0.5'
 
-gem 'quiet_assets'
+# TODO: need to drop draper as a dependency
+gem 'draper', github: 'audionerd/draper', branch: 'rails5' # Released version breaks Rake tasks (!)
+gem 'activemodel-serializers-xml' # Removed from Rails, still a dependency for draper
 
 gem 'bullet'
 

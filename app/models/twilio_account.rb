@@ -1,4 +1,4 @@
-class TwilioAccount < ActiveRecord::Base
+class TwilioAccount < ApplicationRecord
   has_many :messages, class_name: "SMS"
 
   validates :sid, presence: true, uniqueness: true

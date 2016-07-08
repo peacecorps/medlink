@@ -11,6 +11,6 @@ class MessagesController < ApplicationController
 private
 
   def search_params
-    params[:message_search] || {}
+    params.fetch(:message_search, {}).permit(:direction, :direction, :validity, country_ids: [])
   end
 end

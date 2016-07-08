@@ -1,4 +1,4 @@
-class ReceiptReminder < ActiveRecord::Base
+class ReceiptReminder < ApplicationRecord
   belongs_to :user
   belongs_to :response
   belongs_to :message, class_name: "SMS"

@@ -20,14 +20,14 @@ RSpec.describe Api::V1::AuthController do
   end
 
   context "logging in" do
-    When(:result) { post :login, email: pcv.email, password: "password" }
+    When(:result) { post :login, params: { email: pcv.email, password: "password" } }
 
     Then { result.status == 200                        }
     And  { json["secret_key"] == pcv.reload.secret_key }
   end
 
   context "failing to log in" do
-    When(:result) { post :login, email: pcv.email, password: "hunter2" }
+    When(:result) { post :login, params: { email: pcv.email, password: "hunter2" } }
 
     Then { result.status == 401                            }
     And  { json["error"] == "Invalid username or password" }

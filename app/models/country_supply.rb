@@ -1,4 +1,4 @@
-class CountrySupply < ActiveRecord::Base
+class CountrySupply < ApplicationRecord
   belongs_to :country
   belongs_to :supply
 

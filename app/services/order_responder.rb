@@ -8,9 +8,9 @@ class OrderResponder
   end
 
   def run text: nil, selections:
-    return false unless selections
+    return false unless selections.present?
     update_response text: text
-    attach_orders selections: coerce(selections)
+    attach_orders selections: selections
     send_notifications
     mark_updated_orders
     update_wait_times
@@ -39,14 +39,10 @@ class OrderResponder
     response.update! extra_text: text
   end
 
-  def coerce selections
-    selections.map { |k,v| [k.to_s, v] }.to_h
-  end
-
   def attach_orders selections:
     Order.find(selections.keys).each do |order|
       response.orders << order
-      order.update! delivery_method: selections.fetch(order.id.to_s)
+      order.update! delivery_method: selections.fetch(order.id)
     end
   end
 

@@ -34,9 +34,7 @@ module ApplicationHelper
   end
 
   def update_params_link title, param_updates, opts={}
-    updated = params.
-              reject { |k,v| %w(action controller).include? k  }.
-              merge param_updates
+    updated = params.except(:action, :controller).merge(param_updates).to_unsafe_h
     link_to title, opts.merge(params: updated)
   end
 

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_filter :authenticate_user!, only: [:help, :letsencrypt]
+  skip_before_action :authenticate_user!, only: [:help, :letsencrypt]
   skip_after_action :verify_authorized
 
   def root

@@ -1,4 +1,4 @@
-class Response < ActiveRecord::Base
+class Response < ApplicationRecord
   MAX_LENGTH = 250
 
   include Concerns::UserScope

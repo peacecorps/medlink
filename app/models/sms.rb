@@ -1,4 +1,4 @@
-class SMS < ActiveRecord::Base
+class SMS < ApplicationRecord
   MAX_LENGTH = 160
 
   self.table_name = "messages"

@@ -1,4 +1,4 @@
-class Announcement < ActiveRecord::Base
+class Announcement < ApplicationRecord
   belongs_to :country
   validates_presence_of :country, :message
 

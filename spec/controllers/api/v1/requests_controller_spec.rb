@@ -8,7 +8,7 @@ RSpec.describe Api::V1::RequestsController do
   context "placing an order" do
     Given(:supply_ids) { volunteer.country.supplies.random(3).map &:id }
 
-    When(:result)  { authorized(volunteer) { post :create, message: "Thanks!", supply_ids: supply_ids } }
+    When(:result)  { authorized(volunteer) { post :create, params: { message: "Thanks!", supply_ids: supply_ids } } }
     When(:request) { volunteer.requests.last }
 
     Then { result.status == 200                                }
@@ -17,7 +17,7 @@ RSpec.describe Api::V1::RequestsController do
   end
 
   context "with an invalid order" do
-    When(:result) { authorized(volunteer) { post :create, supply_ids: [-1, "foo"] } }
+    When(:result) { authorized(volunteer) { post :create, params: { supply_ids: [-1, "foo"] } } }
 
     Then { result.status == 422                  }
     And  { Request.count == 0                    }
@@ -29,7 +29,7 @@ RSpec.describe Api::V1::RequestsController do
     Given(:country)    { Country.random }
     Given(:supply_ids) { country.supplies.random(3).map &:id }
 
-    When(:result) { post :create, message: "Thanks!", supply_ids: supply_ids }
+    When(:result) { post :create, params: { message: "Thanks!", supply_ids: supply_ids } }
 
     Then { result.status == 401     }
     And  { json["error"] =~ /auth/i }

@@ -68,7 +68,7 @@ class Report::Base
   end
 
   def clean value
-    raise "Unconverted ActiveRecord in CSV" if value.is_a?(ActiveRecord::Base)
+    raise "Unconverted ActiveRecord in CSV" if value.is_a?(ApplicationRecord)
     value.to_s.tr("\n", " ")
   end
 

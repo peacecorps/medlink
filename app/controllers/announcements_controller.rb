@@ -41,13 +41,13 @@ class AnnouncementsController < ApplicationController
     announcement = AnnouncementPresenter.new Announcement.find params[:id]
     authorize announcement
     announcement.send!
-    redirect_to :back, notice: I18n.t!("flash.announcement.sent", volunteer_count: announcement.reach)
+    redirect_back fallback_location: announcements_path, notice: I18n.t!("flash.announcement.sent", volunteer_count: announcement.reach)
   end
 
   def destroy
     announcement = Announcement.find params[:id]
     authorize announcement
     announcement.hide
-    redirect_to :back, notice: I18n.t!("flash.announcement.deleted")
+    redirect_back fallback_location: announcements_path, notice: I18n.t!("flash.announcement.deleted")
   end
 end
