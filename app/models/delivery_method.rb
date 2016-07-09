@@ -5,7 +5,7 @@ class DeliveryMethod
     @name, @text  = name, text
     @title        = opts[:title] || @name.capitalize
     @auto_archive = opts[:auto_archive]
-    freeze
+    deep_freeze
   end
 
   def == other

@@ -90,8 +90,7 @@ class Roster
         user = country.users.create! row.user_hash.merge password: Devise.friendly_token
         row.phone_numbers.each { |number| user.claim_phone_number number }
       rescue => e
-        Notification.send :invalid_roster_upload_row,
-          "Failed to create from upload row #{row.user_hash}: #{e}"
+        Medlink.notify Notification::InvalidRosterUploadRow.new row: row, action: "create", error: e
       end
     end
   end
@@ -103,8 +102,7 @@ class Roster
         user.update! row.user_hash
         row.phone_numbers.each { |number| user.claim_phone_number number }
       rescue => e
-        Notification.send :invalid_roster_upload_row,
-          "Failed to update from upload row #{row.user_hash}: #{e}"
+        Medlink.notify Notification::InvalidRosterUploadRow.new row: row, action: "update", error: e
       end
     end
   end

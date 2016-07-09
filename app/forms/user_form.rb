@@ -46,8 +46,7 @@ class UserForm < Reform::Form
   def save
     super
     @phone_form.save
-    Notification.send :updated_user,
-      "#{model.email} (##{model.id}) has been updated - #{change_summary}"
+    Medlink.notify Notification::UpdatedUser.new user: model, changes: change_summary
   end
 
   def active?

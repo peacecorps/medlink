@@ -42,6 +42,10 @@ class ApplicationController < ActionController::Base
     ) { yield }
   end
 
+  def notify notification
+    Medlink.notifier.call notification
+  end
+
   def api_controller?
     false
   end

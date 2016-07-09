@@ -40,6 +40,4 @@ Medlink::Application.configure do
     Bullet.enable       = true
     Bullet.rails_logger = true
   end unless ENV["NO_BULLET"]
-
-  config.container.register :slow_request_notifier, ->{ NoOp }
 end

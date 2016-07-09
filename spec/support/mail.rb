@@ -1,10 +1,10 @@
 module MailHelpers
   def slackbot
-    Rails.configuration.slackbot
+    Medlink.slackbot
   end
 
   def pingbot
-    Rails.configuration.pingbot
+    Medlink.pingbot
   end
 
   def mail

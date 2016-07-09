@@ -15,6 +15,26 @@ end
 
 NoOp = ->(*args, &block) { block.call if block }
 
+class Container
+  include Dry::Container::Mixin
+
+  # Items should resolve to service objects (with `#call` as their api), but we register
+  # procs (so that we can defer builing until the app is loaded).
+  # Rather than getting lost in `call`s, we'll use this custom resolver
+  configure do |config|
+    config.registry = ->(container, key, builder, options) { container[key] = builder }
+    config.resolver = ->(container, key) {
+      container[:_cache]      ||= Concurrent::Hash.new
+      container[:_cache][key] ||= container.fetch(key).call
+    }
+  end
+
+  def purge key
+    return unless _container[:_cache]
+    _container[:_cache].delete key
+  end
+end
+
 module Medlink
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -64,14 +84,38 @@ module Medlink
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    config.container = Dry::Container.new.tap do |container|
-      container.register :notifier, ->{ Notification }
+    config.container = Container.new.tap do |c|
+      c.register :notifier, -> { Notifier.load }
+      c.register :slackbot, -> { Slackbot::Test.build }
+      c.register :pingbot,  -> { Slackbot::Test.build }
+      c.register :slow_request_notifier, ->{ NoOp }
     end
-
-    config.slackbot = Slackbot::Test.new
-    config.pingbot  = Slackbot::Test.new
 
     config.sms = Sms::SendConfig.new
     config.sms.method = :store
+  end
+
+  %i(
+      notifier
+      pingbot
+      redis
+      slackbot
+      slow_request_notifier
+  ).each do |key|
+    define_singleton_method key do
+      Rails.configuration.container.resolve(key)
+    end
+  end
+
+  def self.notify msg
+    self.notifier.call msg
+  end
+
+  def self.redis
+    Sidekiq.redis { |r| yield r }
+  end
+
+  def self.reload key
+    Rails.configuration.container.purge key
   end
 end

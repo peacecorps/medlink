@@ -49,8 +49,7 @@ class ReceiptAckPrompt
 
   def flag_for_follow_up
     response.update! flagged: true
-    Notification.send :flag_for_followup,
-      "Flagged response #{response.id} for manual follow-up after #{reminder_count} reminders"
+    Medlink.notify Notification::FlagForFollowup.new response: response, count: reminder_count
   end
 
   def reminder_text
@@ -66,8 +65,7 @@ class ReceiptAckPrompt
   end
 
   def send_receipt_reminder
-    Notification.send :prompt_for_ack, \
-      "Pinging #{volunteer.email} to acknowledge receipt of response #{response.id}"
+    Medlink.notify Notification::PromptForAcknowledgement.new volunteer: volunteer, response: response
 
     if sms = volunteer.send_text(reminder_text)
       response.receipt_reminders.create!(user: volunteer, message: sms)

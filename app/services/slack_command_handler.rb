@@ -32,11 +32,14 @@ class SlackCommandHandler
   end
 
   def respond text
+    # :nocov:
+    # TODO: probably want to unify this with lib/slackbot
     uri = URI response_url
     Net::HTTP.start uri.host, uri.port, use_ssl: (uri.port == 443) do |http|
       req = Net::HTTP::Post.new uri.path
       req.set_form_data text: text
       http.request req
     end
+    # :nocov:
   end
 end

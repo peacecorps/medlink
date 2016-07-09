@@ -63,12 +63,12 @@ class UserTexter
   def watch_for_send_volume time: 1.hour
     sent = phone.messages.outgoing.where("created_at > ?", time.ago).count
     if sent > 3
-      Notification.send :spam_warning, "Warning - #{phone.number} has received #{sent} messages in #{time}."
+      Medlink.notify Notification::SpamWarning.new phone: phone, count: sent, time: time
     end
   end
 
   def note_delivery_failure message, error
-    Notification.send :delivery_failure, "Error while texting #{phone} - #{error}"
+    Medlink.notify Notification::DeliveryFailure.new phone: phone, error: error
     phone.update!   send_error: error
     message.update! send_error: error
   end

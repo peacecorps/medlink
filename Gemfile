@@ -38,6 +38,7 @@ gem 'aws-sdk'
 gem 'react-rails'
 
 gem 'dry-container'
+gem 'ice_nine'
 
 group :assets do
   gem 'sass-rails'

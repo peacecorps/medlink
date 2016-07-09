@@ -28,9 +28,9 @@ private
 
   def check_for_unrecognized
     return unless unrecognized_shortcodes.any?
-    Notification.send :unrecognized_sms, "Unhandled SMS (##{sms.id}): `#{sms.text}`"
+    Medlink.notify Notification::UnrecognizedSMS.new sms: sms
     error! "sms.unrecognized_shortcodes",
-           { codes: unrecognized_shortcodes }, condense: :code
+      { codes: unrecognized_shortcodes }, condense: :code
   end
 
   def check_for_unavailable

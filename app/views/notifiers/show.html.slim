@@ -1,0 +1,8 @@
+= content_for :page_title do
+  | Notifications
+
+= bootstrap_form_tag url: notifier_path, method: :patch, layout: :horizontal, label_col: "col-sm-3", control_col: "col-sm-3" do |f|
+  - @notifier.strategies.each do |strat, setting|
+    .form-group
+      = f.collection_select "notifier[#{strat.key}]", @notifier.allowed_strategies, :key, :label, label: strat.description, selected: setting.key
+  button.btn.btn-primary Save

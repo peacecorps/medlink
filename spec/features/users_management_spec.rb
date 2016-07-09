@@ -68,10 +68,19 @@ RSpec.describe "managing users" do
     select "First Updated", from: "user_id"
     click_on "Select"
 
+    url  = page.current_url
+
     expect(page).to have_content "Edit Account"
 
     click_on "Inactivate User"
     expect(page.current_path).to eq country_roster_path
     expect(page).not_to have_content "new_user@example.com"
+
+    visit url
+    expect(page).to have_content "marked as inactive"
+    find(".alert-danger a", text: "click here").click
+
+    visit url
+    expect(page).not_to have_content "marked as inactive"
   end
 end

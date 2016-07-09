@@ -42,8 +42,8 @@ class Admin::UsersController < ApplicationController
   def activate
     user = User.find params[:id]
     authorize user
-    Notification.send :user_activated, "#{user.email} re-activated by #{current_user.email}"
     user.activate!
+    notify Notification::UserActivated.new activated: user, by: current_user
     redirect_to country_roster_path, notice: I18n.t!("flash.user.active_user", user: user.name)
   end
 end

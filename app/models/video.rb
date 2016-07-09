@@ -7,7 +7,7 @@ class Video
 
   def initialize viewer
     @viewer = viewer
-    freeze
+    deep_freeze
   end
 
   def youtube_embed_link

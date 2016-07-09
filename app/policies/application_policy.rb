@@ -26,10 +26,6 @@ class ApplicationPolicy
     update?
   end
 
-  def scope
-    Pundit.policy_scope!(user, record.class)
-  end
-
   def admin?
     user.admin?
   end
@@ -60,7 +56,9 @@ class ApplicationPolicy
       elsif user.pcmo?
         scope.where(country_id: user.country_id)
       else
+        # :nocov:
         scope.none
+        # :nocov:
       end
     end
   end

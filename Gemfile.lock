@@ -395,6 +395,7 @@ DEPENDENCIES
   dry-container
   factory_girl_rails
   figaro
+  ice_nine
   jbuilder
   jquery-rails
   kaminari

@@ -6,8 +6,7 @@ class PeriodicAnnouncementSender
 
   def send_scheduled
     on_schedule.each do |a|
-      Notification.send :announcement_scheduled,
-        "Auto-sending annoucement #{a.id} to #{a.country.name}: #{a.message}"
+      Medlink.notify Notification::AnnouncementScheduled.new announcement: a
       a.send!
     end
   end

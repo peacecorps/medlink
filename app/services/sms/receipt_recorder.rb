@@ -18,18 +18,18 @@ class SMS::ReceiptRecorder < SMS::Handler
 
   def run!
     if user.nil?
-      Notification.send :invalid_response_receipt,
-        "Could not process sms ##{sms.id} (#{stripped}) - no user recognized"
+      Medlink.notify Notification::InvalidResponseReceipt.new \
+        sms: sms, text: stripped, detail: "no user recognized"
       error! "sms.no_outstanding_responses"
     elsif response.nil?
-      Notification.send :invalid_response_receipt,
-        "Could not process sms ##{sms.id} (#{stripped}) - no responses found"
+      Medlink.notify Notification::InvalidResponseReceipt.new \
+        sms: sms, text: stripped, detail: "no responses found"
       error! "sms.no_outstanding_responses"
     elsif response.flagged? || response.archived?
       # This isn't necessarily an error, but we probably want to know if
       # it's happening
-      Notification.send :invalid_response_receipt,
-        "Re-processing sms ##{sms.id} (#{stripped}) - response _was_ flagged:#{response.flagged?} / archived:#{response.archived?}"
+      Medlink.notify Notification::ReprocessingResponseReceipt.new \
+        sms: sms, text: stripped, previous: response
     end
 
     if intent == Flagged

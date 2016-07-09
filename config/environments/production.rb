@@ -78,17 +78,13 @@ Medlink::Application.configure do
 
   config.sms.method = :delivery
 
-  slack_name = ENV["SLACK_BOT_NAME"] || "Medlink"
-
-  config.slackbot = Slackbot.new \
-    channel:    "#medlink",
-    username:   slack_name,
+  bot_opts = {
+    username:   ENV.fetch("SLACK_BOT_NAME", "Medlink"),
     icon_emoji: ":hospital:"
-  config.pingbot = Slackbot.new \
-    channel:    "#medlink-logs",
-    username:   slack_name,
-    icon_emoji: ":hospital:"
+  }
 
+  config.container.register :slackbot, -> { Slackbot.build bot_opts.merge channel: "#medlink"      }
+  config.container.register :pingbot,  -> { Slackbot.build bot_opts.merge channel: "#medlink-logs" }
   config.container.register :slow_request_notifier, -> {
     SlowRequestNotifier.build notifier: config.container.resolve(:notifier)
   }

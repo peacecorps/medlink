@@ -34,6 +34,8 @@ Medlink::Application.routes.draw do
     end
   end
 
+  resource :notifier, only: [:show, :update]
+
   resources :orders, only: [] do
     collection do
       get :manage

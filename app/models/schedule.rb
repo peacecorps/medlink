@@ -7,7 +7,8 @@ class Schedule
   def self.load s
     return unless s
     return s if s.is_a? Schedule
-    Schedule.new JSON.parse s
+    hash = s.is_a?(String) ? JSON.parse(s) : s
+    Schedule.new hash
   end
 
   def self.dump s
