@@ -2,8 +2,8 @@ require "rails_helper"
 
 RSpec.describe PeriodicAnnouncementSender, :queue_jobs do
   Given(:at10) { Schedule.new days: [1,5,10], hour: 10 }
-  Given(:mali) { FactoryGirl.build :announcement, country: Country.find_by(name: "Mali"), schedule: at10 }
-  Given(:fiji) { FactoryGirl.build :announcement, country: Country.find_by(name: "Fiji"), schedule: at10 }
+  Given(:mali) { FactoryGirl.build :announcement, id: 1, country: Country.find_by(name: "Mali"), schedule: at10 }
+  Given(:fiji) { FactoryGirl.build :announcement, id: 2, country: Country.find_by(name: "Fiji"), schedule: at10 }
   Given(:sender) { PeriodicAnnouncementSender.new(announcements: [mali, fiji]) }
 
   context "start of the hour" do

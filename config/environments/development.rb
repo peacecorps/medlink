@@ -25,9 +25,9 @@ Medlink::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  # For Devise
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
   config.action_mailer.delivery_method = :letter_opener
+  Rails.application.routes.default_url_options[:host] = "localhost:3000"
 
   config.eager_load = false
 

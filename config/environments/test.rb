@@ -29,8 +29,8 @@ Medlink::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  # For email specs
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  Rails.application.routes.default_url_options[:host] = "localhost:3000"
 
   config.eager_load = false
 

@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe "managing users" do
-  Given(:admin) { FactoryGirl.create :admin }
+  Given(:admin) { create :admin }
 
   it "lets admins do all the CRUD" do
     login_as admin
