@@ -13,10 +13,12 @@ class Api::V1::AuthController < Api::V1::BaseController
   end
 
   def phone_login
-    p = Phone.find_by condensed: "+#{params[:number]}"
+    p = Phone.find_by condensed: Phone.standardize(params[:number])
     if p && p.user_id && valid_bot_token?
       p.user.ensure_secret_key!
       render json: { id: p.user_id, secret_key: p.user.secret_key }
+    else
+      error "Invalid phone or token", status: :unauthorized
     end
   end
 
@@ -28,6 +30,6 @@ class Api::V1::AuthController < Api::V1::BaseController
 
   def valid_bot_token?
     ActiveSupport::SecurityUtils.secure_compare \
-      Figaro.env.telegram_bot_token!, params[:token]
+      Figaro.env.telegram_bot_token!, params.fetch(:token, "-")
   end
 end

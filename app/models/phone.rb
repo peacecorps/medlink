@@ -21,6 +21,11 @@ class Phone < ApplicationRecord
     number.gsub(/[^+\d]/, '')
   end
 
+  def self.standardize number
+    n = condense number
+    n.start_with?("+") ? n : "+#{n}"
+  end
+
   def self.for number:
     normalized = condense number
     normalized = "+#{normalized}" unless normalized.start_with? "+"

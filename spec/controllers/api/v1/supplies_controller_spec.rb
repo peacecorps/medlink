@@ -1,25 +1,46 @@
 require "rails_helper"
 
 RSpec.describe Api::V1::SuppliesController do
-  render_views
+  Given(:country) { pcv.country }
+  Given(:supply)  { country.supplies.random }
 
-  context "when unauthed" do
-    When(:result) { get :index }
+  context "user list" do
+    context "when unauthed" do
+      When { get :index }
 
-    Then { result.status == 401 }
-    And  { json["error"] =~ /auth/i }
+      Then { status == 401    }
+      And  { error =~ /auth/i }
+    end
+
+    context "when authed" do
+      Given!(:gone) { country.supplies.delete supply }
+
+      As   { pcv }
+      When { get :index }
+
+      Then { status == 200 }
+      And  { json["supplies"].count == country.supplies.count }
+      And  { json["supplies"].first.keys == %w(id name shortcode) }
+    end
   end
 
-  context "when authed" do
-    Given(:user)    { FactoryGirl.create :user }
-    Given(:country) { user.country }
-    Given(:supply)  { country.supplies.random }
-    Given!(:gone)   { country.supplies.delete supply }
+  context "master list" do
+    context "when unauthed" do
+      When { get :master_list }
 
-    When(:result) { authorized(user) { get :index } }
+      Then { status == 401    }
+      And  { error =~ /auth/i }
+    end
 
-    Then { result.status == 200 }
-    And  { json["supplies"].count == country.supplies.count }
-    And  { json["supplies"].first.keys == %w(id name shortcode) }
+    context "when authed" do
+      Given!(:gone) { country.supplies.delete supply }
+
+      As   { pcv }
+      When { get :master_list }
+
+      Then { status == 200 }
+      And  { json["supplies"].count > country.supplies.count }
+      And  { json["supplies"].first.keys == %w(id name shortcode) }
+    end
   end
 end

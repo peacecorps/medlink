@@ -53,7 +53,6 @@ end
 group :development, :test do
   gem 'activerecord-import'
   gem 'named_seeds'
-  gem 'pry-byebug'
   gem 'letter_opener'
 
   gem 'spring'

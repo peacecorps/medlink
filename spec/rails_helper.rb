@@ -48,6 +48,12 @@ RSpec.configure do |config|
     Then { binding.pry; true }
   end
 
+  def As &block
+    When { log_in instance_eval(&block) }
+  end
+
+  config.include FactoryGirl::Syntax::Methods
+
   config.before :suite do
     clean!
     NamedSeeds.load_seed unless Country.any?
