@@ -4,7 +4,7 @@ class UserTexter
   def initialize phone:, twilio_account: nil, deliverer: nil
     @phone     = phone
     @twilio    = twilio_account || default_account
-    @deliverer = deliverer || Rails.configuration.sms.method(:deliver)
+    @deliverer = deliverer || Medlink.sms_deliverer
   end
 
   def send message
