@@ -12,7 +12,8 @@ class SlackCommandHandler
     authenticate intent
     case intent
     when "report"
-      ReportUploadJob.perform_later content
+      class_name = Report.named(content).title.downcase
+      ReportUploadJob.perform_later class_name
     else
       "Unrecognized subcommand: #{intent}"
     end

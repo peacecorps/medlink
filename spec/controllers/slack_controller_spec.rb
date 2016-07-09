@@ -14,13 +14,19 @@ RSpec.describe SlackController do
     Given(:user_id) { Figaro.env.SLACK_ADMIN_IDS!.split(",").first }
 
     context "valid" do
-      Given(:text) { "report orders" }
+      Given(:text) { "report order history" }
 
       Then { body.empty? }
     end
 
-    context "invalid" do
-      Given(:text) { "alsdkjfnalskjdfnaljsd" }
+    context "bad report name" do
+      Given(:text) { "report orders" }
+
+      Then { body =~ /`order history`/i }
+    end
+
+    context "bad command" do
+      Given(:text) { "floop something" }
 
       Then { body =~ /unrecognized/i }
     end

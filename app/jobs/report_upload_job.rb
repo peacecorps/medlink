@@ -1,5 +1,5 @@
 class ReportUploadJob < ApplicationJob
   def perform report_name
-    ReportUploader.new(report_name).run!
+    Rails.configuration.container.resolve(:report_uploader).call report_name
   end
 end
