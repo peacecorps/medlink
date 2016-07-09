@@ -22,6 +22,6 @@ class PagesController < ApplicationController
 
   def letsencrypt
     c = EncryptChallenge.recent.find_by! pre: params[:id]
-    render text: c.full
+    render plain: c.full
   end
 end
