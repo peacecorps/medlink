@@ -12,7 +12,11 @@ module ApiHelpers
   end
 
   def json
-    @_json ||= JSON.parse(@response.body)
+    @_json ||= JSON.parse(body)
+  end
+
+  def body
+    @response.body
   end
 
   def status

@@ -8,7 +8,7 @@ class SlackController < ApplicationController
     ).perform
 
     if response.is_a?(String)
-      render text: response
+      render plain: response
     else
       head :ok
     end

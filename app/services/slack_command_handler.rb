@@ -22,7 +22,7 @@ class SlackCommandHandler
 
   private
 
-  attr_reader :token, :response_url, :text, :user_id
+  attr_reader :token, :response_url, :text, :user_id, :user_name
 
   def authenticate intent
     unless Figaro.env.SLACK_ADMIN_IDS!.split(",").include?(user_id)
