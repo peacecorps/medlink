@@ -1,45 +1,7 @@
 class Notifier
-  class Strategy
-    Missing = Class.new StandardError
-
-    def initialize key:, label:, &block
-      @key, @label = key, label
-      @deliverer   = block
-      deep_freeze
-    end
-
-    attr_reader :key, :label
-
-    def call msg
-      @deliverer.call msg
-    end
-
-    def inspect
-      # :nocov:
-      %|<#{self.class.name}("#{label}")>|
-      # :nocov:
-    end
-  end
-
-  Slack = Strategy.new key: :slack, label: "Public Slack channel" do |msg|
-    Medlink.slackbot.call msg.slack
-  end
-
-  Ping = Strategy.new key: :ping, label: "Private Slack channel" do |msg|
-    Medlink.pingbot.call msg.slack
-  end
-
-  Log = Strategy.new key: :log, label: "Server logs" do |msg|
-    Rails.logger.info msg.text
-  end
-
-
-  Strategies = [Slack, Ping, Log]
-
-
   class << self
     def build strategies: default_strategies
-      new strategies: hydrate_and_verify(strategies)
+      new strategies: verify(strategies)
     end
 
     def load
@@ -48,7 +10,7 @@ class Notifier
 
     def save_strategies! strats
       symbolized = symbolize strats
-      hydrate_and_verify symbolized
+      verify symbolized
 
       Medlink.redis do |r|
         r.hmset "notifier.strategies", *symbolized.to_a.flatten
@@ -80,12 +42,12 @@ class Notifier
       }
     end
 
-    private
-
     def all
-      Dir["#{Rails.root.join 'app', 'models', 'notification'}/*"].each { |n| require n }
+      Dir["#{Rails.root.join 'app', 'models', 'notification'}/*"].each { |n| require n } unless Rails.env.production?
       Notification::Base.subclasses
     end
+
+    private
 
     def saved_strategies
       found = Medlink.redis do |r|
@@ -94,14 +56,16 @@ class Notifier
       symbolize found
     end
 
-    def hydrate_and_verify strategies
+    def verify strategies
+      # FIXME: we should just store the key => key hash, as auto-reloading mucks with
+      # matching based on class
       hydrated = all.each_with_object({}) do |klass, h|
-        h[klass] = Strategies.find { |s| s.key == strategies[klass.key] }
+        h[klass.key] = Notifier::Strategy.find(strategies[klass.key]).try(:key)
       end
 
       missing = hydrated.select { |k,v| v.nil? }.keys
       if missing.any?
-        raise Strategy::Missing, "No strategy defined for #{missing.to_sentence}"
+        raise Notifier::Strategy::Missing, "No strategy defined for #{missing.to_sentence}"
       end
 
       hydrated
@@ -113,17 +77,21 @@ class Notifier
   end
 
   def call notification
-    if strategy = strategies[notification.class]
+    if strategy = Notifier::Strategy.find(@strategies[notification.class.key])
       strategy.call notification
     else
       unhandled notification
     end
   end
 
-  attr_reader :strategies
-
   def allowed_strategies
-    [Slack, Ping, Log]
+    Notifier::Strategy.all
+  end
+
+  def strategies
+    Notifier.all.each_with_object({}) do |strat, h|
+      h[strat] = @strategies[strat.key]
+    end
   end
 
 private

@@ -1,8 +1,8 @@
 class SMS::Receiver
   InvalidSid = Class.new StandardError
 
-  def initialize sid:, to:
-    @twilio = TwilioAccount.where(sid: sid, number: to).first || raise(InvalidSid)
+  def initialize sid: nil, to: nil, twilio: nil
+    @twilio = twilio || TwilioAccount.where(sid: sid, number: to).first || raise(InvalidSid)
   end
 
   def handle from:, body:

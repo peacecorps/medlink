@@ -1,0 +1,16 @@
+= bootstrap_form_tag url: test_messages_path do |f|
+  = f.text_field :message
+  button.btn.btn-primary Send
+
+- @messages.each do |m|
+  .row
+    - if m.incoming?
+      .col-md-3
+      .col-md-9
+        pre= m.text
+        small #{time_ago_in_words m.created_at} ago
+    - else
+      .col-md-9
+        pre= m.text
+        small #{time_ago_in_words m.created_at} ago
+      .col-md-3

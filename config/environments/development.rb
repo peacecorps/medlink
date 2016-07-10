@@ -36,9 +36,9 @@ Medlink::Application.configure do
     Bullet.add_footer = true
   end unless ENV["NO_BULLET"]
 
-  config.container.register :pingbot, -> { Slackbot.build(
-    channel:    "#medlink-logs",
-    username:   "Medlink [DEV]",
-    icon_emoji: ":computer:"
-  ) }
+  #config.container.register :pingbot, -> { Slackbot.build(
+  #  channel:    "#medlink-logs",
+  #  username:   "Medlink [DEV]",
+  #  icon_emoji: ":computer:"
+  #) }
 end

@@ -1,7 +1,4 @@
-class SupplyPresenter < Draper::Decorator
-  # TODO: subclassing ApplicationPresenter here seems to cause test-order-dependent failures
-  #   about not being able to find `protect_from_forgery?` and `_path` deprecations. We
-  #   should track down _why_ that's actually happening.
+class SupplyPresenter < ApplicationPresenter
   # TODO: unify with CountrySuppliesPresenter::SupplyPresenter?
   delegate :shortcode, :orderable?
 

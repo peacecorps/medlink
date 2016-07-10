@@ -31,6 +31,41 @@ module FeatureHelpers
   end
 end
 
+module SMSHelpers
+  def as user
+    @sender  = user
+    @phone   = @sender.phones.first || FactoryGirl.create(:phone, user: @sender)
+    @country = @sender.country
+    @twilio  = @country.twilio_account
+  end
+
+  def see matcher
+    @seen = if @seen
+      SMS.outgoing.where("id > ?", @seen.id).last
+    else
+      SMS.outgoing.last
+    end
+
+    if matcher.nil?
+      expect(@seen).to be_nil
+    else
+      expect(@seen).to be_present
+      expect(@seen.number).to eq @phone.condensed
+      expect(@seen.text.length).to be < 160
+      expect(@seen.text).to match matcher
+    end
+  end
+
+  def send msg
+    Medlink.slackbot.requests.clear
+    Medlink.pingbot.requests.clear
+
+    dispatcher = SMS::Receiver.new sid: @twilio.sid, to: @twilio.number
+    dispatcher.handle from: @phone.number, body: msg
+  end
+end
+
 RSpec.configure do |config|
   config.include FeatureHelpers, type: :feature
+  config.include SMSHelpers,     type: :sms
 end

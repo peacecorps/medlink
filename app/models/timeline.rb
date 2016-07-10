@@ -3,7 +3,7 @@ class Timeline
 
   attr_reader :user, :duration
 
-  def initialize user, duration: 1.year
+  def initialize user, duration: 1.year, requests: nil, responses: nil, messages: nil
     @user, @duration = user, duration
   end
 
@@ -14,13 +14,13 @@ class Timeline
   end
 
   def requests
-    @_requests ||= fetch(user.requests).includes(orders: [:supply, :response]).to_a
+    @requests ||= fetch(user.requests).includes(orders: [:supply, :response]).to_a
   end
   def responses
-    @_responses ||= fetch(user.responses).includes(:orders).to_a
+    @responses ||= fetch(user.responses).includes(:orders).to_a
   end
   def messages
-    @_messages ||= fetch(user.messages).to_a
+    @messages ||= fetch(user.messages).to_a
   end
 
   def time_zone

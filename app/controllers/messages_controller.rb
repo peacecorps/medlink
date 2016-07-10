@@ -8,6 +8,22 @@ class MessagesController < ApplicationController
     end
   end
 
+  def tester
+    authorize :message
+    @messages = TwilioAccount.null.messages.newest(20)
+  end
+
+  def test
+    authorize :message
+    if current_user.primary_phone
+      dispatcher = SMS::Receiver.new twilio: TwilioAccount.null
+      dispatcher.handle(from: current_user.primary_phone.number, body: params[:message])
+    else
+      flash[:notice] = "Please register a phone number to test sending"
+    end
+    redirect_back fallback_location: tester_messages_path
+  end
+
 private
 
   def search_params

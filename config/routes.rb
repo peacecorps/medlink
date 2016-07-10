@@ -19,7 +19,12 @@ Medlink::Application.routes.draw do
 
   resource :timeline, only: [:show]
 
-  resources :messages, only: [:index]
+  resources :messages, only: [:index] do
+    collection do
+      get  :tester
+      post :test
+    end
+  end
   resources :announcements, except: [:show] do
     member do
       post :deliver

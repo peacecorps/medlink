@@ -88,5 +88,5 @@ Medlink::Application.configure do
   config.container.register :slow_request_notifier, -> {
     SlowRequestNotifier.build notifier: config.container.resolve(:notifier)
   }
-  config.container.register :sms_deliverer, ->(sms:, twilio:) { twilio.client.messages.create sms }
+  config.container.register :sms_deliverer, ->(sms:, twilio:) { twilio.client.messages.create sms if twilio.client }
 end

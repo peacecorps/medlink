@@ -16,7 +16,7 @@ class Slackbot
     end
 
     def last
-      text requests.last
+      text requests.last if requests.any?
     end
 
     private

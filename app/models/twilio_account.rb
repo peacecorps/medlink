@@ -10,7 +10,11 @@ class TwilioAccount < ApplicationRecord
 
   def client
     # :nocov:
-    @_client ||= Twilio::REST::Client.new(sid, auth)
+    @_client ||= auth.present? && Twilio::REST::Client.new(sid, auth)
     # :nocov:
+  end
+
+  def self.null
+    where(sid: "!!!", number: "+15555555555").first_or_create!
   end
 end
