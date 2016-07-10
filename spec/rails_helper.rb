@@ -17,9 +17,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 Capybara.register_driver :poltergeist do |app|
-  # TODO: we should probably properly fix this, but it only
-  #   seems to error on Travis
-  Capybara::Poltergeist::Driver.new app, js_errors: false
+  Capybara::Poltergeist::Driver.new app #, js_errors: false
 end
 Capybara.javascript_driver = :poltergeist
 

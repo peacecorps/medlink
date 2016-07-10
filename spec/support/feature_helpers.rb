@@ -5,11 +5,12 @@ module FeatureHelpers
   end
 
   def logout
-    page.driver.browser.clear_cookies
+    find(".fa.fa-cog").click
+    btns = find_all "a", text: "Sign Out"
+    btns.first.click if btns.any?
   end
 
   def login_as user
-    logout
     visit root_path
     within ".sign-in" do
       fill_in "Email", with: user.email

@@ -5,7 +5,7 @@ p Any incoming SMS matching an affirmative of these will be considered received.
 = bootstrap_form_tag url: receipts_path, method: :patch do |f|
   .row
     .col-md-6
-      = f.text_area "receipts[affirmations]", label: "Affirmatives", value: @classifier.affirmatives, rows: @classifier.affirmatives.lines.count
+      = f.text_area "receipts[affirmations]", label: "Affirmatives", value: @classifier.affirmatives, rows: @classifier.affirmatives.lines.count, help: "N.B. any message starting with 'yes' is considered affirmative"
     .col-md-6
       = f.text_area "receipts[negations]", label: "Negatives", value: @classifier.negatives, rows: @classifier.negatives.lines.count
       button.btn.btn-primary Save

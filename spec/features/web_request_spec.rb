@@ -21,6 +21,7 @@ RSpec.describe "Ordering via the web", :queue_jobs do
     expect(page).to have_content "Pls"
 
     # PCMO approves it
+    logout
     login_as pcmo
 
     find(".link.order", text: "Sunscreen").click
@@ -32,6 +33,7 @@ RSpec.describe "Ordering via the web", :queue_jobs do
     expect(queued(ActionMailer::DeliveryJob).count).to eq 1
 
     # PCV indicates receipt
+    logout
     login_as volunteer
     expect(page).not_to have_content "Sunscreen"
     expect(page).not_to have_content "Got It"
@@ -48,6 +50,7 @@ RSpec.describe "Ordering via the web", :queue_jobs do
     expect(flag["disabled"]).to eq "disabled"
 
     # PCMO sees receipt
+    logout
     login_as pcmo
     visit responses_path
     expect(page).not_to have_content volunteer.email

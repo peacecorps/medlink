@@ -6,7 +6,7 @@ rvm:
 script:
 - RAILS_ENV=test COVERAGE=true bundle exec rake db:setup spec
 env:
-- s3_access_key_id=xxx s3_secret_access_key=xxx s3_bucket_name=xxx 
+- s3_access_key_id=xxx s3_secret_access_key=xxx s3_bucket_name=xxx slack_command_token=xxx slack_admin_ids=xxx,yyy telegram_bot_token=xxx
 branches:
   only:
   - master
@@ -20,3 +20,11 @@ notifications:
     on_failure: always
 addons:
   postgresql: "9.4"
+services:
+  - redis-server
+sudo: required
+before_install:
+  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - tar -xjf phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - sudo rm -rf /usr/local/phantomjs/bin/phantomjs
+  - sudo mv phantomjs /usr/local/phantomjs/bin/phantomjs
