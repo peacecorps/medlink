@@ -34,7 +34,7 @@ log " => Loaded #{Country.count} countries"
 
 supplies  = Supply.all
 countries = Country.all
-all_pairs = countries.product(supplies).map { |c,s| [c.id, s.id] }
+all_pairs = countries.to_a.product(supplies).map { |c,s| [c.id, s.id] }
 CountrySupply.import [:country_id, :supply_id], all_pairs, validate: false
 log " => Created #{CountrySupply.count} country supplies"
 

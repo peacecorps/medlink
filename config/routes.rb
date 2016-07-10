@@ -31,6 +31,8 @@ Medlink::Application.routes.draw do
     end
   end
 
+  resource :receipts, only: [:edit, :update]
+
   resources :requests, only: [:new, :create]
 
   resources :supplies, only: [:index, :new, :create] do

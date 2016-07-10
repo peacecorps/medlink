@@ -3,11 +3,12 @@ class SMS::ReceiptRecorder < SMS::Handler
   Flagged  = :flagged
 
   def intent
-    if ["yes", "y", "got it","got it!", "ok", "okay", "yes!", "yes.", "si", "si!", "-yes", "I recieved my medicine", "yes. Thanks!", "yes. Thank you.", "yes. Thank you!", "yes and thank you", "yes and thank you!", "yea", "yeah", "hi, yes!", "hi, yes!", "yes:)", "yes :)", "Yes, thanks for checking!", "Yes I did!", "Got it :) Thanks!", "yes i did. thanks", "Yes (received order)", "yep"].include? stripped
+    return @intent if @intent
+
+    classifier = Classifier.new
+    @intent = if classifier.affirmative? stripped
       Received
-    elsif stripped =~ /^yes/i
-      Received
-    elsif ["no", "no!", "n", "nope", "flag", "not yet", "not yet."].include? stripped
+    elsif classifier.negative? stripped
       Flagged
     end
   end
@@ -17,20 +18,7 @@ class SMS::ReceiptRecorder < SMS::Handler
   end
 
   def run!
-    if user.nil?
-      Medlink.notify Notification::InvalidResponseReceipt.new \
-        sms: sms, text: stripped, detail: "no user recognized"
-      error! "sms.no_outstanding_responses"
-    elsif response.nil?
-      Medlink.notify Notification::InvalidResponseReceipt.new \
-        sms: sms, text: stripped, detail: "no responses found"
-      error! "sms.no_outstanding_responses"
-    elsif response.flagged? || response.archived?
-      # This isn't necessarily an error, but we probably want to know if
-      # it's happening
-      Medlink.notify Notification::ReprocessingResponseReceipt.new \
-        sms: sms, text: stripped, previous: response
-    end
+    verify_user_and_response!
 
     if intent == Flagged
       receipt_tracker.flag_for_follow_up
@@ -66,4 +54,22 @@ private
   def response_message type
     SMS::Condenser.new("sms.orders_#{type}", :supply, supplies: unique_supply_names).message
   end
+
+  def verify_user_and_response!
+    if user.nil?
+      Medlink.notify Notification::InvalidResponseReceipt.new \
+                                                            sms: sms, text: stripped, detail: "no user recognized"
+      error! "sms.unrecognized_user"
+    elsif response.nil?
+      Medlink.notify Notification::InvalidResponseReceipt.new \
+                                                            sms: sms, text: stripped, detail: "no responses found"
+      error! "sms.no_outstanding_responses"
+    elsif response.flagged? || response.archived?
+      # This isn't necessarily an error, but we probably want to know if
+      # it's happening
+      Medlink.notify Notification::ReprocessingResponseReceipt.new \
+                                                                 sms: sms, text: stripped, previous: response
+    end
+  end
 end
+
