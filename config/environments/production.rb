@@ -76,8 +76,6 @@ Medlink::Application.configure do
     Bullet.rollbar = true
   end
 
-  config.sms.method = :delivery
-
   bot_opts = {
     username:   ENV.fetch("SLACK_BOT_NAME", "Medlink"),
     icon_emoji: ":hospital:"
