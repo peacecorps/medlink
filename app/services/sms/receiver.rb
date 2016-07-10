@@ -18,10 +18,10 @@ class SMS::Receiver
     response = begin
       SMS::Dispatcher.new(sms: sms).handler.run!
     rescue SMS::Handler::PresentableError => e
-      e.message
+      SMS::Assistant.new(sms: sms).run! e
     end
 
-    twilio.send_text to: from, text: response
+    twilio.send_text to: from, text: response if response
   end
 
   private

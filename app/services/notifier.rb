@@ -27,6 +27,7 @@ class Notifier
         user_activated:                :slack,
         invalid_response_receipt:      :slack,
         reprocessing_response_receipt: :slack,
+        sms_help_needed:               :slack,
         invalid_roster_upload_row:     :ping,
         announcement_scheduled:        :ping,
         job_error:                     :ping,

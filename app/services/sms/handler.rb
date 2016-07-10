@@ -1,5 +1,12 @@
 class SMS::Handler
-  PresentableError = Class.new StandardError
+  class PresentableError < StandardError
+    attr_reader :from
+
+    def initialize msg, from
+      super msg
+      @from = from
+    end
+  end
 
   def initialize sms:
     @sms = sms
@@ -33,7 +40,7 @@ class SMS::Handler
     else
       I18n.t! key, subs
     end
-    raise PresentableError, msg
+    raise PresentableError.new msg, self.class
   end
 
   def user_required!

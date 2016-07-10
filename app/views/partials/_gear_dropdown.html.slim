@@ -3,5 +3,9 @@ li(class=klass)= link_to 'Help', help_path
   li(class=klass)= link_to 'Announcements', announcements_path
 - if policy(:message).index?
   li(class=klass)= link_to 'Message History', messages_path
+- if policy(:message).index?
+  li(class=klass)= link_to 'Message Tester', tester_messages_path
+- if policy(Medlink.notifier).update?
+  li(class=klass)= link_to 'Notification Settings', notifier_path
 li(class=klass)= link_to 'Change Password', edit_user_registration_path
 li(class=klass)= link_to 'Sign Out', destroy_user_session_path, method: :delete

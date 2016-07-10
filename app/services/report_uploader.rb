@@ -2,30 +2,32 @@ class ReportUploader
   Upload = Struct.new :url, :expires_at
 
   class S3
-    def initialize
+    def initialize live:
       @bucket = Aws::S3::Resource.new(region: "us-east-1").bucket(Figaro.env.s3_bucket_name!)
+      @live   = live
     end
 
     def call report
       expires_at = 7.days.from_now
 
-      title = report.class.title.gsub(/\s+/, '-')
+      title = report.class.title.gsub /\s+/, '-'
       key   = "reports/#{Rails.env}/#{title}/#{title}-#{Time.now}-#{SecureRandom.uuid}.csv"
+      obj   = @bucket.object key
 
-      @bucket.object(key).put(
+      obj.put(
         body:         report.to_csv,
         expires:      expires_at,
         content_type: "text/csv",
         acl:          "public-read"
-      )
+      ) if @live
 
       ReportUploader::Upload.new obj.public_url, expires_at
     end
   end
 
-  def self.build uploader: nil, notifier: nil
+  def self.build live: true, notifier: nil
     new \
-      uploader: uploader || ReportUploader::S3.new,
+      uploader: ReportUploader::S3.new(live: live),
       notifier: notifier || Rails.configuration.container.resolve(:notifier)
   end
 

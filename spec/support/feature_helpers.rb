@@ -37,6 +37,7 @@ module SMSHelpers
     @phone   = @sender.phones.first || FactoryGirl.create(:phone, user: @sender)
     @country = @sender.country
     @twilio  = @country.twilio_account
+    @sender
   end
 
   def see matcher

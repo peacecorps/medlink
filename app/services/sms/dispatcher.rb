@@ -1,6 +1,6 @@
 class SMS
   class Dispatcher
-    Handlers = [ Empty, SupplyList, ReceiptRecorder, OrderPlacer ]
+    Handlers = [ Empty, SupplyList, Example, Help, ReceiptRecorder, OrderPlacer ]
 
     def initialize sms:
       @sms = sms
