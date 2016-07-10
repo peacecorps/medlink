@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def alert_if_slow
-    Rails.configuration.container.resolve(:slow_request_notifier).call(
+    Medlink.slow_request_notifier.(
       action: "#{params[:controller]}##{params[:action]}",
       path:   request.path,
       user:   current_user

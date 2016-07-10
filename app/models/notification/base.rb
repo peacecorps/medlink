@@ -23,7 +23,7 @@ module Notification
     private
 
     def slack_link label, path
-      "<#{label}|#{path}>"
+      "<#{path}|#{label}>"
     end
   end
 end

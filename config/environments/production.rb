@@ -76,6 +76,8 @@ Medlink::Application.configure do
     Bullet.rollbar = true
   end
 
+  Rails.application.routes.default_url_options[:host] = "pcmedlink.org"
+
   bot_opts = {
     username:   ENV.fetch("SLACK_BOT_NAME", "Medlink"),
     icon_emoji: ":hospital:"
@@ -86,5 +88,7 @@ Medlink::Application.configure do
   config.container.register :slow_request_notifier, -> {
     SlowRequestNotifier.build notifier: config.container.resolve(:notifier)
   }
-  config.container.register :sms_deliverer, ->(sms:, twilio:) { twilio.client.messages.create sms if twilio.client }
+  config.container.register :sms_deliverer, -> {
+    ->(sms:, twilio:) { twilio.client.messages.create sms if twilio.client }
+  }
 end

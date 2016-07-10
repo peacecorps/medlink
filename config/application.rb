@@ -47,7 +47,7 @@ module Medlink
 
     I18n.config.enforce_available_locales = false
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.paths.add "lib", eager_load: true
 
     config.container = Container.new.tap do |c|
       c.register :notifier, -> { Notifier.load }
