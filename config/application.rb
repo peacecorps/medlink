@@ -24,12 +24,26 @@ module Medlink
       }
     end
 
-    def set key, &block
-      register key, block || NoOp
-
+    %i(
+      notifier
+      order_responder
+      pingbot
+      report_uploader
+      slackbot
+      slow_request_notifier
+      sms_deliverer
+    ).each do |key|
       Medlink.define_singleton_method key do
-        Rails.configuration.container.resolve(key)
+        Rails.configuration.container.resolve key
       end
+
+      define_method key do |&builder|
+        builder ? register(key, &builder) : resolve(key)
+      end
+    end
+
+    def self.build
+      new.tap { |c| yield c }
     end
 
     def purge key
@@ -57,15 +71,14 @@ module Medlink
 
     config.paths.add "lib", eager_load: true
 
-    config.container = Container.new.tap do |c|
-      c.set(:notifier)        { Notifier.load }
-      c.set(:slackbot)        { Slackbot::Test.build }
-      c.set(:pingbot)         { Slackbot::Test.build }
-      c.set(:order_responder) { OrderResponder.build }
-      c.set(:report_uploader) { ReportUploader.build }
-
-      c.set :slow_request_notifier
-      c.set :sms_deliverer
+    config.container = Container.build do |c|
+      c.notifier              { Notifier.load }
+      c.order_responder       { OrderResponder.build }
+      c.pingbot               { Slackbot::Test.build }
+      c.report_uploader       { ReportUploader.build }
+      c.slackbot              { Slackbot::Test.build }
+      c.slow_request_notifier { NoOp }
+      c.sms_deliverer         { NoOp }
     end
   end
 

@@ -83,12 +83,12 @@ Medlink::Application.configure do
     icon_emoji: ":hospital:"
   }
 
-  config.container.register :slackbot, -> { Slackbot.build bot_opts.merge channel: "#medlink"      }
-  config.container.register :pingbot,  -> { Slackbot.build bot_opts.merge channel: "#medlink-logs" }
-  config.container.register :slow_request_notifier, -> {
+  config.container.slackbot { Slackbot.build bot_opts.merge channel: "#medlink"      }
+  config.container.pingbot  { Slackbot.build bot_opts.merge channel: "#medlink-logs" }
+  config.container.slow_request_notifier do
     SlowRequestNotifier.build notifier: config.container.resolve(:notifier)
-  }
-  config.container.register :sms_deliverer, -> {
+  end
+  config.container.sms_deliverer do
     ->(sms:, twilio:) { twilio.client.messages.create sms if twilio.client }
-  }
+  end
 end

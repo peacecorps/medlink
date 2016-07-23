@@ -41,5 +41,5 @@ Medlink::Application.configure do
     Bullet.rails_logger = true
   end unless ENV["NO_BULLET"]
 
-  config.container.register :report_uploader, -> { ReportUploader.build live: false }
+  config.container.report_uploader { ReportUploader.build live: false }
 end
