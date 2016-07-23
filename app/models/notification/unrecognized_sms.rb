@@ -8,7 +8,7 @@ module Notification
       if @sms.user
         "Unhandled SMS (##{@sms.id}) for #{@sms.user.email}: `#{@sms.text}`"
       else
-        "Unhandled SMS (##{@sms.id}): `#{@sms.text}`"
+        "Unhandled SMS (##{@sms.id}) for #{@sms.phone.number}: `#{@sms.text}`"
       end
     end
 
@@ -16,7 +16,7 @@ module Notification
       if @sms.user
         "Unhandled SMS (##{@sms.id}) for #{slack_link @sms.user.email, user_timeline_url(@sms.user)}: `#{@sms.text}`"
       else
-        "Unhandled SMS (##{@sms.id}): `#{@sms.text}`"
+        "Unhandled SMS (##{@sms.id}) for #{@sms.phone.number}: `#{@sms.text}`"
       end
     end
   end

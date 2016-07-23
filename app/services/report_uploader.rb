@@ -28,7 +28,7 @@ class ReportUploader
   def self.build live: true, notifier: nil
     new \
       uploader: ReportUploader::S3.new(live: live),
-      notifier: notifier || Rails.configuration.container.resolve(:notifier)
+      notifier: notifier || Medlink.notifier
   end
 
   def initialize uploader:, notifier:

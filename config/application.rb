@@ -7,7 +7,7 @@ if defined?(Bundler)
   Bundler.require(*Rails.groups(:assets => %w(development test)))
 end
 
-NoOp = ->(*args, &block) { block.call if block }
+NoOp = ->(*args, &block) { block ? block.call : NoOp }
 
 module Medlink
   class Container
@@ -24,8 +24,8 @@ module Medlink
       }
     end
 
-    def set key, proc
-      register key, proc
+    def set key, &block
+      register key, block || NoOp
 
       Medlink.define_singleton_method key do
         Rails.configuration.container.resolve(key)
@@ -58,12 +58,14 @@ module Medlink
     config.paths.add "lib", eager_load: true
 
     config.container = Container.new.tap do |c|
-      c.set :notifier, -> { Notifier.load }
-      c.set :slackbot, -> { Slackbot::Test.build }
-      c.set :pingbot,  -> { Slackbot::Test.build }
-      c.set :slow_request_notifier, ->{ NoOp }
-      c.set :sms_deliverer,         ->{ NoOp }
-      c.set :order_responder, -> { OrderResponder.build }
+      c.set(:notifier)        { Notifier.load }
+      c.set(:slackbot)        { Slackbot::Test.build }
+      c.set(:pingbot)         { Slackbot::Test.build }
+      c.set(:order_responder) { OrderResponder.build }
+      c.set(:report_uploader) { ReportUploader.build }
+
+      c.set :slow_request_notifier
+      c.set :sms_deliverer
     end
   end
 

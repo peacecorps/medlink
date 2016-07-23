@@ -5,26 +5,19 @@ module Notification
     end
 
     def text
-      if @sms.user
-        "It looks like #{@sms.user.email} is having trouble."
-      else
-        "It looks like #{@sms.phone.number} is having trouble."
-      end
+      "It looks like #{name @sms, link: false} is having trouble."
     end
 
     def slack
-      if @sms.user
-        "It looks like #{slack_link @sms.user.email, user_timeline_url(@sms.user)} is having trouble."
-      else
-        "It looks like `#{@sms.phone.number}` is having trouble."
-      end
+      "It looks like #{name @sms, link: true} is having trouble."
     end
 
     private
 
     def name sms, link:
       text = sms.user ? sms.user.email : sms.phone.number
-      if link
+      if sms.user && link
+        slack_link text, user_timeline_url(sms.user)
       else
         text
       end

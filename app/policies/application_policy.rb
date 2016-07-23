@@ -6,10 +6,6 @@ class ApplicationPolicy
     @record = record
   end
 
-  def show?
-    scope.where(:id => record.id).exists?
-  end
-
   def create?
     country_admin?
   end

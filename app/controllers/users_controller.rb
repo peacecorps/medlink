@@ -5,11 +5,7 @@ class UsersController < ApplicationController
   def set_country
     authorize current_user
     current_user.update country: Country.find(params[:country][:id])
-    if params[:next]
-      redirect_to params[:next]
-    else
-      redirect_back fallback_location: root_path
-    end
+    redirect_to params[:next] || request.env["HTTP_REFERER"] || root_path
   end
 
   def send_login_help
