@@ -43,4 +43,11 @@ namespace :admin do
     u = User.where(email: email).first!
     u.update! role: :admin, password: password
   end
+
+  task :rerole => :environment do
+    email = git_data.first
+    u = User.where(email: email).first!
+    u.update! role: ARGV[1]
+    exit
+  end
 end

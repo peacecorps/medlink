@@ -20,14 +20,17 @@ class ResponsesController < ApplicationController
   end
 
   def create
-    user      = User.find params[:user_id]
-    responder = OrderResponder.new(user.responses.new)
-    authorize responder
-    if responder.run create_params
+    response = Medlink.order_responder.build \
+      user_id:    params[:user_id],
+      text:       params.dig(:response, :extra_text),
+      selections: params.fetch(:orders, {}).to_unsafe_h.transform_keys(&:to_i)
+
+    authorize response
+    if Medlink.order_responder.save(response)
       redirect_to manage_orders_path, flash:
-        { success: I18n.t!("flash.response.sent", user: user.name) }
+        { success: I18n.t!("flash.response.sent", user: response.user.name) }
     else
-      redirect_back fallback_location: new_user_response_path(user), flash: { error: I18n.t!("flash.response.none_selected") }
+      redirect_back fallback_location: new_user_response_path(response.user), flash: { error: I18n.t!("flash.response.none_selected") }
     end
   end
 
@@ -81,8 +84,6 @@ class ResponsesController < ApplicationController
   end
 
   def create_params
-    selections = params.fetch(:orders, {}).transform_keys(&:to_i).to_unsafe_h
-    { text: params.require(:response)[:extra_text], selections: selections }
   end
 
   def archived responses

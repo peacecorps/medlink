@@ -9,27 +9,35 @@ end
 
 NoOp = ->(*args, &block) { block.call if block }
 
-class Container
-  include Dry::Container::Mixin
-
-  # Items should resolve to service objects (with `#call` as their api), but we register
-  # procs (so that we can defer builing until the app is loaded).
-  # Rather than getting lost in `call`s, we'll use this custom resolver
-  configure do |config|
-    config.registry = ->(container, key, builder, options) { container[key] = builder }
-    config.resolver = ->(container, key) {
-      container[:_cache]      ||= Concurrent::Hash.new
-      container[:_cache][key] ||= container.fetch(key).call
-    }
-  end
-
-  def purge key
-    return unless _container[:_cache]
-    _container[:_cache].delete key
-  end
-end
-
 module Medlink
+  class Container
+    include Dry::Container::Mixin
+
+    # Items should resolve to service objects (with `#call` as their api), but we register
+    # procs (so that we can defer builing until the app is loaded).
+    # Rather than getting lost in `call`s, we'll use this custom resolver
+    configure do |config|
+      config.registry = ->(container, key, builder, options) { container[key] = builder }
+      config.resolver = ->(container, key) {
+        container[:_cache]      ||= Concurrent::Hash.new
+        container[:_cache][key] ||= container.fetch(key).call
+      }
+    end
+
+    def set key, proc
+      register key, proc
+
+      Medlink.define_singleton_method key do
+        Rails.configuration.container.resolve(key)
+      end
+    end
+
+    def purge key
+      return unless _container[:_cache]
+      _container[:_cache].delete key
+    end
+  end
+
   class Application < Rails::Application
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'Eastern Time (US & Canada)'
@@ -50,23 +58,12 @@ module Medlink
     config.paths.add "lib", eager_load: true
 
     config.container = Container.new.tap do |c|
-      c.register :notifier, -> { Notifier.load }
-      c.register :slackbot, -> { Slackbot::Test.build }
-      c.register :pingbot,  -> { Slackbot::Test.build }
-      c.register :slow_request_notifier, ->{ NoOp }
-      c.register :sms_deliverer,         ->{ NoOp }
-    end
-  end
-
-  %i(
-      notifier
-      pingbot
-      slackbot
-      slow_request_notifier
-      sms_deliverer
-  ).each do |key|
-    define_singleton_method key do
-      Rails.configuration.container.resolve(key)
+      c.set :notifier, -> { Notifier.load }
+      c.set :slackbot, -> { Slackbot::Test.build }
+      c.set :pingbot,  -> { Slackbot::Test.build }
+      c.set :slow_request_notifier, ->{ NoOp }
+      c.set :sms_deliverer,         ->{ NoOp }
+      c.set :order_responder, -> { OrderResponder.build }
     end
   end
 
