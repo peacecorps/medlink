@@ -5,7 +5,7 @@ li(class=klass)= link_to 'Help', help_path
   li(class=klass)= link_to 'Message History', messages_path
 - if policy(:message).index?
   li(class=klass)= link_to 'Message Tester', tester_messages_path
-- if policy(Medlink.notifier).update?
+- if policy(:"NotificationSettings").update?
   li(class=klass)= link_to 'Notification Settings', notifier_path
 - if policy(:"SMS::ReceiptRecorder::Classifier").update?
   li(class=klass)= link_to 'Receipt Settings', edit_receipts_path

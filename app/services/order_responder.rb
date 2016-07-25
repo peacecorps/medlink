@@ -1,6 +1,6 @@
 class OrderResponder
   def self.build
-    new notifier: ResponseNotifier.new, recorder: ResponseRecorder.new
+    new notifier: Medlink.notifier, recorder: ResponseRecorder.new
   end
 
   def initialize notifier:, recorder:
@@ -20,7 +20,7 @@ class OrderResponder
   def save response
     return if response.orders.none?
     recorder.call response
-    notifier.call response
+    notifier.call Notification::ResponseCreated.new response
     queue_receipt_reminders response
     response
   end

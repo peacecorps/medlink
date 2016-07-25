@@ -1,17 +1,20 @@
 class NotifiersController < ApplicationController
   def show
-    @notifier = Medlink.notifier
+    @notifier = NotificationSettingsForm.new Medlink.notifier.preferences
     authorize @notifier
   end
 
   def update
-    authorize Medlink.notifier
-    Notifier.save_strategies! params[:notifier].to_unsafe_h
-    Medlink.reload(:notifier)
-    redirect_back fallback_location: notifier_path, notice: "Preferences saved"
-  rescue Notifier::Strategy::Missing => e
-    # :nocov:
-    redirect_back fallback_location: notifier_path, danger: e.message
-    # :nocov:
+    notifier = NotificationSettingsForm.new Medlink.notifier.preferences
+    authorize notifier
+    if notifier.validate params[:notifier]
+      notifier.save
+      Medlink.reload :notifier
+      redirect_back fallback_location: notifier_path, notice: "Preferences saved"
+    else
+      # :nocov:
+      redirect_back fallback_location: notifier_path, danger: notifier.errors.full_messages.to_sentence
+      # :nocov:
+    end
   end
 end

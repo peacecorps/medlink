@@ -5,18 +5,11 @@ class NewNotification
     :new_notification
   end
 
-  def text
-    "not registered"
-  end
+  def for_user? ; end
+  def text      ; end
 end
 
 RSpec.describe Notifier do
-  context "building requires a full strategy specification" do
-    When(:built) { Notifier.build strategies: {} }
-
-    Then { built == Failure(Notifier::Strategy::Missing) }
-  end
-
   context "notifies on unhandled messages" do
     Given(:notifier) { Notifier.build }
 

@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Dynamic notifier" do
-  before(:each) { Notifier.reset!; Medlink.reload(:notifier) }
-  after(:all)   { Notifier.reset!; Medlink.reload(:notifier) }
+  before(:each) { Medlink.notifier.reset! }
+  after(:all)   { Medlink.notifier.reset! }
 
   it "lets admins edit notification settings" do
     Medlink.notify Notification::JobError.new(klass: ApplicationJob, error: "testing")

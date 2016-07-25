@@ -1,4 +1,4 @@
-class NotifierPolicy < ApplicationPolicy
+class NotificationSettingsPolicy < ApplicationPolicy
   def show?
     admin?
   end

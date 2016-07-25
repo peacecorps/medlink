@@ -39,18 +39,12 @@ class ReportUploader
     report_klass = Report.named report_name
     report = report_klass.new report_klass.model
     upload = uploader.call report
-    notify report: report, upload: upload
+    notifier.call Notification::NewReportReady.new \
+      report: report, upload: upload
     upload
   end
 
   private
 
   attr_reader :uploader, :notifier
-
-  def notify report:, upload:
-    notifier.call :new_report_ready, <<-MSG.strip_heredoc
-      #{report.class.title} is ready for download at #{upload.url}.
-      It will be available until #{upload.expires_at.strftime('%m/%d %H:%M')} }
-    MSG
-  end
 end

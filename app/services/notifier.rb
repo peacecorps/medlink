@@ -1,105 +1,57 @@
 class Notifier
+  NotFound = Class.new StandardError
+
+  attr_reader :preferences
+
   class << self
-    def build strategies: default_strategies
-      new strategies: verify(strategies)
+    def build
+      new preferences: Notifier::Preferences::System.new
     end
 
-    def load
-      build strategies: default_strategies.merge(saved_strategies)
-    end
-
-    def save_strategies! strats
-      symbolized = symbolize strats
-      verify symbolized
-
-      Medlink.redis do |r|
-        r.hmset "notifier.strategies", *symbolized.to_a.flatten
+    def notifications
+      @_notifications ||= begin
+        force_load!
+        Notification::Base.subclasses
       end
     end
 
-    def reset!
-      save_strategies! default_strategies
+    def fetch key
+      notifications.find { |klass| klass.key == key } || raise(NotFound.new key)
     end
 
-    def default_strategies
-      {
-        sending_country_sms:           :slack,
-        user_activated:                :slack,
-        invalid_response_receipt:      :slack,
-        reprocessing_response_receipt: :slack,
-        sms_help_needed:               :slack,
-        invalid_roster_upload_row:     :ping,
-        announcement_scheduled:        :ping,
-        job_error:                     :ping,
-        flag_for_followup:             :ping,
-        slow:                          :ping,
-        spam_warning:                  :ping,
-        unrecognized_sms:              :ping,
-        updated_user:                  :ping,
-        new_report_ready:              :ping,
-        sending_response:              :log,
-        prompt_for_acknowledgement:    :log,
-        delivery_failure:              :log
-      }
+    def strategies
+      Notifier::Strategy.all
     end
 
-    def all
-      Dir["#{Rails.root.join 'app', 'models', 'notification'}/*"].each { |n| require n } unless Rails.env.production?
-      Notification::Base.subclasses
-    end
-
-    private
-
-    def saved_strategies
-      found = Medlink.redis do |r|
-        r.hgetall "notifier.strategies"
-      end
-      symbolize found
-    end
-
-    def verify strategies
-      # FIXME: we should just store the key => key hash, as auto-reloading mucks with
-      # matching based on class
-      hydrated = all.each_with_object({}) do |klass, h|
-        h[klass.key] = Notifier::Strategy.find(strategies[klass.key]).try(:key)
-      end
-
-      missing = hydrated.select { |k,v| v.nil? }.keys
-      if missing.any?
-        raise Notifier::Strategy::Missing, "No strategy defined for #{missing.to_sentence}"
-      end
-
-      hydrated
-    end
-
-    def symbolize h
-      h.map { |k,v| [k.to_sym, v.to_sym] }.to_h
+    def force_load!
+      return if Rails.env.production?
+      Dir["#{Rails.root.join 'app', 'models', 'notification'}/*"].each { |n| require n }
     end
   end
 
   def call notification
-    if strategy = Notifier::Strategy.find(@strategies[notification.class.key])
-      strategy.call notification
+    strategies = strategies_for notification: notification
+    if strategies.present?
+      strategies.each { |s| s.call notification }
     else
       unhandled notification
     end
   end
 
-  def allowed_strategies
-    Notifier::Strategy.all
-  end
-
-  def strategies
-    Notifier.all.each_with_object({}) do |strat, h|
-      h[strat] = @strategies[strat.key]
-    end
+  def reset!
+    preferences.reset!
   end
 
 private
 
-  def initialize strategies: nil
-    @strategies = strategies
-    deep_freeze
+  def strategies_for notification:
+    prefs = notification.for_user? ? Notifier::Preferences::User.new(notification.user) : preferences
+    prefs.for notification.class
+  end
+
+  def initialize preferences: nil
+    @preferences = preferences
+    freeze
   end
 
   def unhandled msg

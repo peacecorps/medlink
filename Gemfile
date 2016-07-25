@@ -22,7 +22,13 @@ gem 'sinatra', require: nil, github: 'sinatra' # 'til Sidekiq resolves the rack/
 
 gem 'kaminari'
 gem 'virtus'
-gem 'reform', '2.0.5'
+gem 'dry-types'
+gem 'dry-container'
+gem 'ice_nine'
+
+gem 'reform', '~> 2.2.0'
+gem 'reform-rails'
+gem 'dry-validation'
 
 # TODO: need to drop draper as a dependency
 gem 'draper', github: 'audionerd/draper', branch: 'rails5' # Released version breaks Rake tasks (!)
@@ -36,9 +42,6 @@ gem 's3_direct_upload'
 gem 'aws-sdk'
 
 gem 'react-rails'
-
-gem 'dry-container'
-gem 'ice_nine'
 
 group :assets do
   gem 'sass-rails'

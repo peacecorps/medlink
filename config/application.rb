@@ -71,8 +71,10 @@ module Medlink
 
     config.paths.add "lib", eager_load: true
 
+    #config.reform.validations = :dry
+
     config.container = Container.build do |c|
-      c.notifier              { Notifier.load }
+      c.notifier              { Notifier.build }
       c.order_responder       { OrderResponder.build }
       c.pingbot               { Slackbot::Test.build }
       c.report_uploader       { ReportUploader.build }

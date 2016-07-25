@@ -3,4 +3,8 @@ class ApplicationJob < ActiveJob::Base
     Medlink.notify Notification::JobError.new klass: self.class, error: error
     raise error
   end
+
+  def perform_later
+    self.class.perform_later(*arguments)
+  end
 end

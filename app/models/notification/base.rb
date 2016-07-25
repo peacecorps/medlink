@@ -10,14 +10,26 @@ module Notification
       name.split("::").last.underscore.gsub("_", " ").capitalize
     end
 
+    # :nocov:
     def text
-      # :nocov:
       raise "Expected `#{self.class}` to define `text`"
-      # :nocov:
     end
+
+    def email
+      raise "Expected `#{self.class}` to define `email`"
+    end
+
+    def sms
+      raise "Expected `#{self.class}` to define `sms`"
+    end
+    # :nocov:
 
     def slack
       text
+    end
+
+    def for_user?
+      !!@for_user
     end
 
     private
