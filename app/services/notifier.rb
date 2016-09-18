@@ -9,9 +9,11 @@ class Notifier
     end
 
     def notifications
-      @_notifications ||= begin
+      if subs = Notification::Base.subclasses
+        subs
+      else
         force_load!
-        Notification::Base.subclasses
+        Notification::Base.subclasses.any?
       end
     end
 
