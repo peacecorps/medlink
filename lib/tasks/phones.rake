@@ -28,4 +28,31 @@ namespace :phones do
       end
     end
   end
+
+  task :standardize => :environment do
+    total = 0
+    users = 0
+
+    User.find_each do |user|
+      deleted = 0
+      selected = {}
+
+      user.phones.each do |phone|
+        if replacement = selected[phone.condensed]
+          phone.messages.update_all(phone_id: replacement.id)
+          phone.delete
+          deleted += 1
+        else
+          selected[phone.condensed] = phone
+        end
+      end
+
+      if deleted > 0
+        total += deleted
+        users += 1
+      end
+    end
+
+    puts "Deleted #{total} phones from #{users} users"
+  end
 end

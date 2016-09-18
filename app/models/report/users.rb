@@ -18,7 +18,7 @@ class Report::Users < Report::Base
       "First"       => user.first_name,
       "Last"        => user.last_name,
       "Email"       => user.email,
-      "Phones"      => user.phones.map(&:number),
+      "Phones"      => user.phones.map(&:number).join(","),
       "Country"     => country.name,
       "Role"        => user.role,
       "Location"    => user.location,
