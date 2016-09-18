@@ -18,10 +18,11 @@ class Report::Users < Report::Base
       "First"       => user.first_name,
       "Last"        => user.last_name,
       "Email"       => user.email,
-      "Phone"       => phone.try(:number),
+      "Phones"      => user.phones.map(&:number),
       "Country"     => country.name,
       "Role"        => user.role,
-      "Location"    => user.location
+      "Location"    => user.location,
+      "Active"      => user.active?
     }
   end
 end
