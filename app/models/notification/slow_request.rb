@@ -13,7 +13,11 @@ module Notification
     private
 
     def describe_user
-      "#{user.name} (#{user.email})"
+      if user
+        "#{user.name} (#{user.id} / #{user.role} in #{user.country.try :name})"
+      else
+        "unknown user"
+      end
     end
   end
 end

@@ -23,12 +23,4 @@ class SlowRequestNotifier
   private
 
   attr_reader :timeout, :notifier
-
-  def describe_user user
-    if user
-      "#{user.name} (#{user.id} / #{user.role} in #{user.country.try :name})"
-    else
-      "unknown user"
-    end
-  end
 end

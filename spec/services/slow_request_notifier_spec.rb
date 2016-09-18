@@ -5,7 +5,7 @@ RSpec.describe SlowRequestNotifier do
   Given(:monitor) {
     SlowRequestNotifier.build \
       timeout: 0.01,
-      notifier: ->(key, msg) { notifications.push msg }
+      notifier: notifications.method(:push)
   }
 
   context "quick request" do
@@ -26,7 +26,7 @@ RSpec.describe SlowRequestNotifier do
     end
 
     Then { result == 2 }
-    And  { notifications == ["`path => action` took 0.02 for unknown user"] }
+    And  { notifications.map(&:text) == ["`path => action` took 0.02 for unknown user"] }
   end
 
   context "slow request with known user" do
@@ -41,6 +41,6 @@ RSpec.describe SlowRequestNotifier do
     end
 
     Then { result == 4 }
-    And  { notifications == ["`path => action` took 0.02 for Name (1234 / PCMO in Country)"] }
+    And  { notifications.map(&:text) == ["`path => action` took 0.02 for Name (1234 / PCMO in Country)"] }
   end
 end

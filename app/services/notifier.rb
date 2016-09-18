@@ -9,12 +9,8 @@ class Notifier
     end
 
     def notifications
-      if subs = Notification::Base.subclasses
-        subs
-      else
-        force_load!
-        Notification::Base.subclasses.any?
-      end
+      force_load! unless loaded?
+      Notification::Base.subclasses
     end
 
     def fetch key
@@ -26,8 +22,12 @@ class Notifier
     end
 
     def force_load!
-      return if Rails.env.production?
       Dir["#{Rails.root.join 'app', 'models', 'notification'}/*"].each { |n| require n }
+      @_loaded = true
+    end
+
+    def loaded?
+      Rails.env.production? || @_loaded
     end
   end
 

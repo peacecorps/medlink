@@ -8,6 +8,7 @@ class UserTexter
   end
 
   def send message
+    return false if user && !user.active?
     return false if spammy? message
     sms = record message
     begin
