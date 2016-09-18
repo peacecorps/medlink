@@ -83,8 +83,8 @@ Medlink::Application.configure do
     icon_emoji: ":hospital:"
   }
 
-  config.container.slackbot { Slackbot.build bot_opts.merge channel: "#medlink"      }
-  config.container.pingbot  { Slackbot.build bot_opts.merge channel: "#medlink-logs" }
+  config.container.slackbot { Medlink::Slackbot.build bot_opts.merge channel: "#medlink"      }
+  config.container.pingbot  { Medlink::Slackbot.build bot_opts.merge channel: "#medlink-logs" }
   config.container.slow_request_notifier do
     SlowRequestNotifier.build notifier: config.container.resolve(:notifier)
   end

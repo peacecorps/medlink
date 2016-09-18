@@ -14,7 +14,8 @@ class SlowRequestNotifier
     result = block.call
     duration = Time.now - start
     if duration > timeout
-      send_notification action: action, path: path, user: user, duration: duration
+      notifier.call Notification::SlowRequest.new \
+        action: action, path: path, user: user, duration: duration
     end
     result
   end
@@ -22,10 +23,6 @@ class SlowRequestNotifier
   private
 
   attr_reader :timeout, :notifier
-
-  def send_notification action:, path:, user:, duration:
-    notifier.call :slow, "`#{path} => #{action}` took #{duration.round 2} for #{describe_user user}"
-  end
 
   def describe_user user
     if user

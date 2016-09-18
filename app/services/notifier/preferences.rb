@@ -82,7 +82,7 @@ class Notifier
           announcement_scheduled:        [:ping],
           job_error:                     [:ping],
           flag_for_followup:             [:ping],
-          # TODO: fold this back in slow: [:ping],
+          slow_request:                  [:ping],
           spam_warning:                  [:ping],
           unrecognized_sms:              [:ping],
           updated_user:                  [:ping],
