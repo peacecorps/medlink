@@ -14,7 +14,7 @@ module Notification
 
     def describe_user
       if user
-        "#{user.name} (#{user.id} / #{user.role} in #{user.country.try :name})"
+        "#{user.pcv_id} (#{user.role})"
       else
         "unknown user"
       end

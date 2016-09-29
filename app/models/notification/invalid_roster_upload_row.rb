@@ -5,7 +5,7 @@ module Notification
     end
 
     def text
-      "Failed to #@action from upload row #{@row.user_hash}: #@error"
+      "Failed to #@action from upload row #{@row.user_hash[:pcv_id]}: #@error"
     end
   end
 end

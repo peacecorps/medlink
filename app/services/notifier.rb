@@ -14,6 +14,7 @@ class Notifier
     end
 
     def fetch key
+      key = key.to_sym
       notifications.find { |klass| klass.key == key } || raise(NotFound.new key)
     end
 

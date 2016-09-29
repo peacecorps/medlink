@@ -5,7 +5,7 @@ module Notification
     end
 
     def text
-      "#{@activated.email} re-activated by #{@by.email}"
+      "#{@activated.pcv_id} re-activated by User ##{@by.id}"
     end
   end
 end

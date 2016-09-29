@@ -5,7 +5,7 @@ module Notification
     end
 
     def text
-      "Pinging #{@volunteer.email} to acknowledge receipt of response #{@response.id}"
+      "Pinging #{@volunteer.pcv_id} to acknowledge receipt of response #{@response.id}"
     end
   end
 end

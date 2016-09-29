@@ -5,7 +5,7 @@ module Notification
     end
 
     def text
-      "#{@user.email} (##{@user.id}) has been updated - #{@changes}"
+      "#{@user.pcv_id} (##{@user.id}) has been updated - #{@changes}"
     end
   end
 end

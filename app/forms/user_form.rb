@@ -92,9 +92,9 @@ class UserForm < Reform::Form
 
   def summarize key
     if key == "country_id"
-      "country=#{country_name}"
+      "country"
     else
-      "#{key}=#{send key}"
+      "#{key}"
     end
   end
 

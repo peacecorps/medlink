@@ -15,7 +15,7 @@ module Notification
     private
 
     def name sms, link:
-      text = sms.user ? sms.user.email : sms.phone.number
+      text = sms.user ? sms.user.pcv_id : sms.phone.number
       if sms.user && link
         slack_link text, user_timeline_url(sms.user)
       else

@@ -6,7 +6,7 @@ module Notification
 
     def text
       if @sms.user
-        "Unhandled SMS (##{@sms.id}) for #{@sms.user.email}: `#{@sms.text}`"
+        "Unhandled SMS (##{@sms.id}) for #{@sms.user.pcv_id}: `#{@sms.text}`"
       else
         "Unhandled SMS (##{@sms.id}) for #{@sms.phone.number}: `#{@sms.text}`"
       end
@@ -14,7 +14,7 @@ module Notification
 
     def slack
       if @sms.user
-        "Unhandled SMS (##{@sms.id}) for #{slack_link @sms.user.email, user_timeline_url(@sms.user)}: `#{@sms.text}`"
+        "Unhandled SMS (##{@sms.id}) for #{slack_link @sms.user.pcv_id, user_timeline_url(@sms.user)}: `#{@sms.text}`"
       else
         "Unhandled SMS (##{@sms.id}) for #{@sms.phone.number}: `#{@sms.text}`"
       end
